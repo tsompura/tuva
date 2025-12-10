@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Dashboard V7 - Final Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        /* Class Card Gradients - Using Style Guide Colors */
+        .gradient-blue { background: linear-gradient(135deg, #013ca6 0%, #1d4cbc 100%); }
+        .gradient-green { background: linear-gradient(135deg, #006F75 0%, #008B94 100%); }
+        .gradient-purple { background: linear-gradient(135deg, #8c1a64 0%, #b31e6f 100%); }
+        
+        /* Assignment Cards - Teal from style guide */
+        .gradient-teal { background: linear-gradient(135deg, #006F75 0%, #008B94 100%); }
+        .gradient-orange { background: linear-gradient(135deg, #EB9E00 0%, #ECB606 100%); }
+        
+        /* Assessment Cards - Pink/Green from style guide */
+        .gradient-pink { background: linear-gradient(135deg, #f22380 0%, #c92074 100%); }
+        .gradient-green-light { background: linear-gradient(135deg, #46ADB9 0%, #7DC4CE 100%); }
+        
+        /* Featured Content - Using Tutorial/Tuva Jr colors */
+        .gradient-featured-1 { background: linear-gradient(135deg, #5B1E7F 0%, #7B2FA0 100%); }
+        .gradient-featured-2 { background: linear-gradient(135deg, #A71931 0%, #C42943 100%); }
+        
+        .transition-all { transition: all 0.3s ease; }
+        .expanded { display: grid; }
+        .collapsed { display: none; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-full mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-teal-600 rounded">
+                        <span class="text-white font-bold text-lg">Tuva</span>
+                    </div>
+                    <nav class="flex items-center gap-1">
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Tuva Tools</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Tuva Jr.</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-blue-600 bg-blue-50">Dashboard</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Content Library</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Dataset Library</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Assessments</button>
+                        <button class="px-3 py-2 rounded text-sm font-medium text-gray-700 hover:bg-gray-100">Teaching</button>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="px-4 py-1.5 bg-yellow-400 text-gray-900 rounded font-bold text-sm hover:bg-yellow-500">PREMIUM</button>
+                    <button class="text-sm text-gray-700 hover:text-gray-900 font-medium">Help</button>
+                    <button class="text-sm font-bold text-gray-800 hover:text-gray-900">HSIMPURA ▼</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Action Buttons Row -->
+    <div class="bg-teal-600 border-b border-teal-700">
+        <div class="max-w-full mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button class="px-4 py-2 bg-teal-700 text-white rounded font-semibold text-sm hover:bg-teal-800">➕ Create a Class</button>
+                    <button class="px-4 py-2 bg-teal-700 text-white rounded font-semibold text-sm hover:bg-teal-800">⬇️ Import Class from LMS ▼</button>
+                    <button class="px-4 py-2 bg-yellow-400 text-gray-900 rounded font-bold text-sm hover:bg-yellow-500">⬆️ Upload Dataset</button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="text-sm text-white hover:text-teal-100 font-medium">📊 My Activities</button>
+                    <button class="text-sm text-white hover:text-teal-100 font-medium">✉️ Email Settings</button>
+                    <button class="px-4 py-2 bg-white text-teal-700 rounded font-semibold text-sm hover:bg-gray-50">▶️ Teacher Tour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Action Alert Bar -->
+    <div class="bg-orange-50 border-b border-orange-200">
+        <div class="max-w-full mx-auto px-6 py-3">
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-semibold text-gray-700">Quick Actions:</span>
+                <button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-orange-300 rounded-lg hover:bg-orange-50">
+                    <div class="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold">12</div>
+                    <span class="text-sm font-medium text-gray-800">Need Grading</span>
+                </button>
+                <button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-red-300 rounded-lg hover:bg-red-50">
+                    <div class="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">5</div>
+                    <span class="text-sm font-medium text-gray-800">Overdue</span>
+                </button>
+                <button class="flex items-center gap-2 px-3 py-1.5 bg-white border border-blue-300 rounded-lg hover:bg-blue-50">
+                    <div class="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                    <span class="text-sm font-medium text-gray-800">Due Today</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content - Two Column Layout -->
+    <div class="max-w-full mx-auto px-6 py-6">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- LEFT SIDE - Teacher Workflow (8 columns) -->
+            <div class="col-span-8 space-y-6">
+                <!-- My Classes -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                    <div class="px-5 py-4 border-b border-gray-200">
+                        <h2 class="text-xl font-bold text-gray-900">My Classes</h2>
+                    </div>
+                    <div class="p-5">
+                        <div class="grid grid-cols-3 gap-4">
+                            <!-- Class Card 1 -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-blue opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-6 text-white">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <div class="text-xs font-semibold text-white/80 mb-1">6th Grade</div>
+                                            <div class="text-xl font-bold">Math</div>
+                                        </div>
+                                        <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center text-2xl font-bold">8</div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-white/90">Code: 6m9fs</span>
+                                        <span>→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Class Card 2 -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-green opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-6 text-white">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <div class="text-xs font-semibold text-white/80 mb-1">7th Grade</div>
+                                            <div class="text-xl font-bold">Science</div>
+                                        </div>
+                                        <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center text-2xl font-bold">10</div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-white/90">Code: hvud9</span>
+                                        <span>→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Class Card 3 -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-purple opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-6 text-white">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <div class="text-xs font-semibold text-white/80 mb-1">10th Grade</div>
+                                            <div class="text-xl font-bold">Math</div>
+                                        </div>
+                                        <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center text-2xl font-bold">10</div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-white/90">Code: 3jqt5</span>
+                                        <span>→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignments -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                    <div class="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-900">Assignments</h2>
+                        <button onclick="toggleSection('assignments')" class="flex items-center gap-2 px-4 py-2 text-teal-600 hover:bg-teal-50 rounded-lg font-semibold text-sm">
+                            <span id="assignments-toggle-text">View More</span>
+                            <span id="assignments-toggle-icon">▼</span>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="grid grid-cols-3 gap-4" id="assignments-grid">
+                            <!-- Assignment 1 - Due Today -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-orange opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">6th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Solar System Data Analysis</div>
+                                        </div>
+                                        <span class="px-2 py-1 bg-white/30 backdrop-blur text-white rounded text-xs font-bold flex-shrink-0 ml-2">TODAY</span>
+                                    </div>
+                                    <div class="space-y-2 mb-3">
+                                        <div class="flex items-center gap-2 text-xs text-white/90">
+                                            <span>🕐</span>
+                                            <span>Today 2:30 PM</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Submitted</span>
+                                            <span class="font-bold">6/8</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">To Grade</span>
+                                            <span class="font-bold">3</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-end text-sm pt-2 border-t border-white/20">
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Assignment 2 -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-teal opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">7th Grade Science</div>
+                                            <div class="text-base font-bold mb-2">Climate Data Exploration</div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-3">
+                                        <div class="flex items-center gap-2 text-xs text-white/90">
+                                            <span>🕐</span>
+                                            <span>Tomorrow</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Submitted</span>
+                                            <span class="font-bold">4/10</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-end text-sm pt-2 border-t border-white/20">
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Assignment 3 -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-teal opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">10th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Quadratic Functions</div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-3">
+                                        <div class="flex items-center gap-2 text-xs text-white/90">
+                                            <span>🕐</span>
+                                            <span>Friday 3:00 PM</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Submitted</span>
+                                            <span class="font-bold">8/10</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">To Grade</span>
+                                            <span class="font-bold">5</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-end text-sm pt-2 border-t border-white/20">
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Expanded Assignments -->
+                        <div id="assignments-expanded" class="collapsed grid-cols-3 gap-4 mt-4">
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-teal opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">7th Grade Science</div>
+                                            <div class="text-base font-bold mb-2">Plant Growth Lab Report</div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-3">
+                                        <div class="flex items-center gap-2 text-xs text-white/90">
+                                            <span>🕐</span>
+                                            <span>Next Monday</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Submitted</span>
+                                            <span class="font-bold">2/10</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-end text-sm pt-2 border-t border-white/20">
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-teal opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">10th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Linear Functions Worksheet</div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-3">
+                                        <div class="flex items-center gap-2 text-xs text-white/90">
+                                            <span>🕐</span>
+                                            <span>Next Week</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Submitted</span>
+                                            <span class="font-bold">5/10</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">To Grade</span>
+                                            <span class="font-bold">2</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-end text-sm pt-2 border-t border-white/20">
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assessments -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                    <div class="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-900">Assessments</h2>
+                        <button onclick="toggleSection('assessments')" class="flex items-center gap-2 px-4 py-2 text-teal-600 hover:bg-teal-50 rounded-lg font-semibold text-sm">
+                            <span id="assessments-toggle-text">View More</span>
+                            <span id="assessments-toggle-icon">▼</span>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="grid grid-cols-3 gap-4" id="assessments-grid">
+                            <!-- Assessment 1 - Needs Grading -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-pink opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">6th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Statistics Quiz</div>
+                                        </div>
+                                        <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                                            <span class="text-lg">⚠️</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Completed</span>
+                                            <span class="font-bold">6/8</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Avg Score</span>
+                                            <span class="font-bold">85%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm pt-3 mt-3 border-t border-white/20">
+                                        <span class="text-white/80 text-xs">Needs Review</span>
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Assessment 2 - Completed -->
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-green-light opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">7th Grade Science</div>
+                                            <div class="text-base font-bold mb-2">Ecosystem Test</div>
+                                        </div>
+                                        <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                                            <span class="text-lg">✓</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Completed</span>
+                                            <span class="font-bold">10/10</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Avg Score</span>
+                                            <span class="font-bold">78%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm pt-3 mt-3 border-t border-white/20">
+                                        <span class="text-white/80 text-xs">Completed</span>
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Expanded Assessments -->
+                        <div id="assessments-expanded" class="collapsed grid-cols-3 gap-4 mt-4">
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-green-light opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">10th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Algebra Midterm</div>
+                                        </div>
+                                        <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                                            <span class="text-lg">✓</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Completed</span>
+                                            <span class="font-bold">9/10</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Avg Score</span>
+                                            <span class="font-bold">92%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm pt-3 mt-3 border-t border-white/20">
+                                        <span class="text-white/80 text-xs">Completed</span>
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer group">
+                                <div class="absolute inset-0 gradient-pink opacity-90 group-hover:opacity-100"></div>
+                                <div class="relative p-5 text-white">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-white/80 mb-1">6th Grade Math</div>
+                                            <div class="text-base font-bold mb-2">Data Analysis Project</div>
+                                        </div>
+                                        <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center flex-shrink-0 ml-2">
+                                            <span class="text-lg">⚠️</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Completed</span>
+                                            <span class="font-bold">4/8</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-sm">
+                                            <span class="text-white/90">Avg Score</span>
+                                            <span class="font-bold">88%</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm pt-3 mt-3 border-t border-white/20">
+                                        <span class="text-white/80 text-xs">Needs Review</span>
+                                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Content Discovery -->
+                <div class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="relative px-5 py-5 text-white" style="background: linear-gradient(135deg, #006F75 0%, #46ADB9 100%);">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center">✨</div>
+                                <div>
+                                    <h2 class="text-xl font-bold mb-1">Newest Lessons for Tuva Jr. and Premium</h2>
+                                    <p class="text-white/80 text-sm">Fresh content aligned to your curriculum</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 bg-white rounded-lg font-bold text-sm hover:bg-gray-50" style="color: #006F75;">View All</button>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="grid grid-cols-2 gap-5">
+                            <!-- Featured Content 1 -->
+                            <div class="group cursor-pointer">
+                                <div class="relative h-40 rounded-t-xl overflow-hidden gradient-featured-1">
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10"></div>
+                                    <div class="absolute top-3 left-3 flex gap-2">
+                                        <span class="px-2 py-1 rounded-full text-xs font-bold bg-yellow-400 text-gray-900">Premium</span>
+                                        <span class="px-2 py-1 bg-red-500 text-white rounded-full text-xs font-bold">NEW</span>
+                                    </div>
+                                    <div class="absolute bottom-3 left-3">
+                                        <div class="flex items-center gap-2 text-white">
+                                            <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">📚</div>
+                                            <span class="text-xs font-semibold">Activity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 border-t-0 rounded-b-xl p-4 group-hover:border-purple-400">
+                                    <h3 class="text-sm font-bold text-gray-900 mb-2 group-hover:text-purple-700">Estimating Arm Spans: Standard Error of the Mean</h3>
+                                    <p class="text-xs text-gray-600 mb-3">Students visually experience how the standard error of the mean (SEM) changes with sample size.</p>
+                                    <div class="flex items-center gap-2 mb-3 text-xs text-gray-600">
+                                        <span>📚</span>
+                                        <span>Grades 9-12</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1 mb-3">
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium">Box Plots</span>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium">One-Variable Statistics</span>
+                                    </div>
+                                    <button class="w-full px-3 py-2 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700">View Details →</button>
+                                </div>
+                            </div>
+                            <!-- Featured Content 2 -->
+                            <div class="group cursor-pointer">
+                                <div class="relative h-40 rounded-t-xl overflow-hidden gradient-featured-2">
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10"></div>
+                                    <div class="absolute top-3 left-3 flex gap-2">
+                                        <span class="px-2 py-1 rounded-full text-xs font-bold bg-yellow-400 text-gray-900">Premium</span>
+                                    </div>
+                                    <div class="absolute bottom-3 left-3">
+                                        <div class="flex items-center gap-2 text-white">
+                                            <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">📚</div>
+                                            <span class="text-xs font-semibold">Data Story</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 border-t-0 rounded-b-xl p-4 group-hover:border-purple-400">
+                                    <h3 class="text-sm font-bold text-gray-900 mb-2 group-hover:text-purple-700">Rainbows of National Parks</h3>
+                                    <p class="text-xs text-gray-600 mb-3">Explore visitor data across 12 National Parks using different graph types.</p>
+                                    <div class="flex items-center gap-2 mb-3 text-xs text-gray-600">
+                                        <span>📚</span>
+                                        <span>Grades 9-12</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1 mb-3">
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium">Box Plots</span>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium">Interquartile Range</span>
+                                    </div>
+                                    <button class="w-full px-3 py-2 bg-purple-600 text-white rounded-lg text-xs font-semibold hover:bg-purple-700">View Details →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE - Resources (4 columns) -->
+            <div class="col-span-4 space-y-4">
+                <!-- Upgrade to Premium -->
+                <div style="background: linear-gradient(135deg, #ECB606 0%, #F2E969 100%);" class="rounded-lg p-5 shadow-lg">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-2xl">🔒</span>
+                        <h3 class="text-lg font-bold text-gray-900">Upgrade to Tuva Premium</h3>
+                    </div>
+                    <p class="text-sm mb-4 text-gray-800">
+                        Unlock all premium lessons, unlimited datasets, and advanced analytics.
+                    </p>
+                    <button class="w-full px-4 py-2 bg-gray-900 text-white rounded-lg font-semibold hover:bg-gray-800">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Free Tutorials & Introductory Activities -->
+                <div style="background: linear-gradient(135deg, #8c1a64 0%, #b31e6f 100%);" class="rounded-lg p-5 text-white shadow-lg">
+                    <h3 class="text-base font-bold mb-1">Free Tutorials & Introductory Activities</h3>
+                    <p class="text-xs text-white/80 mb-3">(NEW)</p>
+                    <div class="space-y-2 text-sm">
+                        <button class="w-full text-left flex items-center gap-2 text-white hover:text-white/80">
+                            <span>›</span>
+                            <span>Tutorials For Tuva Data & Graphing Tools</span>
+                        </button>
+                        <button class="w-full text-left flex items-center gap-2 text-white hover:text-white/80">
+                            <span>›</span>
+                            <span>Man's Best Friend Introductory Activities</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tuva for Mathematics & Statistic -->
+                <div class="bg-gray-100 rounded-lg p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-gray-900 mb-3">Tuva for Mathematics & Statistic</h3>
+                    <div class="space-y-2 text-sm">
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Quickstart Guide For Math & Statistics</span>
+                        </button>
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Tuva Alignment Guide For Illustrative Math Grades 6-8</span>
+                        </button>
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Tuva Alignment Guide For Illustrative Math Algebra 1 & 2</span>
+                        </button>
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Tuva Alignment Guide For TEKS Algebra I And Algebra II</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tuva for Science -->
+                <div class="bg-gray-100 rounded-lg p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-gray-900 mb-3">Tuva for Science</h3>
+                    <div class="space-y-2 text-sm">
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Quickstart Guide For Next Gen Science Standards</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Support Resources -->
+                <div class="bg-gray-100 rounded-lg p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-gray-900 mb-3">Support Resources</h3>
+                    <div class="space-y-2 text-sm">
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Product Support</span>
+                        </button>
+                        <button class="w-full text-left flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                            <span>›</span>
+                            <span>Uploading Your Data Into Tuva</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionName) {
+            const expandedElement = document.getElementById(sectionName + '-expanded');
+            const toggleText = document.getElementById(sectionName + '-toggle-text');
+            const toggleIcon = document.getElementById(sectionName + '-toggle-icon');
+            
+            if (expandedElement.classList.contains('collapsed')) {
+                expandedElement.classList.remove('collapsed');
+                expandedElement.classList.add('expanded');
+                toggleText.textContent = 'Show Less';
+                toggleIcon.textContent = '▲';
+            } else {
+                expandedElement.classList.remove('expanded');
+                expandedElement.classList.add('collapsed');
+                toggleText.textContent = 'View More';
+                toggleIcon.textContent = '▼';
+            }
+        }
+    </script>
+</body>
+</html>
