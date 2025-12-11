@@ -1,389 +1,555 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Tuva — Animated Timeline Prototype (D3)</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<!-- D3 v7 -->
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<style>
-  :root{
-    --bg:#f6f8fa; --card:#ffffff; --muted:#566173; --accent:#0f62fe;
-    --food:#16a34a; --sports:#f59e0b; --env:#06b6d4; --animals:#8b5cf6; --tech:#ef4444;
-    --border:#e6e9ee;
-  }
-  *{box-sizing:border-box}
-  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; margin:18px; background:var(--bg); color:#071132}
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-  h1{font-size:18px;margin:0}
-  .subtitle{color:var(--muted);font-size:13px}
-  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  select,input[type="search"],button{font-size:13px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:#fff}
-  button.primary{background:var(--accent);color:#fff;border:none}
-  .panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;box-shadow:0 8px 24px rgba(12,18,28,0.05)}
-  .layout{display:grid;grid-template-columns:1fr 360px;gap:12px;align-items:start}
-  .visWrap{height:700px; border-radius:8px; overflow:hidden; background:linear-gradient(180deg,#fff,#fbfdff); padding:12px}
-  .hint{font-size:13px;color:var(--muted)}
-  .unit-label{font-weight:700;font-size:13px;margin-bottom:8px}
-  .skill-node{cursor:pointer}
-  .skill-title{font-size:13px;font-weight:600}
-  .skill-meta{font-size:12px;color:var(--muted)}
-  .lesson-chip{font-size:12px;padding:6px 8px;border-radius:999px;border:1px solid var(--border);background:#fff;margin:6px;cursor:pointer}
-  .lesson-list{display:flex;flex-wrap:wrap;margin-top:8px}
-  .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-  .controls-right{display:flex;gap:8px;align-items:center}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  /* responsive */
-  @media (max-width:1100px){ .layout{grid-template-columns:1fr} .visWrap{height:520px} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Real-Math Learning Map</title>
+    <style>
+        :root {
+            /* --- Tuva Brand Palette --- */
+            --tuva-purple: #5B4896; 
+            --tuva-purple-hover: #4a3a7a;
+            --tuva-text-dark: #333333;
+            --tuva-text-medium: #555555;
+            --tuva-text-light: #777777;
+            --tuva-bg-light: #F9F9F9;
+            --tuva-border: #E0E0E0;
+
+            /* --- Theme Colors (Matches Spreadsheet Contexts) --- */
+            --theme-green: #4CAF50;  /* Nature/Env */
+            --theme-blue: #2196F3;   /* Math/Standard */
+            --theme-orange: #FF9800; /* Social/active */
+
+            /* --- Spacing & Dimensions --- */
+            --line-width: 2px;
+            --dot-size: 14px;
+            --card-radius: 4px; /* Standard web radius */
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #FFFFFF;
+            margin: 0;
+            color: var(--tuva-text-dark);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Sidebar (Matches Tuva Filter Panel) --- */
+        .sidebar {
+            width: 240px;
+            background-color: #FAFAFA; /* Subtle contrast */
+            border-right: 1px solid var(--tuva-border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 20px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--tuva-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--tuva-text-medium);
+            border-left: 4px solid transparent; /* Reserve space for active indicator */
+            transition: all 0.2s;
+            background: transparent;
+            text-align: left;
+            border-top: none;
+            border-right: none;
+            border-bottom: none;
+            width: 100%;
+        }
+
+        .nav-item:hover {
+            background-color: #F0F0F0;
+            color: var(--tuva-text-dark);
+        }
+
+        .nav-item.active {
+            color: var(--tuva-purple);
+            font-weight: 600;
+            border-left-color: var(--tuva-purple); /* Tuva active style */
+            background-color: #F3F1F9; /* Very light purple bg */
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            background-color: #FFFFFF;
+        }
+
+        .page-header {
+            margin-bottom: 50px;
+            max-width: 800px;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin: 0 0 10px 0;
+            color: var(--tuva-text-dark);
+        }
+
+        .page-header p {
+            color: var(--tuva-text-light);
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* --- The Timeline Container --- */
+        .timeline-wrapper {
+            max-width: 800px;
+            position: relative;
+            padding-left: 10px; /* Slight offset */
+        }
+
+        /* Continuous Vertical Line */
+        .timeline-line {
+            position: absolute;
+            left: 27px; /* Center of the dot */
+            top: 10px;
+            bottom: 0;
+            width: var(--line-width);
+            background-color: var(--tuva-border);
+            z-index: 0;
+        }
+
+        /* Unit Section */
+        .unit-section {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 60px; /* Space for line and dots */
+        }
+
+        /* Unit Title (Sitting above the skills) */
+        .unit-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--tuva-text-light); /* Default gray */
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* The Dot (Circle) */
+        .timeline-dot {
+            position: absolute;
+            left: 20px; /* Center aligned with line (27px center - 7px half dot) */
+            top: 4px; /* Align with label text */
+            width: 12px;
+            height: 12px;
+            background-color: #FFF;
+            border: 2px solid var(--tuva-border);
+            border-radius: 50%;
+            z-index: 1;
+            box-sizing: content-box; /* Keeps size consistent */
+        }
+
+        /* Theme Styling for Dots and Labels */
+        .unit-section[data-theme="green"] .unit-label { color: var(--theme-green); }
+        .unit-section[data-theme="green"] .timeline-dot { border-color: var(--theme-green); }
+
+        .unit-section[data-theme="blue"] .unit-label { color: var(--theme-blue); }
+        .unit-section[data-theme="blue"] .timeline-dot { border-color: var(--theme-blue); }
+
+        .unit-section[data-theme="orange"] .unit-label { color: var(--theme-orange); }
+        .unit-section[data-theme="orange"] .timeline-dot { border-color: var(--theme-orange); }
+
+
+        /* --- Skill Card (The Item) --- */
+        .skill-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #FFFFFF;
+            border: 1px solid var(--tuva-border);
+            border-radius: var(--card-radius);
+            padding: 16px 20px;
+            margin-bottom: 12px; /* Space between cards in same unit */
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            position: relative;
+        }
+
+        /* Connector Line (Horizontal) - Optional visual link to main line */
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            left: -33px; /* Reach back to the vertical line */
+            top: 50%;
+            width: 33px;
+            height: 1px;
+            background-color: #F0F0F0; /* Very subtle connector */
+            z-index: -1;
+            display: none; /* Hidden for cleaner look, uncomment if desired */
+        }
+
+        /* Hover Effect: Flat Color Change */
+        .skill-card:hover {
+            border-color: var(--tuva-purple);
+            background-color: #FAFAFA;
+        }
+        
+        .skill-card:focus-visible {
+            outline: 2px solid var(--tuva-purple);
+            outline-offset: 2px;
+        }
+
+        .skill-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .skill-number {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--tuva-text-light);
+            min-width: 25px;
+        }
+
+        .skill-title {
+            font-size: 1rem;
+            color: var(--tuva-text-dark);
+            font-weight: 500;
+        }
+
+        .activity-badge {
+            background-color: #F3F3F3;
+            color: var(--tuva-text-medium);
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 4px; /* Standard Tuva badge radius */
+            font-weight: 600;
+        }
+
+        /* --- Slide-out Panel (Matches Content View) --- */
+        .details-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
+            background: #FFF;
+            border-left: 1px solid var(--tuva-border);
+            z-index: 100;
+            box-shadow: -10px 0 20px rgba(0,0,0,0.03); /* Extremely subtle shadow */
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-panel.open {
+            right: 0;
+        }
+
+        .panel-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--tuva-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--tuva-text-dark);
+        }
+        
+        .panel-title span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--tuva-text-light);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--tuva-text-light);
+            cursor: pointer;
+        }
+
+        .panel-content {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .lesson-item {
+            border: 1px solid var(--tuva-border);
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #FFF;
+        }
+
+        .lesson-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--theme-green); /* Example default */
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .lesson-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            display: block;
+            color: var(--tuva-text-dark);
+        }
+
+        .btn-action {
+            display: inline-block;
+            width: 100%;
+            padding: 8px 0;
+            text-align: center;
+            border: 1px solid var(--tuva-purple);
+            color: var(--tuva-purple);
+            background: #FFF;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-action:hover {
+            background: var(--tuva-purple);
+            color: #FFF;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255,255,255,0.7); /* White overlay instead of dark */
+            backdrop-filter: blur(2px);
+            z-index: 90;
+            display: none;
+        }
+        .overlay.active { display: block; }
+
+    </style>
 </head>
 <body>
-<header>
-  <div>
-    <h1>Tuva — Animated Timeline Prototype</h1>
-    <div class="subtitle">Unit → Skill → Lessons. Smooth transitions and filters (D3)</div>
-  </div>
-  <div class="controls panel">
-    <label class="sr-only" for="grade">Grade filter</label>
-    <select id="grade" aria-label="Select grade">
-      <option>All</option><option>Grade 3</option><option>Grade 4</option>
-    </select>
-    <label class="sr-only" for="ctx">Context filter</label>
-    <select id="ctx" aria-label="Select context">
-      <option>All</option><option>Food & Farming</option><option>Sports</option><option>Environment</option><option>Animals</option><option>Industry & Tech</option>
-    </select>
-    <input type="search" id="search" placeholder="Search skill or lesson" aria-label="Search skills or lessons" />
-    <div style="width:8px"></div>
-    <button id="reset">Reset</button>
-    <div style="width:8px"></div>
-    <button id="export" class="primary">Export JSON</button>
-  </div>
-</header>
 
-<div class="layout">
-  <main class="panel visWrap" id="visWrap" role="application" aria-label="Learning timeline visualization">
-    <!-- svg will be appended here by d3 -->
-  </main>
+    <aside class="sidebar">
+        <div class="sidebar-header">Learning Map</div>
+        
+        <button class="nav-item active" onclick="switchGrade('grade3', this)">
+            Grade 3
+        </button>
+        <button class="nav-item" onclick="switchGrade('grade4', this)">
+            Grade 4
+        </button>
+        <button class="nav-item" onclick="switchGrade('grade5', this)">
+            Grade 5
+        </button>
+    </aside>
 
-  <aside class="panel" aria-live="polite">
-    <h3 id="detailTitle">Select a skill or lesson</h3>
-    <div id="detailMeta" class="hint">Click or keyboard-select a skill node to see lesson previews and quick actions.</div>
-    <div id="detail" style="margin-top:12px"><div class="hint">No item selected.</div></div>
-    <div style="margin-top:12px"><button id="assign" class="primary">Assign to class (mock)</button> <button id="fav">Add to favorites</button></div>
-  </aside>
-</div>
+    <main class="main-content">
+        <div class="page-header">
+            <h1 id="page-title">Grade 3 Mathematics</h1>
+            <p>Select a skill to view real-world data activities aligned to your curriculum.</p>
+        </div>
 
-<script>
-/* ---------------- Data (sample) ---------------- */
-const DATA = [
-  { id:1, grade:"Grade 3", unit:"Place Value & Number Sense", skill:"Round numbers to nearest 100", lesson:"How High Are We? Altitudes of Cities Around the World", context:"Altitudes", contextCat:"Environment" },
-  { id:2, grade:"Grade 3", unit:"Place Value & Number Sense", skill:"Round numbers to nearest 100", lesson:"Counting Calories", context:"Calories in Common Foods", contextCat:"Food & Farming" },
-  { id:3, grade:"Grade 3", unit:"Place Value & Number Sense", skill:"Round numbers to nearest 100", lesson:"Charge it Up! Estimating EV Ranges", context:"Electric Vehicle Ranges", contextCat:"Industry & Tech" },
-  { id:4, grade:"Grade 3", unit:"Introduction to Multiplication", skill:"Understand multiplication as equal groups", lesson:"How Many Animals at the Zoo?", context:"Animals at the Zoo", contextCat:"Animals" },
-  { id:5, grade:"Grade 3", unit:"Introduction to Multiplication", skill:"Understand multiplication as equal groups", lesson:"School Garden Harvest", context:"School Garden Fruit Harvests", contextCat:"Food & Farming" },
-  { id:6, grade:"Grade 3", unit:"Introduction to Multiplication", skill:"Understand multiplication as equal groups", lesson:"Let's Look at Recycling Collection at a School", context:"Weekly Recycling Totals (4-Week Sample)", contextCat:"Industry & Tech" },
-  { id:7, grade:"Grade 3", unit:"Understanding Fractions", skill:"Compare fractions with same denominators", lesson:"What's on Your Plate?", context:"Macronutrients in 6 everyday foods", contextCat:"Food & Farming" },
-  { id:8, grade:"Grade 3", unit:"Understanding Fractions", skill:"Compare fractions with same denominators", lesson:"Fractions on the Field", context:"FIFA World Cup Goals by Country", contextCat:"Sports" },
-  { id:9, grade:"Grade 3", unit:"Understanding Fractions", skill:"Compare fractions with same denominators", lesson:"Going for Gold: Comparing Fractions the Olympic Way", context:"Olympic Medal Tallies", contextCat:"Sports" },
-  { id:10, grade:"Grade 4", unit:"Division", skill:"Divide upto 4-Digit Numbers by 1-Digit Divisor", lesson:"Snip Snip How Fabric Turns into Fashion", context:"Fabric Bolt Inventory for Garment Making", contextCat:"Industry & Tech" },
-  { id:11, grade:"Grade 4", unit:"Division", skill:"Divide upto 4-Digit Numbers by 1-Digit Divisor", lesson:"Packing Eggs on a Farm", context:"Daily Egg Collection on a Farm", contextCat:"Food & Farming" },
-  { id:12, grade:"Grade 4", unit:"Division", skill:"Divide upto 4-Digit Numbers by 1-Digit Divisor", lesson:"Mining for Answers: Can You Break It Down?", context:"Crushed Stone, Sand & Gravel Production", contextCat:"Industry & Tech" },
-  { id:13, grade:"Grade 4", unit:"Factors & Multiples", skill:"Identify Factors and Multiples of a Number", lesson:"Multiply and Grow! Help the Nursery Bloom", context:"Nursery Plant Collection Inventory", contextCat:"Food & Farming" },
-  { id:14, grade:"Grade 4", unit:"Factors & Multiples", skill:"Identify Factors and Multiples of a Number", lesson:"Cracking the Code of Animal Lifespans", context:"Animal Lifespans", contextCat:"Animals" },
-  { id:15, grade:"Grade 4", unit:"Factors & Multiples", skill:"Identify Factors and Multiples of a Number", lesson:"Time Runs in Multiples!", context:"Common Units of Time", contextCat:"Environment" },
-  { id:16, grade:"Grade 4", unit:"Understanding Decimals", skill:"Compare Decimals", lesson:"Split-second Decisions - Comparing Sprint Times", context:"Top 100m Sprint Times (Male Athletes)", contextCat:"Sports" },
-  { id:17, grade:"Grade 4", unit:"Understanding Decimals", skill:"Compare Decimals", lesson:"Tall Order: Who Stands Tallest in the NBA?", context:"Heights of the Tallest NBA Players", contextCat:"Sports" },
-  { id:18, grade:"Grade 4", unit:"Understanding Decimals", skill:"Compare Decimals", lesson:"How Wet Is It? Comparing Rainfall in US States", context:"Rainfall Records — US States", contextCat:"Environment" }
-];
+        <div class="timeline-wrapper">
+            <div class="timeline-line"></div>
 
-/* ---------------- Helpers ---------------- */
-const uniq = arr => Array.from(new Set(arr || []));
-const ctxColor = cat => {
-  if(!cat) return '#9ca3af';
-  if(cat.includes('Food')) return '#16a34a';
-  if(cat.includes('Sport')) return '#f59e0b';
-  if(cat.includes('Environment')) return '#06b6d4';
-  if(cat.includes('Animal')) return '#8b5cf6';
-  if(cat.includes('Tech')) return '#ef4444';
-  return '#9ca3af';
-};
+            <div id="map-content">
+                </div>
+        </div>
+    </main>
 
-/* ---------------- App state ---------------- */
-let state = { grade: 'All', ctx: 'All', q: '' };
+    <div class="overlay" id="overlay" onclick="closePanel()"></div>
+    <div class="details-panel" id="panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <span id="panel-unit">Unit Name</span>
+                <h3 id="panel-skill">Skill Name</h3>
+            </div>
+            <button class="close-btn" onclick="closePanel()">&times;</button>
+        </div>
+        <div class="panel-content" id="panel-body">
+            </div>
+    </div>
 
-/* ---------------- Build hierarchy for timeline ----------------
-   Structure:
-   [
-     { grade: 'Grade 3',
-       units: [
-         { unit: 'Unit name', skills: [ { skill: 'skill', lessons: [...] } ] }
-       ]
-     }
-   ]
-*/
-function buildHierarchy() {
-  const rows = DATA.filter(d => {
-    if(state.grade !== 'All' && d.grade !== state.grade) return false;
-    if(state.ctx !== 'All' && d.contextCat !== state.ctx) return false;
-    if(state.q) {
-      const q = state.q.toLowerCase();
-      if(!(d.unit.toLowerCase().includes(q) || d.skill.toLowerCase().includes(q) || d.lesson.toLowerCase().includes(q))) return false;
-    }
-    return true;
-  });
+    <script>
+        // Data derived from user spreadsheet
+        const data = {
+            grade3: [
+                {
+                    unit: "Place Value & Number Sense",
+                    theme: "green", // Mapping Context to color
+                    skills: [
+                        { id: 1, name: "Round numbers to nearest 100", activities: 3, 
+                          lessons: [
+                              { title: "How High Are We? Altitudes of Cities", context: "Environment" }, 
+                              { title: "Counting Calories", context: "Health" }
+                          ] 
+                        }
+                    ]
+                },
+                {
+                    unit: "Introduction to Multiplication",
+                    theme: "blue",
+                    skills: [
+                        { id: 2, name: "Understand multiplication as equal groups", activities: 3,
+                          lessons: [{ title: "How Many Animals at the Zoo?", context: "Animals" }]
+                        }
+                    ]
+                },
+                {
+                    unit: "Understanding Fractions",
+                    theme: "orange",
+                    skills: [
+                        { id: 3, name: "Compare fractions with same denominators", activities: 2,
+                          lessons: [{ title: "Fractions on the Field", context: "Sports" }]
+                        }
+                    ]
+                }
+            ],
+            grade4: [
+                 {
+                    unit: "Division",
+                    theme: "blue",
+                    skills: [
+                        { id: 4, name: "Divide up to 4-Digit Numbers", activities: 3, lessons: [] }
+                    ]
+                },
+                {
+                    unit: "Factors & Multiples",
+                    theme: "green",
+                    skills: [
+                         { id: 5, name: "Identify Factors and Multiples", activities: 2, lessons: [] }
+                    ]
+                }
+            ],
+            grade5: [] // Empty state test
+        };
 
-  const byGrade = {};
-  rows.forEach(r=>{
-    byGrade[r.grade] = byGrade[r.grade] || {};
-    byGrade[r.grade][r.unit] = byGrade[r.grade][r.unit] || {};
-    byGrade[r.grade][r.unit][r.skill] = byGrade[r.grade][r.unit][r.skill] || { lessons: [], contexts: [] };
-    byGrade[r.grade][r.unit][r.skill].lessons.push({ id:r.id, lesson:r.lesson, context:r.context, contextCat:r.contextCat });
-    byGrade[r.grade][r.unit][r.skill].contexts.push(r.contextCat);
-  });
+        function switchGrade(grade, btn) {
+            // Update UI Active State
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Update Title
+            const titleMap = { 'grade3': 'Grade 3 Mathematics', 'grade4': 'Grade 4 Mathematics', 'grade5': 'Grade 5 Mathematics' };
+            document.getElementById('page-title').innerText = titleMap[grade];
 
-  const out = [];
-  Object.keys(byGrade).forEach(grade=>{
-    const units = [];
-    Object.keys(byGrade[grade]).forEach(unit=>{
-      const skills = [];
-      Object.keys(byGrade[grade][unit]).forEach(skill=>{
-        const s = byGrade[grade][unit][skill];
-        skills.push({ skill, lessons: s.lessons, contexts: uniq(s.contexts) });
-      });
-      units.push({ unit, skills });
-    });
-    out.push({ grade, units });
-  });
-  return out;
-}
+            renderMap(grade);
+        }
 
-/* ---------------- Set up SVG canvas ---------------- */
-const wrapper = d3.select('#visWrap');
-const margin = {top:20, right:20, bottom:20, left:20};
-const width = wrapper.node().clientWidth - margin.left - margin.right;
-const height = wrapper.node().clientHeight - margin.top - margin.bottom;
+        function renderMap(gradeKey) {
+            const container = document.getElementById('map-content');
+            container.innerHTML = '';
+            
+            const gradeData = data[gradeKey];
 
-// we will create an inner SVG that can pan horizontally if too wide
-const svg = wrapper.append('svg')
-  .attr('width', '100%')
-  .attr('height', '100%')
-  .attr('role','img')
-  .attr('aria-label','Timeline visualization');
+            if (!gradeData || gradeData.length === 0) {
+                container.innerHTML = '<div style="padding:20px; color:#777;">No curriculum data available for this grade level yet.</div>';
+                return;
+            }
 
-const gRoot = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+            gradeData.forEach(unit => {
+                // Create Unit Section
+                const section = document.createElement('div');
+                section.className = 'unit-section';
+                section.setAttribute('data-theme', unit.theme);
 
-/* horizontal pan/zoom using d3.zoom */
-const inner = gRoot.append('g').attr('class','inner');
-const zoom = d3.zoom()
-  .scaleExtent([0.6, 2.5])
-  .on('zoom', (event) => inner.attr('transform', event.transform));
-svg.call(zoom);
+                // The Circle Anchor
+                const dot = document.createElement('div');
+                dot.className = 'timeline-dot';
+                section.appendChild(dot);
 
-/* ---------------- Render timeline (with animated transitions) ---------------- */
-function renderTimeline() {
-  const structure = buildHierarchy();
+                // The Label
+                const label = document.createElement('div');
+                label.className = 'unit-label';
+                label.innerText = unit.unit;
+                section.appendChild(label);
 
-  // flatten to compute total unit columns across grades in order
-  const unitColumns = [];
-  structure.forEach(g=>{
-    g.units.forEach(u=>{
-      unitColumns.push({ grade: g.grade, unit: u.unit, skills: u.skills });
-    });
-  });
+                // The Cards (Skills)
+                unit.skills.forEach(skill => {
+                    const card = document.createElement('div');
+                    card.className = 'skill-card';
+                    card.tabIndex = 0; // Accessibility
+                    card.onclick = () => openPanel(unit.unit, skill);
+                    
+                    // HTML Structure for Card
+                    card.innerHTML = `
+                        <div class="skill-info">
+                            <span class="skill-number">${skill.id}.</span>
+                            <span class="skill-title">${skill.name}</span>
+                        </div>
+                        <span class="activity-badge">${skill.activities} Activities</span>
+                    `;
 
-  // layout: column width and spacing
-  const colWidth = 300;
-  const colGap = 24;
-  const totalWidth = unitColumns.length * (colWidth + colGap);
+                    section.appendChild(card);
+                });
 
-  // ensure inner has width large enough
-  inner.attr('data-width', totalWidth);
+                container.appendChild(section);
+            });
+        }
 
-  // scale for column x positions
-  const x = d3.scaleLinear().domain([0, unitColumns.length - 1]).range([0, (unitColumns.length - 1) * (colWidth + colGap)]);
+        function openPanel(unitName, skill) {
+            document.getElementById('panel-unit').innerText = unitName;
+            document.getElementById('panel-skill').innerText = skill.name;
+            
+            const body = document.getElementById('panel-body');
+            body.innerHTML = ''; // Clear previous
 
-  // bind unit groups
-  const units = inner.selectAll('.unit-col')
-    .data(unitColumns, d => d.grade + '|' + d.unit);
+            if(skill.lessons.length === 0) {
+                body.innerHTML = '<p style="color:#777;">No specific activities linked yet.</p>';
+            } else {
+                skill.lessons.forEach(lesson => {
+                    const lDiv = document.createElement('div');
+                    lDiv.className = 'lesson-item';
+                    lDiv.innerHTML = `
+                        <span class="lesson-tag" style="color:var(--tuva-purple)">${lesson.context}</span>
+                        <span class="lesson-name">${lesson.title}</span>
+                        <button class="btn-action">View Activity</button>
+                    `;
+                    body.appendChild(lDiv);
+                });
+            }
 
-  // exit
-  units.exit().transition().duration(300).style('opacity',0).remove();
+            document.getElementById('panel').classList.add('open');
+            document.getElementById('overlay').classList.add('active');
+        }
 
-  // enter
-  const unitEnter = units.enter().append('g')
-    .attr('class','unit-col')
-    .attr('transform', (d,i) => `translate(${x(i)},0)`)
-    .style('opacity',0);
+        function closePanel() {
+            document.getElementById('panel').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
 
-  unitEnter.append('rect')
-    .attr('x', 0).attr('y', 0).attr('rx', 10).attr('ry', 10)
-    .attr('width', colWidth).attr('height', height - 40)
-    .attr('fill', '#fff').attr('stroke', '#e6e9ee');
+        // Initialize
+        renderMap('grade3');
 
-  unitEnter.append('text')
-    .attr('class','unitLabel')
-    .attr('x', 14).attr('y', 28)
-    .style('font-weight','700')
-    .style('font-size','13px')
-    .text(d => d.unit);
-
-  unitEnter.append('text')
-    .attr('x', 14).attr('y', 46)
-    .style('font-size','12px')
-    .style('fill','#6b7280')
-    .text(d => d.grade + ' · ' + (d.skills ? d.skills.length : 0) + ' skill(s)');
-
-  // enter + update group for skills list (we will manage inside)
-  unitEnter.each(function(d,i){
-    const unitG = d3.select(this);
-    // create a sub-group for skills
-    unitG.append('g').attr('class','skillsGroup').attr('transform','translate(0,68)');
-  });
-
-  // merge selection
-  const unitMerge = unitEnter.merge(units);
-
-  // animate position & opacity
-  unitMerge.transition().duration(600)
-    .attr('transform', (d,i) => `translate(${x(i)},0)`)
-    .style('opacity',1);
-
-  // update skill nodes inside each unit group with transitions
-  unitMerge.each(function(dUnit, unitIndex){
-    const skills = dUnit.skills || [];
-    const skillsG = d3.select(this).select('.skillsGroup');
-
-    // flatten skills to nodes with y offsets
-    const nodeHeight = 64;
-    const nodesData = skills.map((s, i) => {
-      return {
-        unit: dUnit.unit,
-        grade: dUnit.grade,
-        skill: s.skill,
-        lessons: s.lessons,
-        contexts: s.contexts,
-        idx: i,
-        x: 16,
-        y: i * (nodeHeight + 8)
-      };
-    });
-
-    // bind skill nodes
-    const nodes = skillsG.selectAll('.skillNode').data(nodesData, d => d.skill);
-
-    // exit
-    nodes.exit().transition().duration(250).style('opacity',0).remove();
-
-    // enter
-    const nodeEnter = nodes.enter().append('g')
-      .attr('class','skillNode')
-      .attr('transform', d => `translate(${d.x}, ${d.y})`)
-      .style('opacity',0)
-      .attr('tabindex',0)
-      .attr('role','button')
-      .attr('aria-label', d => `Skill ${d.skill}, ${d.lessons.length} lessons`);
-
-    nodeEnter.append('rect')
-      .attr('x', 0).attr('y', 0).attr('rx', 8).attr('ry', 8)
-      .attr('width', colWidth - 32)
-      .attr('height', nodeHeight)
-      .attr('fill', '#fff')
-      .attr('stroke', '#eef2f6');
-
-    nodeEnter.append('circle')
-      .attr('cx', 16).attr('cy', 32).attr('r', 10)
-      .attr('fill', d => ctxColor(d.contexts && d.contexts[0]));
-
-    nodeEnter.append('text')
-      .attr('x', 40).attr('y', 24)
-      .text(d => d.skill.length>36? d.skill.slice(0,34)+'…' : d.skill)
-      .attr('class','skill-title');
-
-    nodeEnter.append('text')
-      .attr('x', 40).attr('y', 42)
-      .text(d => `${d.lessons.length} lesson(s) · ${d.contexts ? d.contexts.join(', ') : ''}`)
-      .attr('class','skill-meta')
-      .style('fill','#6b7280')
-      .style('font-size','12px');
-
-    // add interaction: click and keyboard
-    nodeEnter.on('click', (event, d) => {
-      event.stopPropagation();
-      showSkillDetail(d);
-    });
-
-    nodeEnter.on('keydown', (event, d) => {
-      if(event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        showSkillDetail(d);
-      }
-    });
-
-    // merge and transition all nodes into place
-    const nodeMerge = nodeEnter.merge(nodes);
-    nodeMerge.transition().duration(600)
-      .attr('transform', d => `translate(${d.x}, ${d.y})`)
-      .style('opacity',1);
-  });
-
-  // set overall inner width so zoom extents work
-  const innerWidth = Math.max(totalWidth, width);
-  svg.attr('viewBox', `0 0 ${innerWidth + margin.left + margin.right} ${height + margin.top + margin.bottom}`);
-}
-
-/* ---------------- Interaction helpers: show details ---------------- */
-const detailTitle = d3.select('#detailTitle');
-const detailMeta = d3.select('#detailMeta');
-const detailDiv = d3.select('#detail');
-
-function showSkillDetail(d){
-  // d: { skill, lessons[], unit, grade, contexts }
-  detailTitle.text(d.skill);
-  detailMeta.text(`${d.grade} · ${d.unit} · ${d.lessons.length} lessons`);
-  // animate and render lesson chips
-  detailDiv.html('');
-  const list = detailDiv.append('div').attr('class','lesson-list');
-  d.lessons.forEach(l=>{
-    list.append('div')
-      .attr('class','lesson-chip')
-      .text(l.lesson.length>48? l.lesson.slice(0,46)+'…' : l.lesson)
-      .on('click', ()=> showLessonDetail(Object.assign({}, l, { skill: d.skill, unit: d.unit, grade: d.grade })));
-  });
-}
-
-function showLessonDetail(l){
-  detailTitle.text(l.lesson);
-  detailMeta.text((l.contextCat ? l.contextCat + ' · ' : '') + (l.context || ''));
-  detailDiv.html(`<div style="font-weight:600;margin-bottom:8px">${l.lesson}</div>
-    <div class="small">Context: <strong>${l.contextCat || ''}</strong></div>
-    <div style="margin-top:10px"><button class="primary" onclick="alert('Mock: assign lesson to class: ${escape(l.lesson)}')">Assign to class</button></div>`);
-}
-
-/* ---------------- UI wiring (filters, search, reset, export) ---------------- */
-d3.select('#grade').on('change', function(){ state.grade = this.value; renderTimeline(); });
-d3.select('#ctx').on('change', function(){ state.ctx = this.value; renderTimeline(); });
-d3.select('#search').on('input', function(){ state.q = this.value.trim(); renderTimeline(); });
-d3.select('#reset').on('click', function(){ state = { grade:'All', ctx:'All', q:'' }; d3.select('#grade').property('value', 'All'); d3.select('#ctx').property('value','All'); d3.select('#search').property('value',''); renderTimeline(); });
-d3.select('#export').on('click', function(){ const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'tuva-curriculum.json'; a.click(); URL.revokeObjectURL(url); });
-
-/* initial render */
-renderTimeline();
-
-/* ---------------- Accessibility: keyboard navigation and focus outline ---------------- */
-svg.node().addEventListener('keydown', (e)=>{
-  // basic keyboard shortcuts
-  if(e.key === 'F' && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault();
-    document.getElementById('search').focus();
-  }
-});
-
-/* ---------------- Notes on improvements for production ----------------
-  - Replace mock alert assignments with real API calls.
-  - Consider server-side paging for very large curriculum sets.
-  - Add smoother animated connectors (if desired) using D3 force or path interpolations.
-  - Add persisted user favorites and saved practice paths.
---------------------------------------------------------- */
-</script>
+    </script>
 </body>
 </html>
