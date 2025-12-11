@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Tools - Start Exploring Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .gradient-magenta { background: linear-gradient(135deg, #8c1a64 0%, #b31e6f 100%); }
+        .gradient-teal { background: linear-gradient(135deg, #006F75 0%, #46ADB9 100%); }
+        .gradient-blue { background: linear-gradient(135deg, #013ca6 0%, #1d4cbc 100%); }
+        .gradient-red { background: linear-gradient(135deg, #A71931 0%, #C42943 100%); }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex flex-col overflow-hidden">
+    <!-- Compact Header -->
+    <header class="gradient-magenta shadow-lg flex-shrink-0">
+        <div class="max-w-full mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="text-xl font-bold text-white">Tuva</div>
+                    <nav class="flex items-center gap-4 text-sm">
+                        <a href="#" class="text-white font-semibold border-b-2 border-white pb-1">Tuva Tools</a>
+                        <a href="#" class="text-white/80 hover:text-white">My Datasets</a>
+                        <a href="#" class="text-white/80 hover:text-white">More ▼</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-3 text-sm">
+                    <button class="px-3 py-1.5 bg-yellow-400 text-gray-900 rounded-lg font-bold hover:bg-yellow-500">PREMIUM</button>
+                    <button class="text-white font-medium">Help</button>
+                    <button class="text-white font-bold">TSOMPURA ▼</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Left Sidebar - Vertical Tabs -->
+        <div class="w-80 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Choose Your Data Source</h2>
+                <p class="text-sm text-gray-600 mb-6">Select how you want to work with data</p>
+
+                <!-- Tab Buttons -->
+                <div class="space-y-3">
+                    <!-- Sample Datasets Tab -->
+                    <button onclick="switchTab('sample')" id="tab-sample" class="tab-button active w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-purple-300 transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 gradient-magenta rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl">🗂️</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-base font-bold text-gray-900">Sample Datasets</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 ml-13">100+ ready-to-use datasets</p>
+                    </button>
+
+                    <!-- Insert Data Tab -->
+                    <button onclick="switchTab('insert')" id="tab-insert" class="tab-button w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-teal-300 transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 gradient-teal rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl">📊</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-base font-bold text-gray-900">Insert Data</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 ml-13">Paste or type your own data</p>
+                    </button>
+
+                    <!-- Insert Jr. Data Tab -->
+                    <button onclick="switchTab('junior')" id="tab-junior" class="tab-button w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-red-300 transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 gradient-red rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl">🎨</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-base font-bold text-gray-900">Insert Data Jr.</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 ml-13">For elementary students</p>
+                    </button>
+
+                    <!-- Import Data Tab -->
+                    <button onclick="switchTab('import')" id="tab-import" class="tab-button w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 transition-all">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-xl">⬇️</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-base font-bold text-gray-900">Import Data</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 ml-13">Upload CSV, Excel files</p>
+                    </button>
+                </div>
+
+                <!-- Help Section -->
+                <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-lg">💡</span>
+                        <div class="text-sm font-bold text-gray-900">Need Help?</div>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Check our tutorials and guides</p>
+                    <button class="w-full px-3 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-50">
+                        View Tutorials
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Sample Datasets Content -->
+            <div id="content-sample" class="tab-content active p-8">
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Begin Exploring a Sample Dataset</h1>
+                        <p class="text-gray-600">Choose from our curated collection of educational datasets</p>
+                    </div>
+
+                    <!-- Category Sections -->
+                    <div class="space-y-6">
+                        <!-- Tuva Jr. -->
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 gradient-red rounded-lg flex items-center justify-center">
+                                    <span class="text-xl">🎨</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900">Tuva Jr.</h2>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-red-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-green-100 to-green-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🐹</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Pet Adoption</h3>
+                                    <p class="text-xs text-gray-600">Animal shelter data</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-red-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🌪️</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Spinning Storms</h3>
+                                    <p class="text-xs text-gray-600">Weather patterns</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-red-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🐨</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Mammal Life Cycles</h3>
+                                    <p class="text-xs text-gray-600">Biology basics</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Math -->
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 gradient-teal rounded-lg flex items-center justify-center">
+                                    <span class="text-xl">📐</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900">Math</h2>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🎢</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Roller Coasters</h3>
+                                    <p class="text-xs text-gray-600">Linear relationships</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-pink-100 to-pink-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🍬</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">M&M Measurements</h3>
+                                    <p class="text-xs text-gray-600">Sampling data</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🚗</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Fuel Economy 2023</h3>
+                                    <p class="text-xs text-gray-600">Real-world data</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Science -->
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center">
+                                    <span class="text-xl">🔬</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900">Science</h2>
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-green-100 to-green-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🦕</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Dinosaurs</h3>
+                                    <p class="text-xs text-gray-600">Paleontology</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-teal-100 to-teal-200 rounded-lg mb-3 flex items-center justify-center text-4xl">🌀</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Atlantic Hurricanes</h3>
+                                    <p class="text-xs text-gray-600">Climate data</p>
+                                </div>
+                                <div class="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-lg transition-all cursor-pointer">
+                                    <div class="w-full h-32 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-lg mb-3 flex items-center justify-center text-4xl">⚛️</div>
+                                    <h3 class="font-bold text-gray-900 mb-1">Periodic Table</h3>
+                                    <p class="text-xs text-gray-600">Chemistry</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insert Data Content -->
+            <div id="content-insert" class="tab-content p-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Insert Your Own Data</h1>
+                        <p class="text-gray-600">Start analyzing your custom dataset</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Paste Data Card -->
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer">
+                            <div class="w-14 h-14 gradient-teal rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-3xl">📝</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Type or Paste Data</h3>
+                            <p class="text-sm text-gray-600 mb-4">Directly input your data into the spreadsheet editor</p>
+                            <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>Copy from Excel or Google Sheets</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>Type data manually</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>Instant visualization</span>
+                                </li>
+                            </ul>
+                            <button class="w-full px-4 py-3 gradient-teal text-white rounded-lg font-bold hover:opacity-90">
+                                Open Data Editor
+                            </button>
+                        </div>
+
+                        <!-- Upload File Card -->
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-teal-400 hover:shadow-lg transition-all cursor-pointer">
+                            <div class="w-14 h-14 gradient-teal rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-3xl">📄</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Upload from File</h3>
+                            <p class="text-sm text-gray-600 mb-4">Import data from CSV or Excel files</p>
+                            <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>CSV, XLS, XLSX formats</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>Drag and drop support</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <span class="text-teal-600">✓</span>
+                                    <span>Auto-detect data types</span>
+                                </li>
+                            </ul>
+                            <button class="w-full px-4 py-3 gradient-teal text-white rounded-lg font-bold hover:opacity-90">
+                                Choose File
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tips -->
+                    <div class="mt-8 bg-teal-50 border-2 border-teal-200 rounded-xl p-6">
+                        <h3 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <span>💡</span>
+                            <span>Quick Tips</span>
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li>• Include column headers in the first row</li>
+                            <li>• Make sure numeric data doesn't have text characters</li>
+                            <li>• Use consistent date formats (YYYY-MM-DD recommended)</li>
+                            <li>• Remove any empty rows or columns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insert Jr. Data Content -->
+            <div id="content-junior" class="tab-content p-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Insert Data Jr.</h1>
+                        <p class="text-gray-600">Simplified data entry for elementary students (Grades 2-5)</p>
+                    </div>
+
+                    <div class="bg-white border-2 border-red-300 rounded-xl p-8">
+                        <div class="flex items-start gap-6 mb-6">
+                            <div class="w-20 h-20 gradient-red rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <span class="text-4xl">🎨</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Kid-Friendly Interface</h3>
+                                <p class="text-gray-600">Designed specifically for younger learners with simplified tools and clear instructions</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center p-4 bg-red-50 rounded-xl">
+                                <div class="text-3xl mb-2">📊</div>
+                                <div class="text-sm font-bold text-gray-900">Simple Graphs</div>
+                                <div class="text-xs text-gray-600 mt-1">Bar and picture graphs</div>
+                            </div>
+                            <div class="text-center p-4 bg-red-50 rounded-xl">
+                                <div class="text-3xl mb-2">🖍️</div>
+                                <div class="text-sm font-bold text-gray-900">Easy Data Entry</div>
+                                <div class="text-xs text-gray-600 mt-1">Type directly into tables</div>
+                            </div>
+                            <div class="text-center p-4 bg-red-50 rounded-xl">
+                                <div class="text-3xl mb-2">🎯</div>
+                                <div class="text-sm font-bold text-gray-900">Age-Appropriate</div>
+                                <div class="text-xs text-gray-600 mt-1">Built for ages 7-11</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border-2 border-yellow-300 rounded-xl p-4 mb-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xl">👨‍🏫</span>
+                                <span class="font-bold text-gray-900">For Teachers</span>
+                            </div>
+                            <p class="text-sm text-gray-700">The Jr. interface includes built-in scaffolding and prompts to guide students through data collection and analysis activities.</p>
+                        </div>
+
+                        <button class="w-full px-6 py-4 gradient-red text-white rounded-xl font-bold text-lg hover:opacity-90">
+                            Open Tuva Jr. Data Tool
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Import Data Content -->
+            <div id="content-import" class="tab-content p-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Import Data from Files</h1>
+                        <p class="text-gray-600">Upload datasets from your computer or cloud storage</p>
+                    </div>
+
+                    <!-- Drag & Drop Area -->
+                    <div class="bg-white border-4 border-dashed border-gray-300 rounded-2xl p-12 mb-6 hover:border-blue-400 transition-all cursor-pointer">
+                        <div class="text-center">
+                            <div class="w-20 h-20 gradient-blue rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <span class="text-4xl">📁</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Drag and Drop Files Here</h3>
+                            <p class="text-gray-600 mb-4">or click to browse your computer</p>
+                            <button class="px-6 py-3 gradient-blue text-white rounded-xl font-bold hover:opacity-90">
+                                Choose Files
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Supported Formats -->
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                            <div class="text-3xl mb-2">📊</div>
+                            <div class="font-bold text-gray-900 mb-1">CSV Files</div>
+                            <div class="text-xs text-gray-600">.csv format</div>
+                        </div>
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                            <div class="text-3xl mb-2">📈</div>
+                            <div class="font-bold text-gray-900 mb-1">Excel Files</div>
+                            <div class="text-xs text-gray-600">.xlsx, .xls formats</div>
+                        </div>
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-4 text-center">
+                            <div class="text-3xl mb-2">☁️</div>
+                            <div class="font-bold text-gray-900 mb-1">Google Sheets</div>
+                            <div class="text-xs text-gray-600">Import from Drive</div>
+                        </div>
+                    </div>
+
+                    <!-- Import Tips -->
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
+                        <h3 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <span>ℹ️</span>
+                            <span>Import Guidelines</span>
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li>• Maximum file size: 10MB</li>
+                            <li>• First row should contain column headers</li>
+                            <li>• Dates should be in a consistent format</li>
+                            <li>• Remove any merged cells before uploading</li>
+                            <li>• Ensure numeric columns don't contain text</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active class to selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('content-' + tabName).classList.add('active');
+        }
+    </script>
+</body>
+</html>
