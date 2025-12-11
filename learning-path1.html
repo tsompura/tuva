@@ -3,53 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tuva Real-Math Learning Map</title>
+    <title>Tuva Learning Journey Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- Tuva Brand Palette --- */
-            --tuva-purple: #5B4896; 
+            /* --- Tuva Core Palette --- */
+            --tuva-purple: #5B4896;
             --tuva-purple-hover: #4a3a7a;
-            --tuva-text-dark: #333333;
-            --tuva-text-medium: #555555;
-            --tuva-text-light: #777777;
-            --tuva-bg-light: #F9F9F9;
+            --tuva-bg: #FFFFFF;
+            --tuva-bg-gray: #FAFAFA;
             --tuva-border: #E0E0E0;
+            --tuva-text-main: #333333;
+            --tuva-text-light: #666666;
 
-            /* --- Theme Colors (Matches Spreadsheet Contexts) --- */
-            --theme-green: #4CAF50;  /* Nature/Env */
-            --theme-blue: #2196F3;   /* Math/Standard */
-            --theme-orange: #FF9800; /* Social/active */
-
-            /* --- Spacing & Dimensions --- */
-            --line-width: 2px;
-            --dot-size: 14px;
-            --card-radius: 4px; /* Standard web radius */
+            /* --- Unit Theme Colors --- */
+            --theme-green: #67AC5B; /* Matches 'Place Value' in your image */
+            --theme-blue: #4A90E2;  /* Matches 'Multiplication' */
+            --theme-orange: #F5A623; /* Matches 'Fractions' */
+            
+            /* --- Layout --- */
+            --sidebar-width: 260px;
+            --timeline-left: 24px; /* Position of the vertical line */
+            --card-indent: 60px;   /* Indentation for the cards */
         }
 
         body {
-            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #FFFFFF;
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--tuva-bg);
+            color: var(--tuva-text-main);
             margin: 0;
-            color: var(--tuva-text-dark);
             display: flex;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* --- Sidebar (Matches Tuva Filter Panel) --- */
+        /* --- Sidebar (Tuva Filter Style) --- */
         .sidebar {
-            width: 240px;
-            background-color: #FAFAFA; /* Subtle contrast */
+            width: var(--sidebar-width);
+            background-color: var(--tuva-bg-gray);
             border-right: 1px solid var(--tuva-border);
             display: flex;
             flex-direction: column;
-            padding: 30px 0;
+            padding: 32px 0;
             flex-shrink: 0;
         }
 
         .sidebar-header {
-            padding: 0 24px 20px 24px;
-            font-size: 0.85rem;
+            padding: 0 24px 16px 24px;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--tuva-text-light);
             text-transform: uppercase;
@@ -57,30 +58,30 @@
         }
 
         .nav-item {
-            padding: 12px 24px;
+            padding: 10px 24px;
             cursor: pointer;
             font-size: 0.95rem;
-            color: var(--tuva-text-medium);
-            border-left: 4px solid transparent; /* Reserve space for active indicator */
-            transition: all 0.2s;
+            color: var(--tuva-text-light);
+            border-left: 4px solid transparent;
             background: transparent;
             text-align: left;
             border-top: none;
             border-right: none;
             border-bottom: none;
             width: 100%;
+            transition: all 0.2s;
         }
 
         .nav-item:hover {
+            color: var(--tuva-text-main);
             background-color: #F0F0F0;
-            color: var(--tuva-text-dark);
         }
 
         .nav-item.active {
             color: var(--tuva-purple);
-            font-weight: 600;
-            border-left-color: var(--tuva-purple); /* Tuva active style */
-            background-color: #F3F1F9; /* Very light purple bg */
+            font-weight: 700;
+            border-left-color: var(--tuva-purple);
+            background-color: #FFFFFF;
         }
 
         /* --- Main Content Area --- */
@@ -88,271 +89,245 @@
             flex: 1;
             padding: 40px 60px;
             overflow-y: auto;
-            background-color: #FFFFFF;
+            position: relative;
         }
 
         .page-header {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             max-width: 800px;
+            margin-left: var(--card-indent); /* Align with cards */
         }
 
         .page-header h1 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin: 0 0 10px 0;
-            color: var(--tuva-text-dark);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: var(--tuva-text-main);
         }
 
         .page-header p {
-            color: var(--tuva-text-light);
             font-size: 1rem;
+            color: var(--tuva-text-light);
             margin: 0;
-            line-height: 1.5;
         }
 
-        /* --- The Timeline Container --- */
-        .timeline-wrapper {
-            max-width: 800px;
+        /* --- Timeline Structure --- */
+        .timeline-container {
             position: relative;
-            padding-left: 10px; /* Slight offset */
+            max-width: 900px;
+            padding-bottom: 60px; /* Space at bottom */
         }
 
-        /* Continuous Vertical Line */
+        /* The Continuous Vertical Line */
         .timeline-line {
             position: absolute;
-            left: 27px; /* Center of the dot */
+            left: var(--timeline-left);
             top: 10px;
             bottom: 0;
-            width: var(--line-width);
+            width: 2px;
             background-color: var(--tuva-border);
             z-index: 0;
         }
 
-        /* Unit Section */
-        .unit-section {
+        /* Unit Group Container */
+        .unit-group {
             margin-bottom: 40px;
             position: relative;
-            padding-left: 60px; /* Space for line and dots */
         }
 
-        /* Unit Title (Sitting above the skills) */
-        .unit-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--tuva-text-light); /* Default gray */
+        /* Unit Marker (Dot + Label) */
+        .unit-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-        }
-
-        /* The Dot (Circle) */
-        .timeline-dot {
-            position: absolute;
-            left: 20px; /* Center aligned with line (27px center - 7px half dot) */
-            top: 4px; /* Align with label text */
-            width: 12px;
-            height: 12px;
-            background-color: #FFF;
-            border: 2px solid var(--tuva-border);
-            border-radius: 50%;
-            z-index: 1;
-            box-sizing: content-box; /* Keeps size consistent */
-        }
-
-        /* Theme Styling for Dots and Labels */
-        .unit-section[data-theme="green"] .unit-label { color: var(--theme-green); }
-        .unit-section[data-theme="green"] .timeline-dot { border-color: var(--theme-green); }
-
-        .unit-section[data-theme="blue"] .unit-label { color: var(--theme-blue); }
-        .unit-section[data-theme="blue"] .timeline-dot { border-color: var(--theme-blue); }
-
-        .unit-section[data-theme="orange"] .unit-label { color: var(--theme-orange); }
-        .unit-section[data-theme="orange"] .timeline-dot { border-color: var(--theme-orange); }
-
-
-        /* --- Skill Card (The Item) --- */
-        .skill-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #FFFFFF;
-            border: 1px solid var(--tuva-border);
-            border-radius: var(--card-radius);
-            padding: 16px 20px;
-            margin-bottom: 12px; /* Space between cards in same unit */
-            cursor: pointer;
-            transition: border-color 0.2s, background-color 0.2s;
             position: relative;
         }
 
-        /* Connector Line (Horizontal) - Optional visual link to main line */
-        .skill-card::before {
-            content: '';
+        .unit-dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--tuva-bg);
+            border: 2px solid #ccc; /* Default */
+            border-radius: 50%;
             position: absolute;
-            left: -33px; /* Reach back to the vertical line */
-            top: 50%;
-            width: 33px;
-            height: 1px;
-            background-color: #F0F0F0; /* Very subtle connector */
-            z-index: -1;
-            display: none; /* Hidden for cleaner look, uncomment if desired */
+            left: calc(var(--timeline-left) - 7px); /* Centered on line */
+            z-index: 2;
         }
 
-        /* Hover Effect: Flat Color Change */
-        .skill-card:hover {
-            border-color: var(--tuva-purple);
-            background-color: #FAFAFA;
+        .unit-label {
+            margin-left: var(--card-indent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--tuva-text-light);
         }
-        
-        .skill-card:focus-visible {
-            outline: 2px solid var(--tuva-purple);
-            outline-offset: 2px;
+
+        /* Coloring based on Theme */
+        .unit-group[data-theme="green"] .unit-dot { border-color: var(--theme-green); }
+        .unit-group[data-theme="green"] .unit-label { color: var(--theme-green); }
+
+        .unit-group[data-theme="blue"] .unit-dot { border-color: var(--theme-blue); }
+        .unit-group[data-theme="blue"] .unit-label { color: var(--theme-blue); }
+
+        .unit-group[data-theme="orange"] .unit-dot { border-color: var(--theme-orange); }
+        .unit-group[data-theme="orange"] .unit-label { color: var(--theme-orange); }
+
+
+        /* --- Skill Card (The Node) --- */
+        .skill-node {
+            margin-left: var(--card-indent);
+            margin-bottom: 16px;
+        }
+
+        /* The Clickable Card Header */
+        .skill-card-header {
+            background-color: var(--tuva-bg);
+            border: 1px solid var(--tuva-border);
+            border-radius: 4px;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.1s;
+            position: relative;
+        }
+
+        .skill-card-header:hover {
+            border-color: var(--tuva-purple);
+            background-color: #FBFAFF; /* Extremely light purple tint */
         }
 
         .skill-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
         }
 
         .skill-number {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--tuva-text-light);
-            min-width: 25px;
+            width: 24px;
         }
 
         .skill-title {
             font-size: 1rem;
-            color: var(--tuva-text-dark);
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--tuva-text-main);
         }
 
-        .activity-badge {
-            background-color: #F3F3F3;
-            color: var(--tuva-text-medium);
+        .activity-count {
+            background-color: #F0F0F0;
+            padding: 4px 10px;
+            border-radius: 4px;
             font-size: 0.8rem;
-            padding: 6px 12px;
-            border-radius: 4px; /* Standard Tuva badge radius */
             font-weight: 600;
+            color: var(--tuva-text-light);
         }
 
-        /* --- Slide-out Panel (Matches Content View) --- */
-        .details-panel {
-            position: fixed;
-            top: 0;
-            right: -450px;
-            width: 450px;
-            height: 100vh;
-            background: #FFF;
+        /* --- Expanded Content (Inline List) --- */
+        .activities-list {
+            display: none; /* Hidden by default */
             border-left: 1px solid var(--tuva-border);
-            z-index: 100;
-            box-shadow: -10px 0 20px rgba(0,0,0,0.03); /* Extremely subtle shadow */
-            transition: right 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .details-panel.open {
-            right: 0;
-        }
-
-        .panel-header {
-            padding: 24px;
+            border-right: 1px solid var(--tuva-border);
             border-bottom: 1px solid var(--tuva-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            margin-top: -1px; /* Overlap border */
+            background-color: #FAFAFA; /* Slightly differentiated bg */
+            padding: 16px 24px;
         }
 
-        .panel-title h3 {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--tuva-text-dark);
-        }
-        
-        .panel-title span {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--tuva-text-light);
+        .activities-list.open {
             display: block;
-            margin-bottom: 4px;
+            animation: slideDown 0.2s ease-out;
         }
 
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--tuva-text-light);
-            cursor: pointer;
-        }
-
-        .panel-content {
-            padding: 24px;
-            overflow-y: auto;
-            flex: 1;
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .lesson-item {
-            border: 1px solid var(--tuva-border);
-            border-radius: 4px;
-            padding: 16px;
-            margin-bottom: 16px;
-            background: #FFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #EAEAEA;
         }
 
-        .lesson-tag {
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .lesson-context {
             font-size: 0.7rem;
             text-transform: uppercase;
             font-weight: 700;
-            color: var(--theme-green); /* Example default */
-            margin-bottom: 8px;
-            display: inline-block;
+            color: var(--tuva-text-light);
         }
 
-        .lesson-name {
-            font-weight: 600;
+        .lesson-title {
             font-size: 0.95rem;
-            margin-bottom: 12px;
-            display: block;
-            color: var(--tuva-text-dark);
+            font-weight: 600;
+            color: var(--tuva-text-main);
+            text-decoration: none;
+        }
+        
+        .lesson-title:hover {
+            color: var(--tuva-purple);
+            text-decoration: underline;
         }
 
-        .btn-action {
-            display: inline-block;
-            width: 100%;
-            padding: 8px 0;
-            text-align: center;
-            border: 1px solid var(--tuva-purple);
-            color: var(--tuva-purple);
-            background: #FFF;
-            border-radius: 4px;
+        .btn-assign {
+            padding: 6px 16px;
             font-size: 0.85rem;
             font-weight: 600;
+            color: var(--tuva-purple);
+            border: 1px solid var(--tuva-purple);
+            background: white;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
-        .btn-action:hover {
-            background: var(--tuva-purple);
-            color: #FFF;
+        .btn-assign:hover {
+            background-color: var(--tuva-purple);
+            color: white;
         }
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(255,255,255,0.7); /* White overlay instead of dark */
-            backdrop-filter: blur(2px);
-            z-index: 90;
-            display: none;
+        /* Active State for Parent Card */
+        .skill-card-header.active {
+            border-color: var(--tuva-purple);
+            border-bottom-color: transparent; /* Seamless merge */
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            background-color: #FFF;
         }
-        .overlay.active { display: block; }
+
+        /* --- Scrollbar Polish --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bbb; 
+        }
 
     </style>
 </head>
@@ -361,194 +336,209 @@
     <aside class="sidebar">
         <div class="sidebar-header">Learning Map</div>
         
-        <button class="nav-item active" onclick="switchGrade('grade3', this)">
-            Grade 3
-        </button>
-        <button class="nav-item" onclick="switchGrade('grade4', this)">
-            Grade 4
-        </button>
-        <button class="nav-item" onclick="switchGrade('grade5', this)">
-            Grade 5
-        </button>
+        <button class="nav-item active" onclick="loadGrade('grade3', this)">Grade 3</button>
+        <button class="nav-item" onclick="loadGrade('grade4', this)">Grade 4</button>
+        <button class="nav-item" onclick="loadGrade('grade5', this)">Grade 5</button>
+        
+        <div style="margin-top: 30px;">
+             <div class="sidebar-header">Subject</div>
+             <div class="nav-item" style="cursor: default; opacity: 0.6;">Mathematics</div>
+             <div class="nav-item" style="cursor: default; opacity: 0.6;">Science</div>
+        </div>
     </aside>
 
     <main class="main-content">
         <div class="page-header">
-            <h1 id="page-title">Grade 3 Mathematics</h1>
+            <h1 id="grade-heading">Grade 3 Mathematics</h1>
             <p>Select a skill to view real-world data activities aligned to your curriculum.</p>
         </div>
 
-        <div class="timeline-wrapper">
+        <div class="timeline-container">
             <div class="timeline-line"></div>
 
-            <div id="map-content">
-                </div>
+            <div id="timeline-content"></div>
         </div>
     </main>
 
-    <div class="overlay" id="overlay" onclick="closePanel()"></div>
-    <div class="details-panel" id="panel">
-        <div class="panel-header">
-            <div class="panel-title">
-                <span id="panel-unit">Unit Name</span>
-                <h3 id="panel-skill">Skill Name</h3>
-            </div>
-            <button class="close-btn" onclick="closePanel()">&times;</button>
-        </div>
-        <div class="panel-content" id="panel-body">
-            </div>
-    </div>
-
     <script>
-        // Data derived from user spreadsheet
-        const data = {
+        // Data derived from the provided spreadsheet/context
+        const curriculumData = {
             grade3: [
                 {
-                    unit: "Place Value & Number Sense",
-                    theme: "green", // Mapping Context to color
+                    unitName: "Place Value & Number Sense",
+                    theme: "green",
                     skills: [
-                        { id: 1, name: "Round numbers to nearest 100", activities: 3, 
-                          lessons: [
-                              { title: "How High Are We? Altitudes of Cities", context: "Environment" }, 
-                              { title: "Counting Calories", context: "Health" }
-                          ] 
+                        {
+                            id: 1,
+                            name: "Round numbers to nearest 100",
+                            lessons: [
+                                { title: "How High Are We? Altitudes of Cities", context: "Environment" },
+                                { title: "Counting Calories", context: "Food & Farming" },
+                                { title: "Charge it Up! Estimating EV Ranges", context: "Industry & Tech" }
+                            ]
                         }
                     ]
                 },
                 {
-                    unit: "Introduction to Multiplication",
+                    unitName: "Introduction to Multiplication",
                     theme: "blue",
                     skills: [
-                        { id: 2, name: "Understand multiplication as equal groups", activities: 3,
-                          lessons: [{ title: "How Many Animals at the Zoo?", context: "Animals" }]
+                        {
+                            id: 2,
+                            name: "Understand multiplication as equal groups",
+                            lessons: [
+                                { title: "How Many Animals at the Zoo?", context: "Animals" },
+                                { title: "School Garden Harvest", context: "Food & Farming" },
+                                { title: "Recycling Collection at School", context: "Environment" }
+                            ]
                         }
                     ]
                 },
                 {
-                    unit: "Understanding Fractions",
+                    unitName: "Understanding Fractions",
                     theme: "orange",
                     skills: [
-                        { id: 3, name: "Compare fractions with same denominators", activities: 2,
-                          lessons: [{ title: "Fractions on the Field", context: "Sports" }]
+                        {
+                            id: 3,
+                            name: "Compare fractions with same denominators",
+                            lessons: [
+                                { title: "What's on Your Plate?", context: "Health" },
+                                { title: "FIFA World Cup Goals by Country", context: "Sports" }
+                            ]
                         }
                     ]
                 }
             ],
             grade4: [
                  {
-                    unit: "Division",
+                    unitName: "Division",
                     theme: "blue",
                     skills: [
-                        { id: 4, name: "Divide up to 4-Digit Numbers", activities: 3, lessons: [] }
+                        { id: 4, name: "Divide up to 4-Digit Numbers", lessons: [
+                            { title: "Packing Eggs on a Farm", context: "Farming" }
+                        ]}
                     ]
                 },
                 {
-                    unit: "Factors & Multiples",
+                    unitName: "Factors & Multiples",
                     theme: "green",
                     skills: [
-                         { id: 5, name: "Identify Factors and Multiples", activities: 2, lessons: [] }
+                        { id: 5, name: "Identify Factors and Multiples", lessons: [
+                            { title: "Common Units of Time", context: "Science" }
+                        ]}
                     ]
                 }
             ],
-            grade5: [] // Empty state test
+            grade5: []
         };
 
-        function switchGrade(grade, btn) {
-            // Update UI Active State
+        function loadGrade(gradeKey, btnElement) {
+            // UI Toggle
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // Update Title
-            const titleMap = { 'grade3': 'Grade 3 Mathematics', 'grade4': 'Grade 4 Mathematics', 'grade5': 'Grade 5 Mathematics' };
-            document.getElementById('page-title').innerText = titleMap[grade];
+            if(btnElement) btnElement.classList.add('active');
 
-            renderMap(grade);
-        }
+            // Header Update
+            const titles = { 'grade3': 'Grade 3 Mathematics', 'grade4': 'Grade 4 Mathematics', 'grade5': 'Grade 5 Mathematics' };
+            document.getElementById('grade-heading').innerText = titles[gradeKey];
 
-        function renderMap(gradeKey) {
-            const container = document.getElementById('map-content');
+            const container = document.getElementById('timeline-content');
             container.innerHTML = '';
             
-            const gradeData = data[gradeKey];
+            const data = curriculumData[gradeKey];
 
-            if (!gradeData || gradeData.length === 0) {
-                container.innerHTML = '<div style="padding:20px; color:#777;">No curriculum data available for this grade level yet.</div>';
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div style="margin-left:60px; color:#666; padding: 20px 0;">No curriculum data available.</div>';
                 return;
             }
 
-            gradeData.forEach(unit => {
-                // Create Unit Section
-                const section = document.createElement('div');
-                section.className = 'unit-section';
-                section.setAttribute('data-theme', unit.theme);
+            // Render Units
+            data.forEach(unit => {
+                const group = document.createElement('div');
+                group.className = 'unit-group';
+                group.setAttribute('data-theme', unit.theme);
 
-                // The Circle Anchor
-                const dot = document.createElement('div');
-                dot.className = 'timeline-dot';
-                section.appendChild(dot);
+                // 1. Unit Header (Dot + Label)
+                const header = document.createElement('div');
+                header.className = 'unit-header';
+                header.innerHTML = `
+                    <div class="unit-dot"></div>
+                    <div class="unit-label">${unit.unitName}</div>
+                `;
+                group.appendChild(header);
 
-                // The Label
-                const label = document.createElement('div');
-                label.className = 'unit-label';
-                label.innerText = unit.unit;
-                section.appendChild(label);
-
-                // The Cards (Skills)
+                // 2. Skills (Cards)
                 unit.skills.forEach(skill => {
-                    const card = document.createElement('div');
-                    card.className = 'skill-card';
-                    card.tabIndex = 0; // Accessibility
-                    card.onclick = () => openPanel(unit.unit, skill);
+                    const node = document.createElement('div');
+                    node.className = 'skill-node';
                     
-                    // HTML Structure for Card
-                    card.innerHTML = `
+                    // Card Content
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'skill-card-header';
+                    cardHeader.onclick = function() { toggleActivities(this); };
+                    cardHeader.innerHTML = `
                         <div class="skill-info">
                             <span class="skill-number">${skill.id}.</span>
                             <span class="skill-title">${skill.name}</span>
                         </div>
-                        <span class="activity-badge">${skill.activities} Activities</span>
+                        <span class="activity-count">${skill.lessons.length} Activities</span>
                     `;
 
-                    section.appendChild(card);
+                    // Accordion Body (Activities)
+                    const activityList = document.createElement('div');
+                    activityList.className = 'activities-list';
+                    
+                    if (skill.lessons.length > 0) {
+                        skill.lessons.forEach(lesson => {
+                            const item = document.createElement('div');
+                            item.className = 'lesson-item';
+                            item.innerHTML = `
+                                <div class="lesson-detail">
+                                    <span class="lesson-context" style="color:${getThemeColor(unit.theme)}">${lesson.context}</span>
+                                    <a href="#" class="lesson-title">${lesson.title}</a>
+                                </div>
+                                <button class="btn-assign">Assign</button>
+                            `;
+                            activityList.appendChild(item);
+                        });
+                    } else {
+                        activityList.innerHTML = '<div style="color:#999; font-size:0.9rem;">No activities currently mapped.</div>';
+                    }
+
+                    node.appendChild(cardHeader);
+                    node.appendChild(activityList);
+                    group.appendChild(node);
                 });
 
-                container.appendChild(section);
+                container.appendChild(group);
             });
         }
 
-        function openPanel(unitName, skill) {
-            document.getElementById('panel-unit').innerText = unitName;
-            document.getElementById('panel-skill').innerText = skill.name;
-            
-            const body = document.getElementById('panel-body');
-            body.innerHTML = ''; // Clear previous
+        // Helper to get hex from theme name for inline styles
+        function getThemeColor(theme) {
+            const colors = { 'green': '#67AC5B', 'blue': '#4A90E2', 'orange': '#F5A623' };
+            return colors[theme] || '#666';
+        }
 
-            if(skill.lessons.length === 0) {
-                body.innerHTML = '<p style="color:#777;">No specific activities linked yet.</p>';
+        // Accordion Toggle Logic
+        function toggleActivities(headerElement) {
+            const list = headerElement.nextElementSibling;
+            const isOpen = list.classList.contains('open');
+
+            // Close all others (Optional: comment out if you want multiple open)
+            // document.querySelectorAll('.activities-list').forEach(el => el.classList.remove('open'));
+            // document.querySelectorAll('.skill-card-header').forEach(el => el.classList.remove('active'));
+
+            if (!isOpen) {
+                list.classList.add('open');
+                headerElement.classList.add('active');
             } else {
-                skill.lessons.forEach(lesson => {
-                    const lDiv = document.createElement('div');
-                    lDiv.className = 'lesson-item';
-                    lDiv.innerHTML = `
-                        <span class="lesson-tag" style="color:var(--tuva-purple)">${lesson.context}</span>
-                        <span class="lesson-name">${lesson.title}</span>
-                        <button class="btn-action">View Activity</button>
-                    `;
-                    body.appendChild(lDiv);
-                });
+                list.classList.remove('open');
+                headerElement.classList.remove('active');
             }
-
-            document.getElementById('panel').classList.add('open');
-            document.getElementById('overlay').classList.add('active');
         }
 
-        function closePanel() {
-            document.getElementById('panel').classList.remove('open');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        // Initialize
-        renderMap('grade3');
+        // Initial Load
+        loadGrade('grade3', document.querySelector('.nav-item.active'));
 
     </script>
 </body>
