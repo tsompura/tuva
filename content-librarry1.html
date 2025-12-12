@@ -2,493 +2,778 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tuva – Math Content Library</title>
   <style>
     :root {
-      --page-bg: #f5f7fa;
-      --card-bg: #ffffff;
-      --accent: #1c9d8f;      /* change to green for Science */
-      --accent-soft: #e0f4f1;
-      --text-main: #102a43;
-      --text-muted: #6b7280;
-      --border-subtle: #e5e7eb;
-      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --color-primary: #1b9c85;
+      --color-primary-light: #e0f4f1;
+      --color-primary-hover: #157a6b;
+      --color-bg-page: #f5f7fa;
+      --color-bg-card: #ffffff;
+      --color-border: #e5e7eb;
+      --color-text-main: #102a43;
+      --color-text-secondary: #6b7280;
+      --color-text-tertiary: #9ca3af;
+      --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-sm: 0 4px 6px rgba(15, 23, 42, 0.07);
+      --shadow-md: 0 10px 20px rgba(15, 23, 42, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 12px;
+      --spacing-lg: 16px;
+      --spacing-xl: 24px;
+      --spacing-2xl: 32px;
     }
 
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
       margin: 0;
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background: var(--page-bg);
-      color: var(--text-main);
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--color-bg-page);
+      color: var(--color-text-main);
+      line-height: 1.5;
     }
 
-    .page {
-      max-width: 1120px;
-      margin: 32px auto 64px;
-      padding: 0 24px;
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--spacing-xl);
     }
 
+    /* HEADER SECTION */
     .page-header {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .header-top {
       display: flex;
-      align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .page-title {
-      font-size: 24px;
-      font-weight: 650;
-    }
-
-    .page-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .view-switch {
-      display: flex;
-      gap: 8px;
-      font-size: 12px;
-    }
-
-    .view-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .view-pill.active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    /* layout */
-    .layout {
-      display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-      gap: 24px;
       align-items: flex-start;
+      margin-bottom: var(--spacing-lg);
     }
 
-    /* sidebar filters */
-    .filters {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 16px 16px 18px;
-      box-shadow: var(--shadow-soft);
-      font-size: 13px;
+    .header-content h1 {
+      margin: 0 0 var(--spacing-xs);
+      font-size: 28px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
     }
 
-    .filters h3 {
+    .header-subtitle {
+      margin: 0;
       font-size: 14px;
-      margin: 0 0 8px;
+      color: var(--color-text-secondary);
+      max-width: 600px;
     }
 
-    .filter-group {
-      margin-bottom: 14px;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 10px;
+    .header-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    .filter-group:last-of-type {
-      border-bottom: none;
-      margin-bottom: 4px;
-      padding-bottom: 0;
+    .btn-view {
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .btn-view.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      font-weight: 550;
+    }
+
+    .btn-view:hover:not(.active) {
+      border-color: var(--color-text-tertiary);
+      background: #fafbfc;
+    }
+
+    /* ACTIVE FILTERS */
+    .filters-active {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+      align-items: center;
     }
 
     .filter-label {
-      display: block;
-      margin: 4px 0;
-      color: var(--text-muted);
-      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-right: var(--spacing-sm);
     }
 
-    .filter-label input {
-      margin-right: 6px;
-    }
-
-    .filters-footer {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-    }
-
-    .link {
-      color: var(--accent);
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .link:hover { text-decoration: underline; }
-
-    /* content side */
-    .content-column {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .active-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 11px;
-    }
-
-    .chip {
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      color: #374151;
+    .filter-chip {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: var(--spacing-xs);
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 999px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border: 1px solid #c9e8e3;
     }
 
-    .chip button {
+    .filter-chip button {
+      background: none;
       border: none;
-      background: transparent;
+      color: var(--color-primary);
       cursor: pointer;
-      color: #6b7280;
-      font-size: 11px;
+      font-size: 14px;
       padding: 0;
       line-height: 1;
+      display: flex;
+      align-items: center;
     }
 
+    .filter-chip button:hover {
+      opacity: 0.7;
+    }
+
+    /* LAYOUT: 2-COLUMN */
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: var(--spacing-2xl);
+      align-items: flex-start;
+    }
+
+    /* FILTERS SIDEBAR */
+    .filters-sidebar {
+      position: sticky;
+      top: var(--spacing-xl);
+    }
+
+    .filter-section {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .filter-section-title {
+      margin: 0 0 var(--spacing-md);
+      font-size: 13px;
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-main);
+    }
+
+    .filter-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .filter-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .filter-item input[type="checkbox"] {
+      margin-right: var(--spacing-sm);
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--color-primary);
+    }
+
+    .filter-item label {
+      margin: 0;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .filter-item input[type="checkbox"]:checked + label {
+      color: var(--color-text-main);
+      font-weight: 500;
+    }
+
+    .filter-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .filter-link {
+      font-size: 12px;
+      color: var(--color-primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 200ms ease;
+    }
+
+    .filter-link:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    /* MAIN CONTENT */
+    .content-main {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2xl);
+    }
+
+    /* SECTION HEADER */
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-top: 6px;
+      margin-bottom: var(--spacing-lg);
     }
 
     .section-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
+      color: var(--color-text-main);
     }
 
     .section-caption {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* featured row */
-    .featured-row {
+    /* FEATURED SECTION */
+    .featured-scroll {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 1fr);
-      gap: 16px;
+      grid-auto-columns: minmax(280px, 1fr);
+      gap: var(--spacing-lg);
       overflow-x: auto;
-      padding-bottom: 4px;
+      scroll-behavior: smooth;
+      padding-bottom: var(--spacing-sm);
     }
 
-    .featured-card {
-      min-width: 260px;
-      background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: var(--shadow-soft);
+    .featured-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .featured-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .featured-scroll::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 999px;
+    }
+
+    /* CARD STYLES */
+    .card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: all 200ms ease;
+      border: 1px solid var(--color-border);
     }
 
-    .thumb {
-      height: 96px;
-      border-radius: 16px 16px 0 0;
-      background: linear-gradient(135deg,#0f766e,#22c55e);
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-light);
+    }
+
+    .card-image {
+      height: 120px;
+      background: linear-gradient(135deg, #0f766e 0%, #10b981 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-image svg {
+      position: absolute;
+      opacity: 0.1;
+      right: -20px;
+      top: -20px;
     }
 
     .card-body {
-      padding: 10px 12px 12px;
-      font-size: 13px;
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      flex: 1;
     }
 
-    .badge-row {
+    .card-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 6px;
+      gap: var(--spacing-xs);
     }
 
     .badge {
+      display: inline-block;
+      padding: 3px 8px;
       font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 999px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: var(--accent-soft);
-      color: var(--accent);
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
     }
 
-    .badge-secondary {
-      background: #e5e7eb;
-      color: #4b5563;
+    .badge.secondary {
+      background: #f3f4f6;
+      color: #6b7280;
     }
 
     .card-title {
+      margin: 0;
+      font-size: 15px;
       font-weight: 600;
-      margin-bottom: 4px;
+      line-height: 1.4;
+      color: var(--color-text-main);
     }
 
     .card-meta {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+      margin: 0;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
     }
 
     .card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: var(--spacing-xs);
+      margin-top: var(--spacing-sm);
     }
 
     .tag {
-      font-size: 11px;
+      display: inline-block;
       padding: 2px 8px;
-      border-radius: 999px;
+      font-size: 11px;
       background: #f3f4f6;
-      color: #4b5563;
+      color: #374151;
+      border-radius: 6px;
+      white-space: nowrap;
     }
 
-    .card-actions {
+    .card-footer {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      border-top: 1px solid var(--border-subtle);
-      padding: 8px 12px 9px;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+      margin-top: auto;
     }
 
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 4px 10px;
-      border: 1px solid var(--border-subtle);
-      background: #ffffff;
+    .btn-card {
+      flex: 1;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 550;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      color: var(--color-text-main);
       cursor: pointer;
-      font-size: 12px;
+      transition: all 150ms ease;
     }
 
-    .btn-primary {
-      border-radius: 999px;
-      padding: 4px 12px;
-      border: none;
-      background: var(--accent);
-      color: #ffffff;
-      cursor: pointer;
-      font-size: 12px;
+    .btn-card:hover {
+      background: #f9fafb;
+      border-color: var(--color-text-tertiary);
     }
 
-    /* results grid */
+    .btn-card.primary {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .btn-card.primary:hover {
+      background: var(--color-primary-hover);
+      border-color: var(--color-primary-hover);
+    }
+
+    /* RESULTS GRID */
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--spacing-lg);
     }
 
-    .result-card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      border: 1px solid var(--border-subtle);
-      display: flex;
-      flex-direction: column;
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .content-wrapper {
+        grid-template-columns: 200px 1fr;
+        gap: var(--spacing-xl);
+      }
+
+      .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
     }
 
-    .result-thumb {
-      height: 80px;
-      border-radius: 14px 14px 0 0;
-      background: #e5e7eb;
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--spacing-lg);
+      }
+
+      .content-wrapper {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+
+      .filters-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
+      }
+
+      .filter-section {
+        margin-bottom: 0;
+      }
+
+      .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+
+      .header-top {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
     }
 
-    .result-body {
-      padding: 8px 10px 10px;
-      font-size: 13px;
-    }
+    @media (max-width: 480px) {
+      .filters-sidebar {
+        grid-template-columns: 1fr;
+      }
 
-    .result-title {
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
 
-    .result-meta {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .result-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      border-top: 1px solid var(--border-subtle);
-      padding: 6px 10px 7px;
-      font-size: 11px;
-    }
-
-    @media (max-width: 860px) {
-      .layout {
-        grid-template-columns: minmax(0,1fr);
+      .featured-scroll {
+        grid-auto-columns: 90vw;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <!-- HEADER -->
+  <div class="container">
+    <!-- PAGE HEADER -->
     <header class="page-header">
-      <div>
-        <div class="page-title">Math Content Library</div>
-        <div class="page-subtitle">
-          Browse ready‑to‑use data stories and activities. Filter by grade and concept, then preview or assign in one click.
+      <div class="header-top">
+        <div class="header-content">
+          <h1>Math Content Library</h1>
+          <p class="header-subtitle">
+            Discover ready‑to‑use data stories, activities, and lessons. Preview instantly or assign to your classes.
+          </p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-view active">Teacher view</button>
+          <button class="btn-view">Coming soon</button>
         </div>
       </div>
-      <div class="view-switch">
-        <!-- example only – list vs compact views -->
-        <button class="view-pill active">Teacher view</button>
-        <button class="view-pill">Student view (coming soon)</button>
+
+      <!-- ACTIVE FILTERS -->
+      <div class="filters-active" aria-label="Applied filters">
+        <span class="filter-label">Applied:</span>
+        <span class="filter-chip">
+          Grades 3–5
+          <button aria-label="Remove grade filter">×</button>
+        </span>
+        <span class="filter-chip">
+          Data stories
+          <button aria-label="Remove type filter">×</button>
+        </span>
+        <span class="filter-chip">
+          Data & statistics
+          <button aria-label="Remove topic filter">×</button>
+        </span>
       </div>
     </header>
 
-    <!-- LAYOUT -->
-    <main class="layout" aria-label="Math content library">
-      <!-- FILTERS COLUMN -->
-      <aside class="filters" aria-label="Filter math content">
-        <h3>Refine results</h3>
+    <!-- MAIN LAYOUT -->
+    <main class="content-wrapper">
+      <!-- FILTERS SIDEBAR -->
+      <aside class="filters-sidebar" aria-label="Filters">
+        <section class="filter-section">
+          <h2 class="filter-section-title">Grade band</h2>
+          <div class="filter-group">
+            <div class="filter-item">
+              <input type="checkbox" id="grade-k2" checked>
+              <label for="grade-k2">Grades K–2</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="grade-35" checked>
+              <label for="grade-35">Grades 3–5</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="grade-68">
+              <label for="grade-68">Grades 6–8</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="grade-912">
+              <label for="grade-912">Grades 9–12</label>
+            </div>
+          </div>
+        </section>
 
-        <div class="filter-group">
-          <strong>Grade band</strong>
-          <label class="filter-label">
-            <input type="checkbox" checked> Grades 3–5
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> Grades 6–8
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> High School
-          </label>
-        </div>
+        <section class="filter-section">
+          <h2 class="filter-section-title">Content type</h2>
+          <div class="filter-group">
+            <div class="filter-item">
+              <input type="checkbox" id="type-story" checked>
+              <label for="type-story">Data stories</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="type-activity">
+              <label for="type-activity">Activities</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="type-tutorial">
+              <label for="type-tutorial">Tutorials</label>
+            </div>
+          </div>
+        </section>
 
-        <div class="filter-group">
-          <strong>Content type</strong>
-          <label class="filter-label">
-            <input type="checkbox" checked> Data stories
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> Activities
-          </label>
-        </div>
+        <section class="filter-section">
+          <h2 class="filter-section-title">Math focus</h2>
+          <div class="filter-group">
+            <div class="filter-item">
+              <input type="checkbox" id="focus-data" checked>
+              <label for="focus-data">Data & statistics</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="focus-fractions">
+              <label for="focus-fractions">Fractions & ratios</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="focus-functions">
+              <label for="focus-functions">Functions & algebra</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="focus-geometry">
+              <label for="focus-geometry">Geometry & space</label>
+            </div>
+          </div>
+        </section>
 
-        <div class="filter-group">
-          <strong>Math focus</strong>
-          <label class="filter-label">
-            <input type="checkbox" checked> Data &amp; statistics
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> Fractions &amp; ratios
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> Functions &amp; algebra
-          </label>
-        </div>
-
-        <div class="filter-group">
-          <strong>Programs &amp; curricula</strong>
-          <label class="filter-label">
-            <input type="checkbox"> Real‑Math Practice
-          </label>
-          <label class="filter-label">
-            <input type="checkbox"> Illustrative Math
-          </label>
-        </div>
-
-        <div class="filters-footer">
-          <a class="link" href="#">Reset</a>
-          <a class="link" href="#">Save filter set</a>
-        </div>
+        <section class="filter-section">
+          <h2 class="filter-section-title">Programs</h2>
+          <div class="filter-group">
+            <div class="filter-item">
+              <input type="checkbox" id="prog-real-math">
+              <label for="prog-real-math">Real‑Math Practice</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="prog-illustrative">
+              <label for="prog-illustrative">Illustrative Math</label>
+            </div>
+            <div class="filter-item">
+              <input type="checkbox" id="prog-tuva-jr">
+              <label for="prog-tuva-jr">Tuva Jr.</label>
+            </div>
+          </div>
+          <div class="filter-actions">
+            <a class="filter-link" href="#">Reset</a>
+            <a class="filter-link" href="#">Save set</a>
+          </div>
+        </section>
       </aside>
 
-      <!-- CONTENT COLUMN -->
-      <section class="content-column">
-        <!-- ACTIVE FILTER CHIPS -->
-        <div class="active-filters" aria-label="Active filters">
-          <span class="chip">Grades 3–5 <button aria-label="Remove">×</button></span>
-          <span class="chip">Data stories <button aria-label="Remove">×</button></span>
-          <span class="chip">Data &amp; statistics <button aria-label="Remove">×</button></span>
-        </div>
-
-        <!-- FEATURED ROW -->
+      <!-- MAIN CONTENT -->
+      <section class="content-main">
+        <!-- FEATURED SECTION -->
         <div>
           <div class="section-header">
-            <div class="section-title">Featured math lessons</div>
-            <div class="section-caption">Picked for your grade filters</div>
+            <h2 class="section-title">Featured lessons</h2>
+            <span class="section-caption">Picked for your filters</span>
           </div>
-
-          <div class="featured-row" aria-label="Featured lessons">
-            <!-- featured card 1 -->
-            <article class="featured-card">
-              <div class="thumb"></div>
+          
+          <div class="featured-scroll">
+            <!-- Featured Card 1 -->
+            <article class="card">
+              <div class="card-image"></div>
               <div class="card-body">
-                <div class="badge-row">
-                  <span class="badge">Data Story</span>
-                  <span class="badge-secondary">Grades 6–8</span>
+                <div class="card-badges">
+                  <span class="badge">Data story</span>
+                  <span class="badge secondary">Grade 6</span>
                 </div>
-                <div class="card-title">Colossal Cabbages and Titanic Turnips</div>
-                <div class="card-meta">
-                  Measures of center · 1–2 class periods
-                </div>
+                <h3 class="card-title">Colossal Cabbages and Titanic Turnips</h3>
+                <p class="card-meta">Measures of center · 1–2 class periods</p>
                 <div class="card-tags">
-                  <span class="tag">Food &amp; farming</span>
+                  <span class="tag">Food & farming</span>
                   <span class="tag">Statistics</span>
                 </div>
               </div>
-              <div class="card-actions">
-                <button class="btn-ghost">Preview</button>
-                <button class="btn-primary">Assign to class</button>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
               </div>
             </article>
 
-            <!-- duplicate a few more featured-card blocks as needed -->
+            <!-- Featured Card 2 -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge">Activity</span>
+                  <span class="badge secondary">Grade 5</span>
+                </div>
+                <h3 class="card-title">Comparing Sprint Times of Elite Runners</h3>
+                <p class="card-meta">Variability & line plots · 1 class period</p>
+                <div class="card-tags">
+                  <span class="tag">Sports</span>
+                  <span class="tag">Variability</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
+
+            <!-- Featured Card 3 -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge">Data story</span>
+                  <span class="badge secondary">Grade 7</span>
+                </div>
+                <h3 class="card-title">Olympic Medal Tallies</h3>
+                <p class="card-meta">Comparing data & graphs · 45 minutes</p>
+                <div class="card-tags">
+                  <span class="tag">Sports</span>
+                  <span class="tag">Comparisons</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
           </div>
         </div>
 
-        <!-- RESULTS GRID -->
+        <!-- ALL RESULTS SECTION -->
         <div>
           <div class="section-header">
-            <div class="section-title">All matching math content</div>
-            <div class="section-caption">Sorted by newest first</div>
+            <h2 class="section-title">All matching content</h2>
+            <span class="section-caption">Sorted by newest first</span>
           </div>
 
-          <div class="results-grid" aria-label="Math results">
-            <!-- result card -->
-            <article class="result-card">
-              <div class="result-thumb"></div>
-              <div class="result-body">
-                <div class="badge-row">
-                  <span class="badge-secondary">Activity</span>
-                  <span class="badge-secondary">Grade 7</span>
+          <div class="results-grid">
+            <!-- Result Card -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge secondary">Activity</span>
+                  <span class="badge secondary">Grade 4</span>
                 </div>
-                <div class="result-title">Comparing Sprint Times of Elite Runners</div>
-                <div class="result-meta">
-                  Variability · Line plots · 1 class period
-                </div>
+                <h3 class="card-title">School Garden Harvest</h3>
+                <p class="card-meta">Equal groups · 1 class period</p>
                 <div class="card-tags">
-                  <span class="tag">Sports</span>
-                  <span class="tag">Data &amp; statistics</span>
+                  <span class="tag">Food & farming</span>
                 </div>
               </div>
-              <div class="result-actions">
-                <button class="btn-ghost">Preview</button>
-                <button class="btn-primary">Assign</button>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
               </div>
             </article>
 
-            <!-- more result-card blocks … -->
+            <!-- Result Card -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge secondary">Data story</span>
+                  <span class="badge secondary">Grade 5</span>
+                </div>
+                <h3 class="card-title">How High Are We?</h3>
+                <p class="card-meta">Place value · 30 minutes</p>
+                <div class="card-tags">
+                  <span class="tag">Environment</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
+
+            <!-- Result Card -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge secondary">Activity</span>
+                  <span class="badge secondary">Grade 6</span>
+                </div>
+                <h3 class="card-title">Packing Eggs on a Farm</h3>
+                <p class="card-meta">Division · 1 class period</p>
+                <div class="card-tags">
+                  <span class="tag">Food & farming</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
+
+            <!-- Result Card -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-body">
+                <div class="card-badges">
+                  <span class="badge secondary">Tutorial</span>
+                  <span class="badge secondary">Grade 7</span>
+                </div>
+                <h3 class="card-title">Recycling Collection Totals</h3>
+                <p class="card-meta">Equal groups & multiplication · 45 min</p>
+                <div class="card-tags">
+                  <span class="tag">Environment</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
+
+            <!-- Add more cards as needed -->
           </div>
         </div>
       </section>
