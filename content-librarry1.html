@@ -9,12 +9,15 @@
       --color-primary: #1b9c85;
       --color-primary-light: #e0f4f1;
       --color-primary-hover: #157a6b;
+      --color-accent-gold: #f59e0b;
       --color-bg-page: #f5f7fa;
       --color-bg-card: #ffffff;
       --color-border: #e5e7eb;
       --color-text-main: #102a43;
       --color-text-secondary: #6b7280;
       --color-text-tertiary: #9ca3af;
+      --color-success: #10b981;
+      --color-premium: #7c3aed;
       --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
       --shadow-sm: 0 4px 6px rgba(15, 23, 42, 0.07);
       --shadow-md: 0 10px 20px rgba(15, 23, 42, 0.08);
@@ -40,18 +43,58 @@
       line-height: 1.5;
     }
 
+    /* TUVA HEADER */
+    .tuva-header {
+      background: linear-gradient(135deg, #134252 0%, #1b9c85 100%);
+      color: white;
+      padding: var(--spacing-2xl) var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: var(--spacing-2xl);
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .header-nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .header-nav a:hover, .header-nav a.active {
+      color: white;
+      font-weight: 550;
+    }
+
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: var(--spacing-xl);
     }
 
-    /* HEADER SECTION */
+    /* PAGE HEADER */
     .page-header {
       margin-bottom: var(--spacing-2xl);
     }
 
-    .header-top {
+    .header-top-section {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -72,34 +115,58 @@
       max-width: 600px;
     }
 
-    .header-actions {
+    .header-controls {
       display: flex;
-      gap: var(--spacing-md);
+      gap: var(--spacing-lg);
       flex-wrap: wrap;
       justify-content: flex-end;
+      align-items: center;
     }
 
-    .btn-view {
-      padding: 6px 14px;
-      font-size: 13px;
+    /* CONTENT TYPE FILTER */
+    .content-type-filter {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+      background: var(--color-bg-card);
+      padding: var(--spacing-sm);
       border-radius: 999px;
       border: 1px solid var(--color-border);
-      background: var(--color-bg-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .content-type-filter-label {
+      font-size: 12px;
       color: var(--color-text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
       cursor: pointer;
-      transition: all 200ms ease;
+      font-size: 13px;
+      color: var(--color-text-secondary);
     }
 
-    .btn-view.active {
-      background: var(--color-primary-light);
-      color: var(--color-primary);
-      border-color: var(--color-primary);
-      font-weight: 550;
+    .filter-checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
     }
 
-    .btn-view:hover:not(.active) {
-      border-color: var(--color-text-tertiary);
-      background: #fafbfc;
+    .filter-checkbox input:checked + label {
+      color: var(--color-text-main);
+      font-weight: 600;
+    }
+
+    .filter-checkbox label {
+      cursor: pointer;
+      margin: 0;
     }
 
     /* ACTIVE FILTERS */
@@ -142,10 +209,6 @@
       align-items: center;
     }
 
-    .filter-chip button:hover {
-      opacity: 0.7;
-    }
-
     /* LAYOUT: 2-COLUMN */
     .content-wrapper {
       display: grid;
@@ -175,14 +238,6 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--color-text-main);
-    }
-
-    .filter-group {
-      margin-bottom: var(--spacing-md);
-    }
-
-    .filter-group:last-child {
-      margin-bottom: 0;
     }
 
     .filter-item {
@@ -265,7 +320,7 @@
     .featured-scroll {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(280px, 1fr);
+      grid-auto-columns: minmax(310px, 1fr);
       gap: var(--spacing-lg);
       overflow-x: auto;
       scroll-behavior: smooth;
@@ -300,38 +355,35 @@
     .card:hover {
       box-shadow: var(--shadow-md);
       border-color: var(--color-primary-light);
+      transform: translateY(-2px);
     }
 
     .card-image {
-      height: 120px;
+      height: 140px;
       background: linear-gradient(135deg, #0f766e 0%, #10b981 100%);
       position: relative;
       overflow: hidden;
     }
 
-    .card-image svg {
-      position: absolute;
-      opacity: 0.1;
-      right: -20px;
-      top: -20px;
-    }
-
-    .card-body {
-      padding: var(--spacing-lg);
+    /* CARD HEADER (Meta badges) */
+    .card-header {
+      padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);
       display: flex;
-      flex-direction: column;
-      gap: var(--spacing-sm);
-      flex: 1;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--color-border);
     }
 
     .card-badges {
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-xs);
+      align-items: center;
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       padding: 3px 8px;
       font-size: 10px;
       font-weight: 600;
@@ -340,11 +392,50 @@
       border-radius: 6px;
       background: var(--color-primary-light);
       color: var(--color-primary);
+      gap: var(--spacing-xs);
+    }
+
+    .badge.premium {
+      background: rgba(124, 58, 237, 0.1);
+      color: var(--color-premium);
+    }
+
+    .badge.free {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--color-success);
     }
 
     .badge.secondary {
       background: #f3f4f6;
       color: #6b7280;
+    }
+
+    .badge-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .card-action {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      font-size: 18px;
+      padding: 0;
+      transition: color 200ms ease;
+    }
+
+    .card-action:hover {
+      color: var(--color-primary);
+    }
+
+    /* CARD BODY */
+    .card-body {
+      padding: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      flex: 1;
     }
 
     .card-title {
@@ -355,17 +446,41 @@
       color: var(--color-text-main);
     }
 
-    .card-meta {
+    .card-description {
       margin: 0;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta-row {
+      display: flex;
+      gap: var(--spacing-lg);
       font-size: 12px;
       color: var(--color-text-tertiary);
+      flex-wrap: wrap;
+    }
+
+    .card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .card-meta-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.6;
     }
 
     .card-tags {
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-xs);
-      margin-top: var(--spacing-sm);
     }
 
     .tag {
@@ -378,6 +493,12 @@
       white-space: nowrap;
     }
 
+    .tag.math {
+      background: rgba(27, 156, 133, 0.1);
+      color: var(--color-primary);
+    }
+
+    /* CARD FOOTER */
     .card-footer {
       display: flex;
       gap: var(--spacing-sm);
@@ -388,7 +509,7 @@
 
     .btn-card {
       flex: 1;
-      padding: 6px 12px;
+      padding: 7px 12px;
       font-size: 12px;
       font-weight: 550;
       border-radius: 6px;
@@ -418,7 +539,7 @@
     /* RESULTS GRID */
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: var(--spacing-lg);
     }
 
@@ -430,7 +551,7 @@
       }
 
       .results-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       }
     }
 
@@ -460,24 +581,14 @@
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       }
 
-      .header-top {
+      .header-top-section {
         flex-direction: column;
         gap: var(--spacing-lg);
       }
 
-      .header-actions {
+      .header-controls {
         width: 100%;
         justify-content: flex-start;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .filters-sidebar {
-        grid-template-columns: 1fr;
-      }
-
-      .results-grid {
-        grid-template-columns: 1fr;
       }
 
       .featured-scroll {
@@ -487,36 +598,55 @@
   </style>
 </head>
 <body>
+  <!-- TUVA HEADER -->
+  <header class="tuva-header">
+    <div class="header-top">
+      <div class="header-logo">📊 Tuva</div>
+      <nav class="header-nav">
+        <a href="#">Dashboard</a>
+        <a href="#" class="active">Content Library</a>
+        <a href="#">Dataset Library</a>
+        <a href="#">Assessments</a>
+      </nav>
+    </div>
+  </header>
+
   <div class="container">
     <!-- PAGE HEADER -->
     <header class="page-header">
-      <div class="header-top">
+      <div class="header-top-section">
         <div class="header-content">
           <h1>Math Content Library</h1>
           <p class="header-subtitle">
-            Discover ready‑to‑use data stories, activities, and lessons. Preview instantly or assign to your classes.
+            Discover data stories & activities. Preview instantly or assign to your classes.
           </p>
         </div>
-        <div class="header-actions">
-          <button class="btn-view active">Teacher view</button>
-          <button class="btn-view">Coming soon</button>
+        <div class="header-controls">
+          <!-- CONTENT TYPE TOGGLE -->
+          <div class="content-type-filter">
+            <span class="content-type-filter-label">Show:</span>
+            <div class="filter-checkbox">
+              <input type="checkbox" id="show-activities" checked>
+              <label for="show-activities">Activities</label>
+            </div>
+            <div class="filter-checkbox">
+              <input type="checkbox" id="show-stories" checked>
+              <label for="show-stories">Data Stories</label>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- ACTIVE FILTERS -->
       <div class="filters-active" aria-label="Applied filters">
-        <span class="filter-label">Applied:</span>
+        <span class="filter-label">Showing 24 Results ·</span>
         <span class="filter-chip">
           Grades 3–5
-          <button aria-label="Remove grade filter">×</button>
-        </span>
-        <span class="filter-chip">
-          Data stories
-          <button aria-label="Remove type filter">×</button>
+          <button aria-label="Remove">×</button>
         </span>
         <span class="filter-chip">
           Data & statistics
-          <button aria-label="Remove topic filter">×</button>
+          <button aria-label="Remove">×</button>
         </span>
       </div>
     </header>
@@ -527,81 +657,45 @@
       <aside class="filters-sidebar" aria-label="Filters">
         <section class="filter-section">
           <h2 class="filter-section-title">Grade band</h2>
-          <div class="filter-group">
-            <div class="filter-item">
-              <input type="checkbox" id="grade-k2" checked>
-              <label for="grade-k2">Grades K–2</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="grade-35" checked>
-              <label for="grade-35">Grades 3–5</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="grade-68">
-              <label for="grade-68">Grades 6–8</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="grade-912">
-              <label for="grade-912">Grades 9–12</label>
-            </div>
+          <div class="filter-item">
+            <input type="checkbox" id="grade-35" checked>
+            <label for="grade-35">Grades 3–5</label>
           </div>
-        </section>
-
-        <section class="filter-section">
-          <h2 class="filter-section-title">Content type</h2>
-          <div class="filter-group">
-            <div class="filter-item">
-              <input type="checkbox" id="type-story" checked>
-              <label for="type-story">Data stories</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="type-activity">
-              <label for="type-activity">Activities</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="type-tutorial">
-              <label for="type-tutorial">Tutorials</label>
-            </div>
+          <div class="filter-item">
+            <input type="checkbox" id="grade-68">
+            <label for="grade-68">Grades 6–8</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="grade-912">
+            <label for="grade-912">Grades 9–12</label>
           </div>
         </section>
 
         <section class="filter-section">
           <h2 class="filter-section-title">Math focus</h2>
-          <div class="filter-group">
-            <div class="filter-item">
-              <input type="checkbox" id="focus-data" checked>
-              <label for="focus-data">Data & statistics</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="focus-fractions">
-              <label for="focus-fractions">Fractions & ratios</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="focus-functions">
-              <label for="focus-functions">Functions & algebra</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="focus-geometry">
-              <label for="focus-geometry">Geometry & space</label>
-            </div>
+          <div class="filter-item">
+            <input type="checkbox" id="focus-data" checked>
+            <label for="focus-data">Data & statistics</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="focus-fractions">
+            <label for="focus-fractions">Fractions & ratios</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="focus-functions">
+            <label for="focus-functions">Functions & algebra</label>
           </div>
         </section>
 
         <section class="filter-section">
           <h2 class="filter-section-title">Programs</h2>
-          <div class="filter-group">
-            <div class="filter-item">
-              <input type="checkbox" id="prog-real-math">
-              <label for="prog-real-math">Real‑Math Practice</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="prog-illustrative">
-              <label for="prog-illustrative">Illustrative Math</label>
-            </div>
-            <div class="filter-item">
-              <input type="checkbox" id="prog-tuva-jr">
-              <label for="prog-tuva-jr">Tuva Jr.</label>
-            </div>
+          <div class="filter-item">
+            <input type="checkbox" id="prog-real-math">
+            <label for="prog-real-math">Real‑Math Practice</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="prog-illustrative">
+            <label for="prog-illustrative">Illustrative Math</label>
           </div>
           <div class="filter-actions">
             <a class="filter-link" href="#">Reset</a>
@@ -616,22 +710,30 @@
         <div>
           <div class="section-header">
             <h2 class="section-title">Featured lessons</h2>
-            <span class="section-caption">Picked for your filters</span>
+            <span class="section-caption">Curated for your grade</span>
           </div>
           
           <div class="featured-scroll">
-            <!-- Featured Card 1 -->
+            <!-- FEATURED CARD 1 -->
             <article class="card">
               <div class="card-image"></div>
-              <div class="card-body">
+              <div class="card-header">
                 <div class="card-badges">
-                  <span class="badge">Data story</span>
+                  <span class="badge">📊 Activity</span>
+                  <span class="badge free">Free</span>
                   <span class="badge secondary">Grade 6</span>
                 </div>
-                <h3 class="card-title">Colossal Cabbages and Titanic Turnips</h3>
-                <p class="card-meta">Measures of center · 1–2 class periods</p>
+                <button class="card-action" aria-label="Save">🔖</button>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Cereal Number Crunch: Exploring the Mean and the…</h3>
+                <p class="card-description">In this activity, students choose which measure of center, mean or median, is more appropriate given the data.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📋 11 Steps</div>
+                  <div class="card-meta-item">⏱ 45 min</div>
+                </div>
                 <div class="card-tags">
-                  <span class="tag">Food & farming</span>
+                  <span class="tag math">Food & Farming</span>
                   <span class="tag">Statistics</span>
                 </div>
               </div>
@@ -641,40 +743,27 @@
               </div>
             </article>
 
-            <!-- Featured Card 2 -->
+            <!-- FEATURED CARD 2 -->
             <article class="card">
               <div class="card-image"></div>
-              <div class="card-body">
+              <div class="card-header">
                 <div class="card-badges">
-                  <span class="badge">Activity</span>
+                  <span class="badge">📖 Data Story</span>
+                  <span class="badge premium">Premium</span>
                   <span class="badge secondary">Grade 5</span>
                 </div>
-                <h3 class="card-title">Comparing Sprint Times of Elite Runners</h3>
-                <p class="card-meta">Variability & line plots · 1 class period</p>
-                <div class="card-tags">
-                  <span class="tag">Sports</span>
-                  <span class="tag">Variability</span>
-                </div>
+                <button class="card-action" aria-label="Save">🔖</button>
               </div>
-              <div class="card-footer">
-                <button class="btn-card">Preview</button>
-                <button class="btn-card primary">Assign</button>
-              </div>
-            </article>
-
-            <!-- Featured Card 3 -->
-            <article class="card">
-              <div class="card-image"></div>
               <div class="card-body">
-                <div class="card-badges">
-                  <span class="badge">Data story</span>
-                  <span class="badge secondary">Grade 7</span>
+                <h3 class="card-title">Colossal Cabbages and Titanic Turnips</h3>
+                <p class="card-description">Compare plant growth data to understand measures of center through real harvest datasets.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📊 Illustrative Math</div>
+                  <div class="card-meta-item">⏱ 1–2 periods</div>
                 </div>
-                <h3 class="card-title">Olympic Medal Tallies</h3>
-                <p class="card-meta">Comparing data & graphs · 45 minutes</p>
                 <div class="card-tags">
-                  <span class="tag">Sports</span>
-                  <span class="tag">Comparisons</span>
+                  <span class="tag math">Agriculture</span>
+                  <span class="tag">Measures of Center</span>
                 </div>
               </div>
               <div class="card-footer">
@@ -689,20 +778,27 @@
         <div>
           <div class="section-header">
             <h2 class="section-title">All matching content</h2>
-            <span class="section-caption">Sorted by newest first</span>
+            <span class="section-caption">Sorted by newest</span>
           </div>
 
           <div class="results-grid">
-            <!-- Result Card -->
+            <!-- RESULT CARD 1 -->
             <article class="card">
               <div class="card-image"></div>
-              <div class="card-body">
+              <div class="card-header">
                 <div class="card-badges">
-                  <span class="badge secondary">Activity</span>
-                  <span class="badge secondary">Grade 4</span>
+                  <span class="badge">📊 Activity</span>
+                  <span class="badge free">Free</span>
                 </div>
+                <button class="card-action">🔖</button>
+              </div>
+              <div class="card-body">
                 <h3 class="card-title">School Garden Harvest</h3>
-                <p class="card-meta">Equal groups · 1 class period</p>
+                <p class="card-description">Students explore multiplication using real garden data from produce counts.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📋 8 Steps</div>
+                  <div class="card-meta-item">⏱ 30 min</div>
+                </div>
                 <div class="card-tags">
                   <span class="tag">Food & farming</span>
                 </div>
@@ -713,18 +809,25 @@
               </div>
             </article>
 
-            <!-- Result Card -->
+            <!-- RESULT CARD 2 -->
             <article class="card">
               <div class="card-image"></div>
-              <div class="card-body">
+              <div class="card-header">
                 <div class="card-badges">
-                  <span class="badge secondary">Data story</span>
-                  <span class="badge secondary">Grade 5</span>
+                  <span class="badge">📖 Data Story</span>
+                  <span class="badge free">Free</span>
                 </div>
-                <h3 class="card-title">How High Are We?</h3>
-                <p class="card-meta">Place value · 30 minutes</p>
+                <button class="card-action">🔖</button>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">How High Are We? City Altitudes</h3>
+                <p class="card-description">Explore elevation data across world cities to practice place value & rounding.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📊 Real-Math</div>
+                  <div class="card-meta-item">⏱ 25 min</div>
+                </div>
                 <div class="card-tags">
-                  <span class="tag">Environment</span>
+                  <span class="tag">Geography</span>
                 </div>
               </div>
               <div class="card-footer">
@@ -733,16 +836,51 @@
               </div>
             </article>
 
-            <!-- Result Card -->
+            <!-- RESULT CARD 3 -->
             <article class="card">
               <div class="card-image"></div>
-              <div class="card-body">
+              <div class="card-header">
                 <div class="card-badges">
-                  <span class="badge secondary">Activity</span>
-                  <span class="badge secondary">Grade 6</span>
+                  <span class="badge">📊 Activity</span>
+                  <span class="badge premium">Premium</span>
                 </div>
+                <button class="card-action">🔖</button>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Comparing Sprint Times: Olympic Data</h3>
+                <p class="card-description">Analyze athlete performance data to compare decimals and interpret variations.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📋 12 Steps</div>
+                  <div class="card-meta-item">⏱ 50 min</div>
+                </div>
+                <div class="card-tags">
+                  <span class="tag">Sports</span>
+                  <span class="tag">Decimals</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-card">Preview</button>
+                <button class="btn-card primary">Assign</button>
+              </div>
+            </article>
+
+            <!-- RESULT CARD 4 -->
+            <article class="card">
+              <div class="card-image"></div>
+              <div class="card-header">
+                <div class="card-badges">
+                  <span class="badge">📖 Data Story</span>
+                  <span class="badge free">Free</span>
+                </div>
+                <button class="card-action">🔖</button>
+              </div>
+              <div class="card-body">
                 <h3 class="card-title">Packing Eggs on a Farm</h3>
-                <p class="card-meta">Division · 1 class period</p>
+                <p class="card-description">Use division to determine packaging arrangements from harvest records.</p>
+                <div class="card-meta-row">
+                  <div class="card-meta-item">📊 Real-Math</div>
+                  <div class="card-meta-item">⏱ 35 min</div>
+                </div>
                 <div class="card-tags">
                   <span class="tag">Food & farming</span>
                 </div>
@@ -752,28 +890,6 @@
                 <button class="btn-card primary">Assign</button>
               </div>
             </article>
-
-            <!-- Result Card -->
-            <article class="card">
-              <div class="card-image"></div>
-              <div class="card-body">
-                <div class="card-badges">
-                  <span class="badge secondary">Tutorial</span>
-                  <span class="badge secondary">Grade 7</span>
-                </div>
-                <h3 class="card-title">Recycling Collection Totals</h3>
-                <p class="card-meta">Equal groups & multiplication · 45 min</p>
-                <div class="card-tags">
-                  <span class="tag">Environment</span>
-                </div>
-              </div>
-              <div class="card-footer">
-                <button class="btn-card">Preview</button>
-                <button class="btn-card primary">Assign</button>
-              </div>
-            </article>
-
-            <!-- Add more cards as needed -->
           </div>
         </div>
       </section>
