@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real‑Math Practice Learning Map</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --line: #c7d2e6;
+      --grade3: #1b9c85;
+      --grade4: #3b82f6;
+      --grade5: #8b5cf6;
+      --text-main: #1f2933;
+      --text-muted: #6b7280;
+      --pill-env: #0ea5e9;
+      --pill-food: #f97316;
+      --pill-sport: #22c55e;
+      --pill-tech: #6366f1;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 32px auto 64px;
+      padding: 0 24px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .tabs {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #e5e7eb;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 6px 16px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .tab.active {
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+    }
+
+    .map-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px 24px 24px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .legend-dot.env    { background: var(--pill-env); }
+    .legend-dot.food   { background: var(--pill-food); }
+    .legend-dot.sport  { background: var(--pill-sport); }
+    .legend-dot.tech   { background: var(--pill-tech); }
+
+    .grade-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 12px 0 4px;
+    }
+
+    /* horizontal “journey line” */
+    .journey {
+      position: relative;
+      padding: 32px 8px 12px;
+      border-left: 4px solid transparent; /* keeps layout soft */
+    }
+
+    .journey-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 52px;
+      height: 2px;
+      background: linear-gradient(90deg, #bfdbfe, #e5e7eb);
+      z-index: 0;
+    }
+
+    .nodes {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+      z-index: 1;
+    }
+
+    .node {
+      position: relative;
+      text-align: left;
+    }
+
+    .node-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--grade3);
+      border: 3px solid #e0f2f1;
+      box-shadow: 0 0 0 2px rgba(27, 156, 133, 0.16);
+      margin-bottom: 6px;
+    }
+
+    .node-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .node-unit {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .node-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: #0f172a;
+      background: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    .pill.env   { background: rgba(14,165,233,0.12);  color: #0369a1; }
+    .pill.food  { background: rgba(249,115,22,0.14);  color: #9a3412; }
+    .pill.sport { background: rgba(34,197,94,0.12);   color: #166534; }
+    .pill.tech  { background: rgba(99,102,241,0.12);  color: #3730a3; }
+
+    .node-actions {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .link {
+      color: #2563eb;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .nodes {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nodes {
+        grid-template-columns: 1fr;
+      }
+      .journey-line {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Real‑Math Practice Learning Map</h1>
+    <p class="subtitle">
+      Bird’s‑eye view of Grade&nbsp;3 data‑rich practice lessons. Start simple, then explore different real‑world contexts.
+    </p>
+
+    <div class="tabs">
+      <button class="tab active">Grade 3</button>
+      <button class="tab">Grade 4</button>
+      <button class="tab">Grade 5</button>
+    </div>
+
+    <section class="map-card" aria-label="Grade 3 learning journey">
+      <div class="legend">
+        <span class="legend-item">
+          <span class="legend-dot env"></span> Environment
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot food"></span> Food &amp; Farming
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot sport"></span> Sports
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot tech"></span> Industry &amp; Tech
+        </span>
+      </div>
+
+      <p class="grade-label">Grade 3 journey</p>
+
+      <div class="journey">
+        <div class="journey-line"></div>
+
+        <div class="nodes">
+          <!-- Node 1 -->
+          <article class="node">
+            <div class="node-circle"></div>
+            <div class="node-unit">Place value &amp; number sense</div>
+            <h3 class="node-title">Round numbers to the nearest 100</h3>
+            <p class="node-desc">
+              Use city altitude data to practice rounding and comparing three‑digit numbers.
+            </p>
+            <div class="pill-row">
+              <span class="pill env">City Altitudes</span>
+              <span class="pill env">Environment</span>
+            </div>
+            <div class="node-actions">
+              <a class="link" href="#">Preview lessons</a>
+              <a class="link" href="#">Assign to class</a>
+            </div>
+          </article>
+
+          <!-- Node 2 -->
+          <article class="node">
+            <div class="node-circle"></div>
+            <div class="node-unit">Place value &amp; number sense</div>
+            <h3 class="node-title">Rounding with energy data</h3>
+            <p class="node-desc">
+              Estimate electric‑vehicle driving ranges by rounding and comparing distances.
+            </p>
+            <div class="pill-row">
+              <span class="pill.tech pill">EV Ranges</span>
+              <span class="pill tech">Industry &amp; Tech</span>
+            </div>
+            <div class="node-actions">
+              <a class="link" href="#">Preview lessons</a>
+              <a class="link" href="#">Assign to class</a>
+            </div>
+          </article>
+
+          <!-- Node 3 -->
+          <article class="node">
+            <div class="node-circle"></div>
+            <div class="node-unit">Intro to multiplication</div>
+            <h3 class="node-title">Equal groups in a garden</h3>
+            <p class="node-desc">
+              Model multiplication as equal groups using data from a school garden harvest.
+            </p>
+            <div class="pill-row">
+              <span class="pill food">School Garden Harvest</span>
+              <span class="pill food">Food &amp; Farming</span>
+            </div>
+            <div class="node-actions">
+              <a class="link" href="#">Preview lessons</a>
+              <a class="link" href="#">Assign to class</a>
+            </div>
+          </article>
+
+          <!-- Node 4 -->
+          <article class="node">
+            <div class="node-circle"></div>
+            <div class="node-unit">Intro to multiplication</div>
+            <h3 class="node-title">Recycling collection totals</h3>
+            <p class="node-desc">
+              Use a 4‑week recycling dataset to see multiplication as repeated addition.
+            </p>
+            <div class="pill-row">
+              <span class="pill food">Weekly Recycling Totals</span>
+              <span class="pill food">Food &amp; Farming</span>
+            </div>
+            <div class="node-actions">
+              <a class="link" href="#">Preview lessons</a>
+              <a class="link" href="#">Assign to class</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- You can duplicate the section above with different colors/content
+         for Grade 4 and Grade 5, then toggle via JS later. -->
+  </div>
+</body>
+</html>
