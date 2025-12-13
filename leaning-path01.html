@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Real-Math Practice Path</title>
+    <!-- Tuva Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons (simulated via CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- Tuva Brand Colors (Extracted from Screenshots) --- */
+            --tuva-burgundy: #8B2332;  /* Header Background */
+            --tuva-red: #A31C30;       /* Jr. Brand Red */
+            --tuva-red-light: #FBEAEA; /* Light Red Background */
+            --tuva-yellow: #D4AF37;    /* Premium/Accent Yellow */
+            
+            --tuva-text-dark: #333333;
+            --tuva-text-light: #666666;
+            --bg-gray: #F9F9F9;
+            --border-color: #E0E0E0;
+
+            /* --- Theme Colors (Unit Colors) --- */
+            --theme-green: #66BB6A;   /* Place Value */
+            --theme-blue: #42A5F5;    /* Multiplication */
+            --theme-orange: #FFA726;  /* Fractions */
+            
+            /* --- Dimensions --- */
+            --header-height: 60px;
+            --sidebar-width: 250px;
+            --line-x: 40px;           /* Metro line position */
+            --card-offset: 80px;      /* Content offset from line */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--tuva-text-dark);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* =========================================
+           1. GLOBAL NAVIGATION HEADER (Tuva Standard)
+           ========================================= */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--tuva-burgundy);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Logo Area */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .tuva-logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .tuva-logo strong { font-weight: 700; color: var(--tuva-yellow); }
+
+        /* Tools Button */
+        .btn-tools {
+            background: white;
+            color: var(--tuva-burgundy);
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Navigation Links */
+        .header-nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .nav-link:hover { opacity: 0.9; }
+        .nav-link i { font-size: 0.8rem; opacity: 0.8; } /* Chevron icon */
+
+        /* Header Right */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-premium {
+            border: 1px solid var(--tuva-yellow);
+            color: var(--tuva-yellow);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-premium:hover {
+            background: var(--tuva-yellow);
+            color: var(--tuva-burgundy);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--tuva-yellow);
+        }
+
+        /* =========================================
+           2. MAIN LAYOUT CONTAINER
+           ========================================= */
+        .app-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden; /* Height controlled by body */
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--tuva-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .grade-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: var(--tuva-text-light);
+            font-weight: 600;
+            font-size: 1rem;
+            border-left: 4px solid transparent;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+        
+        .grade-link:hover {
+            background-color: var(--bg-gray);
+            color: var(--tuva-text-dark);
+        }
+        
+        .grade-link.active {
+            background-color: var(--tuva-burgundy);
+            color: white;
+            border-left-color: var(--tuva-burgundy); /* Solid block style */
+        }
+
+        /* --- CONTENT AREA --- */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            position: relative;
+            background-color: var(--bg-gray);
+        }
+
+        .page-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            margin-left: var(--card-offset); /* Align with content flow */
+            padding-right: 20px;
+        }
+
+        .page-title h1 {
+            color: var(--tuva-burgundy);
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+        }
+        .page-title p {
+            color: var(--tuva-text-light);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Layout Switcher Buttons */
+        .layout-toggle {
+            display: flex;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .toggle-btn {
+            padding: 8px 16px;
+            border: none;
+            background: white;
+            color: var(--tuva-text-light);
+            font-weight: 600;
+            cursor: pointer;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+        .toggle-btn:last-child { border-right: none; }
+        .toggle-btn:hover { background: #f5f5f5; }
+        
+        .toggle-btn.active {
+            background: var(--tuva-burgundy);
+            color: white;
+        }
+
+        /* =========================================
+           3. THE POLISHED CONTEXT CARD (Works in both layouts)
+           ========================================= */
+        .ctx-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            /* Flat design, slight lift on hover */
+        }
+
+        .ctx-card:hover {
+            border-color: var(--tuva-burgundy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Header: Tag + Chevron */
+        .ctx-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ctx-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #eee; /* Default fallback */
+            color: #555;
+        }
+        
+        /* Tag Colors */
+        .ctx-tag.env { background: #E8F5E9; color: #2E7D32; }
+        .ctx-tag.food { background: #FFF3E0; color: #E65100; }
+        .ctx-tag.tech { background: #E3F2FD; color: #1565C0; }
+        .ctx-tag.animals { background: #F3E5F5; color: #7B1FA2; }
+
+        .chevron {
+            color: #ccc;
+            transition: transform 0.3s;
+        }
+        .ctx-card.expanded .chevron {
+            transform: rotate(180deg);
+            color: var(--tuva-burgundy);
+        }
+
+        /* Title & Descriptions */
+        .ctx-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--tuva-text-dark);
+            margin: 0 0 6px 0;
+            line-height: 1.3;
+        }
+
+        .ctx-short {
+            font-size: 0.9rem;
+            color: var(--tuva-text-light);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Expanded Details Area */
+        .ctx-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .ctx-card.expanded .ctx-details {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+        }
+
+        .ctx-card.expanded .ctx-short { display: none; } /* Hide short desc when open */
+
+        .ctx-full {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--tuva-text-light);
+            margin-bottom: 16px;
+        }
+
+        .btn-assign {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--tuva-burgundy);
+            color: var(--tuva-burgundy);
+            background: white;
+            border-radius: 4px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+        .btn-assign:hover {
+            background: var(--tuva-burgundy);
+            color: white;
+        }
+
+        /* =========================================
+           4. LAYOUT 1: VERTICAL METRO MAP
+           ========================================= */
+        .metro-container {
+            position: relative;
+            padding-bottom: 100px;
+            display: none; /* Hidden by default */
+        }
+        .metro-container.visible { display: block; }
+
+        /* The Line */
+        .metro-track {
+            position: absolute;
+            left: var(--line-x);
+            top: 15px; bottom: 0;
+            width: 4px;
+            background: #E0E0E0;
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        /* Unit Station (Big Circle) */
+        .unit-station {
+            position: relative;
+            margin-bottom: 50px;
+        }
+        .unit-marker {
+            width: 32px; height: 32px;
+            background: white;
+            border: 4px solid #ccc;
+            border-radius: 50%;
+            position: absolute;
+            left: calc(var(--line-x) - 14px);
+            z-index: 2;
+            box-shadow: 0 0 0 6px var(--bg-gray); /* Masking line */
+        }
+        .unit-label {
+            margin-left: var(--card-offset);
+            padding-top: 6px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+        }
+
+        /* Skill Stop (Dot) */
+        .skill-stop {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .skill-dot {
+            width: 14px; height: 14px;
+            background: #999;
+            border-radius: 50%;
+            position: absolute;
+            left: calc(var(--line-x) - 5px);
+            top: 22px;
+            z-index: 2;
+            border: 2px solid white;
+        }
+        .skill-content {
+            margin-left: var(--card-offset);
+        }
+        .skill-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--tuva-text-dark);
+        }
+
+        /* Grid for Cards in Metro View */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+        }
+
+        /* =========================================
+           5. LAYOUT 2: TIMELINE (LINEAR LIST)
+           ========================================= */
+        .timeline-container {
+            max-width: 900px;
+            margin-left: var(--card-offset);
+            display: none; /* Hidden by default */
+        }
+        .timeline-container.visible { display: block; }
+
+        .tl-unit-block {
+            margin-bottom: 40px;
+            border-left: 4px solid #eee;
+            padding-left: 24px;
+        }
+
+        .tl-unit-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #999;
+        }
+
+        .tl-skill-block {
+            margin-bottom: 24px;
+        }
+
+        .tl-skill-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--tuva-text-dark);
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* In Timeline view, cards stack vertically */
+        .cards-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+
+        /* =========================================
+           THEME COLORS (Dynamic CSS Classes)
+           ========================================= */
+        .theme-green .unit-marker { border-color: var(--theme-green); }
+        .theme-green .unit-label, .theme-green .tl-unit-title { color: var(--theme-green); }
+        .theme-green .skill-dot { background: var(--theme-green); }
+        .theme-green.tl-unit-block { border-left-color: var(--theme-green); }
+
+        .theme-blue .unit-marker { border-color: var(--theme-blue); }
+        .theme-blue .unit-label, .theme-blue .tl-unit-title { color: var(--theme-blue); }
+        .theme-blue .skill-dot { background: var(--theme-blue); }
+        .theme-blue.tl-unit-block { border-left-color: var(--theme-blue); }
+
+        .theme-orange .unit-marker { border-color: var(--theme-orange); }
+        .theme-orange .unit-label, .theme-orange .tl-unit-title { color: var(--theme-orange); }
+        .theme-orange .skill-dot { background: var(--theme-orange); }
+        .theme-orange.tl-unit-block { border-left-color: var(--theme-orange); }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. GLOBAL HEADER -->
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                Tu<span>v</span>a
+            </a>
+            <a href="#" class="btn-tools">Tuva Tools</a>
+            <nav class="header-nav">
+                <a class="nav-link">Tuva Jr. <i class="fas fa-chevron-down"></i></a>
+                <a class="nav-link">Dashboard</a>
+                <a class="nav-link">Content Library <i class="fas fa-chevron-down"></i></a>
+                <a class="nav-link">Dataset Library <i class="fas fa-chevron-down"></i></a>
+                <a class="nav-link">Teaching <i class="fas fa-chevron-down"></i></a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-premium">Premium</a>
+            <div class="nav-link">Help</div>
+            <div class="user-profile">
+                TSOMPURA <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN APP -->
+    <div class="app-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">Learning Map</div>
+            <div class="grade-link active" onclick="switchGrade('grade3', this)">Grade 3</div>
+            <div class="grade-link" onclick="switchGrade('grade4', this)">Grade 4</div>
+            <div class="grade-link" onclick="switchGrade('grade5', this)">Grade 5</div>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="main-content">
+            
+            <!-- Page Header + View Controls -->
+            <div class="page-controls">
+                <div class="page-title">
+                    <h1 id="grade-title">Grade 3 Mathematics</h1>
+                    <p>Select a skill context below to view real-world data activities.</p>
+                </div>
+                
+                <!-- Layout Switcher -->
+                <div class="layout-toggle">
+                    <button class="toggle-btn active" id="btn-metro" onclick="setLayout('metro')">
+                        <i class="fas fa-project-diagram"></i> Metro Map
+                    </button>
+                    <button class="toggle-btn" id="btn-timeline" onclick="setLayout('timeline')">
+                        <i class="fas fa-list-ul"></i> Timeline
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTAINER FOR DYNAMIC CONTENT -->
+            <div id="dynamic-content">
+                <!-- Javascript will inject the layout here -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA MODEL (Based on your Excel) ---
+        const curriculum = {
+            grade3: [
+                {
+                    unit: "Place Value & Number Sense",
+                    theme: "theme-green",
+                    skills: [
+                        {
+                            id: 1,
+                            name: "Round numbers to nearest 100",
+                            contexts: [
+                                {
+                                    tag: "env", tagName: "Environment",
+                                    title: "How High Are We?",
+                                    short: "Altitudes of Cities Around the World.",
+                                    desc: "Pack your bags! Compare the elevations of major global cities. Use place value to round their altitudes to the nearest 100 meters."
+                                },
+                                {
+                                    tag: "food", tagName: "Food",
+                                    title: "Counting Calories!",
+                                    short: "Analyze calories in common snacks.",
+                                    desc: "From cereals to pizza, every food has a count. Use real data to round calories to the nearest 10 or 100 to make smart estimates."
+                                },
+                                {
+                                    tag: "tech", tagName: "Tech",
+                                    title: "Charge it Up!",
+                                    short: "Estimating EV Ranges.",
+                                    desc: "Electric vehicles are changing travel. Explore ranges of popular cars and practice rounding to compare efficiency."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    unit: "Introduction to Multiplication",
+                    theme: "theme-blue",
+                    skills: [
+                        {
+                            id: 2,
+                            name: "Understand multiplication as equal groups",
+                            contexts: [
+                                {
+                                    tag: "animals", tagName: "Animals",
+                                    title: "How Many Animals at the Zoo?",
+                                    short: "Using pictographs to count exhibits.",
+                                    desc: "The San Diego Zoo keeps track of its animals. Use their data pictographs to answer questions about animal groups using multiplication."
+                                },
+                                {
+                                    tag: "food", tagName: "Farming",
+                                    title: "School Garden Harvest",
+                                    short: "Tracking fruits and vegetables.",
+                                    desc: "Students at Greenfield Elementary harvested fruits. Use multiplication to calculate the total yield from their records."
+                                },
+                                {
+                                    tag: "tech", tagName: "Industry",
+                                    title: "Recycling Collection",
+                                    short: "Weighing plastic, paper, and glass.",
+                                    desc: "Calculate the total weight of materials collected for recycling over a month using equal groups logic."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    unit: "Understanding Fractions",
+                    theme: "theme-orange",
+                    skills: [
+                        {
+                            id: 3,
+                            name: "Compare fractions with same denominators",
+                            contexts: [
+                                {
+                                    tag: "food", tagName: "Health",
+                                    title: "What's on Your Plate?",
+                                    short: "Macronutrients in everyday foods.",
+                                    desc: "Analyze your favorite meals. Compare the fraction of protein versus carbs in different dishes to understand balance."
+                                },
+                                {
+                                    tag: "tech", tagName: "Sports",
+                                    title: "Fractions on the Field",
+                                    short: "FIFA World Cup Goals by Country.",
+                                    desc: "Look at the win/loss ratios of top teams. Compare fractions to see which teams had the best scoring average."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            grade4: [], // Placeholder
+            grade5: []  // Placeholder
+        };
+
+        // --- STATE MANAGEMENT ---
+        let currentLayout = 'metro'; // 'metro' or 'timeline'
+        let currentGrade = 'grade3';
+
+        // --- RENDER FUNCTIONS ---
+
+        function render() {
+            const container = document.getElementById('dynamic-content');
+            const data = curriculum[currentGrade];
+            container.innerHTML = '';
+
+            if(!data || data.length === 0) {
+                container.innerHTML = '<div style="margin-left:80px; color:#999;">Content coming soon.</div>';
+                return;
+            }
+
+            if (currentLayout === 'metro') {
+                renderMetro(data, container);
+            } else {
+                renderTimeline(data, container);
+            }
+        }
+
+        // Layout 1: Metro Map
+        function renderMetro(data, container) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'metro-container visible';
+            wrapper.innerHTML = '<div class="metro-track"></div>'; // The vertical line
+
+            data.forEach(unit => {
+                // Unit Marker
+                wrapper.innerHTML += `
+                    <div class="unit-station ${unit.theme}">
+                        <div class="unit-marker"></div>
+                        <div class="unit-label">${unit.unit}</div>
+                    </div>
+                `;
+
+                // Skills
+                unit.skills.forEach(skill => {
+                    let cardsHtml = '';
+                    skill.contexts.forEach(ctx => {
+                        cardsHtml += getCardHTML(ctx);
+                    });
+
+                    wrapper.innerHTML += `
+                        <div class="skill-stop ${unit.theme}">
+                            <div class="skill-dot"></div>
+                            <div class="skill-content">
+                                <div class="skill-heading">${skill.id}. ${skill.name}</div>
+                                <div class="cards-grid">
+                                    ${cardsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            container.appendChild(wrapper);
+        }
+
+        // Layout 2: Timeline List
+        function renderTimeline(data, container) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'timeline-container visible';
+
+            data.forEach(unit => {
+                let skillsHtml = '';
+                
+                unit.skills.forEach(skill => {
+                    let cardsHtml = '';
+                    skill.contexts.forEach(ctx => {
+                        cardsHtml += getCardHTML(ctx);
+                    });
+                    
+                    skillsHtml += `
+                        <div class="tl-skill-block">
+                            <div class="tl-skill-title">${skill.id}. ${skill.name}</div>
+                            <div class="cards-stack">
+                                ${cardsHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                wrapper.innerHTML += `
+                    <div class="tl-unit-block ${unit.theme}">
+                        <div class="tl-unit-title">${unit.unit}</div>
+                        ${skillsHtml}
+                    </div>
+                `;
+            });
+            container.appendChild(wrapper);
+        }
+
+        // Helper: Card HTML Generator
+        function getCardHTML(ctx) {
+            return `
+                <div class="ctx-card" onclick="toggleCard(this)">
+                    <div class="ctx-header">
+                        <span class="ctx-tag ${ctx.tag}">${ctx.tagName}</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="ctx-title">${ctx.title}</div>
+                    <div class="ctx-short">${ctx.short}</div>
+                    <div class="ctx-details">
+                        <div class="ctx-full">${ctx.desc}</div>
+                        <a href="#" class="btn-assign">Assign Activity</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- INTERACTION HANDLERS ---
+
+        function toggleCard(card) {
+            // Collapse all other cards (Optional: nicer UX)
+            // document.querySelectorAll('.ctx-card.expanded').forEach(c => {
+            //     if(c !== card) c.classList.remove('expanded');
+            // });
+            card.classList.toggle('expanded');
+        }
+
+        function setLayout(layout) {
+            currentLayout = layout;
+            
+            // Toggle Buttons UI
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${layout}`).classList.add('active');
+
+            // Re-render
+            render();
+        }
+
+        function switchGrade(grade, btn) {
+            currentGrade = grade;
+            
+            // Sidebar UI
+            document.querySelectorAll('.grade-link').forEach(el => el.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            
+            // Title Update
+            const display = grade.replace('grade', 'Grade ');
+            document.getElementById('grade-title').textContent = `${display} Mathematics`;
+
+            render();
+        }
+
+        // Initial Render
+        render();
+
+    </script>
+</body>
+</html>
