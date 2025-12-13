@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Tuva – Unified Content Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+/* --------------------------------------------------
+   Base Tokens
+-------------------------------------------------- */
+:root {
+  --green:#073B3A;
+  --green-light:#0A3F3C;
+  --yellow:#F9C74F;
+  --blue:#0D74FF;
+  --border:#E0E6EA;
+  --bg:#F7F9FB;
+  --card:#FFFFFF;
+  --text:#072031;
+  --muted:#697883;
+  --radius:12px;
+}
+
+body { margin:0; font-family:Inter, sans-serif; background:var(--bg); color:var(--text); }
+
+/* --------------------------------------------------
+   NAV + MEGA MENU
+-------------------------------------------------- */
+nav {
+  background:var(--green);
+  padding:16px 32px;
+  display:flex;
+  gap:32px;
+  color:white;
+  position:relative;
+  font-size:15px;
+  font-weight:500;
+}
+nav a { color:white; text-decoration:none; }
+nav a:hover { text-decoration:underline; }
+
+.mega {
+  position:absolute;
+  top:100%; left:0;
+  width:100%;
+  background:var(--green-light);
+  color:white;
+  padding:32px 48px;
+  border-bottom:3px solid var(--blue);
+  display:none;
+  gap:48px;
+}
+.col { flex:1; min-width:240px; }
+.col h3 { margin:0 0 12px; font-size:18px; color:var(--yellow); }
+.col h4 { margin:20px 0 8px; font-size:15px; color:var(--yellow); }
+.col a { display:block; margin-bottom:10px; color:white; font-size:15px; text-decoration:none; }
+.col a:hover { text-decoration:underline; }
+
+.divider { width:1px; background:rgba(255,255,255,0.2); }
+
+/* --------------------------------------------------
+   PAGE LAYOUT
+-------------------------------------------------- */
+.wrapper {
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:32px;
+  padding:32px;
+}
+
+/* --------------------------------------------------
+   SIDEBAR FILTERS
+-------------------------------------------------- */
+.sidebar {
+  background:white;
+  padding:24px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  height:max-content;
+}
+.sidebar h3 { margin:0 0 12px; font-size:18px; color:var(--green); }
+.sidebar h4 { margin:20px 0 8px; font-size:14px; color:var(--muted); }
+
+.sidebar label {
+  display:flex; align-items:center;
+  gap:8px; font-size:14px;
+  margin-bottom:8px;
+  cursor:pointer;
+}
+.sidebar input { transform:scale(1.2); }
+
+/* --------------------------------------------------
+   CONTENT AREA
+-------------------------------------------------- */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+.header h1 { font-size:26px; margin:0; }
+
+.search {
+  width:260px;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  font-size:14px;
+}
+
+/* --------------------------------------------------
+   CONTENT CARDS
+-------------------------------------------------- */
+.grid {
+  display:grid;
+  gap:24px;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.2s;
+}
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+.thumb {
+  height:160px;
+  background:#DCE6EE;
+}
+.card-body {
+  padding:16px;
+}
+.tag {
+  background:var(--green);
+  color:white;
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:12px;
+}
+.title { font-size:16px; font-weight:600; margin:8px 0; }
+.meta { color:var(--muted); font-size:13px; }
+
+/* --------------------------------------------------
+   UTILITY
+-------------------------------------------------- */
+.hide { display:none; }
+</style>
+</head>
+
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#">Dashboard</a>
+  <a href="#" id="menuTrigger">Content Library ▾</a>
+  <a href="#">My Dataset</a>
+  <a href="#">Upload Dataset</a>
+  <a href="#">Pricing</a>
+
+  <!-- MEGA MENU -->
+  <div id="megaMenu" class="mega">
+
+    <!-- MATH -->
+    <div class="col">
+      <h3>Math Library</h3>
+
+      <h4>Content Type</h4>
+      <a href="?library=math&type=free">Free Lessons (38)</a>
+      <a href="?library=math&type=featured">Featured Lessons (3)</a>
+      <a href="?library=math&type=premium">Premium Lessons (135)</a>
+      <a href="?library=math&type=all">All Math Lessons (173)</a>
+
+      <h4>Grades</h4>
+      <a href="?library=math&grade=3">Grade 3</a>
+      <a href="?library=math&grade=4">Grade 4</a>
+      <a href="?library=math&grade=5">Grade 5</a>
+      <a href="?library=math&grade=ms">Middle School</a>
+      <a href="?library=math&grade=hs">High School</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SCIENCE -->
+    <div class="col">
+      <h3>Science Library</h3>
+
+      <h4>Content Type</h4>
+      <a href="?library=science&type=free">Free Lessons (29)</a>
+      <a href="?library=science&type=featured">Featured Lessons</a>
+      <a href="?library=science&type=premium">Premium Lessons (248)</a>
+      <a href="?library=science&type=all">All Science Lessons (277)</a>
+
+      <h4>Grade Bands</h4>
+      <a href="?library=science&grade=ms">Middle School</a>
+      <a href="?library=science&grade=bio">HS Biology</a>
+      <a href="?library=science&grade=chem">HS Chemistry</a>
+      <a href="?library=science&grade=phys">HS Physics</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- COLLECTIONS -->
+    <div class="col">
+      <h3>Collections</h3>
+      <a href="/collections/biology">HS Biology</a>
+      <a href="/collections/chemistry">HS Chemistry</a>
+      <a href="/collections/physics">HS Physics</a>
+      <a href="/collections/all">All Collections</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Filters</h3>
+
+    <h4>Content Type</h4>
+    <label><input type="radio" name="type" value="free"> Free Lessons</label>
+    <label><input type="radio" name="type" value="featured"> Featured Lessons</label>
+    <label><input type="radio" name="type" value="premium"> Premium Lessons</label>
+    <label><input type="radio" name="type" value="all" checked> All Lessons</label>
+
+    <h4>Grades</h4>
+    <label><input type="checkbox" value="3"> Grade 3</label>
+    <label><input type="checkbox" value="4"> Grade 4</label>
+    <label><input type="checkbox" value="5"> Grade 5</label>
+    <label><input type="checkbox" value="ms"> Middle School</label>
+    <label><input type="checkbox" value="hs"> High School</label>
+
+    <h4>Context</h4>
+    <label><input type="checkbox" value="sports"> Sports</label>
+    <label><input type="checkbox" value="tech"> Industry & Tech</label>
+    <label><input type="checkbox" value="env"> Environment</label>
+  </aside>
+
+  <!-- CONTENT -->
+  <main>
+    <div class="header">
+      <h1>Content Library</h1>
+      <input class="search" placeholder="Search lessons…" />
+    </div>
+
+    <div id="grid" class="grid"></div>
+  </main>
+</div>
+
+
+<script>
+/* ----------------------------------------------
+   Demo Content Data (Replace with real API later)
+---------------------------------------------- */
+const DATA = [
+  { id:1, type:"free", grade:"4", context:"sports", title:"Comparing Decimals with NBA Stats" },
+  { id:2, type:"premium", grade:"3", context:"env", title:"Understanding Rounding with EV Range Data" },
+  { id:3, type:"featured", grade:"5", context:"tech", title:"Fractions from World Cup Goals" },
+  { id:4, type:"premium", grade:"ms", context:"env", title:"Air Quality Across US Cities" }
+];
+
+/* ----------------------------------------------
+   Render Cards
+---------------------------------------------- */
+function renderCards(list){
+  document.getElementById("grid").innerHTML =
+    list.map(item => `
+      <div class="card">
+        <div class="thumb"></div>
+        <div class="card-body">
+          <span class="tag">${item.type}</span>
+          <div class="title">${item.title}</div>
+          <div class="meta">Grade: ${item.grade.toUpperCase()}</div>
+        </div>
+      </div>
+    `).join("");
+}
+renderCards(DATA);
+
+/* ----------------------------------------------
+   Mega Menu Interactions
+---------------------------------------------- */
+const trig = document.getElementById("menuTrigger");
+const mega = document.getElementById("megaMenu");
+
+trig.addEventListener("mouseenter", () => mega.style.display="flex");
+mega.addEventListener("mouseleave", () => mega.style.display="none");
+</script>
+
+</body>
+</html>
