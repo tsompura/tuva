@@ -6,32 +6,32 @@
     <title>Tuva Real-Math Practice Path</title>
     <!-- Tuva Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons (simulated via CDN) -->
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            /* --- Tuva Brand Colors (Extracted from Screenshots) --- */
-            --tuva-burgundy: #8B2332;  /* Header Background */
-            --tuva-red: #A31C30;       /* Jr. Brand Red */
-            --tuva-red-light: #FBEAEA; /* Light Red Background */
-            --tuva-yellow: #D4AF37;    /* Premium/Accent Yellow */
+            /* --- Tuva Brand Colors --- */
+            --tuva-burgundy: #8B2332;
+            --tuva-red: #A31C30;
+            --tuva-red-light: #FBEAEA;
+            --tuva-yellow: #D4AF37;
             
             --tuva-text-dark: #333333;
             --tuva-text-light: #666666;
             --bg-gray: #F9F9F9;
             --border-color: #E0E0E0;
 
-            /* --- Theme Colors (Unit Colors) --- */
+            /* --- Theme Colors --- */
             --theme-green: #66BB6A;   /* Place Value */
             --theme-blue: #42A5F5;    /* Multiplication */
             --theme-orange: #FFA726;  /* Fractions */
             
             /* --- Dimensions --- */
             --header-height: 60px;
-            --sidebar-width: 250px;
+            --sidebar-width: 260px;
             --line-x: 40px;           /* Metro line position */
-            --card-offset: 80px;      /* Content offset from line */
+            --card-offset: 80px;      /* Content offset */
         }
 
         * { box-sizing: border-box; }
@@ -47,9 +47,7 @@
             overflow: hidden;
         }
 
-        /* =========================================
-           1. GLOBAL NAVIGATION HEADER (Tuva Standard)
-           ========================================= */
+        /* 1. GLOBAL HEADER */
         .tuva-header {
             height: var(--header-height);
             background-color: var(--tuva-burgundy);
@@ -62,443 +60,242 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Logo Area */
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+        .header-left, .header-right { display: flex; align-items: center; gap: 20px; }
         
         .tuva-logo {
-            font-size: 1.8rem;
-            font-weight: 300;
-            letter-spacing: -1px;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
+            font-size: 1.8rem; font-weight: 300; letter-spacing: -1px; color: white; text-decoration: none;
         }
         .tuva-logo strong { font-weight: 700; color: var(--tuva-yellow); }
 
-        /* Tools Button */
         .btn-tools {
-            background: white;
-            color: var(--tuva-burgundy);
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 0.9rem;
+            background: white; color: var(--tuva-burgundy); padding: 6px 16px;
+            border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 0.9rem;
         }
 
-        /* Navigation Links */
-        .header-nav {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-        
         .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
+            color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+            display: flex; align-items: center; gap: 6px; cursor: pointer;
         }
         .nav-link:hover { opacity: 0.9; }
-        .nav-link i { font-size: 0.8rem; opacity: 0.8; } /* Chevron icon */
-
-        /* Header Right */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
 
         .btn-premium {
-            border: 1px solid var(--tuva-yellow);
-            color: var(--tuva-yellow);
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: all 0.2s;
+            border: 1px solid var(--tuva-yellow); color: var(--tuva-yellow); padding: 6px 12px;
+            border-radius: 4px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; text-decoration: none;
         }
-        .btn-premium:hover {
-            background: var(--tuva-yellow);
-            color: var(--tuva-burgundy);
-        }
+        .btn-premium:hover { background: var(--tuva-yellow); color: var(--tuva-burgundy); }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--tuva-yellow);
-        }
+        /* 2. APP CONTAINER */
+        .app-container { display: flex; flex: 1; overflow: hidden; }
 
-        /* =========================================
-           2. MAIN LAYOUT CONTAINER
-           ========================================= */
-        .app-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden; /* Height controlled by body */
-        }
-
-        /* --- SIDEBAR --- */
+        /* Sidebar */
         .sidebar {
-            width: var(--sidebar-width);
-            background: white;
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            padding-top: 20px;
+            width: var(--sidebar-width); background: white; border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; flex-shrink: 0; padding-top: 20px;
         }
-
         .sidebar-header {
-            padding: 0 24px 16px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--tuva-text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 10px;
+            padding: 0 24px 16px; font-size: 0.85rem; font-weight: 700; color: var(--tuva-text-light);
+            text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #eee; margin-bottom: 10px;
         }
-
         .grade-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 24px;
-            text-decoration: none;
-            color: var(--tuva-text-light);
-            font-weight: 600;
-            font-size: 1rem;
-            border-left: 4px solid transparent;
-            transition: all 0.1s;
-            cursor: pointer;
+            display: flex; align-items: center; padding: 12px 24px; text-decoration: none;
+            color: var(--tuva-text-light); font-weight: 600; font-size: 1rem; border-left: 4px solid transparent;
+            cursor: pointer; transition: all 0.1s;
         }
-        
-        .grade-link:hover {
-            background-color: var(--bg-gray);
-            color: var(--tuva-text-dark);
-        }
-        
+        .grade-link:hover { background-color: var(--bg-gray); color: var(--tuva-text-dark); }
         .grade-link.active {
-            background-color: var(--tuva-burgundy);
-            color: white;
-            border-left-color: var(--tuva-burgundy); /* Solid block style */
+            background-color: var(--tuva-red-light); color: var(--tuva-red); border-left-color: var(--tuva-red);
         }
 
-        /* --- CONTENT AREA --- */
+        /* Content Area */
         .main-content {
-            flex: 1;
-            padding: 40px 60px;
-            overflow-y: auto;
-            position: relative;
-            background-color: var(--bg-gray);
+            flex: 1; padding: 40px 60px; overflow-y: auto; position: relative; background-color: var(--bg-gray);
         }
 
-        .page-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 40px;
-            margin-left: var(--card-offset); /* Align with content flow */
-            padding-right: 20px;
+        /* Page Header & Controls */
+        .page-header-row {
+            display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;
+            margin-left: var(--card-offset); padding-right: 20px;
         }
+        .page-title h1 { color: var(--tuva-red); margin: 0 0 8px 0; font-size: 2rem; }
+        .page-title p { color: var(--tuva-text-light); margin: 0; font-size: 1rem; }
 
-        .page-title h1 {
-            color: var(--tuva-burgundy);
-            margin: 0 0 8px 0;
-            font-size: 2rem;
-        }
-        .page-title p {
-            color: var(--tuva-text-light);
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        /* Layout Switcher Buttons */
         .layout-toggle {
-            display: flex;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
+            display: flex; background: white; border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden;
         }
         .toggle-btn {
-            padding: 8px 16px;
-            border: none;
-            background: white;
-            color: var(--tuva-text-light);
-            font-weight: 600;
-            cursor: pointer;
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
+            padding: 8px 16px; border: none; background: white; color: var(--tuva-text-light);
+            font-weight: 600; cursor: pointer; border-right: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 6px; font-size: 0.9rem;
         }
         .toggle-btn:last-child { border-right: none; }
-        .toggle-btn:hover { background: #f5f5f5; }
-        
-        .toggle-btn.active {
-            background: var(--tuva-burgundy);
-            color: white;
-        }
+        .toggle-btn.active { background: var(--tuva-red); color: white; }
 
-        /* =========================================
-           3. THE POLISHED CONTEXT CARD (Works in both layouts)
-           ========================================= */
+        /* Global Filter Bar */
+        .filter-bar {
+            margin-left: var(--card-offset); margin-bottom: 40px; padding: 12px 20px;
+            background: white; border: 1px solid var(--border-color); border-radius: 8px;
+            display: flex; align-items: center; gap: 20px;
+        }
+        .filter-label { font-weight: 700; font-size: 0.85rem; color: var(--tuva-text-light); text-transform: uppercase; }
+        .filter-pill {
+            padding: 6px 12px; border-radius: 20px; background: #f0f0f0; color: #555;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .filter-pill:hover, .filter-pill.active { background: var(--tuva-red); color: white; }
+
+        /* 3. CARD COMPONENT (Polished with Thumb & Arrow) */
         .ctx-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 16px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-            /* Flat design, slight lift on hover */
+            background: white; border: 1px solid var(--border-color); border-radius: 8px;
+            overflow: hidden; transition: all 0.2s ease; cursor: pointer; display: flex; flex-direction: column;
         }
-
         .ctx-card:hover {
-            border-color: var(--tuva-burgundy);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border-color: var(--tuva-red); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        /* Header: Tag + Chevron */
-        .ctx-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .ctx-tag {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 4px 8px;
-            border-radius: 4px;
-            background: #eee; /* Default fallback */
-            color: #555;
+        .card-thumb {
+            height: 120px; background: #eee; position: relative;
+            background-size: cover; background-position: center;
         }
         
-        /* Tag Colors */
-        .ctx-tag.env { background: #E8F5E9; color: #2E7D32; }
-        .ctx-tag.food { background: #FFF3E0; color: #E65100; }
-        .ctx-tag.tech { background: #E3F2FD; color: #1565C0; }
-        .ctx-tag.animals { background: #F3E5F5; color: #7B1FA2; }
-
-        .chevron {
-            color: #ccc;
-            transition: transform 0.3s;
-        }
-        .ctx-card.expanded .chevron {
-            transform: rotate(180deg);
-            color: var(--tuva-burgundy);
+        .card-tag-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(255,255,255,0.95); color: #333;
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+            padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Title & Descriptions */
+        .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+
+        /* Header Row inside Body: Title + Arrow */
+        .ctx-header-row {
+            display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;
+        }
+
         .ctx-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--tuva-text-dark);
-            margin: 0 0 6px 0;
-            line-height: 1.3;
+            font-size: 1rem; font-weight: 700; color: var(--tuva-text-dark); line-height: 1.3; flex: 1; padding-right: 10px;
+        }
+
+        .ctx-arrow {
+            color: #ccc; transition: transform 0.3s ease; font-size: 0.9rem; margin-top: 4px;
+        }
+        .ctx-card.expanded .ctx-arrow {
+            transform: rotate(180deg); color: var(--tuva-red);
         }
 
         .ctx-short {
-            font-size: 0.9rem;
-            color: var(--tuva-text-light);
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 0.9rem; color: var(--tuva-text-light); margin: 0;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
 
-        /* Expanded Details Area */
+        /* Expanded State Details */
         .ctx-details {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease;
         }
-
         .ctx-card.expanded .ctx-details {
-            max-height: 300px;
-            opacity: 1;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid #eee;
+            max-height: 800px; opacity: 1; margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee;
         }
+        .ctx-card.expanded .ctx-short { -webkit-line-clamp: unset; }
 
-        .ctx-card.expanded .ctx-short { display: none; } /* Hide short desc when open */
+        /* Meta Info Row (Author, Steps, Tags) */
+        .meta-info-row {
+            display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;
+        }
+        .meta-item {
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--tuva-text-light);
+        }
+        .meta-item i { width: 16px; text-align: center; color: #888; }
+        
+        .tag-pill {
+            background: #f0f0f0; color: #555; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;
+        }
 
         .ctx-full {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: var(--tuva-text-light);
-            margin-bottom: 16px;
+            font-size: 0.9rem; line-height: 1.6; color: var(--tuva-text-dark); margin-bottom: 20px;
+        }
+
+        /* Action Buttons Row */
+        .card-actions {
+            display: flex; gap: 10px;
         }
 
         .btn-assign {
-            display: inline-block;
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--tuva-burgundy);
-            color: var(--tuva-burgundy);
-            background: white;
-            border-radius: 4px;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
-            transition: background 0.2s;
-            font-size: 0.9rem;
+            flex: 1; padding: 10px;
+            background: var(--tuva-red); color: white; border-radius: 4px;
+            font-weight: 700; text-align: center; text-decoration: none; font-size: 0.9rem;
+            border: none; cursor: pointer; transition: background 0.2s;
         }
-        .btn-assign:hover {
-            background: var(--tuva-burgundy);
-            color: white;
+        .btn-assign:hover { background: #8B1829; }
+        
+        .btn-bookmark {
+            width: 42px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid var(--border-color); border-radius: 4px; background: white;
+            color: var(--tuva-text-light); cursor: pointer; transition: all 0.2s;
+            font-size: 1.1rem;
         }
+        .btn-bookmark:hover { border-color: var(--tuva-red); color: var(--tuva-red); }
 
-        /* =========================================
-           4. LAYOUT 1: VERTICAL METRO MAP
-           ========================================= */
-        .metro-container {
-            position: relative;
-            padding-bottom: 100px;
-            display: none; /* Hidden by default */
-        }
+
+        /* 4. LAYOUT 1: VERTICAL METRO MAP */
+        .metro-container { position: relative; padding-bottom: 100px; display: none; }
         .metro-container.visible { display: block; }
 
-        /* The Line */
         .metro-track {
-            position: absolute;
-            left: var(--line-x);
-            top: 15px; bottom: 0;
-            width: 4px;
-            background: #E0E0E0;
-            z-index: 0;
-            border-radius: 2px;
+            position: absolute; left: var(--line-x); top: 15px; bottom: 0; width: 4px;
+            background: #E0E0E0; z-index: 0; border-radius: 2px;
         }
 
-        /* Unit Station (Big Circle) */
-        .unit-station {
-            position: relative;
-            margin-bottom: 50px;
-        }
+        .unit-station { position: relative; margin-bottom: 50px; }
         .unit-marker {
-            width: 32px; height: 32px;
-            background: white;
-            border: 4px solid #ccc;
-            border-radius: 50%;
-            position: absolute;
-            left: calc(var(--line-x) - 14px);
-            z-index: 2;
-            box-shadow: 0 0 0 6px var(--bg-gray); /* Masking line */
+            width: 32px; height: 32px; background: white; border: 4px solid #ccc;
+            border-radius: 50%; position: absolute; left: calc(var(--line-x) - 14px);
+            z-index: 2; box-shadow: 0 0 0 6px var(--bg-gray);
         }
         .unit-label {
-            margin-left: var(--card-offset);
-            padding-top: 6px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #999;
+            margin-left: var(--card-offset); padding-top: 6px; font-size: 0.85rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #999;
         }
 
-        /* Skill Stop (Dot) */
-        .skill-stop {
-            position: relative;
-            margin-bottom: 40px;
-        }
+        .skill-stop { position: relative; margin-bottom: 40px; }
         .skill-dot {
-            width: 14px; height: 14px;
-            background: #999;
-            border-radius: 50%;
-            position: absolute;
-            left: calc(var(--line-x) - 5px);
-            top: 22px;
-            z-index: 2;
-            border: 2px solid white;
+            width: 14px; height: 14px; background: #999; border-radius: 50%;
+            position: absolute; left: calc(var(--line-x) - 5px); top: 22px; z-index: 2; border: 2px solid white;
         }
-        .skill-content {
-            margin-left: var(--card-offset);
-        }
+        .skill-content { margin-left: var(--card-offset); }
         .skill-heading {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--tuva-text-dark);
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--tuva-text-dark);
         }
 
-        /* Grid for Cards in Metro View */
         .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1100px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; max-width: 1100px;
         }
 
-        /* =========================================
-           5. LAYOUT 2: TIMELINE (LINEAR LIST)
-           ========================================= */
+        /* 5. LAYOUT 2: TIMELINE LIST */
         .timeline-container {
-            max-width: 900px;
-            margin-left: var(--card-offset);
-            display: none; /* Hidden by default */
+            max-width: 900px; margin-left: var(--card-offset); display: none;
         }
         .timeline-container.visible { display: block; }
 
         .tl-unit-block {
-            margin-bottom: 40px;
-            border-left: 4px solid #eee;
-            padding-left: 24px;
+            margin-bottom: 40px; border-left: 4px solid #eee; padding-left: 24px;
         }
-
         .tl-unit-title {
-            font-size: 0.9rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: #999;
+            font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; color: #999;
         }
-
-        .tl-skill-block {
-            margin-bottom: 24px;
-        }
-
+        .tl-skill-block { margin-bottom: 24px; }
         .tl-skill-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--tuva-text-dark);
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--tuva-text-dark);
+            padding-bottom: 8px; border-bottom: 1px solid #eee;
         }
-        
-        /* In Timeline view, cards stack vertically */
-        .cards-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .cards-stack { display: flex; flex-direction: column; gap: 12px; }
+        /* In stack mode, make cards horizontal */
+        .timeline-container .ctx-card { flex-direction: row; align-items: flex-start; }
+        .timeline-container .card-thumb { width: 140px; height: auto; min-height: 120px; flex-shrink: 0; }
+        .timeline-container .card-body { padding: 16px 20px; }
+        .timeline-container .ctx-card.expanded { flex-direction: column; }
+        .timeline-container .ctx-card.expanded .card-thumb { width: 100%; height: 140px; }
 
 
-        /* =========================================
-           THEME COLORS (Dynamic CSS Classes)
-           ========================================= */
+        /* Theme Classes */
         .theme-green .unit-marker { border-color: var(--theme-green); }
         .theme-green .unit-label, .theme-green .tl-unit-title { color: var(--theme-green); }
         .theme-green .skill-dot { background: var(--theme-green); }
@@ -518,33 +315,25 @@
 </head>
 <body>
 
-    <!-- 1. GLOBAL HEADER -->
+    <!-- HEADER -->
     <header class="tuva-header">
         <div class="header-left">
-            <a href="#" class="tuva-logo">
-                Tu<span>v</span>a
-            </a>
+            <a href="#" class="tuva-logo">Tu<span>v</span>a <strong>Jr.</strong></a>
             <a href="#" class="btn-tools">Tuva Tools</a>
             <nav class="header-nav">
-                <a class="nav-link">Tuva Jr. <i class="fas fa-chevron-down"></i></a>
                 <a class="nav-link">Dashboard</a>
                 <a class="nav-link">Content Library <i class="fas fa-chevron-down"></i></a>
-                <a class="nav-link">Dataset Library <i class="fas fa-chevron-down"></i></a>
                 <a class="nav-link">Teaching <i class="fas fa-chevron-down"></i></a>
             </nav>
         </div>
         <div class="header-right">
             <a href="#" class="btn-premium">Premium</a>
             <div class="nav-link">Help</div>
-            <div class="user-profile">
-                TSOMPURA <i class="fas fa-chevron-down"></i>
-            </div>
+            <div class="nav-link"><i class="fas fa-user-circle"></i> TSOMPURA</div>
         </div>
     </header>
 
-    <!-- 2. MAIN APP -->
     <div class="app-container">
-        
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-header">Learning Map</div>
@@ -553,17 +342,15 @@
             <div class="grade-link" onclick="switchGrade('grade5', this)">Grade 5</div>
         </aside>
 
-        <!-- CONTENT -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- Page Header + View Controls -->
-            <div class="page-controls">
+            <div class="page-header-row">
                 <div class="page-title">
                     <h1 id="grade-title">Grade 3 Mathematics</h1>
-                    <p>Select a skill context below to view real-world data activities.</p>
+                    <p>Select a skill context to view real-world data activities.</p>
                 </div>
                 
-                <!-- Layout Switcher -->
                 <div class="layout-toggle">
                     <button class="toggle-btn active" id="btn-metro" onclick="setLayout('metro')">
                         <i class="fas fa-project-diagram"></i> Metro Map
@@ -574,17 +361,25 @@
                 </div>
             </div>
 
-            <!-- CONTAINER FOR DYNAMIC CONTENT -->
+            <!-- Global Filter: Difficulty -->
+            <div class="filter-bar">
+                <span class="filter-label">Filter By Difficulty:</span>
+                <span class="filter-pill active" onclick="filterDifficulty('all', this)">All</span>
+                <span class="filter-pill" onclick="filterDifficulty('easy', this)">Easy</span>
+                <span class="filter-pill" onclick="filterDifficulty('medium', this)">Medium</span>
+                <span class="filter-pill" onclick="filterDifficulty('hard', this)">Hard</span>
+            </div>
+
+            <!-- DYNAMIC CONTENT -->
             <div id="dynamic-content">
-                <!-- Javascript will inject the layout here -->
+                <!-- Injected via JS -->
             </div>
 
         </main>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- DATA MODEL (Based on your Excel) ---
+        // Data Structure with Real Images
         const curriculum = {
             grade3: [
                 {
@@ -592,26 +387,28 @@
                     theme: "theme-green",
                     skills: [
                         {
-                            id: 1,
                             name: "Round numbers to nearest 100",
                             contexts: [
                                 {
-                                    tag: "env", tagName: "Environment",
+                                    tagName: "Environment", imgUrl: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=400&q=80",
                                     title: "How High Are We?",
                                     short: "Altitudes of Cities Around the World.",
-                                    desc: "Pack your bags! Compare the elevations of major global cities. Use place value to round their altitudes to the nearest 100 meters."
+                                    desc: "Pack your bags—we're off on an adventure! We'll explore how high famous cities sit above sea level. As we travel across the USA and Europe, you'll use your place value superpowers to round their altitudes to the nearest 10 and 100 meters. Get ready to climb the peaks (and spot the lowlands) while sharpening your rounding skills!",
+                                    author: "By Tuva Staff", steps: "5 Steps", tags: ["Grade 3", "Place Value"]
                                 },
                                 {
-                                    tag: "food", tagName: "Food",
+                                    tagName: "Food", imgUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
                                     title: "Counting Calories!",
                                     short: "Analyze calories in common snacks.",
-                                    desc: "From cereals to pizza, every food has a count. Use real data to round calories to the nearest 10 or 100 to make smart estimates."
+                                    desc: "From breakfast cereals to cheesy pizzas, every food comes with a calorie count. But who really remembers if a snack has 263 or 478 calories? In this lesson, you'll explore the world of food and nutrition while learning how to round calories to the nearest 10 or 100 to make quick, smart estimates. You'll use real data from everyday foods to build your math skills, and maybe even rethink that extra slice of cake!",
+                                    author: "By Tuva Staff", steps: "6 Steps", tags: ["Grade 3", "Rounding"]
                                 },
                                 {
-                                    tag: "tech", tagName: "Tech",
+                                    tagName: "Tech", imgUrl: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=400&q=80",
                                     title: "Charge it Up!",
                                     short: "Estimating EV Ranges.",
-                                    desc: "Electric vehicles are changing travel. Explore ranges of popular cars and practice rounding to compare efficiency."
+                                    desc: "Electric vehicles (EVs) are changing how we travel. The distance a car travels on a single charge can be a very important factor. In this lesson, you'll explore the ranges of popular electric cars and practice how to **round numbers to the nearest 10 or 100** to make fast, useful comparisons. It's math that moves, with data that drives real-world thinking about clean energy and transportation!",
+                                    author: "By Tuva Staff", steps: "4 Steps", tags: ["Grade 3", "Tech"]
                                 }
                             ]
                         }
@@ -622,26 +419,28 @@
                     theme: "theme-blue",
                     skills: [
                         {
-                            id: 2,
                             name: "Understand multiplication as equal groups",
                             contexts: [
                                 {
-                                    tag: "animals", tagName: "Animals",
+                                    tagName: "Animals", imgUrl: "https://images.unsplash.com/photo-1534567176735-84636419e92f?auto=format&fit=crop&w=400&q=80",
                                     title: "How Many Animals at the Zoo?",
                                     short: "Using pictographs to count exhibits.",
-                                    desc: "The San Diego Zoo keeps track of its animals. Use their data pictographs to answer questions about animal groups using multiplication."
+                                    desc: "The San Diego Zoo, one of the largest and most famous zoos in the world, keeps track of its animals to make sure they are healthy and well cared for. The zoo staff recently shared animal counts from different exhibits using pictographs. Use the graphs to help answer questions about the animals at the zoo!",
+                                    author: "By Tuva Staff", steps: "5 Steps", tags: ["Grade 3", "Multiplication"]
                                 },
                                 {
-                                    tag: "food", tagName: "Farming",
+                                    tagName: "Farming", imgUrl: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=400&q=80",
                                     title: "School Garden Harvest",
                                     short: "Tracking fruits and vegetables.",
-                                    desc: "Students at Greenfield Elementary harvested fruits. Use multiplication to calculate the total yield from their records."
+                                    desc: "Many schools around the world, including in the U.S., are growing fruits and vegetables in their own school gardens to help students learn about nature, healthy eating, and sustainability. At Greenfield Elementary, students recently harvested fruits from their garden and recorded the totals using pictographs. Use the graphs to explore what they picked!",
+                                    author: "By Tuva Staff", steps: "4 Steps", tags: ["Grade 3", "Graphs"]
                                 },
                                 {
-                                    tag: "tech", tagName: "Industry",
+                                    tagName: "Industry", imgUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=400&q=80",
                                     title: "Recycling Collection",
                                     short: "Weighing plastic, paper, and glass.",
-                                    desc: "Calculate the total weight of materials collected for recycling over a month using equal groups logic."
+                                    desc: "Every week, students at Green Meadows School collect plastic, paper, and glass to help with recycling. The school weighs the materials at the end of each week and tracks the totals in kilograms (kg). Let's explore their collection!",
+                                    author: "By Tuva Staff", steps: "6 Steps", tags: ["Grade 3", "Measurement"]
                                 }
                             ]
                         }
@@ -652,36 +451,36 @@
                     theme: "theme-orange",
                     skills: [
                         {
-                            id: 3,
                             name: "Compare fractions with same denominators",
                             contexts: [
                                 {
-                                    tag: "food", tagName: "Health",
+                                    tagName: "Health", imgUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=400&q=80",
                                     title: "What's on Your Plate?",
                                     short: "Macronutrients in everyday foods.",
-                                    desc: "Analyze your favorite meals. Compare the fraction of protein versus carbs in different dishes to understand balance."
+                                    desc: "Analyze your favorite meals. Compare the fraction of protein versus carbs in different dishes to understand balance.",
+                                    author: "By Tuva Staff", steps: "7 Steps", tags: ["Grade 3", "Fractions"]
                                 },
                                 {
-                                    tag: "tech", tagName: "Sports",
+                                    tagName: "Sports", imgUrl: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=400&q=80",
                                     title: "Fractions on the Field",
                                     short: "FIFA World Cup Goals by Country.",
-                                    desc: "Look at the win/loss ratios of top teams. Compare fractions to see which teams had the best scoring average."
+                                    desc: "Look at the win/loss ratios of top teams. Compare fractions to see which teams had the best scoring average.",
+                                    author: "By Tuva Staff", steps: "5 Steps", tags: ["Grade 3", "Sports"]
                                 }
                             ]
                         }
                     ]
                 }
             ],
-            grade4: [], // Placeholder
-            grade5: []  // Placeholder
+            grade4: [],
+            grade5: []
         };
 
-        // --- STATE MANAGEMENT ---
-        let currentLayout = 'metro'; // 'metro' or 'timeline'
+        // State
+        let currentLayout = 'metro';
         let currentGrade = 'grade3';
 
-        // --- RENDER FUNCTIONS ---
-
+        // Render Logic
         function render() {
             const container = document.getElementById('dynamic-content');
             const data = curriculum[currentGrade];
@@ -699,36 +498,29 @@
             }
         }
 
-        // Layout 1: Metro Map
+        // Metro Layout
         function renderMetro(data, container) {
             const wrapper = document.createElement('div');
             wrapper.className = 'metro-container visible';
-            wrapper.innerHTML = '<div class="metro-track"></div>'; // The vertical line
+            wrapper.innerHTML = '<div class="metro-track"></div>';
 
             data.forEach(unit => {
-                // Unit Marker
+                // Unit Station
                 wrapper.innerHTML += `
                     <div class="unit-station ${unit.theme}">
                         <div class="unit-marker"></div>
                         <div class="unit-label">${unit.unit}</div>
                     </div>
                 `;
-
                 // Skills
                 unit.skills.forEach(skill => {
-                    let cardsHtml = '';
-                    skill.contexts.forEach(ctx => {
-                        cardsHtml += getCardHTML(ctx);
-                    });
-
+                    let cardsHtml = skill.contexts.map(ctx => getCardHTML(ctx)).join('');
                     wrapper.innerHTML += `
                         <div class="skill-stop ${unit.theme}">
                             <div class="skill-dot"></div>
                             <div class="skill-content">
-                                <div class="skill-heading">${skill.id}. ${skill.name}</div>
-                                <div class="cards-grid">
-                                    ${cardsHtml}
-                                </div>
+                                <div class="skill-heading">${skill.name}</div>
+                                <div class="cards-grid">${cardsHtml}</div>
                             </div>
                         </div>
                     `;
@@ -737,29 +529,21 @@
             container.appendChild(wrapper);
         }
 
-        // Layout 2: Timeline List
+        // Timeline Layout
         function renderTimeline(data, container) {
             const wrapper = document.createElement('div');
             wrapper.className = 'timeline-container visible';
 
             data.forEach(unit => {
-                let skillsHtml = '';
-                
-                unit.skills.forEach(skill => {
-                    let cardsHtml = '';
-                    skill.contexts.forEach(ctx => {
-                        cardsHtml += getCardHTML(ctx);
-                    });
-                    
-                    skillsHtml += `
+                let skillsHtml = unit.skills.map(skill => {
+                    let cardsHtml = skill.contexts.map(ctx => getCardHTML(ctx)).join('');
+                    return `
                         <div class="tl-skill-block">
-                            <div class="tl-skill-title">${skill.id}. ${skill.name}</div>
-                            <div class="cards-stack">
-                                ${cardsHtml}
-                            </div>
+                            <div class="tl-skill-title">${skill.name}</div>
+                            <div class="cards-stack">${cardsHtml}</div>
                         </div>
                     `;
-                });
+                }).join('');
 
                 wrapper.innerHTML += `
                     <div class="tl-unit-block ${unit.theme}">
@@ -771,28 +555,44 @@
             container.appendChild(wrapper);
         }
 
-        // Helper: Card HTML Generator
+        // Card Template with Real Image & Arrow
         function getCardHTML(ctx) {
+            // Generate tags HTML
+            let tagsHtml = ctx.tags.map(tag => `<span class="tag-pill"><i class="fas fa-tag"></i> ${tag}</span>`).join('');
+            
             return `
                 <div class="ctx-card" onclick="toggleCard(this)">
-                    <div class="ctx-header">
-                        <span class="ctx-tag ${ctx.tag}">${ctx.tagName}</span>
-                        <i class="fas fa-chevron-down chevron"></i>
+                    <div class="card-thumb" style="background-image: url('${ctx.imgUrl}');">
+                        <span class="card-tag-badge">${ctx.tagName}</span>
                     </div>
-                    <div class="ctx-title">${ctx.title}</div>
-                    <div class="ctx-short">${ctx.short}</div>
-                    <div class="ctx-details">
-                        <div class="ctx-full">${ctx.desc}</div>
-                        <a href="#" class="btn-assign">Assign Activity</a>
+                    <div class="card-body">
+                        <div class="ctx-header-row">
+                            <div class="ctx-title">${ctx.title}</div>
+                            <i class="fas fa-chevron-down ctx-arrow"></i>
+                        </div>
+                        <div class="ctx-short">${ctx.short}</div>
+                        <div class="ctx-details">
+                            <div class="meta-info-row">
+                                <div class="meta-item"><i class="far fa-user"></i> ${ctx.author}</div>
+                                <div class="meta-item"><i class="fas fa-layer-group"></i> ${ctx.steps}</div>
+                                <div class="meta-item">${tagsHtml}</div>
+                            </div>
+                            <div class="ctx-full">${ctx.desc}</div>
+                            <div class="card-actions">
+                                <button class="btn-assign">Assign Activity</button>
+                                <button class="btn-bookmark" title="Bookmark Activity">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
         }
 
-        // --- INTERACTION HANDLERS ---
-
+        // Interactions
         function toggleCard(card) {
-            // Collapse all other cards (Optional: nicer UX)
+            // Optional: Close others
             // document.querySelectorAll('.ctx-card.expanded').forEach(c => {
             //     if(c !== card) c.classList.remove('expanded');
             // });
@@ -801,30 +601,30 @@
 
         function setLayout(layout) {
             currentLayout = layout;
-            
-            // Toggle Buttons UI
-            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${layout}`).classList.add('active');
-
-            // Re-render
             render();
         }
 
         function switchGrade(grade, btn) {
             currentGrade = grade;
+            document.querySelectorAll('.grade-link').forEach(l => l.classList.remove('active'));
+            btn.classList.add('active');
             
-            // Sidebar UI
-            document.querySelectorAll('.grade-link').forEach(el => el.classList.remove('active'));
-            if(btn) btn.classList.add('active');
-            
-            // Title Update
             const display = grade.replace('grade', 'Grade ');
             document.getElementById('grade-title').textContent = `${display} Mathematics`;
-
             render();
         }
 
-        // Initial Render
+        // Filter Logic (Visual Only for Prototype)
+        function filterDifficulty(level, btn) {
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // In a real app, this would filter the curriculum array
+            console.log("Filtering by:", level);
+        }
+
+        // Init
         render();
 
     </script>
