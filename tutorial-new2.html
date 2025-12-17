@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Tutorials | Graphing Functions</title>
+    <!-- Tuva Typography: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- Tuva Brand Palette --- */
+            
+            /* Header Background - Tuva Green */
+            --header-bg: #004445; 
+            
+            /* Content Accents - Purple */
+            --tuva-purple: #682D8A;
+            --tuva-red-light: #F3F1F9; 
+            
+            /* Accents */
+            --tuva-yellow: #ECB606;       
+            --tuva-yellow-hover: #EB9E00; 
+
+            /* Neutrals & Text */
+            --gray-900: #1C2025; /* Headings */
+            --text-body: #1C2025; /* Strict Body Color */
+            --gray-700: #666666; 
+            --gray-500: #989DA3; 
+            --gray-200: #DADFE5; 
+            --bg-body:  #F5FAFF; 
+            
+            --sidebar-width: 280px;
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-body);
+            font-size: 16px; /* UPDATED: Base font size increased to 16px */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- 1. GLOBAL HEADER --- */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--header-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            flex-shrink: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        
+        .tuva-logo img { 
+            height: 32px; /* Logo Height */
+            display: block;
+        }
+        
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { 
+            color: rgba(255,255,255,0.9); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-item:hover { color: white; }
+        
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        
+        .btn-premium { 
+            border: 1px solid var(--tuva-yellow); 
+            color: var(--tuva-yellow); 
+            padding: 7px 16px; 
+            border-radius: 4px; 
+            font-weight: 700; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .btn-premium:hover { 
+            background-color: var(--tuva-yellow); 
+            color: var(--header-bg); 
+        }
+
+        /* --- 2. LAYOUT --- */
+        .app-wrapper { display: flex; flex: 1; overflow: hidden; }
+
+        /* SIDEBAR */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            background: white; 
+            border-right: 1px solid var(--gray-200); 
+            display: flex; 
+            flex-direction: column; 
+            overflow-y: auto; 
+        }
+        
+        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--gray-200); }
+        
+        .back-link {
+            font-size: 14px; color: var(--gray-700); text-decoration: none; 
+            display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-weight: 600;
+        }
+        .back-link:hover { color: var(--tuva-purple); }
+
+        .category-title { 
+            font-size: 18px; font-weight: 700; color: var(--tuva-purple); line-height: 1.3; 
+        }
+        .category-meta { font-size: 14px; color: var(--gray-700); margin-top: 4px; }
+
+        .tutorial-list { list-style: none; padding: 0; margin: 0; }
+        .tutorial-item { border-bottom: 1px solid #f0f0f0; }
+        
+        .tutorial-link {
+            display: flex; gap: 12px; padding: 16px 24px; 
+            text-decoration: none; color: var(--text-body);
+            transition: all 0.2s; align-items: flex-start;
+        }
+        .tutorial-link:hover { background-color: #f9f9f9; color: var(--gray-900); }
+        
+        .tutorial-link.active {
+            background-color: var(--tuva-red-light); 
+            border-left: 4px solid var(--tuva-purple); 
+            padding-left: 20px;
+        }
+        .tutorial-link.active .t-title { color: var(--tuva-purple); font-weight: 700; }
+        .tutorial-link.active .t-number { background: var(--tuva-purple); color: white; border-color: var(--tuva-purple); }
+        
+        .t-number {
+            width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+        }
+        .t-title { font-size: 16px; line-height: 1.4; }
+
+        /* CONTENT */
+        .content-area { flex: 1; overflow-y: auto; padding: 40px 60px; scroll-behavior: smooth; }
+        .content-container { max-width: 800px; margin: 0 auto; }
+
+        .tutorial-hero { margin-bottom: 40px; border-bottom: 1px solid var(--gray-200); padding-bottom: 30px; }
+        
+        .hero-badge { 
+            display: inline-block; background: var(--gray-200); color: var(--gray-800); 
+            font-size: 12px; font-weight: 700; text-transform: uppercase; 
+            padding: 4px 8px; border-radius: 4px; margin-bottom: 12px; letter-spacing: 0.5px;
+        }
+        .hero-title { font-size: 36px; margin: 0 0 16px 0; color: var(--gray-900); font-weight: 700; }
+        .hero-intro { font-size: 18px; line-height: 1.6; color: var(--text-body); font-weight: 300; margin-bottom: 24px; }
+
+        /* --- Top "Try It Out" Block --- */
+        .try-it-block {
+            background: white; 
+            border: 1px solid var(--gray-200); 
+            border-left: 5px solid var(--tuva-yellow); 
+            border-radius: 4px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .try-text h4 {
+            margin: 0 0 4px 0; font-size: 18px; font-weight: 700; color: var(--gray-900);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .try-text h4 i { color: var(--tuva-yellow); }
+        .try-text p { margin: 0; font-size: 16px; color: var(--gray-700); }
+
+        .try-actions { display: flex; gap: 12px; }
+
+        .btn-enroll {
+            background-color: var(--tuva-purple); color: white;
+            padding: 10px 20px; border-radius: 4px; text-decoration: none;
+            font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px;
+            transition: background 0.2s;
+        }
+        .btn-enroll:hover { background-color: #53266D; }
+
+        .btn-try-small {
+            background-color: white; color: var(--tuva-purple);
+            border: 1px solid var(--tuva-purple);
+            padding: 10px 20px; border-radius: 4px; text-decoration: none;
+            font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px;
+            transition: background 0.2s;
+        }
+        .btn-try-small:hover { background-color: var(--tuva-red-light); }
+
+
+        .media-block { 
+            background: white; border: 1px solid var(--gray-200); border-radius: 8px; 
+            padding: 10px; margin-bottom: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        }
+        .media-placeholder { 
+            background: #eef2f5; height: 350px; border-radius: 6px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: #9aa5b1; flex-direction: column; gap: 10px; 
+        }
+        .gif-label { font-weight: 600; text-transform: uppercase; font-size: 14px; letter-spacing: 1px; }
+
+        .steps-section { margin-bottom: 50px; }
+        
+        .section-heading { 
+            font-size: 24px; font-weight: 700; color: var(--gray-900); 
+            margin-bottom: 24px; 
+        }
+
+        .step-card {
+            background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 24px;
+            margin-bottom: 20px; display: flex; gap: 0; align-items: flex-start;
+        }
+        
+        .step-content h3 { margin: 0 0 8px 0; font-size: 18px; font-weight: 700; color: var(--gray-900); /* UPDATED: Content Heading size 18px */ }
+        .step-content p { margin: 0; font-size: 16px; color: var(--text-body); line-height: 1.5; /* UPDATED: Content Body size 16px */ }
+        .step-sublist { margin-top: 10px; padding-left: 20px; color: var(--text-body); font-size: 16px; /* UPDATED: List size 16px */ }
+        .step-sublist li { margin-bottom: 4px; }
+
+        /* Bottom CTA */
+        .cta-block {
+            background: white; border-left: 5px solid var(--tuva-yellow); padding: 30px; 
+            border-radius: 0 8px 8px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-top: 60px; margin-bottom: 60px;
+        }
+        .cta-text h3 { margin: 0 0 8px 0; color: var(--gray-900); font-size: 20px; font-weight: 700; }
+        .cta-text p { margin: 0; color: var(--gray-700); font-size: 16px; }
+        
+        .btn-launch {
+            background-color: var(--tuva-yellow); color: var(--gray-900); 
+            padding: 12px 24px; border-radius: 4px; font-weight: 700; 
+            text-decoration: none; display: flex; align-items: center; gap: 8px; 
+            transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 16px; text-transform: uppercase;
+        }
+        .btn-launch:hover { background-color: var(--tuva-yellow-hover); transform: translateY(-1px); }
+
+        .tutorial-footer { display: flex; justify-content: space-between; padding-top: 30px; border-top: 1px solid var(--gray-200); }
+        .footer-nav { text-decoration: none; display: flex; flex-direction: column; gap: 4px; color: var(--gray-700); transition: all 0.2s; }
+        .footer-nav:hover { color: var(--tuva-purple); }
+        .nav-label { font-size: 12px; text-transform: uppercase; font-weight: 700; opacity: 0.6; }
+        .nav-title { font-size: 16px; font-weight: 600; }
+        .footer-nav.right { text-align: right; }
+    </style>
+</head>
+<body>
+
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item">Tutorials</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-premium">Premium</a>
+            <span style="color:white; font-size:14px; font-weight:600;">TSOMPURA <i class="fas fa-chevron-down" style="font-size:12px; margin-left:5px;"></i></span>
+        </div>
+    </header>
+
+    <div class="app-wrapper">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <!-- LINK BACK TO LANDING -->
+                <a href="Tuva_Tutorials_Landing.html" class="back-link"><i class="fas fa-arrow-left"></i> All Categories</a>
+                <div class="category-title">Graphing Functions & Creating Models</div>
+                <div class="category-meta">5 Tutorials</div>
+            </div>
+
+            <ul class="tutorial-list">
+                <li class="tutorial-item">
+                    <a href="#" class="tutorial-link active">
+                        <span class="t-number">1</span>
+                        <span class="t-title">Fitting Data with the Movable Line</span>
+                    </a>
+                </li>
+                <li class="tutorial-item">
+                    <a href="#" class="tutorial-link">
+                        <span class="t-number">2</span>
+                        <span class="t-title">Fitting Data with the Least Squares Line</span>
+                    </a>
+                </li>
+                <li class="tutorial-item">
+                    <a href="#" class="tutorial-link">
+                        <span class="t-number">3</span>
+                        <span class="t-title">Fitting Linear Data using the Equation Editor</span>
+                    </a>
+                </li>
+                <li class="tutorial-item">
+                    <a href="#" class="tutorial-link">
+                        <span class="t-number">4</span>
+                        <span class="t-title">Judging Model Fit using Least Squares Method</span>
+                    </a>
+                </li>
+                <li class="tutorial-item">
+                    <a href="#" class="tutorial-link">
+                        <span class="t-number">5</span>
+                        <span class="t-title">Nonlinear Modeling on Tuva</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content-area">
+            <div class="content-container">
+                
+                <section class="tutorial-hero">
+                    <span class="hero-badge">Modeling Tools</span>
+                    <h1 class="hero-title">Fitting Data with the Movable Line</h1>
+                    <p class="hero-intro">
+                        When two numerical variables form a pattern that looks like a straight line, a linear model can help describe how they are related. 
+                        Tuva's <strong>Movable Line tool</strong> lets you adjust a line directly on the graph to see how well it fits the data.
+                    </p>
+                    
+                    <!-- NEW BLOCK STYLE ACTIONS -->
+                    <div class="try-it-block">
+                        <div class="try-text">
+                            <h4><i class="fas fa-bolt"></i> Ready to practice?</h4>
+                            <p>Jump straight into the interactive tool or enroll to track progress.</p>
+                        </div>
+                        <div class="try-actions">
+                            <a href="#" class="btn-enroll"><i class="fas fa-plus-circle"></i> Enroll in Series</a>
+                            <a href="#" class="btn-try-small"><i class="fas fa-external-link-alt"></i> Try It Out Now</a>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="media-block">
+                    <div class="media-placeholder">
+                        <i class="fas fa-play-circle" style="font-size: 64px; opacity:0.5;"></i>
+                        <span class="gif-label">Fitting_Linear_Data_with_a_Movable_Line.gif</span>
+                    </div>
+                </div>
+
+                <section class="steps-section">
+                    <div class="section-heading">How It Works</div>
+
+                    <div class="step-card">
+                        <div class="step-content">
+                            <h3>1. Create a Scatter Plot</h3>
+                            <p>Drag one numerical attribute to the <strong>x-axis</strong> and another to the <strong>y-axis</strong> to visualize the relationship.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-content">
+                            <h3>2. Add a Movable Line</h3>
+                            <p>From the toolbar, select the <strong>Stats</strong> or <strong>Modeling</strong> menu, then choose <strong>Movable Line</strong>. A line will appear on your graph.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-content">
+                            <h3>3. Adjust for Best Fit</h3>
+                            <p>Fine-tune the line to match your data:</p>
+                            <ul class="step-sublist">
+                                <li><strong>Drag the middle</strong> of the line to change the intercept.</li>
+                                <li><strong>Drag either end</strong> to change the slope (rotation).</li>
+                                <li><strong>Stretch</strong> the line to extend it across the plot.</li>
+                            </ul>
+                            <p style="margin-top:8px; font-size:16px; color:#666;"><em>Note: As you move the line, its equation updates automatically!</em></p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="cta-block">
+                    <div class="cta-text">
+                        <h3><i class="fas fa-flask" style="color:var(--tuva-yellow); margin-right:8px;"></i> Try It Out</h3>
+                        <p>Open an interactive dataset and experiment with the Movable Line now.</p>
+                    </div>
+                    <a href="#" class="btn-launch">
+                        Launch Modeling Tools <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="tutorial-footer">
+                    <a href="#" class="footer-nav disabled" style="opacity:0.3; cursor:default;">
+                        <span class="nav-label">Previous</span>
+                        <span class="nav-title">--</span>
+                    </a>
+                    <a href="#" class="footer-nav right">
+                        <span class="nav-label">Next Tutorial</span>
+                        <span class="nav-title">Fitting Data with Least Squares <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+                <div style="height: 60px;"></div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
