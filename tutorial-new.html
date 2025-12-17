@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Tutorials | Learning Hub</title>
+    <!-- Tuva Typography: Source Sans Pro & Bitter -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Bitter:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- Tuva Brand Palette --- */
+            
+            /* Header Backgrounds */
+            --nav-bg-green: #004445;   /* Main Navigation Green */
+            --hero-bg-purple: #4B1C6D; /* Hero Dark Purple */
+            
+            /* Content Colors */
+            --tuva-purple: #682D8A;
+            --tuva-yellow: #ECB606;       
+            --tuva-yellow-hover: #EB9E00; 
+
+            /* Neutrals & Text */
+            --gray-900: #1C2025; 
+            --gray-800: #3D4146; 
+            --gray-700: #666666; 
+            --gray-500: #989DA3; 
+            --gray-200: #DADFE5; 
+            --bg-body:  #F5FAFF; 
+            
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            font-size: 16px; /* Base Body Size 16px */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- 1. GLOBAL HEADER (Green) --- */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--nav-bg-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        
+        .tuva-logo { 
+            font-size: 26px; 
+            font-weight: 300; 
+            letter-spacing: -0.5px; 
+            color: white; 
+            text-decoration: none; 
+        }
+        .tuva-logo img { height: 32px; display: block; }
+        
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { 
+            color: rgba(255,255,255,0.9); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 14px; 
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-item:hover { color: white; }
+        .nav-item.active { color: white; }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; 
+            left: 0; right: 0;
+            height: 4px;
+            background-color: var(--tuva-yellow);
+        }
+
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        
+        .btn-premium { 
+            border: 1px solid var(--tuva-yellow); 
+            color: var(--tuva-yellow); 
+            padding: 7px 16px; 
+            border-radius: 4px; 
+            font-weight: 700; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .btn-premium:hover { 
+            background-color: var(--tuva-yellow); 
+            color: var(--nav-bg-green); 
+        }
+        
+        .user-profile {
+            color: white; 
+            font-size: 14px; 
+            font-weight: 600; 
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- 2. HERO SECTION (Dark Purple #4B1C6D) --- */
+        .hub-hero {
+            background-color: var(--hero-bg-purple); 
+            background-image: url('https://tuvalabs.com/static/img/tutorials/hero-pattern-bg.svg');
+            background-repeat: repeat;
+            background-position: center;
+            padding: 80px 20px; 
+            text-align: center; 
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .hub-title { 
+            font-family: 'Bitter', serif; /* UPDATED: Changed to Bitter */
+            font-size: 42px; 
+            color: white; 
+            margin: 0 0 12px 0; 
+            font-weight: 700; 
+        }
+        
+        .hub-subtitle { 
+            font-size: 20px; 
+            color: rgba(255,255,255,0.9);
+            max-width: 600px; 
+            margin: 0 auto 40px auto; 
+            line-height: 1.5; 
+            font-weight: 300; 
+        }
+        
+        .search-container { 
+            max-width: 500px; 
+            margin: 0 auto; 
+            position: relative; 
+        }
+        
+        .search-input { 
+            width: 100%; 
+            padding: 14px 20px 14px 45px; 
+            border-radius: 4px; 
+            border: none; 
+            font-size: 16px; 
+            color: var(--gray-800); 
+            transition: box-shadow 0.2s; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .search-input:focus { 
+            outline: none; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2); 
+        }
+        
+        .search-icon { 
+            position: absolute; 
+            left: 16px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--gray-500); 
+        }
+
+        /* --- 3. CATEGORIES GRID --- */
+        .categories-section { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 50px 20px; 
+            width: 100%; 
+        }
+        
+        .section-label { 
+            font-size: 14px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: var(--gray-700); 
+            margin-bottom: 20px; 
+            letter-spacing: 0.5px; 
+            border-bottom: 2px solid var(--gray-200);
+            display: inline-block; 
+            padding-bottom: 5px;
+        }
+        
+        .cards-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 24px; 
+        }
+
+        /* --- 4. SERIES CARD DESIGN --- */
+        .series-card {
+            background: white; 
+            border: 1px solid var(--gray-200); 
+            border-radius: 4px; 
+            overflow: hidden; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+            cursor: pointer;
+            display: flex; 
+            flex-direction: column; 
+            height: 100%;
+            text-decoration: none; 
+            color: inherit;
+        }
+        .series-card:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12); 
+            border-color: var(--tuva-purple);
+        }
+        
+        /* The Header Block - Purple #682D8A */
+        .card-header-block {
+            height: 160px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            background-color: var(--tuva-purple);
+            padding: 0; /* UPDATED: Removed padding to maximize icon size */
+        }
+        
+        .card-thumb-img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover; /* UPDATED: Changed to cover to fill more space if needed, or stick to contain but allow full height */
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-body { 
+            padding: 24px; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Header Font Size: 18px */
+        .series-title { 
+            font-size: 18px; 
+            font-weight: 700; 
+            margin: 0 0 8px 0; 
+            color: var(--tuva-purple);
+        }
+        .series-card:hover .series-title { 
+            text-decoration: underline; 
+        }
+        
+        /* Body Font Size: 16px */
+        .series-desc { 
+            font-size: 16px; 
+            color: var(--gray-800); 
+            line-height: 1.5; 
+            margin-bottom: 20px; 
+            flex: 1; 
+        }
+        
+        .series-meta { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 14px; /* Increased meta size slightly for readability */
+            color: var(--gray-700); 
+            font-weight: 600; 
+            border-top: 1px solid var(--gray-200); 
+            padding-top: 12px; 
+        }
+        
+        .meta-count { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
+        .meta-count i { color: var(--gray-500); }
+        
+        .btn-start { 
+            text-transform: uppercase; 
+            font-size: 13px; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            transition: gap 0.2s; 
+            color: var(--tuva-purple);
+        }
+        .series-card:hover .btn-start { gap: 8px; }
+
+        /* --- 5. FOOTER --- */
+        .tuva-footer { 
+            margin-top: auto; 
+            background: white; 
+            border-top: 1px solid var(--gray-200); 
+            padding: 30px 20px; 
+            text-align: center; 
+            color: var(--gray-700); 
+            font-size: 14px; 
+        }
+        .tuva-footer a { 
+            color: var(--tuva-purple); 
+            text-decoration: none; 
+            margin: 0 10px; 
+        }
+        .tuva-footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item active">Tutorials</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-premium">Premium</a>
+            <div class="user-profile">
+                TSOMPURA <i class="fas fa-chevron-down" style="font-size:12px;"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (Dark Purple + Dots) -->
+    <section class="hub-hero">
+        <h1 class="hub-title">Master Data Literacy with Tuva</h1>
+        <p class="hub-subtitle">Explore our step-by-step guides to mastering graphing, statistical analysis, and data modeling tools.</p>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search tutorials (e.g., 'Least Squares', 'Maps')...">
+        </div>
+    </section>
+
+    <!-- CATEGORIES GRID -->
+    <section class="categories-section">
+        <div class="section-label">Browse Learning Series</div>
+        <div class="cards-grid">
+            
+            <!-- Card 1: Graphing & Modeling -->
+            <a href="Tuva_Tutorial_Redesign.html" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/graphis_img2_QuTGuyG.png" alt="Graphing" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Graphing Functions & Modeling</h3>
+                    <p class="series-desc">Learn how to fit linear and non-linear models to data using movable lines and least squares regression.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 5 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 2: Getting Started -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/sample_img.png" alt="Basics" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Getting Started with Tuva</h3>
+                    <p class="series-desc">The essentials of the Tuva interface. Learn to drag-and-drop attributes, create basic plots, and save your work.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 4 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 3: Data Analysis -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/models_img2_W4SAcdL.png" alt="Analysis" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Statistical Analysis Tools</h3>
+                    <p class="series-desc">Deep dive into mean, median, mode, box plots, and standard deviation visualizers.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 6 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 4: Counts & Percents -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/count_img2_5eHEHY5.png" alt="Counting" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Counts & Percents</h3>
+                    <p class="series-desc">How to use count and percent tools to analyze categorical data distributions effectively.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 3 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+             <!-- Card 5: Filtering -->
+             <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/filter_img2_FPAMGxW.png" alt="Filtering" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Filtering & Formatting</h3>
+                    <p class="series-desc">Techniques for filtering cases, coloring by attributes, and formatting axis labels.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 4 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="tuva-footer">
+        &copy; 2025 Tuva Labs Inc. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </footer>
+
+</body>
+</html>
