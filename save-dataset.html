@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Dataset | Tuva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --tuva-green: #004445;
+            --tuva-pink: #8C1A64;
+            --tuva-pink-hover: #B31E6F;
+            --gray-900: #1C2025;
+            --gray-800: #3D4146;
+            --gray-500: #989DA3;
+            --gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--tuva-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .tuva-logo img { height: 32px; display: block; }
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 14px; }
+        .nav-item:hover { color: white; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .user-profile { color: white; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+        /* MAIN LAYOUT */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .breadcrumb {
+            font-size: 14px; color: var(--gray-500); margin-bottom: 8px; display: block; text-decoration: none;
+        }
+        .breadcrumb:hover { color: var(--tuva-pink); }
+        
+        .page-title { margin: 0; font-size: 28px; font-weight: 700; color: var(--gray-900); }
+
+        /* GRID LAYOUT: 2 Columns */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* CARD STYLE (Flat, not modal) */
+        .content-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-200);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group { margin-bottom: 24px; }
+        .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--gray-900);
+            transition: border-color 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { 
+            outline: none; border-color: var(--tuva-pink); 
+        }
+        .form-textarea { height: 80px; resize: vertical; }
+
+        /* View Toggle (Radio Cards) */
+        .view-options { display: flex; gap: 16px; }
+        .view-option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+        .view-radio { display: none; } /* Hide actual radio */
+        
+        .view-card {
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+        .view-card:hover { border-color: var(--gray-500); }
+        .view-radio:checked + .view-card {
+            border-color: var(--tuva-pink);
+            background-color: #FDF2F8;
+            color: var(--tuva-pink);
+        }
+        .view-radio:checked + .view-card i { color: var(--tuva-pink); }
+        
+        .view-icon { font-size: 18px; color: var(--gray-500); }
+        .view-text { font-weight: 600; font-size: 14px; }
+
+        /* Compact Visibility (Inline) */
+        .radio-inline-group { display: flex; gap: 20px; align-items: center; }
+        .radio-label { 
+            display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer;
+        }
+        .radio-input { accent-color: var(--tuva-pink); width: 16px; height: 16px; margin: 0; }
+
+        /* SIDEBAR (Tips) */
+        .sidebar-card {
+            background: #F8F9FA;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 24px;
+        }
+        .tip-list {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .tip-item {
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--gray-800);
+            display: flex; gap: 10px;
+        }
+        .tip-item i { color: var(--tuva-pink); margin-top: 3px; }
+
+        /* Checkbox Style */
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+        .checkbox-input { accent-color: var(--tuva-pink); width: 18px; height: 18px; margin-top: 2px; }
+        .checkbox-text { font-size: 14px; color: var(--gray-900); }
+        .checkbox-desc { display: block; font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+        /* Footer Actions */
+        .action-bar {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-cancel { background: white; border: 1px solid var(--gray-200); color: var(--gray-500); }
+        .btn-cancel:hover { border-color: var(--gray-500); color: var(--gray-900); }
+        
+        .btn-save { background: var(--tuva-pink); color: white; }
+        .btn-save:hover { background: var(--tuva-pink-hover); }
+
+    </style>
+</head>
+<body>
+
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item">My Datasets</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-profile">TSOMPURA <i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        
+        <div class="page-header">
+            <div>
+                <a href="#" class="breadcrumb"><i class="fas fa-arrow-left"></i> Cancel Import</a>
+                <h1 class="page-title">Finalize Import</h1>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            
+            <!-- LEFT COLUMN: Main Form -->
+            <div class="content-card">
+                
+                <!-- Basic Info -->
+                <div class="form-group">
+                    <label class="form-label">Dataset Name <span style="color:#C10000">*</span></label>
+                    <input type="text" class="form-input" value="Imported Data - Dec 18" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Add a description..."></textarea>
+                </div>
+
+                <!-- Source Info -->
+                <div class="form-group" style="display:flex; gap:20px;">
+                    <div style="flex:1;">
+                        <label class="form-label">Data Source</label>
+                        <input type="text" class="form-input" placeholder="e.g. NOAA, World Bank">
+                    </div>
+                    <div style="flex:1;">
+                        <label class="form-label">Source URL</label>
+                        <input type="text" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-top:40px;">Display & Settings</div>
+
+                <!-- Default View -->
+                <div class="form-group">
+                    <label class="form-label">Default View</label>
+                    <div class="view-options">
+                        <label class="view-option-label">
+                            <input type="radio" name="view" class="view-radio" checked>
+                            <div class="view-card">
+                                <i class="fas fa-table view-icon"></i>
+                                <span class="view-text">Table View</span>
+                            </div>
+                        </label>
+                        <label class="view-option-label">
+                            <input type="radio" name="view" class="view-radio">
+                            <div class="view-card">
+                                <i class="fas fa-th-large view-icon"></i>
+                                <span class="view-text">Card View</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Visibility -->
+                <div class="form-group">
+                    <label class="form-label">Visibility</label>
+                    <div class="radio-inline-group">
+                        <label class="radio-label">
+                            <input type="radio" name="vis" class="radio-input" checked> 
+                            <i class="fas fa-lock" style="font-size:12px; color:#555;"></i> Private
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="vis" class="radio-input"> 
+                            <i class="fas fa-globe" style="font-size:12px; color:#555;"></i> Public
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tuva Jr -->
+                <div class="form-group" style="margin-top:20px;">
+                    <label class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input">
+                        <div>
+                            <span class="checkbox-text">Enable for Tuva Jr.</span>
+                            <span class="checkbox-desc">Makes this dataset accessible in the simplified Tuva Jr. interface.</span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Actions -->
+                <div class="action-bar">
+                    <button class="btn btn-cancel">Cancel Import</button>
+                    <button class="btn btn-save">Import Dataset</button>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Metadata & Tips -->
+            <div style="display:flex; flex-direction:column; gap:20px;">
+                
+                <!-- Categorization -->
+                <div class="content-card">
+                    <div class="section-title" style="margin-bottom:15px; border:none; padding:0;">Categorization</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <select class="form-select">
+                            <option>Select...</option>
+                            <option>Science</option>
+                            <option>Math</option>
+                            <option>Social Studies</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Grade Level</label>
+                        <select class="form-select">
+                            <option>Select...</option>
+                            <option>K-5</option>
+                            <option>6-8</option>
+                            <option>9-12</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <input type="text" class="form-input" placeholder="Add tags...">
+                    </div>
+                </div>
+
+                <!-- Tips -->
+                <div class="sidebar-card">
+                    <div style="font-weight:700; color:var(--tuva-green); margin-bottom:12px; text-transform:uppercase; font-size:12px; letter-spacing:1px;">Import Tips</div>
+                    <ul class="tip-list">
+                        <li class="tip-item"><i class="fas fa-check-circle"></i> Ensure your first row contains attribute names.</li>
+                        <li class="tip-item"><i class="fas fa-check-circle"></i> Use consistent date formats (YYYY-MM-DD).</li>
+                        <li class="tip-item"><i class="fas fa-check-circle"></i> Remove merged cells before importing.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
