@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Datasets | Tuva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Brand Colors */
+            --tuva-green: #004445;
+            --tuva-pink: #8C1A64;
+            --tuva-pink-light: #FDF2F8;
+            --tuva-pink-hover: #B31E6F;
+            --tuva-yellow: #ECB606;
+            
+            /* Neutrals */
+            --gray-900: #1C2025;
+            --gray-800: #3D4146;
+            --gray-500: #989DA3;
+            --gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--tuva-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .tuva-logo img { height: 32px; display: block; }
+        
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 14px; }
+        .nav-item:hover, .nav-item.active { color: white; }
+
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        
+        .plan-badge {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .btn-upgrade {
+            background-color: var(--tuva-yellow);
+            color: var(--gray-900);
+            padding: 6px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            transition: transform 0.1s;
+        }
+        .btn-upgrade:hover { transform: scale(1.05); }
+
+        .user-profile { color: white; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+        /* MAIN LAYOUT (Sidebar + Content) */
+        .app-layout {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* UPGRADE STRIP */
+        .upgrade-strip {
+            background-color: var(--tuva-pink-light);
+            border: 1px solid var(--tuva-pink);
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .strip-content { display: flex; align-items: center; gap: 12px; }
+        .strip-icon { color: var(--tuva-pink); font-size: 20px; }
+        .strip-text h4 { margin: 0; font-size: 16px; font-weight: 700; color: var(--tuva-pink); }
+        .strip-text p { margin: 4px 0 0 0; font-size: 14px; color: var(--gray-800); }
+        
+        .btn-strip-action {
+            background-color: var(--tuva-pink); color: white;
+            padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 14px;
+            transition: background 0.2s;
+        }
+        .btn-strip-action:hover { background-color: var(--tuva-pink-hover); }
+
+        /* SIDEBAR WIDGETS */
+        .widget-card {
+            background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px;
+        }
+        .widget-title { font-size: 14px; font-weight: 700; color: var(--gray-900); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+        
+        .usage-stat { margin-bottom: 12px; }
+        .usage-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray-800); margin-bottom: 6px; font-weight: 600; }
+        .progress-bar { height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--tuva-pink); width: 60%; } /* Example 3/5 */
+        
+        .support-link {
+            display: flex; align-items: center; gap: 10px; color: var(--gray-800); text-decoration: none; font-size: 14px; font-weight: 600;
+            padding: 10px; border-radius: 4px; transition: background 0.2s;
+        }
+        .support-link:hover { background: var(--bg-body); color: var(--tuva-pink); }
+        .support-icon { color: var(--tuva-pink); font-size: 16px; }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;
+            padding-bottom: 20px; border-bottom: 1px solid var(--gray-200);
+        }
+        .page-title h1 { font-size: 28px; color: var(--gray-900); margin: 0 0 8px 0; font-weight: 700; }
+        .page-title p { margin: 0; font-size: 16px; color: var(--gray-500); }
+
+        .btn-primary {
+            background-color: var(--tuva-pink); color: white; padding: 10px 20px; border-radius: 4px;
+            text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s;
+        }
+        .btn-primary:hover { background-color: var(--tuva-pink-hover); }
+
+        /* FILTER BAR */
+        .filter-bar { display: flex; gap: 16px; margin-bottom: 24px; }
+        .search-input {
+            flex: 1; padding: 10px 16px; border: 1px solid var(--gray-200); border-radius: 4px; font-size: 14px;
+        }
+        .filter-select {
+            padding: 10px 16px; border: 1px solid var(--gray-200); border-radius: 4px; background: white; font-size: 14px; color: var(--gray-800);
+        }
+
+        /* DATASET GRID */
+        .dataset-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;
+        }
+
+        /* DATASET CARD */
+        .dataset-card {
+            background: white; border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; position: relative;
+        }
+        .dataset-card:hover {
+            transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.08); border-color: var(--tuva-pink);
+        }
+
+        .card-preview {
+            height: 140px; background-color: #F0F4F8; display: flex; align-items: center; justify-content: center;
+            border-bottom: 1px solid var(--gray-200); position: relative;
+        }
+        .card-preview i { font-size: 42px; color: var(--gray-200); }
+        
+        .status-badge {
+            position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.9); padding: 4px 8px;
+            border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .status-private { color: var(--gray-500); }
+        .status-public { color: var(--tuva-green); }
+
+        .card-body { padding: 16px; flex: 1; }
+        
+        .dataset-title { font-size: 16px; font-weight: 700; color: var(--tuva-pink); margin: 0 0 6px 0; line-height: 1.3; }
+        .dataset-meta { font-size: 12px; color: var(--gray-500); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .dataset-desc {
+            font-size: 13px; color: var(--gray-800); line-height: 1.5; display: -webkit-box;
+            -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0;
+        }
+
+        .card-footer {
+            border-top: 1px solid var(--gray-200); padding: 10px 16px; display: flex;
+            justify-content: space-between; align-items: center; background-color: #FBFCFD;
+        }
+        
+        .action-link {
+            font-size: 12px; font-weight: 600; color: var(--gray-500); text-decoration: none;
+            display: flex; align-items: center; gap: 4px; transition: color 0.2s; cursor: pointer;
+        }
+        .action-link:hover { color: var(--tuva-pink); }
+        .action-link.disabled { opacity: 0.5; cursor: not-allowed; }
+        .action-link.disabled:hover { color: var(--gray-500); } /* No hover for disabled */
+        
+        .btn-open { color: var(--tuva-pink); font-weight: 700; }
+
+        /* Lock Icon for Premium Features */
+        .lock-icon { font-size: 10px; margin-left: 2px; color: var(--tuva-yellow); }
+
+    </style>
+</head>
+<body>
+
+    <header class="tuva-header">
+        <div style="display:flex; align-items:center; gap:24px;">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item active">My Datasets</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <span class="plan-badge">Free Plan</span>
+            <a href="#" class="btn-upgrade">Upgrade</a>
+            <div class="user-profile">TSOMPURA <i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        
+        <!-- SIDEBAR WIDGETS -->
+        <aside class="sidebar">
+            
+            <!-- Usage Widget -->
+            <div class="widget-card">
+                <div class="widget-title">Free Plan Usage</div>
+                <div class="usage-stat">
+                    <div class="usage-label"><span>Datasets</span> <span>3 / 5</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                </div>
+                <div class="usage-stat">
+                    <div class="usage-label"><span>Storage</span> <span>15MB / 50MB</span></div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
+                </div>
+                <p style="font-size:12px; color:var(--gray-500); margin-top:12px;">Upgrade to Premium for unlimited datasets and storage.</p>
+            </div>
+
+            <!-- Support Widget -->
+            <div class="widget-card" style="border-left: 4px solid var(--tuva-yellow);">
+                <div class="widget-title">Support</div>
+                <a href="#" class="support-link"><i class="fas fa-book-open support-icon"></i> Guide: Uploading Data</a>
+                <a href="#" class="support-link"><i class="fas fa-video support-icon"></i> Video Tutorials</a>
+                <a href="#" class="support-link"><i class="fas fa-envelope support-icon"></i> Contact Support</a>
+            </div>
+
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- UPGRADE STRIP -->
+            <div class="upgrade-strip">
+                <div class="strip-content">
+                    <i class="fas fa-crown strip-icon"></i>
+                    <div class="strip-text">
+                        <h4>Unlock Premium Features</h4>
+                        <p>Get unlimited datasets, advanced export options, and classroom sharing.</p>
+                    </div>
+                </div>
+                <a href="#" class="btn-strip-action">View Plans</a>
+            </div>
+
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>My Datasets</h1>
+                    <p>Manage your imported data and saved projects.</p>
+                </div>
+                <a href="Tuva_Save_Dataset_Dedicated.html" class="btn-primary">
+                    <i class="fas fa-plus"></i> Import New Data
+                </a>
+            </div>
+
+            <div class="filter-bar">
+                <input type="text" class="search-input" placeholder="Search my datasets...">
+                <select class="filter-select">
+                    <option>Sort by: Newest First</option>
+                    <option>Sort by: Name (A-Z)</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Visibility</option>
+                    <option>Private</option>
+                    <option>Public</option>
+                </select>
+            </div>
+
+            <div class="dataset-grid">
+
+                <!-- Card 1 -->
+                <div class="dataset-card">
+                    <div class="card-preview">
+                        <i class="fas fa-table" style="opacity:0.3;"></i>
+                        <span class="status-badge status-private"><i class="fas fa-lock"></i> Private</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="dataset-title">Global CO2 Emissions (2020-2024)</div>
+                        <div class="dataset-meta">
+                            <span><i class="far fa-clock"></i> Edited 2 hours ago</span>
+                            <span><i class="fas fa-database"></i> 450 Rows</span>
+                        </div>
+                        <p class="dataset-desc">A clean dataset of carbon emissions by country, including per capita calculations.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="action-link disabled" title="Premium Feature"><i class="fas fa-download"></i> Export <i class="fas fa-lock lock-icon"></i></div>
+                        <a href="#" class="action-link btn-open">Open <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="dataset-card">
+                    <div class="card-preview">
+                        <i class="fas fa-chart-bar" style="opacity:0.3;"></i>
+                        <span class="status-badge status-public"><i class="fas fa-globe"></i> Public</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="dataset-title">Student Height vs. Armspan</div>
+                        <div class="dataset-meta">
+                            <span><i class="far fa-clock"></i> Edited yesterday</span>
+                            <span><i class="fas fa-database"></i> 28 Rows</span>
+                        </div>
+                        <p class="dataset-desc">Classroom data collected from Period 3 science class.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="action-link"><i class="fas fa-share-alt"></i> Share</a>
+                        <a href="#" class="action-link btn-open">Open <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="dataset-card">
+                    <div class="card-preview">
+                        <i class="fas fa-file-csv" style="opacity:0.3;"></i>
+                        <span class="status-badge status-private"><i class="fas fa-lock"></i> Private</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="dataset-title">Weather Data: Chicago</div>
+                        <div class="dataset-meta">
+                            <span><i class="far fa-clock"></i> Oct 12, 2024</span>
+                            <span><i class="fas fa-database"></i> 1,200 Rows</span>
+                        </div>
+                        <p class="dataset-desc">Daily temperature and precipitation records for Chicago O'Hare airport.</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="action-link disabled" title="Premium Feature"><i class="fas fa-download"></i> Export <i class="fas fa-lock lock-icon"></i></div>
+                        <a href="#" class="action-link btn-open">Open <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
