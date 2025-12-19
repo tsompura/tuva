@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Data | Tuva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Brand Colors */
+            --tuva-green: #004445;
+            --tuva-pink: #8C1A64;
+            --tuva-pink-light: #FDF2F8;
+            --tuva-pink-hover: #B31E6F;
+            --tuva-yellow: #ECB606;
+            
+            /* Neutrals */
+            --gray-900: #1C2025;
+            --gray-800: #3D4146;
+            --gray-500: #989DA3;
+            --gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--tuva-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .tuva-logo img { height: 32px; display: block; }
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 14px; }
+        .nav-item:hover { color: white; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .user-profile { color: white; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+        /* MAIN LAYOUT */
+        .main-container {
+            flex: 1;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        /* LEFT COLUMN: NAVIGATION */
+        .nav-column {
+            width: 340px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .nav-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center; /* Centered vertically */
+            gap: 20px;
+            position: relative;
+        }
+
+        .nav-card:hover {
+            border-color: var(--tuva-pink);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+
+        .nav-card.active {
+            border-color: var(--tuva-pink);
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(140, 26, 100, 0.15);
+            border-left: 6px solid var(--tuva-pink);
+        }
+
+        .nav-icon {
+            width: 60px; /* Slightly larger icon container */
+            height: 60px;
+            background-color: var(--bg-body);
+            border-radius: 50%; /* Perfect circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: var(--gray-500);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .nav-card:hover .nav-icon {
+            color: var(--tuva-pink);
+            background-color: var(--tuva-pink-light);
+        }
+
+        .nav-card.active .nav-icon {
+            background-color: var(--tuva-pink);
+            color: white;
+            box-shadow: 0 4px 10px rgba(140, 26, 100, 0.2);
+        }
+
+        .nav-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .nav-info h3 {
+            margin: 0 0 4px 0;
+            font-size: 18px; /* Larger title */
+            font-weight: 700;
+            color: var(--gray-900);
+            transition: color 0.2s;
+        }
+        .nav-card.active .nav-info h3 { color: var(--tuva-pink); }
+        
+        .nav-info p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.4;
+        }
+
+        /* RIGHT COLUMN: CONTENT DETAILS */
+        .content-column {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .content-section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-header {
+            margin-bottom: 30px;
+        }
+
+        .detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0 0 16px 0;
+        }
+
+        .detail-desc {
+            font-size: 18px;
+            color: var(--gray-800);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* PREVIEW SIMULATIONS */
+        .ui-preview {
+            width: 100%;
+            max-width: 600px;
+            height: 280px; /* Slightly taller */
+            background: var(--bg-body);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 1. Sample Dataset (Library Card Style) */
+        .lib-card {
+            background: white;
+            width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            text-align: left;
+        }
+        .lib-card-img { height: 100px; background-color: #E0F2F1; display: flex; align-items: center; justify-content: center; color: #004d40; font-size: 32px; }
+        .lib-card-body { padding: 16px; }
+        .lib-card-title { font-weight: 700; font-size: 16px; margin-bottom: 8px; color: var(--gray-900); }
+        .lib-card-meta { display: flex; gap: 10px; font-size: 12px; color: var(--gray-500); }
+        .lib-tag { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; }
+
+        /* 2. Insert Data (Table Style) */
+        .table-sim {
+            width: 90%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .table-sim th { background: #f5f5f5; border: 1px solid #ddd; padding: 8px; font-size: 12px; color: var(--gray-800); }
+        .table-sim td { border: 1px solid #ddd; padding: 8px; height: 30px; }
+        .table-sim tr:first-child td { background: #fff; }
+
+        /* 3. Jr Interface (Colorful Buttons) */
+        .jr-sim {
+            display: flex;
+            gap: 20px;
+            background: #FFF0F6; /* Light Pink BG */
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .jr-btn {
+            width: 90px; height: 90px;
+            border-radius: 16px;
+            background: white;
+            border: 3px solid var(--tuva-pink);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--tuva-pink);
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: 0 6px 0 var(--tuva-pink);
+        }
+        .jr-btn i { font-size: 28px; margin-bottom: 6px; }
+
+        /* 4. Import (Dropzone) */
+        .drop-sim {
+            width: 80%;
+            height: 70%;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--gray-500);
+        }
+        .drop-sim i { font-size: 48px; margin-bottom: 12px; color: var(--tuva-green); }
+
+        /* CTA BUTTON */
+        .btn-action {
+            background-color: var(--tuva-pink);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(140, 26, 100, 0.2);
+        }
+        .btn-action:hover {
+            background-color: var(--tuva-pink-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(140, 26, 100, 0.3);
+        }
+
+        /* FOOTER */
+        .site-footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray-500);
+            font-size: 13px;
+            border-top: 1px solid var(--gray-200);
+            background: white;
+            margin-top: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item">My Datasets</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="user-profile">TSOMPURA <i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- LEFT COLUMN: Navigation -->
+        <div class="nav-column">
+            <div>
+                <div class="section-header">Insert Data</div>
+                <div class="section-desc">Select how you would like to bring data into Tuva.</div>
+            </div>
+
+            <!-- Option 1: Sample -->
+            <div class="nav-card active" onclick="showSection('sample', this)">
+                <div class="nav-icon"><i class="fas fa-book-open"></i></div>
+                <div class="nav-info">
+                    <h3>Sample Datasets</h3>
+                    <p>Use curated data from our library.</p>
+                </div>
+            </div>
+
+            <!-- Option 2: Insert Data -->
+            <div class="nav-card" onclick="showSection('insert', this)">
+                <div class="nav-icon"><i class="fas fa-table"></i></div>
+                <div class="nav-info">
+                    <h3>Insert Data</h3>
+                    <p>Enter data manually into a table.</p>
+                </div>
+            </div>
+
+            <!-- Option 3: Insert Data Jr -->
+            <div class="nav-card" onclick="showSection('jr', this)">
+                <div class="nav-icon"><i class="fas fa-child"></i></div>
+                <div class="nav-info">
+                    <h3>Insert Data Jr.</h3>
+                    <p>Simplified entry for younger students.</p>
+                </div>
+            </div>
+
+            <!-- Option 4: Import -->
+            <div class="nav-card" onclick="showSection('import', this)">
+                <div class="nav-icon"><i class="fas fa-file-upload"></i></div>
+                <div class="nav-info">
+                    <h3>Import Data</h3>
+                    <p>Upload files or connect Google Drive.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Details -->
+        <div class="content-column">
+            
+            <!-- Content 1: Sample -->
+            <div id="content-sample" class="content-section active">
+                <div class="detail-header">
+                    <h2 class="detail-title">Sample Dataset</h2>
+                    <p class="detail-desc">
+                        Browse our extensive library of scientifically accurate datasets. Perfect for getting started quickly with high-quality data on topics ranging from climate change to sports statistics.
+                    </p>
+                </div>
+                <div class="ui-preview">
+                    <!-- Library Card Simulation -->
+                    <div class="lib-card">
+                        <div class="lib-card-img"><i class="fas fa-leaf"></i></div>
+                        <div class="lib-card-body">
+                            <div class="lib-card-title">Global Temperature Change</div>
+                            <div class="lib-card-meta">
+                                <span class="lib-tag">Science</span>
+                                <span class="lib-tag">Grades 6-12</span>
+                                <span>1200 Rows</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-action">Browse Library <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- Content 2: Insert -->
+            <div id="content-insert" class="content-section">
+                <div class="detail-header">
+                    <h2 class="detail-title">Insert Data</h2>
+                    <p class="detail-desc">
+                        Create a dataset from scratch. Start with a blank table, define your attributes (columns), and enter your data points (rows) manually. Ideal for small classroom experiments.
+                    </p>
+                </div>
+                <div class="ui-preview">
+                    <!-- Table Simulation -->
+                    <table class="table-sim">
+                        <thead>
+                            <tr><th>Name (Text)</th><th>Height (Num)</th><th>Group (Cat)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td></td><td></td><td></td></tr>
+                            <tr><td></td><td></td><td></td></tr>
+                            <tr><td></td><td></td><td></td></tr>
+                            <tr><td></td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn-action">Create Blank Table</button>
+            </div>
+
+            <!-- Content 3: Jr -->
+            <div id="content-jr" class="content-section">
+                <div class="detail-header">
+                    <h2 class="detail-title">Insert Data Jr.</h2>
+                    <p class="detail-desc">
+                        A kid-friendly interface designed for K-5 students. Features larger text, colorful controls, and a guided experience for basic data entry concepts.
+                    </p>
+                </div>
+                <div class="ui-preview">
+                    <!-- Junior Interface Simulation -->
+                    <div class="jr-sim">
+                        <div class="jr-btn"><i class="fas fa-plus"></i>Add Data</div>
+                        <div class="jr-btn" style="border-color:#ECB606; color:#ECB606; box-shadow:0 6px 0 #ECB606;"><i class="fas fa-chart-bar"></i>Graph</div>
+                    </div>
+                </div>
+                <button class="btn-action">Launch Junior Tool</button>
+            </div>
+
+            <!-- Content 4: Import -->
+            <div id="content-import" class="content-section">
+                <div class="detail-header">
+                    <h2 class="detail-title">Import Data</h2>
+                    <p class="detail-desc">
+                        Upload existing data files (CSV, Excel, Google Sheets) directly into Tuva. Our importer helps categorize attributes for immediate analysis.
+                    </p>
+                </div>
+                <div class="ui-preview">
+                    <!-- Dropzone Simulation -->
+                    <div class="drop-sim">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span style="font-weight:600; color:#333;">Drag & Drop File Here</span>
+                        <span style="font-size:12px; margin-top:4px;">or click to browse</span>
+                    </div>
+                </div>
+                <a href="Tuva_Save_Dataset_Dedicated.html" class="btn-action">Upload File</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        &copy; 2025 Tuva Labs Inc. All rights reserved.
+    </footer>
+
+    <script>
+        function showSection(id, element) {
+            // Update Navigation UI
+            document.querySelectorAll('.nav-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+
+            // Show Content
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('content-' + id).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
