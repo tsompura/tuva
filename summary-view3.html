@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Summary View - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --tuva-gray-900: #1C2025;
+            --tuva-gray-800: #3D4146;
+            --tuva-gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            --tuva-pink: #8C1A64;
+            --tuva-yellow: #ECB606;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--tuva-gray-800);
+            margin: 0;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-title { font-size: 24px; font-weight: 700; color: var(--tuva-gray-900); }
+
+        .controls { display: flex; gap: 10px; }
+        .btn-action {
+            background: white; border: 1px solid var(--tuva-gray-200);
+            padding: 8px 12px; border-radius: 4px; cursor: pointer;
+            font-weight: 600; color: var(--tuva-gray-800);
+        }
+        .btn-action:hover { border-color: var(--tuva-pink); color: var(--tuva-pink); }
+
+        /* Widget Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--tuva-gray-200);
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card-header {
+            font-size: 14px; text-transform: uppercase; color: var(--tuva-gray-500);
+            font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid #eee;
+            padding-bottom: 10px; display: flex; justify-content: space-between;
+        }
+
+        .stat-row {
+            display: flex; justify-content: space-between; margin-bottom: 10px;
+            font-size: 15px;
+        }
+        .stat-name { color: var(--tuva-gray-700); }
+        .stat-val { font-weight: 700; color: var(--tuva-gray-900); }
+
+        /* Equation Card */
+        .eq-card {
+            grid-column: 1 / -1;
+            background: #FFFCF0;
+            border-color: var(--tuva-yellow);
+            text-align: center;
+        }
+        .eq-text { font-family: 'Courier New', monospace; font-size: 18px; font-weight: 700; }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <div class="header-row">
+            <h1 class="page-title">Model Summary</h1>
+            <div class="controls">
+                <button class="btn-action"><i class="fas fa-print"></i> Print</button>
+                <button class="btn-action"><i class="far fa-copy"></i> Copy</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            
+            <!-- Equation Widget -->
+            <div class="stat-card eq-card">
+                <div class="card-header" style="color:var(--tuva-yellow); border-bottom-color:rgba(236,182,6,0.2);">Linear Model</div>
+                <div class="eq-text">y = 0.85x + 12.40</div>
+            </div>
+
+            <!-- Fit Statistics -->
+            <div class="stat-card">
+                <div class="card-header">Model Fit</div>
+                <div class="stat-row">
+                    <span class="stat-name">Correlation (r)</span>
+                    <span class="stat-val">0.87</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">R-Squared (r²)</span>
+                    <span class="stat-val">0.76</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">RMSE</span>
+                    <span class="stat-val">1.24</span>
+                </div>
+            </div>
+
+            <!-- Coefficients -->
+            <div class="stat-card">
+                <div class="card-header">Coefficients</div>
+                <div class="stat-row">
+                    <span class="stat-name">Slope (m)</span>
+                    <span class="stat-val">0.85</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">Y-Intercept (b)</span>
+                    <span class="stat-val">12.40</span>
+                </div>
+            </div>
+
+            <!-- Variable Stats -->
+            <div class="stat-card">
+                <div class="card-header">X Variable (Height)</div>
+                <div class="stat-row">
+                    <span class="stat-name">Mean</span>
+                    <span class="stat-val">165.20</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">StDev</span>
+                    <span class="stat-val">12.45</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">Min / Max</span>
+                    <span class="stat-val">140 / 195</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="card-header">Y Variable (Armspan)</div>
+                <div class="stat-row">
+                    <span class="stat-name">Mean</span>
+                    <span class="stat-val">168.50</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">StDev</span>
+                    <span class="stat-val">13.10</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-name">Min / Max</span>
+                    <span class="stat-val">142 / 201</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
