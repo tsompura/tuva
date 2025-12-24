@@ -1,0 +1,1233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuva Teacher Module - School Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    
+    :root {
+      --color-primary: #1a7d5f;
+      --color-primary-light: #248a6b;
+      --color-primary-dark: #0f5847;
+      --color-accent: #2196f3;
+      --color-success: #10b981;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --color-bg: #f0f5f3;
+      --color-surface: #ffffff;
+      --color-border: #d4d8d6;
+      --color-text: #1f3a37;
+      --color-text-secondary: #6b7976;
+      --color-text-tertiary: #a8ada9;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 16px rgba(0,0,0,0.12);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .tde-header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: white;
+      padding: 16px 24px;
+      border-bottom: none;
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+    }
+
+    .tde-header-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tde-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tde-breadcrumb {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .tde-breadcrumb a {
+      color: white;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+
+    .tde-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* MAIN LAYOUT */
+    .tde-container {
+      display: flex;
+      height: calc(100vh - 72px);
+      overflow: hidden;
+    }
+
+    .tde-sidebar {
+      width: 220px;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      overflow-y: auto;
+      padding: 12px 0;
+    }
+
+    .tde-sidebar-item {
+      padding: 11px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      border-left: 3px solid transparent;
+      transition: all 150ms;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0;
+    }
+
+    .tde-sidebar-item:hover {
+      background: rgba(26, 125, 95, 0.06);
+      border-left-color: var(--color-primary);
+      color: var(--color-text);
+    }
+
+    .tde-sidebar-item.active {
+      background: rgba(26, 125, 95, 0.12);
+      border-left-color: var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    /* CONTENT AREA */
+    .tde-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .tde-content-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tde-content-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-primary);
+    }
+
+    .tde-content-subtitle {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+
+    .tde-content-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    /* TEACHER LIST */
+    .tde-teacher-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tde-teacher-row {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0;
+      transition: all 200ms;
+      overflow: hidden;
+    }
+
+    .tde-teacher-row:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tde-teacher-header {
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: var(--color-surface);
+      transition: background 150ms;
+    }
+
+    .tde-teacher-row.expanded .tde-teacher-header {
+      background: rgba(26, 125, 95, 0.05);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tde-teacher-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .tde-teacher-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .tde-teacher-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tde-teacher-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text);
+    }
+
+    .tde-teacher-meta {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+
+    .tde-teacher-stats {
+      display: flex;
+      gap: 24px;
+      flex-shrink: 0;
+      margin-right: 16px;
+    }
+
+    .tde-stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .tde-stat-value {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .tde-stat-label {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    .tde-expand-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      transition: transform 200ms;
+      flex-shrink: 0;
+    }
+
+    .tde-teacher-row.expanded .tde-expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* EXPANDED CONTENT */
+    .tde-teacher-content {
+      display: none;
+      padding: 20px 16px;
+      background: rgba(29, 76, 188, 0.02);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .tde-teacher-row.expanded .tde-teacher-content {
+      display: block;
+    }
+
+    .tde-tab-section {
+      display: none;
+    }
+
+    .tde-tab-section.active {
+      display: block;
+    }
+
+    /* TABS */
+    .tde-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: 16px;
+    }
+
+    .tde-tab-btn {
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      border-bottom: 3px solid transparent;
+      transition: all 150ms;
+      margin-bottom: -2px;
+    }
+
+    .tde-tab-btn:hover {
+      color: var(--color-text);
+    }
+
+    .tde-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* OVERVIEW GRID */
+    .tde-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .tde-metric-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .tde-metric-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .tde-metric-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .tde-metric-label {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* PROGRESS BAR */
+    .tde-progress-bar {
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .tde-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      border-radius: 3px;
+      transition: width 300ms ease;
+    }
+
+    /* CLASS TABLE */
+    .tde-table-wrapper {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .tde-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .tde-table th {
+      background: #f7f7fb;
+      border-bottom: 1px solid var(--color-border);
+      padding: 12px;
+      font-weight: 700;
+      text-align: left;
+      color: var(--color-text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 11px;
+    }
+
+    .tde-table td {
+      border-bottom: 1px solid var(--color-border);
+      padding: 12px;
+      color: var(--color-text);
+    }
+
+    .tde-table tr:hover {
+      background: rgba(29, 76, 188, 0.02);
+    }
+
+    .tde-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* BADGES */
+    .tde-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tde-badge-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    .tde-badge-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #d97706;
+    }
+
+    .tde-badge-error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+    }
+
+    .tde-badge-info {
+      background: rgba(26, 125, 95, 0.15);
+      color: var(--color-primary);
+    }
+
+    /* ASSIGNMENT CARD */
+    .tde-assignment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .tde-assignment-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 150ms;
+    }
+
+    .tde-assignment-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tde-assignment-title {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--color-text);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tde-assignment-meta {
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .tde-assignment-stats {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .tde-assignment-stat {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* COMPLETION METER */
+    .tde-completion-meter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tde-completion-value {
+      font-weight: 700;
+      font-size: 12px;
+      min-width: 35px;
+      color: var(--color-primary);
+    }
+
+    .tde-completion-bar {
+      flex: 1;
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    /* BUTTON */
+    .tde-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 150ms;
+    }
+
+    .tde-btn:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tde-btn-secondary {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .tde-btn-secondary:hover {
+      background: rgba(26, 125, 95, 0.06);
+      border-color: var(--color-primary);
+    }
+
+    /* MODAL */
+    .tde-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .tde-modal-overlay.active {
+      display: flex;
+    }
+
+    .tde-modal {
+      background: var(--color-surface);
+      border-radius: 8px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tde-modal-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tde-modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+    }
+
+    .tde-modal-body {
+      padding: 16px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .tde-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tde-assignment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tde-teacher-stats {
+        gap: 12px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tde-sidebar {
+        width: 160px;
+      }
+
+      .tde-overview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tde-teacher-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tde-teacher-stats {
+        width: 100%;
+        margin-right: 0;
+        margin-top: 12px;
+      }
+    }
+
+    /* SCROLLBAR */
+    .tde-content-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .tde-content-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .tde-content-body::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    .tde-content-body::-webkit-scrollbar-thumb:hover {
+      background: var(--color-border);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <div class="tde-header">
+    <div class="tde-header-content">
+      <div class="tde-logo">🎓 Tuva School Dashboard</div>
+      <div class="tde-breadcrumb">
+        <a href="#">Tuva School</a> &gt; <span>Teacher Analytics</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="tde-container">
+    <!-- SIDEBAR -->
+    <div class="tde-sidebar">
+      <div class="tde-sidebar-item active" onclick="switchView('overview')">📊 Overview</div>
+      <div class="tde-sidebar-item" onclick="switchView('classes')">📚 Classes</div>
+      <div class="tde-sidebar-item" onclick="switchView('assignments')">📋 Assignments</div>
+      <div class="tde-sidebar-item" onclick="switchView('assessments')">✓ Assessments</div>
+      <div class="tde-sidebar-item" onclick="switchView('bookmarks')">⭐ Bookmarks</div>
+      <div class="tde-sidebar-item" onclick="switchView('analytics')">📈 Analytics</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="tde-content">
+      <div class="tde-content-header">
+        <div>
+          <h1 class="tde-content-title">Teacher Analytics</h1>
+          <p class="tde-content-subtitle">Harshil Parikh · Tuva Jr. School · 14 Classes · 93 Students</p>
+        </div>
+      </div>
+
+      <div class="tde-content-body">
+        <!-- TEACHER LIST -->
+        <div class="tde-teacher-list" id="teacherList">
+          <!-- Teachers will be generated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGNMENT DETAIL MODAL -->
+  <div class="tde-modal-overlay" id="assignmentModal">
+    <div class="tde-modal">
+      <div class="tde-modal-header">
+        <span id="modalTitle">Assignment Details</span>
+        <button class="tde-modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="tde-modal-body" id="modalBody">
+        <!-- Modal content will be injected here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SAMPLE DATA - Real data from screenshots
+    const teachersData = [
+      {
+        id: 1,
+        name: "Harshil Parikh",
+        school: "Tuva Jr. School",
+        role: "Math & Science Teacher",
+        classes: 14,
+        students: 93,
+        assignments: 1252,
+        assessments: 134,
+        bookmarks: 97,
+        datasetUploads: 334,
+        status: "Premium + Tuva Jr.",
+        classesDetail: [
+          {
+            id: 101,
+            name: "7th Grade Math - Period 1",
+            grade: "7",
+            students: 23,
+            assignments: 45,
+            avgCompletion: 82,
+            assessments: 8,
+            bookmarks: 15,
+            created: "Jan 15, 2024"
+          },
+          {
+            id: 102,
+            name: "7th Grade Science - Period 2",
+            grade: "7",
+            students: 24,
+            assignments: 38,
+            avgCompletion: 76,
+            assessments: 6,
+            bookmarks: 12,
+            created: "Jan 15, 2024"
+          },
+          {
+            id: 103,
+            name: "8th Grade Math - Period 3",
+            grade: "8",
+            students: 22,
+            assignments: 52,
+            avgCompletion: 88,
+            assessments: 10,
+            bookmarks: 18,
+            created: "Feb 20, 2024"
+          },
+          {
+            id: 104,
+            name: "Workshops - After School",
+            grade: "Mixed",
+            students: 24,
+            assignments: 18,
+            avgCompletion: 71,
+            assessments: 4,
+            bookmarks: 8,
+            created: "Mar 10, 2024"
+          }
+        ],
+        assignmentsDetail: [
+          {
+            id: 201,
+            title: "Pixar vs Dreamworks: Comparing Distributions",
+            class: "7th Grade Math - Period 1",
+            type: "Activity",
+            assigned: "Mar 06, 2021",
+            due: "Mar 13, 2021",
+            completed: 18,
+            started: 4,
+            notStarted: 1,
+            completion: 78,
+            students: 23
+          },
+          {
+            id: 202,
+            title: "School Garden Harvest Data Analysis",
+            class: "7th Grade Science - Period 2",
+            type: "Data Story",
+            assigned: "Mar 01, 2021",
+            due: "Mar 08, 2021",
+            completed: 20,
+            started: 3,
+            notStarted: 1,
+            completion: 87,
+            students: 24
+          },
+          {
+            id: 203,
+            title: "Comparing Sprint Times: Olympic Data",
+            class: "8th Grade Math - Period 3",
+            type: "Activity",
+            assigned: "Feb 28, 2021",
+            due: "Mar 07, 2021",
+            completed: 21,
+            started: 1,
+            notStarted: 0,
+            completion: 95,
+            students: 22
+          },
+          {
+            id: 204,
+            title: "Cereal Number Crunch: Mean vs Median",
+            class: "7th Grade Math - Period 1",
+            type: "Activity",
+            assigned: "Feb 20, 2021",
+            due: "Feb 27, 2021",
+            completed: 22,
+            started: 0,
+            notStarted: 1,
+            completion: 96,
+            students: 23
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: "Jocelyn Foran",
+        school: "Tuva School",
+        role: "District Administrator",
+        classes: 3,
+        students: 62,
+        assignments: 269,
+        assessments: 23,
+        bookmarks: 15,
+        datasetUploads: 228,
+        status: "Premium + Tuva Jr.",
+        classesDetail: [
+          {
+            id: 201,
+            name: "Other - Workshops",
+            grade: "Mixed",
+            students: 37,
+            assignments: 125,
+            avgCompletion: 75,
+            assessments: 12,
+            bookmarks: 8,
+            created: "Jul 03, 2025"
+          },
+          {
+            id: 202,
+            name: "7th Grade - Ms. F's A Block",
+            grade: "7",
+            students: 7,
+            assignments: 12,
+            avgCompletion: 85,
+            assessments: 3,
+            bookmarks: 4,
+            created: "Mar 06, 2024"
+          }
+        ],
+        assignmentsDetail: [
+          {
+            id: 301,
+            title: "Wildlife Population Trends",
+            class: "Other - Workshops",
+            type: "Data Story",
+            assigned: "Feb 15, 2021",
+            due: "Feb 22, 2021",
+            completed: 28,
+            started: 6,
+            notStarted: 3,
+            completion: 76,
+            students: 37
+          }
+        ]
+      }
+    ];
+
+    let currentView = 'overview';
+
+    // Initialize
+    function init() {
+      renderTeachers();
+    }
+
+    function renderTeachers() {
+      const container = document.getElementById('teacherList');
+      container.innerHTML = '';
+
+      teachersData.forEach(teacher => {
+        const row = document.createElement('div');
+        row.className = 'tde-teacher-row';
+        row.innerHTML = `
+          <div class="tde-teacher-header" onclick="toggleTeacher(this)">
+            <div class="tde-teacher-info">
+              <div class="tde-teacher-avatar">${teacher.name.split(' ').map(n => n[0]).join('')}</div>
+              <div class="tde-teacher-details">
+                <div class="tde-teacher-name">${teacher.name}</div>
+                <div class="tde-teacher-meta">${teacher.role} • ${teacher.school}</div>
+              </div>
+            </div>
+            <div class="tde-teacher-stats">
+              <div class="tde-stat-item">
+                <div class="tde-stat-value">${teacher.classes}</div>
+                <div class="tde-stat-label">Classes</div>
+              </div>
+              <div class="tde-stat-item">
+                <div class="tde-stat-value">${teacher.students}</div>
+                <div class="tde-stat-label">Students</div>
+              </div>
+              <div class="tde-stat-item">
+                <div class="tde-stat-value">${teacher.assignments}</div>
+                <div class="tde-stat-label">Assignments</div>
+              </div>
+              <div class="tde-stat-item">
+                <div class="tde-stat-value">${teacher.assessments}</div>
+                <div class="tde-stat-label">Assessments</div>
+              </div>
+              <div class="tde-stat-item">
+                <div class="tde-stat-value">${teacher.bookmarks}</div>
+                <div class="tde-stat-label">Bookmarks</div>
+              </div>
+            </div>
+            <div class="tde-expand-icon">▼</div>
+          </div>
+          <div class="tde-teacher-content">
+            ${renderTeacherContent(teacher)}
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function renderTeacherContent(teacher) {
+      let html = `
+        <div class="tde-tabs">
+          <button class="tde-tab-btn active" onclick="switchTeacherTab(this, 'overview')">📊 Overview</button>
+          <button class="tde-tab-btn" onclick="switchTeacherTab(this, 'classes')">📚 Classes</button>
+          <button class="tde-tab-btn" onclick="switchTeacherTab(this, 'assignments')">📋 Assignments</button>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div class="tde-tab-section active" data-tab="overview">
+          <div class="tde-overview-grid">
+            <div class="tde-metric-card">
+              <div class="tde-metric-icon">📚</div>
+              <div class="tde-metric-value">${teacher.classes}</div>
+              <div class="tde-metric-label">Classes Created</div>
+            </div>
+            <div class="tde-metric-card">
+              <div class="tde-metric-icon">👥</div>
+              <div class="tde-metric-value">${teacher.students}</div>
+              <div class="tde-metric-label">Total Students</div>
+            </div>
+            <div class="tde-metric-card">
+              <div class="tde-metric-icon">📋</div>
+              <div class="tde-metric-value">${teacher.assignments}</div>
+              <div class="tde-metric-label">Assignments</div>
+            </div>
+            <div class="tde-metric-card">
+              <div class="tde-metric-icon">📈</div>
+              <div class="tde-metric-value">${Math.round((teacher.classesDetail.reduce((sum, c) => sum + c.avgCompletion, 0) / teacher.classesDetail.length))}%</div>
+              <div class="tde-metric-label">Avg Completion</div>
+            </div>
+          </div>
+
+          <h3 style="margin: 20px 0 12px 0; font-size: 14px; color: var(--color-text);">License Status</h3>
+          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <span class="tde-badge tde-badge-success">Premium</span>
+            <span class="tde-badge tde-badge-info">Tuva Jr</span>
+          </div>
+
+          <h3 style="margin: 20px 0 12px 0; font-size: 14px; color: var(--color-text);">Class Activity Overview</h3>
+          <div class="tde-table-wrapper">
+            <table class="tde-table">
+              <thead>
+                <tr>
+                  <th>Class Name</th>
+                  <th>Students</th>
+                  <th>Assignments</th>
+                  <th>Completion</th>
+                  <th>Assessment</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${teacher.classesDetail.slice(0, 3).map(cls => `
+                  <tr>
+                    <td><strong>${cls.name}</strong></td>
+                    <td>${cls.students}</td>
+                    <td>${cls.assignments}</td>
+                    <td>
+                      <div class="tde-completion-meter">
+                        <span class="tde-completion-value">${cls.avgCompletion}%</span>
+                        <div class="tde-completion-bar">
+                          <div class="tde-progress-fill" style="width: ${cls.avgCompletion}%"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>${cls.assessments}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CLASSES TAB -->
+        <div class="tde-tab-section" data-tab="classes">
+          <div class="tde-table-wrapper">
+            <table class="tde-table">
+              <thead>
+                <tr>
+                  <th>Class Name</th>
+                  <th>Grade</th>
+                  <th>Students</th>
+                  <th>Assignments</th>
+                  <th>Completion</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${teacher.classesDetail.map(cls => `
+                  <tr onclick="openClassDetail('${cls.id}', '${teacher.id}')" style="cursor: pointer;">
+                    <td><strong>${cls.name}</strong></td>
+                    <td><span class="tde-badge tde-badge-info">${cls.grade}</span></td>
+                    <td>${cls.students}</td>
+                    <td>${cls.assignments}</td>
+                    <td>
+                      <div class="tde-completion-meter">
+                        <span class="tde-completion-value">${cls.avgCompletion}%</span>
+                        <div class="tde-completion-bar">
+                          <div class="tde-progress-fill" style="width: ${cls.avgCompletion}%"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>${cls.created}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ASSIGNMENTS TAB -->
+        <div class="tde-tab-section" data-tab="assignments">
+          <div class="tde-assignment-grid">
+            ${teacher.assignmentsDetail.map(assign => `
+              <div class="tde-assignment-card" onclick="openAssignmentDetail(${assign.id})">
+                <div class="tde-assignment-title">${assign.title}</div>
+                <div class="tde-assignment-meta">
+                  ${assign.class} • <span class="tde-badge tde-badge-info">${assign.type}</span>
+                </div>
+                <div class="tde-assignment-stats">
+                  <div class="tde-assignment-stat">✓ ${assign.completed}/${assign.students}</div>
+                  <div class="tde-assignment-stat">⏱ ${assign.started} In Progress</div>
+                </div>
+                <div class="tde-completion-meter">
+                  <span class="tde-completion-value">${assign.completion}%</span>
+                  <div class="tde-completion-bar">
+                    <div class="tde-progress-fill" style="width: ${assign.completion}%"></div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      return html;
+    }
+
+    function toggleTeacher(header) {
+      const row = header.closest('.tde-teacher-row');
+      row.classList.toggle('expanded');
+    }
+
+    function switchTeacherTab(btn, tab) {
+      const row = btn.closest('.tde-teacher-row');
+      row.querySelectorAll('.tde-tab-btn').forEach(b => b.classList.remove('active'));
+      row.querySelectorAll('[data-tab]').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      row.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll('.tde-sidebar-item').forEach(item => item.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function openAssignmentDetail(assignId) {
+      const teacher = teachersData[0]; // Assuming first teacher for demo
+      const assign = teacher.assignmentsDetail.find(a => a.id === assignId);
+      
+      const html = `
+        <div style="margin-bottom: 16px;">
+          <h3 style="margin: 0 0 8px 0; color: var(--color-text);">${assign.title}</h3>
+          <p style="margin: 0; font-size: 12px; color: var(--color-text-secondary);">
+            ${assign.class} • Assigned ${assign.assigned} • Due ${assign.due}
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;">
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${assign.completion}%</div>
+            <div class="tde-metric-label">Completion</div>
+          </div>
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${assign.completed}</div>
+            <div class="tde-metric-label">Completed</div>
+          </div>
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${assign.started}</div>
+            <div class="tde-metric-label">In Progress</div>
+          </div>
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${assign.notStarted}</div>
+            <div class="tde-metric-label">Not Started</div>
+          </div>
+        </div>
+
+        <h4 style="margin: 16px 0 8px 0; font-size: 13px; color: var(--color-text);">Student Completion Status</h4>
+        <div class="tde-table-wrapper">
+          <table class="tde-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Status</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${['Alice Johnson', 'Ben Smith', 'Chloe Davis', 'David Wilson'].map(name => `
+                <tr>
+                  <td>${name}</td>
+                  <td><span class="tde-badge tde-badge-success">Completed</span></td>
+                  <td>Mar 12</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      document.getElementById('modalTitle').textContent = 'Assignment Details';
+      document.getElementById('modalBody').innerHTML = html;
+      document.getElementById('assignmentModal').classList.add('active');
+    }
+
+    function openClassDetail(classId, teacherId) {
+      const teacher = teachersData.find(t => t.id === parseInt(teacherId));
+      const cls = teacher.classesDetail.find(c => c.id === parseInt(classId));
+      
+      const html = `
+        <div style="margin-bottom: 16px;">
+          <h3 style="margin: 0 0 8px 0; color: var(--color-text);">${cls.name}</h3>
+          <p style="margin: 0; font-size: 12px; color: var(--color-text-secondary);">
+            Grade ${cls.grade} • Created ${cls.created}
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${cls.students}</div>
+            <div class="tde-metric-label">Students</div>
+          </div>
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${cls.assignments}</div>
+            <div class="tde-metric-label">Assignments</div>
+          </div>
+          <div class="tde-metric-card">
+            <div class="tde-metric-value">${cls.avgCompletion}%</div>
+            <div class="tde-metric-label">Avg Completion</div>
+          </div>
+        </div>
+
+        <h4 style="margin: 16px 0 8px 0; font-size: 13px; color: var(--color-text);">Recent Assignments</h4>
+        <div class="tde-table-wrapper">
+          <table class="tde-table">
+            <thead>
+              <tr>
+                <th>Assignment</th>
+                <th>Due</th>
+                <th>Completion</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${['Assignment 1', 'Assignment 2', 'Assignment 3'].map(name => `
+                <tr>
+                  <td>${name}</td>
+                  <td>Mar 15, 2021</td>
+                  <td>
+                    <div class="tde-completion-meter">
+                      <span class="tde-completion-value">85%</span>
+                      <div class="tde-completion-bar">
+                        <div class="tde-progress-fill" style="width: 85%"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      document.getElementById('modalTitle').textContent = cls.name;
+      document.getElementById('modalBody').innerHTML = html;
+      document.getElementById('assignmentModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('assignmentModal').classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('assignmentModal').addEventListener('click', (e) => {
+      if (e.target.id === 'assignmentModal') closeModal();
+    });
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>
