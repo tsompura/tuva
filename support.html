@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Support Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Brand Colors */
+            --tuva-green: #004445;
+            --tuva-purple: #682D8A;
+            --tuva-purple-dark: #53266D;
+            --tuva-yellow: #ECB606;
+            --tuva-yellow-hover: #D4AF37;
+            
+            /* Neutrals */
+            --gray-900: #1C2025;
+            --gray-800: #3D4146;
+            --gray-500: #989DA3;
+            --gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            
+            --header-height: 60px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .tuva-header {
+            height: var(--header-height);
+            background-color: var(--tuva-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            z-index: 100;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .tuva-logo img { height: 32px; display: block; }
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; font-size: 14px; transition: color 0.2s; }
+        .nav-item:hover { color: white; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .btn-submit-ticket {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-submit-ticket:hover { background: rgba(255,255,255,0.1); }
+        .user-profile { color: white; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+        /* HERO SEARCH SECTION */
+        .support-hero {
+            background-color: var(--tuva-purple-dark);
+            background-image: url('https://tuvalabs.com/static/img/tutorials/hero-pattern-bg.svg');
+            background-repeat: repeat;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-family: 'Bitter', serif;
+            font-size: 42px;
+            color: white;
+            margin: 0 0 24px 0;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border-radius: 8px;
+            border: none;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .search-input:focus { outline: none; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--tuva-purple);
+            font-size: 20px;
+        }
+
+        /* MAIN CONTENT */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* KNOWLEDGE CATEGORIES */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-color: var(--tuva-purple);
+        }
+
+        .cat-icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #F8F0FA; /* Light Purple tint */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--tuva-purple);
+            font-size: 28px;
+            transition: background 0.2s;
+        }
+        .category-card:hover .cat-icon-box {
+            background-color: var(--tuva-purple);
+            color: white;
+        }
+
+        .cat-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0 0 10px 0;
+        }
+
+        .cat-desc {
+            font-size: 15px;
+            color: var(--gray-500);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* POPULAR ARTICLES */
+        .popular-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid var(--gray-200);
+        }
+
+        .section-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 24px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F0F0F0;
+        }
+
+        .article-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 40px;
+        }
+
+        .article-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--gray-800);
+            font-size: 16px;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .article-link:hover {
+            background: #F9F9F9;
+            color: var(--tuva-purple);
+        }
+        .article-link i {
+            color: var(--tuva-yellow);
+            margin-top: 4px;
+        }
+
+        /* CONTACT CTA STRIP */
+        .contact-strip {
+            margin-top: 60px;
+            background: linear-gradient(90deg, #53266D 0%, #682D8A 100%);
+            border-radius: 12px;
+            padding: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .contact-text h2 { margin: 0 0 8px 0; font-family: 'Bitter', serif; font-size: 28px; }
+        .contact-text p { margin: 0; opacity: 0.9; font-size: 16px; }
+
+        .btn-contact {
+            background: var(--tuva-yellow);
+            color: var(--gray-900);
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        .btn-contact:hover {
+            background: var(--tuva-yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* FOOTER */
+        .site-footer {
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 40px 20px;
+            margin-top: auto;
+        }
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-links a {
+            color: var(--gray-500);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .footer-links a:hover { color: var(--tuva-purple); }
+
+    </style>
+</head>
+<body>
+
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Support">
+            </a>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-submit-ticket">Submit a Request</a>
+            <div class="user-profile">Sign In</div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="support-hero">
+        <h1 class="hero-title">How can we help you today?</h1>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search for help articles, guides, and more...">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        
+        <!-- Category Grid -->
+        <div class="categories-grid">
+            
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-rocket"></i></div>
+                <div class="cat-title">Getting Started</div>
+                <p class="cat-desc">New to Tuva? Learn the basics of setting up your account and exploring datasets.</p>
+            </a>
+
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-chart-bar"></i></div>
+                <div class="cat-title">Using Data Tools</div>
+                <p class="cat-desc">Guides on creating plots, using statistical tools, and analyzing data effectively.</p>
+            </a>
+
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-book-open"></i></div>
+                <div class="cat-title">Content & Curriculum</div>
+                <p class="cat-desc">Information about our dataset library, activities, and NGSS alignment.</p>
+            </a>
+
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-user-cog"></i></div>
+                <div class="cat-title">Account & Billing</div>
+                <p class="cat-desc">Manage your subscription, update profile settings, and view invoices.</p>
+            </a>
+
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-child"></i></div>
+                <div class="cat-title">Tuva Jr.</div>
+                <p class="cat-desc">Specific help articles for the K-5 Tuva Junior interface and elementary content.</p>
+            </a>
+
+            <a href="#" class="category-card">
+                <div class="cat-icon-box"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="cat-title">Teacher Resources</div>
+                <p class="cat-desc">Professional development materials, implementation guides, and webinars.</p>
+            </a>
+
+        </div>
+
+        <!-- Popular Articles -->
+        <div class="popular-section">
+            <div class="section-header">Popular Articles</div>
+            <ul class="article-list">
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> How do I upload my own data?</a></li>
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> Managing student accounts and rosters</a></li>
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> How to create a movable reference line</a></li>
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> Troubleshooting login issues</a></li>
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> Integrating Tuva with Google Classroom</a></li>
+                <li><a href="#" class="article-link"><i class="far fa-file-alt"></i> Understanding Tuva Premium features</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Strip -->
+        <div class="contact-strip">
+            <div class="contact-text">
+                <h2>Still need help?</h2>
+                <p>Our support team is just a click away to answer your questions.</p>
+            </div>
+            <a href="#" class="btn-contact">Contact Support</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div style="color:#999; font-size:14px;">&copy; 2025 Tuva Labs Inc.</div>
+            <div class="footer-links">
+                <a href="#">Tuva Main Site</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
