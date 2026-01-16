@@ -8,12 +8,14 @@
 <style>
     /* --- Tuva Brand Variables --- */
     :root {
-        --tuva-header-bg: #03363d;
+        --tuva-header-bg: #004445; /* Standard Green */
         --tuva-bg-gray: #f4f7f9;
-        --tuva-blue: #1d4cbc;
         --tuva-text: #3d4146;
         --tuva-subtext: #828890;
         --tuva-border: #e4e7eb;
+        
+        /* Interactive/Link Color (Now Green) */
+        --tuva-link: #004445; 
         
         /* Status Colors */
         --status-completed: #68bfa5;
@@ -55,7 +57,8 @@
     .nav-links span:hover { color: #fff; }
     .nav-right { display: flex; align-items: center; }
     .btn-premium {
-        background: #1d4cbc;
+        background: #1d4cbc; /* Keeping Premium button distinct blue/purple or can use green */
+        background-color: #1d4cbc; 
         color: white;
         padding: 4px 10px;
         border-radius: 4px;
@@ -123,10 +126,12 @@
         font-weight: 600;
         margin-bottom: 8px;
         opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     .stat-value { font-size: 32px; font-weight: 400; }
 
-    /* --- 3. Main Teacher Table --- */
+    /* --- 3. Main Teacher Table (Matched to Screenshot 2 Style) --- */
     .section-header { margin-bottom: 15px; }
     .section-header h2 { font-size: 20px; color: var(--tuva-header-bg); margin: 0; }
 
@@ -135,6 +140,7 @@
         border-radius: 4px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         border: 1px solid var(--tuva-border);
+        overflow: hidden; /* Rounded corners for header */
     }
     .table-controls {
         padding: 15px;
@@ -149,15 +155,19 @@
     }
 
     table { width: 100%; border-collapse: collapse; }
+    
     th {
         text-align: left;
         padding: 15px 20px;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 700;
-        color: var(--tuva-text);
-        border-bottom: 1px solid #ccc;
-        background-color: #fafbfc;
+        color: var(--tuva-subtext);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--tuva-border);
+        background-color: #fff; /* White background for header */
     }
+    
     td {
         padding: 15px 20px;
         font-size: 14px;
@@ -166,14 +176,20 @@
         vertical-align: middle;
     }
     
+    tr:hover td {
+        background-color: #fafbfc;
+    }
+    
     .teacher-link {
         font-weight: 700;
-        color: var(--tuva-blue);
+        color: var(--tuva-link);
         cursor: pointer;
         display: flex;
         align-items: center;
         text-decoration: none;
     }
+    .teacher-link:hover { text-decoration: underline; }
+
     .expand-arrow {
         display: inline-block;
         width: 16px;
@@ -184,22 +200,27 @@
         transition: transform 0.2s;
         color: var(--tuva-subtext);
     }
+    .expanded .expand-arrow { transform: rotate(90deg); }
+
     .badge {
         padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;
         margin-left: 8px; text-transform: uppercase; color: white;
     }
     .bg-premium { background-color: var(--badge-premium); }
-    .drill-metric { color: var(--tuva-blue); cursor: pointer; font-weight: 600; }
+    
+    .drill-metric { color: var(--tuva-link); cursor: pointer; font-weight: 600; }
     .drill-metric:hover { text-decoration: underline; }
 
     /* --- 4. EXPANDED PANEL --- */
     .details-row { display: none; background-color: #fff; }
     .details-row.visible { display: table-row; }
+    
+    /* Updated Left Border Color */
     .details-container {
         padding: 20px 30px;
         background-color: #fafbfc;
         border-bottom: 1px solid var(--tuva-border);
-        border-left: 4px solid var(--tuva-blue);
+        border-left: 4px solid var(--tuva-link); /* Green Border */
         box-shadow: inset 0 4px 6px -6px rgba(0,0,0,0.1);
     }
 
@@ -217,8 +238,9 @@
         font-size: 14px; color: var(--tuva-subtext); cursor: pointer;
         padding-bottom: 10px; border-bottom: 3px solid transparent; font-weight: 600;
     }
-    .sub-tab:hover { color: var(--tuva-blue); }
-    .sub-tab.active { color: var(--tuva-blue); border-bottom-color: var(--tuva-blue); }
+    /* Updated Tab Hover/Active Colors to Green */
+    .sub-tab:hover { color: var(--tuva-link); }
+    .sub-tab.active { color: var(--tuva-link); border-bottom-color: var(--tuva-link); }
 
     /* Filter Bar inside Tabs */
     .tab-filter-bar {
@@ -226,18 +248,19 @@
         margin-bottom: 15px;
     }
     .class-dropdown {
-        padding: 6px 12px; border: 1px solid var(--tuva-blue); border-radius: 4px;
-        background: white; color: var(--tuva-blue); font-weight: 600; font-size: 13px;
+        padding: 6px 12px; border: 1px solid var(--tuva-link); border-radius: 4px;
+        background: white; color: var(--tuva-link); font-weight: 600; font-size: 13px;
+        cursor: pointer;
     }
 
     /* --- CLASSES TABLE (Overview View) --- */
     .classes-table {
         width: 100%; border: 1px solid var(--tuva-border); border-radius: 4px; background: white;
     }
-    .classes-table th { background: #f4f7f9; font-size: 12px; color: var(--tuva-subtext); padding: 12px 15px; }
-    .classes-table td { padding: 12px 15px; font-size: 14px; border-bottom: 1px solid #eee; }
+    .classes-table th { background: #f4f7f9; font-size: 12px; color: var(--tuva-subtext); padding: 12px 15px; border-bottom: 1px solid #eee; text-transform: uppercase; font-weight: 700; }
+    .classes-table td { padding: 12px 15px; font-size: 14px; border-bottom: 1px solid #eee; color: var(--tuva-text); }
     .classes-table tr:last-child td { border-bottom: none; }
-    .class-name { font-weight: 600; color: var(--tuva-blue); }
+    .class-name { font-weight: 600; color: var(--tuva-link); }
 
     /* --- ASSIGNMENT CARDS (Assignments View) --- */
     .assignment-list { display: flex; flex-direction: column; gap: 10px; }
@@ -245,11 +268,11 @@
         background: white; border: 1px solid var(--tuva-border); border-radius: 6px;
         padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
     }
-    .assign-left { display: flex; flex-direction: column; width: 35%; }
+    .assign-left { display: flex; flex-direction: column; width: 45%; }
     .assign-type { font-size: 10px; color: var(--tuva-subtext); text-transform: uppercase; font-weight: 700; margin-bottom: 4px;}
     .assign-title { font-size: 16px; font-weight: 700; color: var(--tuva-header-bg); text-decoration: none; }
     
-    .assign-metrics { display: flex; gap: 30px; align-items: center; justify-content: center; width: 40%; }
+    .assign-metrics { display: flex; gap: 30px; align-items: center; justify-content: flex-end; width: 35%; }
     .circle-stat { display: flex; flex-direction: column; align-items: center; }
     .circle {
         width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
@@ -258,21 +281,29 @@
     .c-completed { border: 3px solid var(--status-completed); color: var(--tuva-text); }
     .c-started { border: 3px solid var(--status-started); color: var(--tuva-text); }
     .c-notstarted { border: 3px solid var(--status-notstarted); color: var(--tuva-text); }
-    .c-score {
-        background: conic-gradient(var(--status-score) 0% 80%, #f0f0f0 80% 100%);
-        border: none; width: 44px; height: 44px; position: relative;
-    }
-    .c-score::before {
-        content: "80%"; position: absolute; background: white; width: 34px; height: 34px;
-        border-radius: 50%; display: flex; justify-content: center; align-items: center;
-        font-size: 11px; color: var(--status-score); font-weight: 700;
-        top: 5px; left: 5px;
-    }
+    
     .circle-label { font-size: 10px; color: var(--tuva-subtext); font-weight: 600; text-transform: uppercase; }
 
     /* Helper Classes */
     .hidden { display: none; }
-    .btn-link { background: none; border: none; color: var(--tuva-blue); font-weight: 600; cursor: pointer; font-size: 12px; }
+    .btn-link { background: none; border: none; color: var(--tuva-link); font-weight: 600; cursor: pointer; font-size: 12px; }
+    .btn-link:hover { text-decoration: underline; }
+    
+    .view-all-link {
+        text-align: center;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--tuva-border);
+    }
+    .view-all-link a {
+        color: var(--tuva-link);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .view-all-link a:hover { text-decoration: underline; }
 
 </style>
 </head>
@@ -419,7 +450,7 @@
                                     </table>
                                 </div>
 
-                                <!-- VIEW 2: ASSIGNMENTS (With Dropdown) -->
+                                <!-- VIEW 2: ASSIGNMENTS (With Dropdown & Layout Update) -->
                                 <div id="view-assignments" class="view-section hidden">
                                     <div class="tab-filter-bar">
                                         <span style="font-size:12px; font-weight:600; color:var(--tuva-subtext); margin-right:10px;">FILTER BY CLASS:</span>
@@ -432,6 +463,11 @@
 
                                     <div class="assignment-list" id="assignment-list-container">
                                         <!-- JS will populate -->
+                                    </div>
+                                    
+                                    <!-- Common Link at Bottom -->
+                                    <div class="view-all-link">
+                                        <a href="#">Review all Assignments &rarr;</a>
                                     </div>
                                 </div>
 
@@ -490,15 +526,19 @@
     // --- Mock Data ---
     const assignmentData = {
         'sci7': [
-            { title: 'Pixar vs Dreamworks: Box Plots', type: 'Activity', date: 'Mar 06, 2025', c: 5, s: 10, n: 5, score: '80%' },
-            { title: 'Global Temp: Scatter Plots', type: 'Dataset Activity', date: 'Feb 28, 2025', c: 18, s: 2, n: 0, score: '92%' }
+            { title: 'Pixar vs Dreamworks: Box Plots', type: 'Activity', date: 'Mar 06, 2025', c: 5, s: 10, n: 5 },
+            { title: 'Global Temp: Scatter Plots', type: 'Dataset Activity', date: 'Feb 28, 2025', c: 18, s: 2, n: 0 },
+            { title: 'Ocean Plastics Survey', type: 'Data Story', date: 'Feb 15, 2025', c: 15, s: 5, n: 0 }
         ],
         'math8': [
-            { title: 'Linear Equations in Sports', type: 'Activity', date: 'Jan 15, 2025', c: 28, s: 4, n: 0, score: '88%' },
-            { title: 'Probability with Dice', type: 'Data Story', date: 'Feb 10, 2025', c: 20, s: 10, n: 2, score: '85%' }
+            { title: 'Linear Equations in Sports', type: 'Activity', date: 'Jan 15, 2025', c: 28, s: 4, n: 0 },
+            { title: 'Probability with Dice', type: 'Data Story', date: 'Feb 10, 2025', c: 20, s: 10, n: 2 },
+            { title: 'Geometric Shapes Analysis', type: 'Dataset Activity', date: 'Dec 12, 2024', c: 30, s: 2, n: 0 }
         ],
         'bio9': [
-            { title: 'Cell Division Analysis', type: 'Activity', date: 'Sep 10, 2024', c: 10, s: 5, n: 0, score: '75%' }
+            { title: 'Cell Division Analysis', type: 'Activity', date: 'Sep 10, 2024', c: 10, s: 5, n: 0 },
+            { title: 'Genetics Probability', type: 'Activity', date: 'Oct 05, 2024', c: 12, s: 3, n: 0 },
+            { title: 'Ecosystem Balance', type: 'Data Story', date: 'Nov 20, 2024', c: 8, s: 7, n: 0 }
         ]
     };
 
@@ -522,11 +562,14 @@
     function toggleTeacher(rowId, viewName) {
         const detailRow = document.getElementById(rowId);
         const arrow = document.getElementById('arrow-' + rowId);
+        const triggerRow = document.getElementById('tr-' + rowId);
+        
         const isClosed = detailRow.style.display !== 'table-row';
 
         if (isClosed) {
             detailRow.style.display = 'table-row';
             arrow.style.transform = 'rotate(90deg)';
+            triggerRow.classList.add('expanded');
             // Default view logic
             switchView(viewName || 'overview');
         } else if (viewName && !isClosed) {
@@ -537,6 +580,7 @@
             // Close panel
             detailRow.style.display = 'none';
             arrow.style.transform = 'rotate(0deg)';
+            triggerRow.classList.remove('expanded');
         }
     }
 
@@ -565,16 +609,12 @@
         const data = assignmentData[classKey] || [];
 
         data.forEach(a => {
-            // Dynamic score visualization style
-            const scoreNum = parseInt(a.score);
-            const scoreStyle = `background: conic-gradient(var(--status-score) 0% ${scoreNum}%, #f0f0f0 ${scoreNum}% 100%);`;
-            
             const html = `
             <div class="assignment-item">
                 <div class="assign-left">
                     <div class="assign-type">${a.type}</div>
                     <a href="#" class="assign-title">${a.title}</a>
-                    <div class="assign-type" style="margin-top:5px; font-weight:400;">Due: ${a.date}</div>
+                    <div class="assign-type" style="margin-top:5px; font-weight:400;">Assigned on: ${a.date}</div>
                 </div>
                 <div class="assign-metrics">
                     <div class="circle-stat">
@@ -589,13 +629,7 @@
                         <div class="circle c-notstarted">${a.n}</div>
                         <div class="circle-label">Not Started</div>
                     </div>
-                    <div class="circle-stat">
-                        <div class="c-score" style="${scoreStyle}"></div>
-                        <style>.c-score::before { content: "${a.score}"; }</style>
-                        <div class="circle-label" style="color:var(--status-score)">Avg Score</div>
-                    </div>
                 </div>
-                <div><button class="btn-link">View Report</button></div>
             </div>`;
             container.innerHTML += html;
         });
@@ -609,7 +643,7 @@
         data.forEach(s => {
             tbody.innerHTML += `
             <tr>
-                <td><span style="color:var(--tuva-blue); font-weight:600;">${s.name}</span></td>
+                <td><span style="color:var(--tuva-link); font-weight:600;">${s.name}</span></td>
                 <td><span style="color:#49c9a7; font-size:10px;">●</span> ${s.status}</td>
                 <td>${s.comp}</td>
                 <td>${s.score}</td>
