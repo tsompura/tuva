@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuva District - Teacher Classes Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    /* --- Tuva Brand Variables --- */
+    :root {
+        --tuva-header-bg: #03363d;
+        --tuva-bg-gray: #f4f7f9;
+        --tuva-blue: #1d4cbc;
+        --tuva-text: #3d4146;
+        --tuva-subtext: #828890;
+        --tuva-border: #e4e7eb;
+        
+        /* Status Colors */
+        --status-completed: #68bfa5;
+        --status-started: #5aa5d6;
+        --status-notstarted: #f2c94c;
+        --status-score: #8e44ad;
+        
+        /* Badges */
+        --badge-premium: #eec228;
+    }
+
+    body {
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: var(--tuva-bg-gray);
+        color: var(--tuva-text);
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- 1. Header --- */
+    header {
+        background-color: var(--tuva-header-bg);
+        height: 56px;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .logo img { height: 28px; }
+    .nav-links span {
+        color: rgba(255,255,255,0.9);
+        margin-left: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .nav-links span:hover { color: #fff; }
+    .nav-right { display: flex; align-items: center; }
+    .btn-premium {
+        background: #1d4cbc;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-right: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* --- 2. Main Layout --- */
+    .container {
+        max-width: 1240px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .dashboard-title {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .dashboard-title h1 {
+        font-size: 26px;
+        font-weight: 600;
+        color: var(--tuva-header-bg);
+        margin: 0;
+    }
+    .dashboard-title .meta {
+        font-size: 12px;
+        color: var(--tuva-subtext);
+        margin-top: 5px;
+    }
+
+    /* Alert Bar */
+    .alert-bar {
+        background-color: #fff9c4;
+        border: 1px solid #f9e79f;
+        color: #5c4a08;
+        padding: 15px 20px;
+        font-size: 13px;
+        border-radius: 4px;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+    .alert-bar a { color: #5c4a08; text-decoration: underline; }
+
+    /* Stats Cards */
+    .stats-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+    .stat-box {
+        background-color: var(--tuva-header-bg);
+        color: white;
+        flex: 1;
+        padding: 20px;
+        border-radius: 4px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    .stat-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        opacity: 0.9;
+    }
+    .stat-value { font-size: 32px; font-weight: 400; }
+
+    /* --- 3. Main Teacher Table --- */
+    .section-header { margin-bottom: 15px; }
+    .section-header h2 { font-size: 20px; color: var(--tuva-header-bg); margin: 0; }
+
+    .table-panel {
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: 1px solid var(--tuva-border);
+    }
+    .table-controls {
+        padding: 15px;
+        border-bottom: 1px solid var(--tuva-border);
+    }
+    .search-input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 300px;
+        font-size: 14px;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    th {
+        text-align: left;
+        padding: 15px 20px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--tuva-text);
+        border-bottom: 1px solid #ccc;
+        background-color: #fafbfc;
+    }
+    td {
+        padding: 15px 20px;
+        font-size: 14px;
+        color: var(--tuva-text);
+        border-bottom: 1px solid var(--tuva-border);
+        vertical-align: middle;
+    }
+    
+    .teacher-link {
+        font-weight: 700;
+        color: var(--tuva-blue);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    .expand-arrow {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        margin-right: 8px;
+        font-size: 10px;
+        transition: transform 0.2s;
+        color: var(--tuva-subtext);
+    }
+    .badge {
+        padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;
+        margin-left: 8px; text-transform: uppercase; color: white;
+    }
+    .bg-premium { background-color: var(--badge-premium); }
+    .drill-metric { color: var(--tuva-blue); cursor: pointer; font-weight: 600; }
+    .drill-metric:hover { text-decoration: underline; }
+
+    /* --- 4. EXPANDED PANEL --- */
+    .details-row { display: none; background-color: #fff; }
+    .details-row.visible { display: table-row; }
+    .details-container {
+        padding: 20px 30px;
+        background-color: #fafbfc;
+        border-bottom: 1px solid var(--tuva-border);
+        border-left: 4px solid var(--tuva-blue);
+        box-shadow: inset 0 4px 6px -6px rgba(0,0,0,0.1);
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .panel-header h3 { margin: 0; font-size: 18px; color: var(--tuva-header-bg); }
+
+    /* Tabs */
+    .sub-tabs { display: flex; gap: 25px; border-bottom: 1px solid var(--tuva-border); margin-bottom: 20px; }
+    .sub-tab {
+        font-size: 14px; color: var(--tuva-subtext); cursor: pointer;
+        padding-bottom: 10px; border-bottom: 3px solid transparent; font-weight: 600;
+    }
+    .sub-tab:hover { color: var(--tuva-blue); }
+    .sub-tab.active { color: var(--tuva-blue); border-bottom-color: var(--tuva-blue); }
+
+    /* Filter Bar inside Tabs */
+    .tab-filter-bar {
+        display: flex; justify-content: flex-end; align-items: center;
+        margin-bottom: 15px;
+    }
+    .class-dropdown {
+        padding: 6px 12px; border: 1px solid var(--tuva-blue); border-radius: 4px;
+        background: white; color: var(--tuva-blue); font-weight: 600; font-size: 13px;
+    }
+
+    /* --- CLASSES TABLE (Overview View) --- */
+    .classes-table {
+        width: 100%; border: 1px solid var(--tuva-border); border-radius: 4px; background: white;
+    }
+    .classes-table th { background: #f4f7f9; font-size: 12px; color: var(--tuva-subtext); padding: 12px 15px; }
+    .classes-table td { padding: 12px 15px; font-size: 14px; border-bottom: 1px solid #eee; }
+    .classes-table tr:last-child td { border-bottom: none; }
+    .class-name { font-weight: 600; color: var(--tuva-blue); }
+
+    /* --- ASSIGNMENT CARDS (Assignments View) --- */
+    .assignment-list { display: flex; flex-direction: column; gap: 10px; }
+    .assignment-item {
+        background: white; border: 1px solid var(--tuva-border); border-radius: 6px;
+        padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .assign-left { display: flex; flex-direction: column; width: 35%; }
+    .assign-type { font-size: 10px; color: var(--tuva-subtext); text-transform: uppercase; font-weight: 700; margin-bottom: 4px;}
+    .assign-title { font-size: 16px; font-weight: 700; color: var(--tuva-header-bg); text-decoration: none; }
+    
+    .assign-metrics { display: flex; gap: 30px; align-items: center; justify-content: center; width: 40%; }
+    .circle-stat { display: flex; flex-direction: column; align-items: center; }
+    .circle {
+        width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        font-weight: 700; font-size: 14px; margin-bottom: 4px; background: white;
+    }
+    .c-completed { border: 3px solid var(--status-completed); color: var(--tuva-text); }
+    .c-started { border: 3px solid var(--status-started); color: var(--tuva-text); }
+    .c-notstarted { border: 3px solid var(--status-notstarted); color: var(--tuva-text); }
+    .c-score {
+        background: conic-gradient(var(--status-score) 0% 80%, #f0f0f0 80% 100%);
+        border: none; width: 44px; height: 44px; position: relative;
+    }
+    .c-score::before {
+        content: "80%"; position: absolute; background: white; width: 34px; height: 34px;
+        border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        font-size: 11px; color: var(--status-score); font-weight: 700;
+        top: 5px; left: 5px;
+    }
+    .circle-label { font-size: 10px; color: var(--tuva-subtext); font-weight: 600; text-transform: uppercase; }
+
+    /* Helper Classes */
+    .hidden { display: none; }
+    .btn-link { background: none; border: none; color: var(--tuva-blue); font-weight: 600; cursor: pointer; font-size: 12px; }
+
+</style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+        </div>
+        <div class="nav-right">
+            <span class="btn-premium">Premium</span>
+            <div class="nav-links">
+                <span>Tuva Tools</span>
+                <span>Dashboard</span>
+                <span>Content Library</span>
+                <span>Dataset Library</span>
+                <span>Help</span>
+                <span>TEJAS1 ▼</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-title">
+            <h1>Newark Public Schools - District Dashboard ⓘ</h1>
+            <div class="meta">Last Updated: Dec 24, 2025</div>
+        </div>
+
+        <div class="alert-bar">
+            Tuva's School & District Data Dashboard <strong>does not</strong> include all the usage by your teachers and students. Read more to learn about what we do and do not track.<br>
+            <a href="#">Read More</a>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box"><span class="stat-label">Schools</span><div class="stat-value">6</div></div>
+            <div class="stat-box"><span class="stat-label">Teachers</span><div class="stat-value">101</div></div>
+            <div class="stat-box"><span class="stat-label">Students</span><div class="stat-value">660</div></div>
+            <div class="stat-box"><span class="stat-label">Assignments</span><div class="stat-value">4,845</div></div>
+            <div class="stat-box"><span class="stat-label">Dataset Uploads</span><div class="stat-value">4,048</div></div>
+        </div>
+
+        <div class="section-header">
+            <h2>Teacher Summary</h2>
+        </div>
+
+        <div class="table-panel">
+            <div class="table-controls">
+                <input type="text" class="search-input" placeholder="Search by Teacher Name">
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 250px;">Teacher Name</th>
+                        <th>School</th>
+                        <th>Classes</th>
+                        <th>Students</th>
+                        <th>Assignments</th>
+                        <th>Assessments</th>
+                        <th>Dataset Uploads</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row 1: Expandable -->
+                    <tr id="tr-row1">
+                        <td>
+                            <div class="teacher-link" onclick="toggleTeacher('row1', 'overview')">
+                                <span class="expand-arrow" id="arrow-row1">▶</span>
+                                Harshil Parikh
+                                <span class="badge bg-premium">Premium</span>
+                            </div>
+                        </td>
+                        <td>Tuva Jr. School</td>
+                        <!-- Clicking this number opens Overview -->
+                        <td><span class="drill-metric" onclick="toggleTeacher('row1', 'overview')">3</span></td>
+                        <!-- Clicking this number opens Students Tab -->
+                        <td><span class="drill-metric" onclick="toggleTeacher('row1', 'students')">67</span></td>
+                        <!-- Clicking this number opens Assignments Tab -->
+                        <td><span class="drill-metric" onclick="toggleTeacher('row1', 'assignments')">42</span></td>
+                        <td>134</td>
+                        <td>334</td>
+                    </tr>
+
+                    <!-- Expanded Content for Row 1 -->
+                    <tr class="details-row" id="row1">
+                        <td colspan="7" style="padding:0;">
+                            <div class="details-container">
+                                
+                                <div class="panel-header">
+                                    <h3>Teacher Insights: Harshil Parikh</h3>
+                                    <button class="btn-link" style="font-size:14px;">View Full Profile</button>
+                                </div>
+
+                                <div class="sub-tabs">
+                                    <div class="sub-tab active" id="tab-overview" onclick="switchView('overview')">Classes Overview</div>
+                                    <div class="sub-tab" id="tab-assignments" onclick="switchView('assignments')">Assignments Detail</div>
+                                    <div class="sub-tab" id="tab-students" onclick="switchView('students')">Student Roster</div>
+                                </div>
+
+                                <!-- VIEW 1: OVERVIEW (Default - Classes List) -->
+                                <div id="view-overview" class="view-section">
+                                    <p style="font-size:13px; color:var(--tuva-subtext); margin-bottom:10px;">Showing active classes for current academic year.</p>
+                                    <table class="classes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Class Name</th>
+                                                <th>Period</th>
+                                                <th>Grade Level</th>
+                                                <th>Students</th>
+                                                <th>Created Date</th>
+                                                <th>Assignments</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="class-name">7th Grade-Science</td>
+                                                <td>Period 3</td>
+                                                <td>7</td>
+                                                <td>20</td>
+                                                <td>Aug 20, 2024</td>
+                                                <td>12</td>
+                                                <td><button class="btn-link" onclick="switchView('assignments', 'sci7')">View Assignments</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="class-name">8th Grade Math</td>
+                                                <td>Period 1</td>
+                                                <td>8</td>
+                                                <td>32</td>
+                                                <td>Aug 22, 2024</td>
+                                                <td>18</td>
+                                                <td><button class="btn-link" onclick="switchView('assignments', 'math8')">View Assignments</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="class-name">9th Grade Biology</td>
+                                                <td>Period 4</td>
+                                                <td>9</td>
+                                                <td>15</td>
+                                                <td>Sep 01, 2024</td>
+                                                <td>12</td>
+                                                <td><button class="btn-link" onclick="switchView('assignments', 'bio9')">View Assignments</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- VIEW 2: ASSIGNMENTS (With Dropdown) -->
+                                <div id="view-assignments" class="view-section hidden">
+                                    <div class="tab-filter-bar">
+                                        <span style="font-size:12px; font-weight:600; color:var(--tuva-subtext); margin-right:10px;">FILTER BY CLASS:</span>
+                                        <select class="class-dropdown" id="assign-class-select" onchange="loadAssignments(this.value)">
+                                            <option value="sci7">7th Grade-Science</option>
+                                            <option value="math8">8th Grade Math</option>
+                                            <option value="bio9">9th Grade Biology</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="assignment-list" id="assignment-list-container">
+                                        <!-- JS will populate -->
+                                    </div>
+                                </div>
+
+                                <!-- VIEW 3: STUDENTS (With Dropdown) -->
+                                <div id="view-students" class="view-section hidden">
+                                    <div class="tab-filter-bar">
+                                        <span style="font-size:12px; font-weight:600; color:var(--tuva-subtext); margin-right:10px;">FILTER BY CLASS:</span>
+                                        <select class="class-dropdown" id="student-class-select" onchange="loadStudents(this.value)">
+                                            <option value="all">All Classes</option>
+                                            <option value="sci7">7th Grade-Science</option>
+                                            <option value="math8">8th Grade Math</option>
+                                        </select>
+                                    </div>
+                                    <table class="classes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Status</th>
+                                                <th>Assignments Completed</th>
+                                                <th>Avg. Score</th>
+                                                <th>Last Login</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="student-list-container">
+                                            <!-- JS will populate -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 2: Standard -->
+                    <tr>
+                        <td>
+                            <div class="teacher-link">
+                                <span class="expand-arrow">▶</span>
+                                Tuva Demo
+                                <span class="badge bg-premium">Premium</span>
+                            </div>
+                        </td>
+                        <td>Tuva Jr. School</td>
+                        <td>8</td>
+                        <td>61</td>
+                        <td>662</td>
+                        <td>59</td>
+                        <td>104</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<script>
+    // --- Mock Data ---
+    const assignmentData = {
+        'sci7': [
+            { title: 'Pixar vs Dreamworks: Box Plots', type: 'Activity', date: 'Mar 06, 2025', c: 5, s: 10, n: 5, score: '80%' },
+            { title: 'Global Temp: Scatter Plots', type: 'Dataset Activity', date: 'Feb 28, 2025', c: 18, s: 2, n: 0, score: '92%' }
+        ],
+        'math8': [
+            { title: 'Linear Equations in Sports', type: 'Activity', date: 'Jan 15, 2025', c: 28, s: 4, n: 0, score: '88%' },
+            { title: 'Probability with Dice', type: 'Data Story', date: 'Feb 10, 2025', c: 20, s: 10, n: 2, score: '85%' }
+        ],
+        'bio9': [
+            { title: 'Cell Division Analysis', type: 'Activity', date: 'Sep 10, 2024', c: 10, s: 5, n: 0, score: '75%' }
+        ]
+    };
+
+    const studentData = {
+        'sci7': [
+            { name: 'Alice Baker', status: 'Active', comp: '12/15', score: '90%', last: 'Today' },
+            { name: 'Bob Charlie', status: 'Active', comp: '10/15', score: '85%', last: 'Yesterday' }
+        ],
+        'math8': [
+            { name: 'Charlie Delta', status: 'Active', comp: '18/18', score: '95%', last: 'Today' }
+        ],
+        'all': [
+            { name: 'Alice Baker', status: 'Active', comp: '12/15', score: '90%', last: 'Today' },
+            { name: 'Bob Charlie', status: 'Active', comp: '10/15', score: '85%', last: 'Yesterday' },
+            { name: 'Charlie Delta', status: 'Active', comp: '18/18', score: '95%', last: 'Today' }
+        ]
+    };
+
+    // --- Logic ---
+
+    function toggleTeacher(rowId, viewName) {
+        const detailRow = document.getElementById(rowId);
+        const arrow = document.getElementById('arrow-' + rowId);
+        const isClosed = detailRow.style.display !== 'table-row';
+
+        if (isClosed) {
+            detailRow.style.display = 'table-row';
+            arrow.style.transform = 'rotate(90deg)';
+            // Default view logic
+            switchView(viewName || 'overview');
+        } else if (viewName && !isClosed) {
+            // Panel is open, but user clicked a different metric (e.g. Assignments)
+            // Just switch tab
+            switchView(viewName);
+        } else {
+            // Close panel
+            detailRow.style.display = 'none';
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    function switchView(viewName, classFilter) {
+        // Hide all views
+        document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+        // Show target view
+        document.getElementById('view-' + viewName).classList.remove('hidden');
+        
+        // Update Tabs
+        document.querySelectorAll('.sub-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + viewName).classList.add('active');
+
+        // Initial Data Load
+        if(viewName === 'assignments') {
+            if(classFilter) document.getElementById('assign-class-select').value = classFilter;
+            loadAssignments(document.getElementById('assign-class-select').value);
+        } else if (viewName === 'students') {
+            loadStudents('all');
+        }
+    }
+
+    function loadAssignments(classKey) {
+        const container = document.getElementById('assignment-list-container');
+        container.innerHTML = '';
+        const data = assignmentData[classKey] || [];
+
+        data.forEach(a => {
+            // Dynamic score visualization style
+            const scoreNum = parseInt(a.score);
+            const scoreStyle = `background: conic-gradient(var(--status-score) 0% ${scoreNum}%, #f0f0f0 ${scoreNum}% 100%);`;
+            
+            const html = `
+            <div class="assignment-item">
+                <div class="assign-left">
+                    <div class="assign-type">${a.type}</div>
+                    <a href="#" class="assign-title">${a.title}</a>
+                    <div class="assign-type" style="margin-top:5px; font-weight:400;">Due: ${a.date}</div>
+                </div>
+                <div class="assign-metrics">
+                    <div class="circle-stat">
+                        <div class="circle c-completed">${a.c}</div>
+                        <div class="circle-label">Completed</div>
+                    </div>
+                    <div class="circle-stat">
+                        <div class="circle c-started">${a.s}</div>
+                        <div class="circle-label">Started</div>
+                    </div>
+                    <div class="circle-stat">
+                        <div class="circle c-notstarted">${a.n}</div>
+                        <div class="circle-label">Not Started</div>
+                    </div>
+                    <div class="circle-stat">
+                        <div class="c-score" style="${scoreStyle}"></div>
+                        <style>.c-score::before { content: "${a.score}"; }</style>
+                        <div class="circle-label" style="color:var(--status-score)">Avg Score</div>
+                    </div>
+                </div>
+                <div><button class="btn-link">View Report</button></div>
+            </div>`;
+            container.innerHTML += html;
+        });
+    }
+
+    function loadStudents(classKey) {
+        const tbody = document.getElementById('student-list-container');
+        tbody.innerHTML = '';
+        const data = studentData[classKey] || studentData['all'];
+
+        data.forEach(s => {
+            tbody.innerHTML += `
+            <tr>
+                <td><span style="color:var(--tuva-blue); font-weight:600;">${s.name}</span></td>
+                <td><span style="color:#49c9a7; font-size:10px;">●</span> ${s.status}</td>
+                <td>${s.comp}</td>
+                <td>${s.score}</td>
+                <td>${s.last}</td>
+            </tr>`;
+        });
+    }
+</script>
+
+</body>
+</html>
