@@ -265,17 +265,47 @@
         
         /* Testimonial */
         .testimonial-section {
-            background-color: #f5faff;
+            background: linear-gradient(135deg, #004445 0%, #006f75 100%);
             padding: 100px 24px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(236, 182, 6, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .testimonial-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(70, 173, 185, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .testimonial-section .container-narrow {
+            position: relative;
+            z-index: 1;
         }
         
         .testimonial-section h2 {
             font-size: 42px;
             font-weight: 700;
-            color: #1c2025;
+            color: #fff;
             margin-bottom: 24px;
             line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         /* Partnership Benefits */
@@ -330,8 +360,27 @@
         
         /* Partnership Opportunities */
         .opportunities-section {
-            background-color: #f5faff;
+            background: linear-gradient(180deg, #f5faff 0%, #e0f0f4 100%);
             padding: 100px 24px;
+            position: relative;
+        }
+        
+        .opportunities-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 68, 69, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(70, 173, 185, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .opportunities-section .container {
+            position: relative;
+            z-index: 1;
         }
         
         .opportunities-section h2 {
@@ -361,43 +410,70 @@
         }
         
         .opportunity-card {
-            background-color: #fff;
-            border: 1px solid #e9eef4;
-            border-radius: 8px;
-            padding: 32px;
-            transition: box-shadow 0.3s;
+            background: linear-gradient(135deg, #fff 0%, #f5faff 100%);
+            border: 2px solid #e0f0f4;
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 139, 148, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.3s;
         }
         
         .opportunity-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 68, 69, 0.15);
+            border-color: #008b94;
+        }
+        
+        .opportunity-card:hover::before {
+            top: -30%;
+            right: -30%;
         }
         
         .opportunity-card h3 {
             font-size: 24px;
             font-weight: 700;
-            color: #1c2025;
+            color: #004445;
             margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
         }
         
         .opportunity-card .description {
             font-size: 16px;
             color: #3d4146;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
         }
         
         .opportunity-card ul {
             list-style: none;
             padding: 0;
             margin: 0;
+            position: relative;
+            z-index: 1;
         }
         
         .opportunity-card li {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 14px;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
             color: #3d4146;
         }
         
@@ -405,6 +481,7 @@
             color: #004445;
             font-weight: 700;
             flex-shrink: 0;
+            font-size: 18px;
         }
         
         /* CTA Section */
@@ -646,13 +723,7 @@
                 </div>
                 <div>
                     <div class="feature-image" style="background-color: #f0f5fb;">
-                        <svg width="300" height="200" viewBox="0 0 300 200">
-                            <rect x="40" y="150" width="40" height="30" fill="#7dc4ce" />
-                            <rect x="90" y="120" width="40" height="60" fill="#46adb9" />
-                            <rect x="140" y="90" width="40" height="90" fill="#008b94" />
-                            <rect x="190" y="110" width="40" height="70" fill="#004445" />
-                            <rect x="240" y="130" width="40" height="50" fill="#005f64" />
-                        </svg>
+                        <img src="https://tuvalabs.com/static/img/partnership/bar-chart.gif" alt="Bar chart visualization" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
                 </div>
             </div>
@@ -665,9 +736,7 @@
             <div class="feature-grid">
                 <div>
                     <div class="feature-image" style="background-color: #e0f0f4; position: relative; overflow: hidden;">
-                        <div style="position: absolute; width: 120px; height: 120px; border-radius: 50%; background-color: #004445; opacity: 0.1; top: 20%; left: 10%;"></div>
-                        <div style="position: absolute; width: 80px; height: 80px; border-radius: 50%; background-color: #008b94; opacity: 0.2; bottom: 20%; right: 15%;"></div>
-                        <div style="text-align: center; color: #004445; font-size: 48px; font-weight: 700; opacity: 0.3;">Students</div>
+                        <img src="https://tuvalabs.com/static/img/partnership/partners-2.jpg" alt="Students using Tuva" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
                 </div>
                 <div>
