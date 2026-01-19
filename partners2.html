@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner with Tuva | Tuva Labs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Bitter:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: #fff;
+            color: #1c2025;
+            line-height: 1.5;
+        }
+        
+        /* Header */
+        header {
+            background-color: #004445;
+            color: #fff;
+            padding: 16px 0;
+        }
+        
+        header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        header .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        header .logo img {
+            height: 32px;
+            width: auto;
+        }
+        
+        header nav {
+            display: flex;
+            gap: 8px;
+        }
+        
+        header nav a {
+            padding: 8px 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        header nav a:hover {
+            color: #ecb606;
+        }
+        
+        header .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        header .header-actions a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 24px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #8c1a64 0%, #a0276b 50%, #b43472 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 60px 24px;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background-image: 
+                linear-gradient(90deg, rgba(140, 26, 100, 0.3) 0%, transparent 100%),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.1) 0px,
+                    rgba(255, 255, 255, 0.1) 2px,
+                    transparent 2px,
+                    transparent 50px
+                );
+            pointer-events: none;
+        }
+        
+        .hero-section .container-narrow {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-section h1 {
+            font-family: 'Bitter', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #ecb606;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-section p {
+            font-size: 20px;
+            color: #fff;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* New Hero CTA Section */
+        .hero-cta {
+            background: linear-gradient(135deg, #004445 0%, #005f64 100%);
+            padding: 80px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(236, 182, 6, 0.1) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+
+        .hero-cta .container-narrow {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-cta h2 {
+            font-family: 'Bitter', serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .hero-cta p {
+            font-size: 20px;
+            color: #e0f0f4;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 16px 32px;
+            background-color: #ecb606;
+            color: #004445;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #ece01b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(236, 182, 6, 0.3);
+        }
+
+        .btn-secondary {
+            padding: 16px 32px;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Partner Logos */
+        .partner-logos {
+            background-color: #f5faff;
+            padding: 40px 0;
+            overflow: hidden;
+        }
+        
+        .logos-scroll {
+            display: flex;
+            gap: 24px;
+            overflow-x: hidden;
+            padding: 0 24px;
+            animation: scroll 30s linear infinite;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .logo-card {
+            flex-shrink: 0;
+            width: 140px;
+            height: 80px;
+            background-color: #fff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e9eef4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px;
+        }
+        
+        .logo-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .partner-logos .text-center {
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .partner-logos p {
+            font-size: 14px;
+            color: #3d4146;
+            font-weight: 500;
+        }
+
+        /* Problem/Solution Section */
+        .problem-solution {
+            background-color: #fff;
+            padding: 100px 24px;
+        }
+
+        .problem-solution h2 {
+            font-family: 'Bitter', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8c1a64;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .problem-solution .subtitle {
+            font-size: 18px;
+            color: #3d4146;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .comparison-column {
+            background-color: #f5faff;
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .comparison-column.old-way {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e9eef4 100%);
+            border: 2px solid #d1d5db;
+        }
+
+        .comparison-column.tuva-way {
+            background: linear-gradient(135deg, #e0f0f4 0%, #f5faff 100%);
+            border: 2px solid #46adb9;
+        }
+
+        .comparison-column h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .comparison-column.old-way h3 {
+            color: #6b7280;
+        }
+
+        .comparison-column.tuva-way h3 {
+            color: #004445;
+        }
+
+        .comparison-item {
+            margin-bottom: 20px;
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .comparison-label {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .old-way .comparison-label {
+            color: #991b1b;
+        }
+
+        .tuva-way .comparison-label {
+            color: #065f46;
+        }
+
+        .comparison-text {
+            color: #3d4146;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Value Pillars */
+        .value-pillars {
+            background: linear-gradient(180deg, #f5faff 0%, #e0f0f4 100%);
+            padding: 100px 24px;
+        }
+
+        .value-pillars h2 {
+            font-family: 'Bitter', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #1c2025;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .value-pillars .subtitle {
+            font-size: 18px;
+            color: #3d4146;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pillar-card {
+            background: linear-gradient(135deg, #fff 0%, #f5faff 100%);
+            border: 2px solid #e0f0f4;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 139, 148, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 68, 69, 0.15);
+            border-color: #008b94;
+        }
+
+        .pillar-card:hover::before {
+            top: -30%;
+            left: -30%;
+        }
+
+        .pillar-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #004445 0%, #008b94 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pillar-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff;
+        }
+
+        .pillar-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #004445;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pillar-card p {
+            font-size: 16px;
+            color: #3d4146;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Feature Sections */
+        .feature-section {
+            padding: 100px 24px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .feature-section h2 {
+            font-family: 'Bitter', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8c1a64;
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+        
+        .feature-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-section li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .bullet {
+            width: 8px;
+            height: 8px;
+            background-color: #004445;
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        
+        .feature-section p {
+            font-size: 18px;
+            color: #3d4146;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .feature-section a {
+            color: #004445;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-top: 32px;
+            display: inline-block;
+        }
+        
+        .feature-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bg-light {
+            background-color: #f5faff;
+        }
+
+        /* Integration Showcase */
+        .integration-showcase {
+            background-color: #fff;
+            padding: 100px 24px;
+        }
+
+        .integration-showcase h2 {
+            font-family: 'Bitter', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8c1a64;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .integration-showcase .intro {
+            font-size: 18px;
+            color: #3d4146;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .integration-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .integration-feature {
+            background-color: #f5faff;
+            border-left: 4px solid #004445;
+            padding: 24px;
+            border-radius: 8px;
+        }
+
+        .integration-feature h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #004445;
+            margin-bottom: 12px;
+        }
+
+        .integration-feature p {
+            font-size: 16px;
+            color: #3d4146;
+            line-height: 1.6;
+        }
+        
+        /* Testimonial */
+        .testimonial-section {
+            background: linear-gradient(135deg, #004445 0%, #005f64 50%, #006f75 100%);
+            padding: 120px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-section::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(236, 182, 6, 0.15) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+        
+        .testimonial-section::after {
+            content: '';
+            position: absolute;
+            bottom: -25%;
+            right: -8%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(70, 173, 185, 0.2) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+        
+        .testimonial-section .container-narrow {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-section h2 {
+            font-family: 'Bitter', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+            line-height: 1.3;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Partnership Benefits */
+        .benefits-section {
+            background-color: #fff;
+            padding: 100px 24px;
+        }
+        
+        .benefits-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1c2025;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            text-align: left;
+        }
+        
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #e0f0f4;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1c2025;
+            margin-bottom: 12px;
+        }
+        
+        .benefit-card p {
+            font-size: 16px;
+            color: #3d4146;
+            line-height: 1.6;
+        }
+        
+        /* Partnership Opportunities */
+        .opportunities-section {
+            background: linear-gradient(180deg, #f5faff 0%, #e0f0f4 100%);
+            padding: 100px 24px;
+            position: relative;
+        }
+        
+        .opportunities-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 68, 69, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(70, 173, 185, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .opportunities-section .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .opportunities-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1c2025;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .opportunities-section .subtitle {
+            font-size: 18px;
+            color: #3d4146;
+            text-align: center;
+            margin-bottom: 48px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .opportunity-card {
+            background: linear-gradient(135deg, #fff 0%, #f5faff 100%);
+            border: 2px solid #e0f0f4;
+            border-radius: 12px;
+            padding: 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 139, 148, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .opportunity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 68, 69, 0.15);
+            border-color: #008b94;
+        }
+        
+        .opportunity-card:hover::before {
+            top: -30%;
+            right: -30%;
+        }
+        
+        .opportunity-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #004445;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .opportunity-card .description {
+            font-size: 16px;
+            color: #3d4146;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .opportunity-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .opportunity-card li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: #3d4146;
+        }
+        
+        .opportunity-card .checkmark {
+            color: #004445;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 24px;
+            background-color: #000;
+            text-align: center;
+        }
+        
+        .cta-section .subtitle {
+            font-size: 18px;
+            color: #ecb606;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        
+        .cta-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+        
+        .btn-cta {
+            padding: 16px 40px;
+            background-color: #ecb606;
+            color: #004445;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-cta:hover {
+            background-color: #ece01b;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #000;
+            color: #989da3;
+            padding: 60px 24px 40px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        footer h4 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        footer a {
+            color: #989da3;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: #fff;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .opportunities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .integration-features {
+                grid-template-columns: 1fr;
+            }
+            
+            header nav {
+                display: none;
+            }
+            
+            .hero-section h1 {
+                font-size: 36px;
+            }
+
+            .hero-cta h2 {
+                font-size: 32px;
+            }
+            
+            .feature-section h2 {
+                font-size: 28px;
+            }
+            
+            .cta-section h2 {
+                font-size: 32px;
+            }
+
+            .hero-cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+            </div>
+            <nav>
+                <a href="#">Tuva Tools</a>
+                <a href="#">Tuva Jr.</a>
+                <a href="#">Content Library</a>
+                <a href="#">Dataset Library</a>
+                <a href="#">Partners</a>
+                <a href="#">Teaching</a>
+                <a href="#">Company</a>
+            </nav>
+            <div class="header-actions">
+                <a href="#">Help</a>
+                <a href="#">Sign Up</a>
+                <a href="#">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container-narrow">
+            <h1>Partner with Tuva</h1>
+            <p>Partner with us to bring real-world, engaging, incredible learning experiences into your curricula or assessment products.</p>
+        </div>
+    </section>
+
+    <!-- New Hero CTA -->
+    <section class="hero-cta">
+        <div class="container-narrow">
+            <h2>Stop Teaching with Static Data. Start Exploring with Live Discovery.</h2>
+            <p>Empower your authors to transform flat tables and "dead" charts into interactive, inquiry-driven experiences that students actually want to explore.</p>
+            <div class="hero-cta-buttons">
+                <a href="#" class="btn-primary">Get the Partner Sandbox</a>
+                <a href="#" class="btn-secondary">See the Content Library</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Logos -->
+    <section class="partner-logos">
+        <div class="logos-scroll">
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/activelylearn-logo.jpeg" alt="Actively Learn">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/brainpop-logo.jpg" alt="BrainPOP">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/cambium-assessment-logo.jpg" alt="Cambium Assessment">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/mmsa-logo.jpg" alt="MMSA">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/Newsela-Logo.jpg" alt="Newsela">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/openscied-logo.jpg" alt="OpenSciEd">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/stemscopes-logo.jpg" alt="STEMscopes">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/penda-logo.jpg" alt="Penda Learning">
+            </div>
+            <!-- Duplicated for seamless scroll -->
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/activelylearn-logo.jpeg" alt="Actively Learn">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/brainpop-logo.jpg" alt="BrainPOP">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/cambium-assessment-logo.jpg" alt="Cambium Assessment">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/mmsa-logo.jpg" alt="MMSA">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/Newsela-Logo.jpg" alt="Newsela">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/openscied-logo.jpg" alt="OpenSciEd">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/stemscopes-logo.jpg" alt="STEMscopes">
+            </div>
+            <div class="logo-card">
+                <img src="https://tuvalabs.com/static/img/partnership/partners/penda-logo.jpg" alt="Penda Learning">
+            </div>
+        </div>
+        <div class="text-center">
+            <p>and many more</p>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section class="problem-solution">
+        <div class="container">
+            <h2>Bridge the "Static Gap" in your Curriculum</h2>
+            <p class="subtitle">Most digital programs suffer from "passive data"—uninspiring images and tables that fail to spark curiosity. Tuva turns those moments into active discovery.</p>
+            <div class="comparison-grid">
+                <div class="comparison-column old-way">
+                    <h3>The Old Way (Static)</h3>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Passive</div>
+                        <div class="comparison-text">Students look at a printed image of a graph.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Hypothetical</div>
+                        <div class="comparison-text">"Imagine a bird flies at X speed..."</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Limited</div>
+                        <div class="comparison-text">One chart = one question.</div>
+                    </div>
+                </div>
+                <div class="comparison-column tuva-way">
+                    <h3>The Tuva Way (Dynamic)</h3>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Active</div>
+                        <div class="comparison-text">Students drag variables to create their own graphs.</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Authentic</div>
+                        <div class="comparison-text">"Analyze the real migration patterns of 500 eagles."</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-label">Expansive</div>
+                        <div class="comparison-text">One dataset = infinite inquiry.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Pillars Section -->
+    <section class="value-pillars">
+        <div class="container">
+            <h2>Built for Content Directors, Designed for Students</h2>
+            <p class="subtitle">Everything you need to create powerful, engaging data experiences</p>
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                        </svg>
+                    </div>
+                    <h3>Real-World Data, Ready Now</h3>
+                    <p>Stop spending editorial hours cleaning CSV files. Access 500+ curated, standards-aligned datasets from NASA, NOAA, and the Census.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3>Pedagogy-First Tools</h3>
+                    <p>Our graphing interface isn't just a tool—it's a scaffold. Help students "see" the math with visual transitions, filtering, and case-card storytelling.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3>Assessment & Accessibility</h3>
+                    <p>Create technology-enhanced items (TEIs) that mirror high-stakes testing. Fully WCAG compliant to meet state and district requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section 1 -->
+    <section class="feature-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div>
+                    <h2>Interactive and Powerful Data and Graphing Tools for Student Learning & Assessment</h2>
+                    <ul>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Empower students to learn how to manipulate and organize data for exploration and analysis.</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Enable students to create various graphs including dot plots, scatter plots, bar graphs, line charts, box plots, histograms, and maps.</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Equip students with tools to create their own mathematical models, make predictions, and provide evidence.</p>
+                        </li>
+                    </ul>
+                    <a href="#">Learn More about Accessibility of Tuva Tools</a>
+                </div>
+                <div>
+                    <div class="feature-image" style="background-color: #f0f5fb;">
+                        <img src="https://tuvalabs.com/static/img/partnership/bar-chart.gif" alt="Bar chart visualization" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section 2 -->
+    <section class="feature-section bg-light">
+        <div class="container">
+            <div class="feature-grid">
+                <div>
+                    <div class="feature-image" style="background-color: #e0f0f4; position: relative; overflow: hidden;">
+                        <img src="https://tuvalabs.com/static/img/partnership/partners-2.jpg" alt="Students using Tuva" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                </div>
+                <div>
+                    <h2>Library of 500+ Authentic, Real-World Datasets from Primary Sources</h2>
+                    <ul>
+                        <li>
+                            <div class="bullet"></div>
+                            <p><strong>Real-World Learning</strong> - bring relevant and meaningful lessons and tasks into your product</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p><strong>No Stale Content</strong> - bring fresh, up to date lessons into your product</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p><strong>Community-Based Learning</strong> - bring local or regional phenomena & topics into your product</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Showcase -->
+    <section class="integration-showcase">
+        <div class="container">
+            <h2>Your Content. Our Engine.</h2>
+            <p class="intro">Whether you are building a K-5 Science module or a High School Statistics assessment, Tuva integrates seamlessly into your existing platform.</p>
+            <div class="integration-features">
+                <div class="integration-feature">
+                    <h3>API & LTI Ready</h3>
+                    <p>Frictionless integration into your LMS or proprietary platform.</p>
+                </div>
+                <div class="integration-feature">
+                    <h3>Custom Authoring</h3>
+                    <p>Lock specific data views to guide student learning paths.</p>
+                </div>
+                <div class="integration-feature">
+                    <h3>Co-Branded Experience</h3>
+                    <p>Keep your brand front and center while leveraging our technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section 3 -->
+    <section class="feature-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div>
+                    <h2>Integrate with Ease</h2>
+                    <ul>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Natively integrate into your product to offer a seamless experience to your users.</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Powerful authoring environment for content and writers to customize and author lessons and assessment tasks.</p>
+                        </li>
+                        <li>
+                            <div class="bullet"></div>
+                            <p>Full control over saving and grading student work and responses.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="feature-image" style="background-color: #f5faff; position: relative;">
+                        <img src="https://tuvalabs.com/static/img/partnership/partners-3.jpg" alt="Integration dashboard" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <div class="container-narrow">
+            <h2>Empower Students with Next Generation Data, Graphing, and Statistics Tools</h2>
+        </div>
+    </section>
+
+    <!-- Partnership Benefits -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2>Partnership Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#004445" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Expand Your Reach</h3>
+                    <p>Connect with thousands of educators and students using Tuva's platform for data literacy education.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#004445" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Enhanced Learning</h3>
+                    <p>Combine your curriculum with Tuva's powerful tools to create deeper, more engaging learning experiences.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#004445" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Co-Marketing</h3>
+                    <p>Leverage joint marketing opportunities, webinars, and co-branded content to reach wider audiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Opportunities -->
+    <section class="opportunities-section">
+        <div class="container">
+            <h2>Partnership Opportunities</h2>
+            <p class="subtitle">We collaborate with diverse organizations across education to expand data literacy</p>
+            <div class="opportunities-grid">
+                <div class="opportunity-card">
+                    <h3>Curriculum Partners</h3>
+                    <p class="description">Math and science curriculum providers looking to enhance their programs with interactive data analysis and visualization tools.</p>
+                    <ul>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Illustrative Mathematics alignment</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>OpenSciEd integration</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>STEMscopes collaboration</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="opportunity-card">
+                    <h3>EdTech Platforms</h3>
+                    <p class="description">Educational technology companies seeking to integrate powerful data literacy tools into their platforms.</p>
+                    <ul>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Learning Management Systems</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Assessment platforms</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Content delivery systems</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="cta-section">
+        <div class="container-narrow">
+            <p class="subtitle">Ready to bring your data to life?</p>
+            <h2>Don't let your content stay static. Schedule a demo to see how easy it is to embed Tuva's data-rich experiences into your next program.</h2>
+            <a href="#" class="btn-cta">Schedule a Strategy Call</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Get Started</h4>
+                    <a href="#">Tuva Jr.</a>
+                    <a href="#">Tuva Science (6-12)</a>
+                    <a href="#">Tuva Math (6-12)</a>
+                    <a href="#">Upload a Dataset</a>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <a href="#">Tuva Tutorials</a>
+                    <a href="#">Support</a>
+                    <a href="#">Accessibility</a>
+                    <a href="#">Conferences & Workshops</a>
+                </div>
+                <div>
+                    <h4>Other Programs</h4>
+                    <a href="#">Arsenic Data</a>
+                    <a href="#">Weather Blur</a>
+                    <a href="#">Climate Literacy</a>
+                    <a href="#">Hudson Valley</a>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">About Data Literacy</a>
+                    <a href="#">Content Philosophy</a>
+                    <a href="#">Partners</a>
+                    <a href="#">News</a>
+                </div>
+                <div>
+                    <h4>Contact Us</h4>
+                    <p style="margin-bottom: 8px;">Sales: <a href="mailto:hello@tuvalabs.com" style="display: inline;">hello@tuvalabs.com</a></p>
+                    <p style="margin-bottom: 8px;">Support: <a href="mailto:support@tuvalabs.com" style="display: inline;">support@tuvalabs.com</a></p>
+                    <p style="margin-bottom: 8px;">Phone: <a href="tel:+1.646.481.2150" style="display: inline;">+1.646.481.2150</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+                <p>© Tuva Labs Inc.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
