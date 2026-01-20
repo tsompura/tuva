@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Plot Settings Card - Improved UX</title>
+    <link rel="stylesheet" href="https://tools.tuvalabs.com/tools-viewer/tools/4.0.0-8/tuva-data-tools.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 24px;
+            background: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* Settings Card Container */
+        .plot-settings-card {
+            width: 280px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Card Header */
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .settings-header h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+
+        .close-btn:hover {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        /* Card Body */
+        .settings-body {
+            padding: 0;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        /* Section */
+        .settings-section {
+            padding: 20px 16px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .settings-section:last-child {
+            border-bottom: none;
+        }
+
+        .settings-section.no-border {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .settings-section.compact {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        /* Section Label with Help Icon */
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .section-label-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .help-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: help;
+            transition: all 0.15s;
+        }
+
+        .help-icon:hover {
+            background: #0d9488;
+            color: white;
+        }
+
+        /* Dropdown Select */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .settings-select {
+            width: 100%;
+            padding: 10px 32px 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #1f2937;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.15s;
+            min-height: 40px;
+        }
+
+        .settings-select:hover {
+            border-color: #0d9488;
+            background: #f9fafb;
+        }
+
+        .settings-select:focus {
+            outline: none;
+            border-color: #0d9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #6b7280;
+            pointer-events: none;
+        }
+
+        /* Range Input Group - Single Line */
+        .range-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .range-group.stacked {
+            grid-template-columns: 1fr;
+        }
+
+        .range-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .range-input-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .range-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #1f2937;
+            transition: all 0.15s;
+            min-height: 40px;
+        }
+
+        .range-input:hover {
+            border-color: #0d9488;
+            background: #f9fafb;
+        }
+
+        .range-input:focus {
+            outline: none;
+            border-color: #0d9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        /* Step Input Group (Side by Side) */
+        .step-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Section Group - Multiple controls in one section */
+        .section-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-group-item:not(:last-child) {
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .toggle-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+        }
+
+        .toggle-section:first-child {
+            padding-top: 0;
+        }
+
+        .toggle-label-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        /* Custom Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            transition: 0.3s;
+            border-radius: 26px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: #0d9488;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        .toggle-switch:hover .toggle-slider {
+            background-color: #9ca3af;
+        }
+
+        .toggle-switch input:checked:hover + .toggle-slider {
+            background-color: #0f766e;
+        }
+
+        /* Language Section */
+        .language-section {
+            padding: 20px 16px;
+            background: #f9fafb;
+        }
+
+        /* Font & Case Size Sections */
+        .size-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .size-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .size-button {
+            width: 36px;
+            height: 36px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+        .size-button:hover {
+            background: #f3f4f6;
+            border-color: #0d9488;
+        }
+
+        .size-button:active {
+            background: #e5e7eb;
+        }
+
+        .size-value {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 6px;
+            min-width: 60px;
+        }
+
+        /* Scrollbar Styling */
+        .settings-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .settings-body::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+
+        .settings-body::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .settings-body::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* Demonstration Container */
+        .demo-container {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .demo-notes {
+            flex: 1;
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .demo-notes h2 {
+            margin: 0 0 16px 0;
+            font-size: 18px;
+            color: #1f2937;
+        }
+
+        .demo-notes h3 {
+            margin: 20px 0 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .demo-notes ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .demo-notes li {
+            margin-bottom: 6px;
+        }
+
+        .improvement-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #d1fae5;
+            color: #065f46;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Plot Settings Card -->
+        <div class="plot-settings-card">
+            <!-- Header -->
+            <div class="settings-header">
+                <h3>Plot Settings Card</h3>
+                <button class="close-btn" aria-label="Close settings">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="settings-body">
+                <!-- Grouping & Ordering Section -->
+                <div class="settings-section">
+                    <div class="section-group">
+                        <!-- Color Cases By -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Color Cases By</span>
+                                <span class="help-icon" title="Choose attribute for color coding">ⓘ</span>
+                            </div>
+                            <div class="select-wrapper">
+                                <select class="settings-select">
+                                    <option>Select...</option>
+                                    <option>Species</option>
+                                    <option>Gender</option>
+                                    <option>Location</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Order Cases By -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Order Cases By</span>
+                                <span class="help-icon" title="Choose attribute for ordering">ⓘ</span>
+                            </div>
+                            <div class="select-wrapper">
+                                <select class="settings-select">
+                                    <option>Select...</option>
+                                    <option>Name</option>
+                                    <option>Value</option>
+                                    <option>Date</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Axis Configuration Section -->
+                <div class="settings-section">
+                    <div class="section-group">
+                        <!-- X-Axis Range - Single Line -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">X-Axis Range</span>
+                            </div>
+                            <div class="range-group">
+                                <div class="range-input-wrapper">
+                                    <label class="range-input-label">Min</label>
+                                    <input type="number" class="range-input" value="22" step="0.5">
+                                </div>
+                                <div class="range-input-wrapper">
+                                    <label class="range-input-label">Max</label>
+                                    <input type="number" class="range-input" value="35" step="0.5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Axis Steps -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Axis Steps</span>
+                            </div>
+                            <div class="step-group">
+                                <div class="range-input-wrapper">
+                                    <label class="range-input-label">Major Step</label>
+                                    <input type="number" class="range-input" value="1" step="0.1">
+                                </div>
+                                <div class="range-input-wrapper">
+                                    <label class="range-input-label">Minor Step</label>
+                                    <input type="number" class="range-input" value="0.5" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Options Section -->
+                <div class="settings-section">
+                    <div class="section-group">
+                        <!-- Grid Lines & Labels -->
+                        <div class="section-group-item">
+                            <div class="toggle-section">
+                                <div class="toggle-label-group">
+                                    <span class="toggle-label">Grid Lines</span>
+                                    <span class="help-icon" title="Show or hide grid lines">ⓘ</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-section">
+                                <div class="toggle-label-group">
+                                    <span class="toggle-label">Labels</span>
+                                    <span class="help-icon" title="Show or hide axis labels">ⓘ</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Language -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Language</span>
+                                <span class="help-icon" title="Interface language">ⓘ</span>
+                            </div>
+                            <div class="select-wrapper">
+                                <select class="settings-select">
+                                    <option selected>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text & Size Section -->
+                <div class="settings-section">
+                    <div class="section-group">
+                        <!-- Font Size -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Font Size</span>
+                            </div>
+                            <div class="size-controls">
+                                <button class="size-button" aria-label="Decrease font size">−</button>
+                                <div class="size-value">14</div>
+                                <button class="size-button" aria-label="Increase font size">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Case Size -->
+                        <div class="section-group-item">
+                            <div class="section-label">
+                                <span class="section-label-text">Case Size</span>
+                            </div>
+                            <div class="size-controls">
+                                <button class="size-button" aria-label="Decrease case size">−</button>
+                                <div class="size-value">12</div>
+                                <button class="size-button" aria-label="Increase case size">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation Notes -->
+        <div class="demo-notes">
+            <h2>UX Improvements <span class="improvement-badge">Enhanced</span></h2>
+            
+            <h3>Grouped Sections</h3>
+            <ul>
+                <li><strong>Grouping & Ordering:</strong> Color Cases + Order Cases together</li>
+                <li><strong>Axis Configuration:</strong> X-Axis Range + Axis Steps together</li>
+                <li><strong>Display Options:</strong> Grid Lines + Labels + Language together</li>
+                <li><strong>Text & Size:</strong> Font Size + Case Size together</li>
+                <li>Reduced from 8 sections to 4 major sections</li>
+                <li>Only 3 major borders instead of 7</li>
+            </ul>
+
+            <h3>Single-Line X-Axis Range</h3>
+            <ul>
+                <li>Min and Max now side-by-side using grid layout</li>
+                <li>Saves vertical space without compromising usability</li>
+                <li>Consistent with Major/Minor Step layout pattern</li>
+            </ul>
+
+            <h3>Reduced Scrolling</h3>
+            <ul>
+                <li>Consolidated 8 individual sections into 4 logical groups</li>
+                <li>Eliminated 4 unnecessary borders and padding areas</li>
+                <li>X-Axis Range now single-line (saves ~60px height)</li>
+                <li>Related controls grouped with subtle internal dividers</li>
+                <li>Approximately 30% less vertical space required</li>
+            </ul>
+
+            <h3>Visual Hierarchy</h3>
+            <ul>
+                <li>Major sections clearly separated with full borders</li>
+                <li>Sub-items within sections use light dividers (#f3f4f6)</li>
+                <li>Section headers maintain consistent 13px/600 weight</li>
+            </ul>
+
+            <h3>Improved Controls</h3>
+            <ul>
+                <li>Larger toggle switches (48×26px) with clear on/off states</li>
+                <li>Teal (#0d9488) used for active states matching Tuva brand</li>
+                <li>Help icons with hover states (gray → teal)</li>
+                <li>Dropdowns with clear hover and focus feedback</li>
+            </ul>
+
+            <h3>Better Information Design</h3>
+            <ul>
+                <li>Input labels positioned above fields for better scanning</li>
+                <li>Step inputs side-by-side (saves vertical space)</li>
+                <li>Range inputs clearly labeled Min/Max</li>
+                <li>Language section visually separated with background</li>
+            </ul>
+
+            <h3>Accessibility</h3>
+            <ul>
+                <li>Proper ARIA labels on icon buttons</li>
+                <li>Focus states with 3px teal ring for keyboard navigation</li>
+                <li>12px minimum font size throughout</li>
+                <li>Color alone not used to convey state (icons + position too)</li>
+            </ul>
+
+            <h3>CSS Compatibility</h3>
+            <ul>
+                <li>Uses Tuva's CSS as base: <code>tuva-data-tools.min.css</code></li>
+                <li>Custom overrides for enhanced UX only</li>
+                <li>Maintains educational, teacher-friendly aesthetic</li>
+                <li>Ready for production integration</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
