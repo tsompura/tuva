@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: #f8f9fa;
+            background: #f7f7fb;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
@@ -21,7 +21,7 @@
         /* Settings Card Container */
         .plot-settings-card {
             width: 280px;
-            background: white;
+            background: #f7f7fb;
             border: 1px solid #d1d5db;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -317,7 +317,7 @@
             background: #f9fafb;
         }
 
-        /* Font & Case Size Sections */
+        /* Size Section - Increment/Decrement Controls */
         .size-section {
             display: flex;
             flex-direction: column;
@@ -326,46 +326,66 @@
 
         .size-controls {
             display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .size-button {
-            width: 36px;
-            height: 36px;
+            align-items: stretch;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             background: white;
-            color: #374151;
-            font-size: 16px;
-            font-weight: 600;
+            height: 44px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .size-button {
+            width: 60px;
+            min-width: 60px;
+            height: 100%;
+            border: none;
+            background: white;
+            color: #1f2937;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.15s;
             flex-shrink: 0;
+            padding: 0;
+        }
+
+        .size-button-minus {
+            border-right: 1px solid #d1d5db;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .size-button-plus {
+            border-left: 1px solid #d1d5db;
+            border-radius: 0 6px 6px 0;
         }
 
         .size-button:hover {
-            background: #f3f4f6;
-            border-color: #3d4146;
+            background: #f9fafb;
         }
 
         .size-button:active {
-            background: #e5e7eb;
+            background: #f3f4f6;
         }
 
         .size-value {
             flex: 1;
+            min-width: 0;
             text-align: center;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 400;
             color: #1f2937;
-            padding: 10px;
-            background: #f9fafb;
-            border-radius: 6px;
-            min-width: 60px;
+            padding: 0;
+            background: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
         }
 
         /* Scrollbar Styling */
@@ -532,9 +552,9 @@
                                 <span class="section-label-text">Font Size</span>
                             </div>
                             <div class="size-controls">
-                                <button class="size-button" aria-label="Decrease font size">−</button>
-                                <div class="size-value">14</div>
-                                <button class="size-button" aria-label="Increase font size">+</button>
+                                <button class="size-button size-button-minus" aria-label="Decrease font size">−</button>
+                                <input type="text" class="size-value" readonly tabindex="-1" aria-label="Input Box Font Size" value="14">
+                                <button class="size-button size-button-plus" aria-label="Increase font size">+</button>
                             </div>
                         </div>
 
@@ -544,9 +564,9 @@
                                 <span class="section-label-text">Case Size</span>
                             </div>
                             <div class="size-controls">
-                                <button class="size-button" aria-label="Decrease case size">−</button>
-                                <div class="size-value">12</div>
-                                <button class="size-button" aria-label="Increase case size">+</button>
+                                <button class="size-button size-button-minus" aria-label="Decrease case size">−</button>
+                                <input type="text" class="size-value" readonly tabindex="-1" aria-label="Input Box Case Size" value="12">
+                                <button class="size-button size-button-plus" aria-label="Increase case size">+</button>
                             </div>
                         </div>
                     </div>
