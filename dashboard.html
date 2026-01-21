@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuva Teacher Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .dropdown { display: none; }
+    .dropdown.active { display: block; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-100">
+  <!-- Header -->
+  <header style="background-color: #004445;">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center justify-between h-14">
+        <div class="flex items-center gap-6">
+          <span class="text-xl font-bold text-white tracking-tight">Tuva</span>
+          <nav class="flex items-center gap-1">
+            <div class="relative">
+              <button onclick="toggleDropdown('tuva-tools')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Tuva Tools
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="tuva-tools" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Graph Tool</div><div class="text-xs text-slate-500">Create visualizations</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Data Analysis</div><div class="text-xs text-slate-500">Explore datasets</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Statistical Tests</div><div class="text-xs text-slate-500">Run calculations</div></a>
+              </div>
+            </div>
+            <div class="relative">
+              <button onclick="toggleDropdown('tuva-jr')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Tuva Jr.
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="tuva-jr" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Jr. Activities</div><div class="text-xs text-slate-500">Grades 2-5</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Data Stories</div><div class="text-xs text-slate-500">Guided explorations</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Real Math Practice</div><div class="text-xs text-slate-500">Skill building</div></a>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 text-sm text-white bg-white/20 rounded">Dashboard</button>
+            <div class="relative">
+              <button onclick="toggleDropdown('content-lib')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Content Library
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="content-lib" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">All Activities</div><div class="text-xs text-slate-500">Browse by subject</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Data Stories</div><div class="text-xs text-slate-500">Narrative lessons</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Premium Content</div><div class="text-xs text-slate-500">Unlock with upgrade</div></a>
+              </div>
+            </div>
+            <div class="relative">
+              <button onclick="toggleDropdown('dataset-lib')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Dataset Library
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="dataset-lib" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Browse Datasets</div><div class="text-xs text-slate-500">Curated collections</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">My Datasets</div><div class="text-xs text-slate-500">Uploaded by you</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Upload New</div><div class="text-xs text-slate-500">Add your data</div></a>
+              </div>
+            </div>
+            <div class="relative">
+              <button onclick="toggleDropdown('assessments')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Assessments
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="assessments" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">All Assessments</div><div class="text-xs text-slate-500">View & manage</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Create New</div><div class="text-xs text-slate-500">Build assessment</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Results</div><div class="text-xs text-slate-500">Student performance</div></a>
+              </div>
+            </div>
+            <div class="relative">
+              <button onclick="toggleDropdown('teaching')" class="flex items-center gap-1 px-3 py-1.5 text-sm text-white/90 hover:text-white hover:bg-white/10 rounded">
+                Teaching
+                <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="teaching" class="dropdown absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Getting Started</div><div class="text-xs text-slate-500">New to Tuva?</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Video Tutorials</div><div class="text-xs text-slate-500">Learn features</div></a>
+                <a href="#" class="block px-4 py-2.5 hover:bg-slate-50"><div class="text-sm font-medium text-slate-800">Best Practices</div><div class="text-xs text-slate-500">Teaching tips</div></a>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-4 py-1.5 rounded text-sm font-bold text-slate-900" style="background-color: #ECB606;">PREMIUM</button>
+          <button class="text-sm text-white/80 hover:text-white">Help</button>
+          <span class="text-sm font-medium text-white">TSOMPURA</span>
+        </div>
+      </div>
+      <!-- Action Bar -->
+      <div class="flex items-center justify-between py-3 border-t border-white/10">
+        <div class="flex items-center gap-3">
+          <button class="px-5 py-2 rounded text-sm font-semibold text-white flex items-center gap-2" style="background-color: #0d9488;">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Create a Class
+          </button>
+          <button class="px-4 py-2 rounded text-sm font-medium text-white flex items-center gap-2 border border-white/30 hover:bg-white/10">
+            Import Class from LMS
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <button class="px-4 py-2 rounded text-sm font-medium flex items-center gap-2 border-2" style="border-color: #ECB606; color: #ECB606;">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            Upload Dataset
+          </button>
+        </div>
+        <div class="relative">
+          <button onclick="toggleDropdown('more-menu')" class="px-4 py-2 text-sm text-white/80 hover:text-white flex items-center gap-1">
+            More
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="more-menu" class="dropdown absolute right-0 top-full mt-1 w-56 bg-white rounded-lg shadow-xl border py-2 z-50">
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Illustrative Math Resources</a>
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">OpenSciEd Alignment</a>
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Tuva Jr. Real Math</a>
+            <div class="border-t my-1"></div>
+            <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Product Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-6 py-6">
+    <div class="flex gap-6">
+      <!-- Left Column -->
+      <div class="flex-1 space-y-5">
+        <!-- Welcome + Stats -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-slate-800">Good afternoon, Tejas!</h1>
+            <p class="text-sm text-slate-500">Here's your teaching overview</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="bg-white rounded-xl px-5 py-3 border border-slate-200 flex items-center gap-3">
+              <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              <div>
+                <div class="text-xl font-bold text-slate-800">67</div>
+                <div class="text-xs text-slate-500">Total Students</div>
+              </div>
+            </div>
+            <div class="bg-white rounded-xl px-5 py-3 border border-slate-200 flex items-center gap-3">
+              <svg class="w-5 h-5" style="color: #8C1A64;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div>
+                <div class="text-xl font-bold" style="color: #8C1A64;">11</div>
+                <div class="text-xs text-slate-500">Need Attention</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="grid grid-cols-4 gap-3">
+          <a href="#" class="bg-white rounded-xl p-4 border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-2">
+              <svg class="w-5 h-5 text-slate-400 group-hover:text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span class="text-xs font-bold px-2 py-0.5 rounded-full text-white" style="background-color: #8C1A64;">3 new</span>
+            </div>
+            <div class="text-sm font-semibold text-slate-800">Assignments</div>
+            <div class="text-xs text-slate-500">8 items</div>
+          </a>
+          <a href="#" class="bg-white rounded-xl p-4 border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-2">
+              <svg class="w-5 h-5 text-slate-400 group-hover:text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              <span class="text-xs font-bold px-2 py-0.5 rounded-full text-white" style="background-color: #8C1A64;">2 new</span>
+            </div>
+            <div class="text-sm font-semibold text-slate-800">Assessments</div>
+            <div class="text-xs text-slate-500">5 items</div>
+          </a>
+          <a href="#" class="bg-white rounded-xl p-4 border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-2">
+              <svg class="w-5 h-5 text-slate-400 group-hover:text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+            </div>
+            <div class="text-sm font-semibold text-slate-800">My Activities</div>
+            <div class="text-xs text-slate-500">12 items</div>
+          </a>
+          <a href="#" class="bg-white rounded-xl p-4 border border-slate-200 hover:border-teal-400 hover:shadow-md transition-all group">
+            <div class="flex items-center justify-between mb-2">
+              <svg class="w-5 h-5 text-slate-400 group-hover:text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+            </div>
+            <div class="text-sm font-semibold text-slate-800">Bookmarks</div>
+            <div class="text-xs text-slate-500">6 items</div>
+          </a>
+        </div>
+
+        <!-- My Classes -->
+        <div class="bg-white rounded-xl border border-slate-200">
+          <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="text-base font-bold text-slate-800">My Classes</h2>
+            <a href="#" class="text-sm font-medium hover:underline" style="color: #0d9488;">View All →</a>
+          </div>
+          <div class="p-4 grid grid-cols-4 gap-3">
+            <div class="relative p-4 rounded-xl border border-slate-200 hover:border-teal-400 transition-all cursor-pointer hover:shadow-md">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: #004445;">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-bold text-slate-800 truncate">Tanish Class</h3>
+                  <span class="text-xs text-slate-500">6th • 1 students</span>
+                </div>
+              </div>
+            </div>
+            <div class="relative p-4 rounded-xl border border-slate-200 hover:border-teal-400 transition-all cursor-pointer hover:shadow-md">
+              <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #8C1A64;">2</div>
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: #004445;">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-bold text-slate-800 truncate">Home Class</h3>
+                  <span class="text-xs text-slate-500">3rd • 1 students</span>
+                </div>
+              </div>
+            </div>
+            <div class="relative p-4 rounded-xl border border-slate-200 hover:border-teal-400 transition-all cursor-pointer hover:shadow-md">
+              <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background-color: #8C1A64;">5</div>
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: #004445;">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-bold text-slate-800 truncate">Demo Class</h3>
+                  <span class="text-xs text-slate-500">5th • 21 students</span>
+                </div>
+              </div>
+            </div>
+            <div class="relative p-4 rounded-xl border border-slate-200 hover:border-teal-400 transition-all cursor-pointer hover:shadow-md">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white" style="background-color: #004445;">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-sm font-bold text-slate-800 truncate">Demo Class</h3>
+                  <span class="text-xs text-slate-500">4th • 24 students</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Due -->
+        <div class="bg-white rounded-xl border border-slate-200">
+          <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
+              <svg class="w-5 h-5" style="color: #8C1A64;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Upcoming Due
+            </h2>
+            <a href="#" class="text-sm font-medium hover:underline" style="color: #0d9488;">All →</a>
+          </div>
+          <div class="p-4 grid grid-cols-4 gap-3">
+            <div class="p-4 rounded-xl border border-red-200 bg-red-50">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h4 class="text-sm font-semibold text-slate-800 leading-tight">Solar System Data Analysis</h4>
+                <span class="text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center bg-red-100 text-red-600 flex-shrink-0">!</span>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">5th Grade - Demo</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-red-600">Today, 3:00 PM</span>
+                <button class="text-xs font-semibold hover:underline" style="color: #0d9488;">View</button>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h4 class="text-sm font-semibold text-slate-800 leading-tight">Plant Growth Lab Report</h4>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">6th Grade - Tanish</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Tomorrow</span>
+                <button class="text-xs font-semibold hover:underline" style="color: #0d9488;">View</button>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h4 class="text-sm font-semibold text-slate-800 leading-tight">Climate Change Activity</h4>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">3rd Grade - Home</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Friday, Jan 24</span>
+                <button class="text-xs font-semibold hover:underline" style="color: #0d9488;">View</button>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h4 class="text-sm font-semibold text-slate-800 leading-tight">Quadratic Equations Quiz</h4>
+              </div>
+              <p class="text-xs text-slate-500 mb-3">4th Grade - Demo</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Monday, Jan 27</span>
+                <button class="text-xs font-semibold hover:underline" style="color: #0d9488;">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fresh on Tuva -->
+        <div class="rounded-xl p-5 border-2" style="background-color: #FFFBEB; border-color: #ECB606;">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg font-bold italic text-slate-800">Fresh on Tuva</h2>
+              <span class="px-2 py-0.5 text-xs font-bold rounded text-slate-800" style="background-color: #ECB606;">NEW</span>
+            </div>
+            <a href="#" class="text-sm font-medium hover:underline" style="color: #004445;">See all →</a>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-white rounded-lg overflow-hidden border border-slate-200 hover:shadow-md transition-all cursor-pointer">
+              <div class="h-20 flex items-center justify-center" style="background-color: #E3F2FD;">
+                <svg class="w-8 h-8" style="color: #1976D2;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+              </div>
+              <div class="p-3">
+                <span class="text-xs font-bold text-slate-500">DATA STORY</span>
+                <h3 class="text-sm font-semibold text-slate-800 mt-1 leading-tight">Climate Change: Arctic Sea Ice</h3>
+                <p class="text-xs text-slate-400 mt-1">Grades 9-12</p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden border border-slate-200 hover:shadow-md transition-all cursor-pointer">
+              <div class="h-20 flex items-center justify-center" style="background-color: #F3E5F5;">
+                <svg class="w-8 h-8" style="color: #8C1A64;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              </div>
+              <div class="p-3">
+                <span class="text-xs font-bold text-slate-500">ACTIVITY</span>
+                <h3 class="text-sm font-semibold text-slate-800 mt-1 leading-tight">Exploring pH Levels</h3>
+                <p class="text-xs text-slate-400 mt-1">Grades 6-8</p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg overflow-hidden border border-slate-200 hover:shadow-md transition-all cursor-pointer">
+              <div class="h-20 flex items-center justify-center" style="background-color: #E8F5E9;">
+                <svg class="w-8 h-8" style="color: #004445;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              </div>
+              <div class="p-3">
+                <span class="text-xs font-bold text-slate-500">DATASET</span>
+                <h3 class="text-sm font-semibold text-slate-800 mt-1 leading-tight">Olympics 2024 Medal Count</h3>
+                <p class="text-xs text-slate-400 mt-1">All Grades</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Tuva Content -->
+      <div class="w-72 space-y-4">
+        <!-- Get Started -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+          <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <span style="color: #ECB606;">✨</span> Get Started Free
+          </h3>
+          <div class="space-y-1">
+            <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 text-sm font-medium" style="color: #004445;">🌟 Tuva Jr. (Grades 2-5)</a>
+            <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 text-sm font-medium" style="color: #004445;">🔬 Tuva Science (Grades 6-12)</a>
+            <a href="#" class="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-50 text-sm font-medium" style="color: #004445;">📐 Tuva Math (Grades 6-12)</a>
+          </div>
+        </div>
+
+        <!-- Tuva + IM -->
+        <div class="rounded-xl p-4" style="background-color: #004445;">
+          <h3 class="text-sm font-bold text-white mb-2">Tuva + Illustrative Math</h3>
+          <p class="text-xs text-teal-200 mb-3">Aligned activities for deeper learning</p>
+          <a href="#" class="text-xs font-semibold flex items-center gap-1" style="color: #ECB606;">Explore IM Resources →</a>
+        </div>
+
+        <!-- Tuva Jr Real Math -->
+        <div class="rounded-xl p-4" style="background-color: #8C1A64;">
+          <h3 class="text-sm font-bold text-white mb-2">Tuva Jr. Real Math</h3>
+          <div class="space-y-1.5">
+            <a href="#" class="flex items-center gap-1 text-xs text-pink-100 hover:text-white">→ Rounding to Nearest 100</a>
+            <a href="#" class="flex items-center gap-1 text-xs text-pink-100 hover:text-white">→ Divide with Remainders</a>
+            <a href="#" class="flex items-center gap-1 text-xs text-pink-100 hover:text-white">→ Decimal Operations</a>
+          </div>
+        </div>
+
+        <!-- Office Hours -->
+        <div class="rounded-xl p-4" style="background-color: #ECB606;">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-slate-800 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">Free Office Hours</h3>
+              <p class="text-xs text-slate-700 mt-1">Get face-to-face help</p>
+              <a href="#" class="text-xs font-semibold text-slate-900 hover:underline mt-2 inline-block">Sign up →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5" style="color: #0d9488;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div>
+              <a href="#" class="text-sm font-semibold hover:underline" style="color: #004445;">Product Support</a>
+              <p class="text-xs text-slate-500">Guides, FAQs & Contact</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown(id) {
+      // Close all dropdowns first
+      document.querySelectorAll('.dropdown').forEach(d => {
+        if (d.id !== id) d.classList.remove('active');
+      });
+      // Toggle the clicked one
+      document.getElementById(id).classList.toggle('active');
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('button')) {
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>
