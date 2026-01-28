@@ -14,77 +14,25 @@
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .tuva-page { display: none; }
         .tuva-page.is-active { display: block; }
-        .progress-bar { background-color: #8C1A64; }
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
         .modal.active { display: flex; align-items: center; justify-content: center; }
-        
-        /* Share Tab Styling */
-        .share-tab-btn { 
-            padding: 10px 16px; 
-            font-size: 14px; 
-            font-weight: 600; 
-            transition: all 0.2s;
-            border: 1px solid #8C1A64;
-            margin-left: -1px;
-        }
+        .share-tab-btn { padding: 10px 16px; font-size: 14px; font-weight: 600; transition: all 0.2s; border: 1px solid #8C1A64; margin-left: -1px; }
         .share-tab-btn:first-child { margin-left: 0; border-radius: 6px 0 0 6px; }
         .share-tab-btn:last-child { border-radius: 0 6px 6px 0; }
         .share-tab-btn.active { background-color: #8C1A64; color: white; }
         .share-tab-btn:not(.active) { background-color: white; color: #8C1A64; }
-        
-        /* Custom Select Styling */
-        .tuva-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            padding-right: 48px;
-        }
-        .tuva-select-std {
-            border-radius: 8px;
-            padding: 12px 48px 12px 20px;
-            border: 1px solid #989da3;
-            background-color: white;
-            font-weight: 500;
-            min-width: 180px;
-        }
-        .tuva-input-std {
-            border-radius: 8px;
-            border: 1px solid #989da3;
-            padding: 12px 16px 12px 44px;
-        }
-        
-        /* Dataset Icon */
-        .ti-dataset {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%238C1A64'%3E%3Ccircle cx='4' cy='4' r='1.8'/%3E%3Ccircle cx='10' cy='4' r='1.8'/%3E%3Ccircle cx='16' cy='4' r='1.8'/%3E%3Ccircle cx='4' cy='10' r='1.8'/%3E%3Ccircle cx='10' cy='10' r='1.8'/%3E%3Ccircle cx='16' cy='10' r='1.8'/%3E%3Ccircle cx='4' cy='16' r='1.8'/%3E%3Ccircle cx='10' cy='16' r='1.8'/%3E%3Ccircle cx='16' cy='16' r='1.8'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-        .ti-lock {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
-        .ti-link {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
-        }
+        .tuva-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 48px; }
+        .tuva-select-std { border-radius: 8px; padding: 12px 48px 12px 20px; border: 1px solid #989da3; background-color: white; font-weight: 500; min-width: 180px; }
+        .tuva-input-std { border-radius: 8px; border: 1px solid #989da3; padding: 12px 16px 12px 44px; }
+        .ti-dataset { display: inline-block; width: 18px; height: 18px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%238C1A64'%3E%3Ccircle cx='4' cy='4' r='1.8'/%3E%3Ccircle cx='10' cy='4' r='1.8'/%3E%3Ccircle cx='16' cy='4' r='1.8'/%3E%3Ccircle cx='4' cy='10' r='1.8'/%3E%3Ccircle cx='10' cy='10' r='1.8'/%3E%3Ccircle cx='16' cy='10' r='1.8'/%3E%3Ccircle cx='4' cy='16' r='1.8'/%3E%3Ccircle cx='10' cy='16' r='1.8'/%3E%3Ccircle cx='16' cy='16' r='1.8'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: contain; }
+        .ti-lock { display: inline-block; width: 14px; height: 14px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: contain; }
+        .ti-link { display: inline-block; width: 14px; height: 14px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: contain; }
+        .icon-btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; border-radius: 8px; background: white; cursor: pointer; transition: all 0.2s; }
+        .icon-btn:hover { background: #f9fafb; border-color: #8C1A64; }
+        .cards-scroll { max-height: 320px; overflow-y: auto; }
     </style>
 </head>
 <body>
-    <!-- Navigation Buttons -->
     <div class="fixed bottom-6 right-6 z-50 flex gap-2 shadow-2xl">
         <button onclick="switchPage(1)" id="nav-1" class="px-4 py-2 rounded-lg font-bold text-sm bg-tuva-pink text-white shadow-lg">Choose Data</button>
         <button onclick="switchPage(2)" id="nav-2" class="px-4 py-2 rounded-lg font-bold text-sm bg-white text-slate-700 border border-gray-300">My Datasets</button>
@@ -113,60 +61,36 @@
                     </div>
                 </div>
             </header>
-
             <div class="flex min-h-screen">
-                <!-- Left Sidebar - Choose Data Source -->
                 <div class="w-80 bg-white border-r border-gray-200 p-6">
                     <h2 class="text-xl font-bold text-slate-900 mb-2">Choose Your Data Source</h2>
                     <p class="text-sm text-slate-600 mb-6">Select how you want to work with data</p>
-                    
                     <div class="space-y-3">
-                        <!-- Sample Datasets - Selected -->
                         <button class="w-full flex items-center gap-4 p-4 bg-pink-50 border-2 border-tuva-pink rounded-xl">
                             <div class="w-14 h-14 bg-tuva-pink rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
                             </div>
-                            <div class="text-left">
-                                <div class="font-bold text-slate-900 text-base">Sample Datasets</div>
-                                <div class="text-sm text-slate-600">100+ ready-to-use datasets</div>
-                            </div>
+                            <div class="text-left"><div class="font-bold text-slate-900 text-base">Sample Datasets</div><div class="text-sm text-slate-600">100+ ready-to-use datasets</div></div>
                         </button>
-
-                        <!-- Insert Data -->
                         <button class="w-full flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50">
                             <div class="w-14 h-14 bg-teal-500 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                             </div>
-                            <div class="text-left">
-                                <div class="font-bold text-slate-900 text-base">Insert Data</div>
-                                <div class="text-sm text-slate-600">Paste or type your own data</div>
-                            </div>
+                            <div class="text-left"><div class="font-bold text-slate-900 text-base">Insert Data</div><div class="text-sm text-slate-600">Paste or type your own data</div></div>
                         </button>
-
-                        <!-- Insert Data Jr. -->
                         <button class="w-full flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50">
                             <div class="w-14 h-14 bg-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             </div>
-                            <div class="text-left">
-                                <div class="font-bold text-slate-900 text-base">Insert Data Jr.</div>
-                                <div class="text-sm text-slate-600">For elementary students</div>
-                            </div>
+                            <div class="text-left"><div class="font-bold text-slate-900 text-base">Insert Data Jr.</div><div class="text-sm text-slate-600">For elementary students</div></div>
                         </button>
-
-                        <!-- Import Data -->
                         <button onclick="switchPage(3)" class="w-full flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50">
                             <div class="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                             </div>
-                            <div class="text-left">
-                                <div class="font-bold text-slate-900 text-base">Import Data</div>
-                                <div class="text-sm text-slate-600">Upload CSV, Excel files</div>
-                            </div>
+                            <div class="text-left"><div class="font-bold text-slate-900 text-base">Import Data</div><div class="text-sm text-slate-600">Upload CSV, Excel files</div></div>
                         </button>
                     </div>
-
-                    <!-- Need Help Section -->
                     <div class="mt-8 p-5 bg-gray-50 rounded-xl">
                         <div class="flex items-center gap-3 mb-2">
                             <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -176,14 +100,10 @@
                         <button class="w-full px-4 py-3 bg-white border border-gray-300 text-slate-700 rounded-lg text-sm font-semibold hover:bg-gray-50">View Tutorials</button>
                     </div>
                 </div>
-
-                <!-- Main Content -->
                 <div class="flex-1 p-8">
                     <div class="max-w-6xl mx-auto">
                         <h1 class="text-3xl font-bold text-slate-900 mb-3">Begin Exploring a Sample Dataset</h1>
                         <p class="text-lg text-slate-600 mb-8">Choose from our curated collection of educational datasets</p>
-                        
-                        <!-- Tuva Jr. Section -->
                         <div class="mb-8">
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center"><span class="text-xl">🐾</span></div>
@@ -204,8 +124,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <!-- Math Section -->
                         <div class="mb-8">
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center"><span class="text-xl">📊</span></div>
@@ -252,11 +170,8 @@
                     </div>
                 </div>
             </header>
-
             <div class="flex min-h-screen">
-                <!-- Left Sidebar -->
                 <div class="w-80 bg-white border-r border-gray-200 p-6">
-                    <!-- Premium Plan Card -->
                     <div class="bg-gradient-to-b from-yellow-100 to-yellow-50 border-2 border-yellow-300 rounded-xl p-5 mb-6">
                         <div class="flex items-center gap-3 mb-3">
                             <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
@@ -270,10 +185,7 @@
                         </div>
                         <div class="bg-white rounded-lg p-4 mb-4 border border-yellow-200">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <div class="text-sm text-slate-600">Total Uploaded</div>
-                                    <div class="text-xs text-slate-500">datasets in your library</div>
-                                </div>
+                                <div><div class="text-sm text-slate-600">Total Uploaded</div><div class="text-xs text-slate-500">datasets in your library</div></div>
                                 <div class="text-3xl font-bold text-slate-900">47</div>
                             </div>
                         </div>
@@ -283,8 +195,6 @@
                             <div class="flex items-center gap-2 text-sm text-slate-700"><svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>School & District analytics</div>
                         </div>
                     </div>
-
-                    <!-- Free Plan Usage -->
                     <div class="bg-white border border-gray-200 rounded-xl p-5 mb-6">
                         <h3 class="font-bold text-slate-900 mb-4">FREE PLAN USAGE</h3>
                         <div class="space-y-4">
@@ -299,8 +209,6 @@
                         </div>
                         <p class="text-xs text-slate-600 mt-4">Upgrade to Premium for unlimited datasets and storage.</p>
                     </div>
-
-                    <!-- Support -->
                     <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
                         <h3 class="font-bold text-slate-900 mb-4">SUPPORT</h3>
                         <div class="space-y-3">
@@ -310,11 +218,8 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Main Content -->
                 <div class="flex-1 p-8 bg-gray-50">
                     <div class="max-w-6xl mx-auto">
-                        <!-- Premium Banner -->
                         <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 border border-yellow-300 rounded-xl p-6 mb-8 flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <div class="text-4xl">👑</div>
@@ -322,35 +227,24 @@
                             </div>
                             <button class="px-6 py-3 bg-tuva-pink text-white rounded-lg font-bold hover:opacity-90">View Plans</button>
                         </div>
-
                         <div class="flex items-center justify-between mb-6">
                             <div><h1 class="text-3xl font-bold text-slate-900 mb-2">My Datasets</h1><p class="text-lg text-slate-600">Manage your imported data and saved projects.</p></div>
                             <button onclick="switchPage(3)" class="px-6 py-3 bg-tuva-pink text-white rounded-lg font-bold hover:opacity-90 flex items-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Import New Data</button>
                         </div>
-
-                        <!-- Search & Filter Bar -->
                         <div class="flex gap-3 mb-6 items-center">
                             <div class="flex-1 relative">
                                 <svg class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 <input type="text" placeholder="Search my datasets..." class="w-full tuva-input-std pl-12 focus:border-tuva-pink focus:outline-none">
                             </div>
-                            <select class="tuva-select tuva-select-std text-slate-700">
-                                <option>Sort by: Newest First</option>
-                                <option>Sort by: Oldest First</option>
-                                <option>Sort by: Name A-Z</option>
-                            </select>
-                            <select class="tuva-select tuva-select-std text-slate-700">
-                                <option>All Visibility</option>
-                                <option>Private Only</option>
-                                <option>Public Only</option>
-                            </select>
+                            <select class="tuva-select tuva-select-std text-slate-700"><option>Sort by: Newest First</option><option>Sort by: Oldest First</option><option>Sort by: Name A-Z</option></select>
+                            <select class="tuva-select tuva-select-std text-slate-700"><option>All Visibility</option><option>Private Only</option><option>Public Only</option></select>
                             <div class="flex border border-gray-300 rounded-lg overflow-hidden">
                                 <button id="view-grid-btn" onclick="toggleView('grid')" class="px-4 py-3 bg-white text-slate-500 hover:bg-gray-50"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
                                 <button id="view-table-btn" onclick="toggleView('table')" class="px-4 py-3 bg-tuva-pink text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg></button>
                             </div>
                         </div>
 
-                        <!-- Grid View (Hidden by default) -->
+                        <!-- Grid View -->
                         <div id="grid-view" class="hidden grid grid-cols-3 gap-6">
                             <!-- Card 1: Global CO2 Emissions -->
                             <div class="bg-white border-2 border-tuva-pink rounded-xl overflow-hidden hover:shadow-lg">
@@ -363,12 +257,25 @@
                                 </div>
                                 <div class="p-5">
                                     <h3 class="font-bold text-slate-900 text-lg mb-2">Global CO2 Emissions (2020-2024)</h3>
-                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3"><span>Edited 2 hours ago</span><span>•</span><span>450 Rows</span></div>
+                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Edited 2 hours ago</span>
+                                        <span>•</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        <span>450 Rows</span>
+                                    </div>
                                     <p class="text-sm text-slate-600 mb-4 line-clamp-2">A clean dataset of carbon emissions by country, including per capita calculations.</p>
-                                    <div class="flex gap-2">
-                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-full text-sm font-bold hover:opacity-90">Open</button>
-                                        <button onclick="showShareModal('Global CO2 Emissions')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50" title="View"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
-                                        <button onclick="showExportModal('Global CO2 Emissions')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50" title="Download"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    <div class="flex gap-2 mb-3">
+                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-lg text-sm font-bold hover:opacity-90 flex items-center justify-center gap-2">Open <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                                        <button onclick="showShareModal('Global CO2 Emissions')" class="icon-btn" title="Share"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
+                                        <button onclick="showExportModal('Global CO2 Emissions')" class="icon-btn" title="Download"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                        <button onclick="showEditModal('Global CO2 Emissions')" class="flex items-center gap-2 text-tuva-pink text-sm font-semibold hover:opacity-80">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                            Edit
+                                        </button>
+                                        <button onclick="showDeleteModal('Global CO2 Emissions')" class="text-slate-400 hover:text-red-500 transition-colors" title="Delete"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                                     </div>
                                 </div>
                             </div>
@@ -383,12 +290,25 @@
                                 </div>
                                 <div class="p-5">
                                     <h3 class="font-bold text-slate-900 text-lg mb-2">Student Height vs. Armspan</h3>
-                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3"><span>Edited yesterday</span><span>•</span><span>28 Rows</span></div>
+                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Edited yesterday</span>
+                                        <span>•</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        <span>28 Rows</span>
+                                    </div>
                                     <p class="text-sm text-slate-600 mb-4 line-clamp-2">Classroom data collected from Period 3 science class.</p>
-                                    <div class="flex gap-2">
-                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-full text-sm font-bold hover:opacity-90">Open</button>
-                                        <button onclick="showShareModal('Student Height vs. Armspan')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
-                                        <button onclick="showExportModal('Student Height vs. Armspan')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    <div class="flex gap-2 mb-3">
+                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-lg text-sm font-bold hover:opacity-90 flex items-center justify-center gap-2">Open <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                                        <button onclick="showShareModal('Student Height vs. Armspan')" class="icon-btn" title="Share"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
+                                        <button onclick="showExportModal('Student Height vs. Armspan')" class="icon-btn" title="Download"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                        <button onclick="showEditModal('Student Height vs. Armspan')" class="flex items-center gap-2 text-tuva-pink text-sm font-semibold hover:opacity-80">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                            Edit
+                                        </button>
+                                        <button onclick="showDeleteModal('Student Height vs. Armspan')" class="text-slate-400 hover:text-red-500 transition-colors" title="Delete"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                                     </div>
                                 </div>
                             </div>
@@ -403,12 +323,25 @@
                                 </div>
                                 <div class="p-5">
                                     <h3 class="font-bold text-slate-900 text-lg mb-2">Weather Data: Chicago</h3>
-                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3"><span>Edited Oct 12, 2024</span><span>•</span><span>1200 Rows</span></div>
+                                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Edited Oct 12, 2024</span>
+                                        <span>•</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        <span>1200 Rows</span>
+                                    </div>
                                     <p class="text-sm text-slate-600 mb-4 line-clamp-2">Daily temperature and precipitation records for Chicago O'Hare airport.</p>
-                                    <div class="flex gap-2">
-                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-full text-sm font-bold hover:opacity-90">Open</button>
-                                        <button onclick="showShareModal('Weather Data: Chicago')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
-                                        <button onclick="showExportModal('Weather Data: Chicago')" class="px-3 py-2.5 border border-gray-300 rounded-full hover:bg-gray-50"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    <div class="flex gap-2 mb-3">
+                                        <button onclick="switchPage(1)" class="flex-1 px-4 py-2.5 bg-tuva-pink text-white rounded-lg text-sm font-bold hover:opacity-90 flex items-center justify-center gap-2">Open <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                                        <button onclick="showShareModal('Weather Data: Chicago')" class="icon-btn" title="Share"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button>
+                                        <button onclick="showExportModal('Weather Data: Chicago')" class="icon-btn" title="Download"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                        <button onclick="showEditModal('Weather Data: Chicago')" class="flex items-center gap-2 text-tuva-pink text-sm font-semibold hover:opacity-80">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                            Edit
+                                        </button>
+                                        <button onclick="showDeleteModal('Weather Data: Chicago')" class="text-slate-400 hover:text-red-500 transition-colors" title="Delete"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                                     </div>
                                 </div>
                             </div>
@@ -420,7 +353,7 @@
                                 <span class="text-sm font-semibold text-slate-700">14 Datasets Currently in Your Library.</span>
                             </div>
                             <table class="w-full">
-                                <thead class="border-b border-gray-200">
+                                <thead class="border-b" style="border-color: #989da3;">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
                                         <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Type</th>
@@ -430,8 +363,8 @@
                                         <th class="px-6 py-3"></th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-100">
-                                    <tr class="hover:bg-gray-50">
+                                <tbody>
+                                    <tr class="hover:bg-gray-50 border-b" style="border-color: #989da3;">
                                         <td class="px-6 py-4"><div class="flex items-center gap-3"><i class="ti-dataset"></i><a href="#" class="text-sm font-medium text-tuva-pink hover:underline">New Dataset</a><i class="ti-link"></i></div></td>
                                         <td class="px-6 py-4 text-sm text-slate-600">Dataset</td>
                                         <td class="px-6 py-4"><svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></td>
@@ -447,7 +380,7 @@
                                         <td class="px-6 py-4"><div class="flex items-center gap-3"><button onclick="showShareModal('Census_at_School')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button><button onclick="showEditModal('Census')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button><button onclick="showExportModal('Census')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button><button onclick="showDeleteModal('Census')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></td>
                                         <td class="px-6 py-4 text-right"><button class="px-4 py-2 border-2 border-tuva-pink text-tuva-pink rounded-lg text-sm font-bold hover:bg-pink-50">Create Activity</button></td>
                                     </tr>
-                                    <tr class="hover:bg-gray-50 bg-gray-50">
+                                    <tr class="hover:bg-gray-50 bg-white border-b" style="border-color: #989da3;">
                                         <td class="px-6 py-4 pl-12"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg><a href="#" class="text-sm font-medium text-tuva-pink hover:underline">mixed up cases</a></div></td>
                                         <td class="px-6 py-4 text-sm text-slate-600">Plot</td>
                                         <td class="px-6 py-4"></td>
@@ -455,7 +388,7 @@
                                         <td class="px-6 py-4"><div class="flex items-center gap-3"><button onclick="showShareModal('mixed up cases')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg></button><button onclick="showDeleteModal('mixed up cases')" class="text-tuva-pink hover:opacity-70"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></td>
                                         <td class="px-6 py-4"></td>
                                     </tr>
-                                    <tr class="hover:bg-gray-50">
+                                    <tr class="hover:bg-gray-50 border-b" style="border-color: #989da3;">
                                         <td class="px-6 py-4"><div class="flex items-center gap-3"><i class="ti-dataset"></i><a href="#" class="text-sm font-medium text-tuva-pink hover:underline">Water Use in US States (2015)</a><i class="ti-lock"></i></div></td>
                                         <td class="px-6 py-4 text-sm text-slate-600">Dataset</td>
                                         <td class="px-6 py-4"><svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></td>
@@ -497,15 +430,28 @@
                 
                 <div class="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
                     <!-- Dataset Name -->
-                    <div class="mb-6">
+                    <div class="mb-4">
                         <label class="block text-sm font-bold text-slate-900 mb-2">Dataset Name <span class="text-red-500">*</span></label>
                         <input type="text" value="Imported Data - Dec 18" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-tuva-pink focus:outline-none">
                     </div>
                     
-                    <!-- Description -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-bold text-slate-900 mb-2">Description</label>
-                        <textarea rows="4" placeholder="Add a description..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-tuva-pink focus:outline-none resize-y"></textarea>
+                    <!-- Add Description Link -->
+                    <div id="add-description-link" class="mb-6">
+                        <button onclick="toggleDescription()" class="text-tuva-pink text-sm font-semibold hover:underline flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Add Dataset Description
+                        </button>
+                    </div>
+                    
+                    <!-- Description (Hidden by default) -->
+                    <div id="description-field" class="mb-6 hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-sm font-bold text-slate-900">Description</label>
+                            <button onclick="toggleDescription()" class="text-slate-400 hover:text-slate-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                        <textarea rows="3" placeholder="Add a description..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-tuva-pink focus:outline-none resize-y"></textarea>
                     </div>
                     
                     <!-- Data Source & URL -->
@@ -527,9 +473,7 @@
                         <!-- Default View with Preview -->
                         <div class="mb-6">
                             <div class="flex items-center justify-between mb-3">
-                                <div>
-                                    <span class="text-sm text-slate-600"><strong>Summary:</strong> 6 Attributes and 4 cases</span>
-                                </div>
+                                <div><span class="text-sm text-slate-600"><strong>Summary:</strong> 6 Attributes and 4 cases</span></div>
                                 <div class="flex rounded-lg overflow-hidden border border-tuva-pink">
                                     <button id="view-card-option" onclick="selectDefaultView('card')" class="px-5 py-2 text-sm font-semibold bg-tuva-pink text-white">Case Card</button>
                                     <button id="view-table-option" onclick="selectDefaultView('table')" class="px-5 py-2 text-sm font-semibold bg-white text-tuva-pink border-l border-tuva-pink">Table View</button>
@@ -538,56 +482,128 @@
                             </div>
                             
                             <div class="border-t border-gray-200 pt-5">
-                                <!-- Case Card View Preview -->
-                                <div id="preview-card-view" class="flex gap-6 justify-center">
-                                    <!-- Categorical Attribute Card -->
-                                    <div class="w-72 border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                                        <div class="bg-slate-700 text-white text-center py-3 font-semibold">Categorical Attribute Card</div>
-                                        <div class="bg-slate-100 px-4 py-2 flex items-center text-sm font-semibold text-slate-700 border-b border-gray-200">
-                                            <span class="flex-1">Attribute <svg class="w-3 h-3 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></span>
-                                            <span class="flex-1">Value</span>
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <!-- Case Card View Preview with Navigation -->
+                                <div id="preview-card-view" class="relative">
+                                    <div id="cards-container" class="cards-scroll flex gap-4 overflow-x-auto pb-4 px-1 scroll-smooth" style="scroll-snap-type: x mandatory;">
+                                        <!-- Card 1: Categorical Attribute Card -->
+                                        <div class="w-64 flex-shrink-0 border border-gray-200 rounded-lg overflow-hidden shadow-sm" style="scroll-snap-align: start;">
+                                            <div class="bg-slate-700 text-white text-center py-3 font-semibold text-sm">Categorical Attribute Card</div>
+                                            <div class="bg-slate-100 px-4 py-2 flex items-center text-xs font-semibold text-slate-700 border-b border-gray-200">
+                                                <span class="flex-1">Attribute</span>
+                                                <span class="flex-1">Value</span>
+                                                <span class="w-8"></span>
+                                            </div>
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-5 h-5 rounded" style="background: linear-gradient(135deg, #1a1a1a 0%, #dc2626 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-5 h-5 rounded" style="background: linear-gradient(135deg, #1a1a1a 0%, #dc2626 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-5 h-5 rounded" style="background: linear-gradient(135deg, #1a1a1a 0%, #dc2626 100%);"></div></div>
+                                            </div>
                                         </div>
-                                        <div class="divide-y divide-gray-100">
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-4 h-4 bg-gradient-to-r from-black to-red-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-4 h-4 bg-gradient-to-r from-black to-red-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">color</span><span class="flex-1 text-slate-600">black</span><div class="w-4 h-4 bg-gradient-to-r from-black to-red-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
+                                        <!-- Card 2: Numerical Attribute Card -->
+                                        <div class="w-64 flex-shrink-0 border border-gray-200 rounded-lg overflow-hidden shadow-sm" style="scroll-snap-align: start;">
+                                            <div class="bg-slate-700 text-white text-center py-3 font-semibold text-sm">Numerical Attribute Card</div>
+                                            <div class="bg-slate-100 px-4 py-2 flex items-center text-xs font-semibold text-slate-700 border-b border-gray-200">
+                                                <span class="flex-1">Attribute</span>
+                                                <span class="flex-1">Value</span>
+                                                <span class="w-8"></span>
+                                            </div>
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">dog</span><span class="flex-1 text-slate-600">dog 1</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #fecaca 0%, #ef4444 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">cat</span><span class="flex-1 text-slate-600">dog 1</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #bbf7d0 0%, #22c55e 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">dog</span><span class="flex-1 text-slate-600">dog 4</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #bfdbfe 0%, #3b82f6 100%);"></div></div>
+                                            </div>
+                                        </div>
+                                        <!-- Card 3: Text Attribute Card -->
+                                        <div class="w-64 flex-shrink-0 border border-gray-200 rounded-lg overflow-hidden shadow-sm" style="scroll-snap-align: start;">
+                                            <div class="bg-slate-700 text-white text-center py-3 font-semibold text-sm">Text Attribute Card</div>
+                                            <div class="bg-slate-100 px-4 py-2 flex items-center text-xs font-semibold text-slate-700 border-b border-gray-200">
+                                                <span class="flex-1">Attribute</span>
+                                                <span class="flex-1">Value</span>
+                                                <span class="w-8"></span>
+                                            </div>
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">name</span><span class="flex-1 text-slate-600">Rex</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #fef3c7 0%, #f59e0b 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">name</span><span class="flex-1 text-slate-600">Max</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #fef3c7 0%, #f59e0b 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">name</span><span class="flex-1 text-slate-600">Buddy</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #fef3c7 0%, #f59e0b 100%);"></div></div>
+                                            </div>
+                                        </div>
+                                        <!-- Card 4: Date Attribute Card -->
+                                        <div class="w-64 flex-shrink-0 border border-gray-200 rounded-lg overflow-hidden shadow-sm" style="scroll-snap-align: start;">
+                                            <div class="bg-slate-700 text-white text-center py-3 font-semibold text-sm">Date Attribute Card</div>
+                                            <div class="bg-slate-100 px-4 py-2 flex items-center text-xs font-semibold text-slate-700 border-b border-gray-200">
+                                                <span class="flex-1">Attribute</span>
+                                                <span class="flex-1">Value</span>
+                                                <span class="w-8"></span>
+                                            </div>
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">date</span><span class="flex-1 text-slate-600">2024-01</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #e0e7ff 0%, #6366f1 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">date</span><span class="flex-1 text-slate-600">2024-02</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #e0e7ff 0%, #6366f1 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">date</span><span class="flex-1 text-slate-600">2024-03</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #e0e7ff 0%, #6366f1 100%);"></div></div>
+                                            </div>
+                                        </div>
+                                        <!-- Card 5: Boolean Attribute Card -->
+                                        <div class="w-64 flex-shrink-0 border border-gray-200 rounded-lg overflow-hidden shadow-sm" style="scroll-snap-align: start;">
+                                            <div class="bg-slate-700 text-white text-center py-3 font-semibold text-sm">Boolean Attribute Card</div>
+                                            <div class="bg-slate-100 px-4 py-2 flex items-center text-xs font-semibold text-slate-700 border-b border-gray-200">
+                                                <span class="flex-1">Attribute</span>
+                                                <span class="flex-1">Value</span>
+                                                <span class="w-8"></span>
+                                            </div>
+                                            <div class="divide-y divide-gray-100">
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">active</span><span class="flex-1 text-slate-600">true</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #d1fae5 0%, #10b981 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">active</span><span class="flex-1 text-slate-600">false</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #fee2e2 0%, #ef4444 100%);"></div></div>
+                                                <div class="px-4 py-2.5 flex items-center text-sm"><span class="flex-1 text-slate-700">active</span><span class="flex-1 text-slate-600">true</span><div class="w-5 h-5 rounded" style="background: linear-gradient(180deg, #d1fae5 0%, #10b981 100%);"></div></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Numerical Attribute Card -->
-                                    <div class="w-72 border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-                                        <div class="bg-slate-700 text-white text-center py-3 font-semibold">Numerical Attribute Card</div>
-                                        <div class="bg-slate-100 px-4 py-2 flex items-center text-sm font-semibold text-slate-700 border-b border-gray-200">
-                                            <span class="flex-1">Attribute <svg class="w-3 h-3 inline ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></span>
-                                            <span class="flex-1">Value</span>
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                        </div>
-                                        <div class="divide-y divide-gray-100">
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">dog</span><span class="flex-1 text-slate-600">dog 1</span><div class="w-4 h-4 bg-gradient-to-b from-red-200 to-red-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">cat</span><span class="flex-1 text-slate-600">dog 1</span><div class="w-4 h-4 bg-gradient-to-b from-green-200 to-green-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                            <div class="px-4 py-3 flex items-center text-sm"><span class="flex-1 text-slate-700">dog</span><span class="flex-1 text-slate-600">dog 4</span><div class="w-4 h-4 bg-gradient-to-b from-blue-200 to-blue-500 rounded-sm mr-2"></div><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                        </div>
+                                    <!-- Navigation Arrows -->
+                                    <div class="flex items-center justify-center gap-4 mt-3">
+                                        <button onclick="scrollCards(-1)" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-50 hover:border-tuva-pink transition-colors">
+                                            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                        </button>
+                                        <span class="text-sm text-slate-500">Scroll to view more cards</span>
+                                        <button onclick="scrollCards(1)" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-50 hover:border-tuva-pink transition-colors">
+                                            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </button>
                                     </div>
                                 </div>
                                 
-                                <!-- Table View Preview (Hidden by default) -->
+                                <!-- Table View Preview -->
                                 <div id="preview-table-view" class="hidden">
                                     <div class="overflow-x-auto border border-gray-200 rounded-lg">
                                         <table class="w-full text-sm">
-                                            <thead class="bg-slate-50 border-b border-gray-200">
+                                            <thead class="bg-blue-50">
                                                 <tr>
-                                                    <th class="px-4 py-3 text-center font-semibold text-slate-700 border-r border-gray-200">Case</th>
-                                                    <th class="px-4 py-3 text-center border-r border-gray-200"><div class="font-semibold text-slate-700">dog</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-red-200 to-red-500 rounded"></div></th>
-                                                    <th class="px-4 py-3 text-center border-r border-gray-200"><div class="font-semibold text-slate-700">color</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-black to-red-500 rounded"></div></th>
-                                                    <th class="px-4 py-3 text-center border-r border-gray-200"><div class="font-semibold text-slate-700">cat</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-green-200 to-green-500 rounded"></div></th>
-                                                    <th class="px-4 py-3 text-center border-r border-gray-200"><div class="font-semibold text-slate-700">color</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-black to-red-500 rounded"></div></th>
-                                                    <th class="px-4 py-3 text-center border-r border-gray-200"><div class="font-semibold text-slate-700">dog</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-blue-200 to-blue-500 rounded"></div></th>
-                                                    <th class="px-4 py-3 text-center"><div class="font-semibold text-slate-700">color</div><div class="h-1.5 w-12 mx-auto mt-1 bg-gradient-to-r from-black to-red-500 rounded"></div></th>
+                                                    <th class="px-4 py-3 text-center font-semibold text-slate-700 border-r border-gray-200 bg-blue-100">Case</th>
+                                                    <th class="px-4 py-3 text-center border-r border-gray-200">
+                                                        <div class="font-semibold text-slate-700">dog</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #fecaca 0%, #ef4444 100%);"></div>
+                                                    </th>
+                                                    <th class="px-4 py-3 text-center border-r border-gray-200">
+                                                        <div class="font-semibold text-slate-700">color</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #1a1a1a 0%, #dc2626 100%);"></div>
+                                                    </th>
+                                                    <th class="px-4 py-3 text-center border-r border-gray-200">
+                                                        <div class="font-semibold text-slate-700">cat</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #bbf7d0 0%, #22c55e 100%);"></div>
+                                                    </th>
+                                                    <th class="px-4 py-3 text-center border-r border-gray-200">
+                                                        <div class="font-semibold text-slate-700">color</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #1a1a1a 0%, #dc2626 100%);"></div>
+                                                    </th>
+                                                    <th class="px-4 py-3 text-center border-r border-gray-200">
+                                                        <div class="font-semibold text-slate-700">dog</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #bfdbfe 0%, #3b82f6 100%);"></div>
+                                                    </th>
+                                                    <th class="px-4 py-3 text-center">
+                                                        <div class="font-semibold text-slate-700">color</div>
+                                                        <div class="h-1.5 w-16 mx-auto mt-1 rounded" style="background: linear-gradient(90deg, #1a1a1a 0%, #dc2626 100%);"></div>
+                                                    </th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="divide-y divide-gray-100">
+                                            <tbody class="divide-y divide-gray-200 bg-white">
                                                 <tr class="hover:bg-gray-50">
-                                                    <td class="px-4 py-3 text-center border-r border-gray-200"><span class="text-slate-500">1</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block"></span></td>
+                                                    <td class="px-4 py-3 text-center border-r border-gray-200 bg-blue-50"><span class="text-slate-500">1</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block ml-1"></span></td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 1</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">black</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 1</td>
@@ -596,7 +612,7 @@
                                                     <td class="px-4 py-3 text-slate-600">black</td>
                                                 </tr>
                                                 <tr class="hover:bg-gray-50">
-                                                    <td class="px-4 py-3 text-center border-r border-gray-200"><span class="text-slate-500">2</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block"></span></td>
+                                                    <td class="px-4 py-3 text-center border-r border-gray-200 bg-blue-50"><span class="text-slate-500">2</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block ml-1"></span></td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 2</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">white</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 2</td>
@@ -605,7 +621,7 @@
                                                     <td class="px-4 py-3 text-slate-600">white</td>
                                                 </tr>
                                                 <tr class="hover:bg-gray-50">
-                                                    <td class="px-4 py-3 text-center border-r border-gray-200"><span class="text-slate-500">3</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block"></span></td>
+                                                    <td class="px-4 py-3 text-center border-r border-gray-200 bg-blue-50"><span class="text-slate-500">3</span> <span class="w-2 h-2 bg-blue-500 rounded-full inline-block ml-1"></span></td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 3</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">red</td>
                                                     <td class="px-4 py-3 text-slate-600 border-r border-gray-200">dog 3</td>
@@ -676,12 +692,10 @@
                         <option value="anyone">Anyone with the link</option>
                     </select>
                 </div>
-                
                 <div id="privacyWarning" class="flex items-center gap-2 text-slate-500 mb-5">
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M12 8v4m0 4h.01"/></svg>
                     <span class="text-sm">Update the privacy settings above to share your dataset.</span>
                 </div>
-
                 <div id="sharingTabs" class="hidden">
                     <div class="flex rounded-lg overflow-hidden mb-5">
                         <button onclick="switchShareTab('direct')" id="tab-direct" class="share-tab-btn active flex-1">Direct Link</button>
@@ -689,7 +703,6 @@
                         <button onclick="switchShareTab('email')" id="tab-email" class="share-tab-btn flex-1">Email</button>
                         <button onclick="switchShareTab('embed')" id="tab-embed" class="share-tab-btn flex-1">Embed</button>
                     </div>
-                    
                     <div id="content-direct" class="share-content">
                         <div class="flex gap-3 mb-4">
                             <input type="text" id="shareLink" value="https://tuva.la/4qLfY1d" readonly class="flex-1 px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg text-slate-600">
@@ -697,23 +710,19 @@
                         </div>
                         <p class="text-sm text-slate-500 text-center">You can share the direct link with anyone</p>
                     </div>
-                    
                     <div id="content-class" class="share-content hidden">
                         <div class="mb-4"><label class="block text-sm font-bold text-slate-700 mb-2">Select Class</label><select class="tuva-select tuva-select-std w-full text-slate-700"><option>5th Grade Science</option><option>8th Grade Math</option></select></div>
                         <button class="w-full px-6 py-3 bg-tuva-pink text-white rounded-lg font-bold hover:opacity-90">Share to Class</button>
                     </div>
-                    
                     <div id="content-email" class="share-content hidden">
                         <div class="mb-4"><label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label><input type="email" placeholder="Enter email address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-tuva-pink focus:outline-none"></div>
                         <button class="w-full px-6 py-3 bg-tuva-pink text-white rounded-lg font-bold hover:opacity-90">Send Email</button>
                     </div>
-                    
                     <div id="content-embed" class="share-content hidden">
                         <div class="mb-4"><label class="block text-sm font-bold text-slate-700 mb-2">Embed Code</label><textarea readonly rows="3" class="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg text-sm font-mono">&lt;iframe src="https://tuva.la/embed/4qLfY1d" width="800" height="600"&gt;&lt;/iframe&gt;</textarea></div>
                         <button onclick="copyEmbedCode()" class="w-full px-6 py-3 border-2 border-tuva-pink text-tuva-pink rounded-lg font-bold hover:bg-pink-50">Copy Embed Code</button>
                     </div>
                 </div>
-
                 <div id="disabledTabs">
                     <div class="flex rounded-lg overflow-hidden mb-5 opacity-50">
                         <button class="share-tab-btn active flex-1" disabled>Direct Link</button>
@@ -799,15 +808,40 @@
         }
 
         function selectDefaultView(view) {
-            const tableBtn = document.getElementById('view-table-option');
             const cardBtn = document.getElementById('view-card-option');
+            const tableBtn = document.getElementById('view-table-option');
+            const cardPreview = document.getElementById('preview-card-view');
+            const tablePreview = document.getElementById('preview-table-view');
+            
             if (view === 'table') {
-                tableBtn.className = 'flex items-center justify-center gap-3 px-4 py-3 bg-pink-50 border-2 border-tuva-pink text-tuva-pink rounded-lg font-semibold';
-                cardBtn.className = 'flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 text-slate-700 rounded-lg font-semibold hover:bg-gray-50';
+                tableBtn.className = 'px-5 py-2 text-sm font-semibold bg-tuva-pink text-white';
+                cardBtn.className = 'px-5 py-2 text-sm font-semibold bg-white text-tuva-pink';
+                cardPreview.classList.add('hidden');
+                tablePreview.classList.remove('hidden');
             } else {
-                cardBtn.className = 'flex items-center justify-center gap-3 px-4 py-3 bg-pink-50 border-2 border-tuva-pink text-tuva-pink rounded-lg font-semibold';
-                tableBtn.className = 'flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 text-slate-700 rounded-lg font-semibold hover:bg-gray-50';
+                cardBtn.className = 'px-5 py-2 text-sm font-semibold bg-tuva-pink text-white';
+                tableBtn.className = 'px-5 py-2 text-sm font-semibold bg-white text-tuva-pink border-l border-tuva-pink';
+                cardPreview.classList.remove('hidden');
+                tablePreview.classList.add('hidden');
             }
+        }
+
+        function toggleDescription() {
+            const link = document.getElementById('add-description-link');
+            const field = document.getElementById('description-field');
+            if (field.classList.contains('hidden')) {
+                field.classList.remove('hidden');
+                link.classList.add('hidden');
+            } else {
+                field.classList.add('hidden');
+                link.classList.remove('hidden');
+            }
+        }
+
+        function scrollCards(direction) {
+            const container = document.getElementById('cards-container');
+            const cardWidth = 272; // 256px card + 16px gap
+            container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
         }
 
         function showShareModal(name) { document.getElementById('shareDatasetName').textContent = name; document.getElementById('privacySelect').value = 'only-me'; handlePrivacyChange(); document.getElementById('shareModal').classList.add('active'); }
