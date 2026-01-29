@@ -52,42 +52,33 @@
         .user-name { color: white; font-size: 14px; font-weight: 600; }
         
         /* === LANDING PAGE === */
-        .hero-section {
-            background: linear-gradient(135deg, var(--tuva-purple) 0%, #4a1d6a 100%);
+        .hub-hero {
+            background: url('https://tuvalabs.com/static/img/tutorials/tutorials-hero-bg.png') center/cover no-repeat;
+            background-color: var(--tuva-purple);
             padding: 60px 40px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-        .hero-title { font-size: 42px; font-weight: 700; color: white; margin-bottom: 16px; font-style: italic; }
-        .hero-subtitle { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 32px; line-height: 1.5; }
-        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
-        .search-box input {
+        .hub-title { font-size: 42px; font-weight: 700; color: white; margin-bottom: 16px; font-style: italic; }
+        .hub-subtitle { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 32px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .search-container { max-width: 500px; margin: 0 auto; position: relative; }
+        .search-container .search-input {
             width: 100%; padding: 14px 20px 14px 48px; border: none; border-radius: 6px;
             font-size: 16px; font-family: inherit;
         }
-        .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gray-500); }
+        .search-container .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gray-500); }
         
-        .series-section { padding: 50px 40px; max-width: 1200px; margin: 0 auto; }
+        .categories-section { padding: 50px 40px; max-width: 1200px; margin: 0 auto; }
         .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--gray-700); letter-spacing: 1px; margin-bottom: 24px; border-left: 3px solid var(--tuva-yellow); padding-left: 12px; }
-        .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-        .series-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.2s; cursor: pointer; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .series-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.2s; cursor: pointer; text-decoration: none; display: block; }
         .series-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
-        .card-image { height: 160px; background: var(--tuva-purple); display: flex; align-items: center; justify-content: center; }
-        .card-icon { font-size: 64px; color: var(--tuva-yellow); }
-        .card-content { padding: 24px; }
-        .card-title { font-size: 18px; font-weight: 700; color: var(--tuva-purple); margin-bottom: 12px; }
-        .card-desc { font-size: 15px; color: var(--gray-700); line-height: 1.5; margin-bottom: 20px; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; }
-        .tutorial-count { font-size: 14px; color: var(--gray-500); display: flex; align-items: center; gap: 6px; }
+        .card-header-block { height: 160px; background: var(--tuva-purple); overflow: hidden; }
+        .card-thumb-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-body { padding: 24px; }
+        .series-title { font-size: 18px; font-weight: 700; color: var(--tuva-purple); margin-bottom: 12px; }
+        .series-desc { font-size: 15px; color: var(--gray-700); line-height: 1.5; margin-bottom: 20px; }
+        .series-meta { display: flex; justify-content: space-between; align-items: center; }
+        .meta-count { font-size: 14px; color: var(--gray-500); display: flex; align-items: center; gap: 6px; }
         .btn-start { color: var(--tuva-purple); font-weight: 700; font-size: 14px; text-transform: uppercase; display: flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer; }
         .btn-start:hover { color: var(--tuva-yellow-hover); }
         
@@ -143,9 +134,8 @@
         
         /* === PRACTICE PAGE === */
         .practice-header-modified .header-left { gap: 16px; }
-        .practice-header-modified .breadcrumb-back { color: #7dd3fc; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; }
-        .practice-header-modified .breadcrumb-back:hover { color: white; text-decoration: underline; }
-        .practice-header-modified .dataset-dropdown { background: transparent; border: none; color: white; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .practice-header-modified .breadcrumb-back { color: var(--tuva-yellow); font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .practice-header-modified .breadcrumb-back:hover { color: #fcd34d; text-decoration: underline; }
         .practice-header-modified .help-link { color: white; font-size: 14px; text-decoration: none; }
         .btn-exit { background: #dc2626; color: white; padding: 6px 16px; border-radius: 4px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
         .btn-exit:hover { background: #b91c1c; }
@@ -230,59 +220,94 @@
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Master Data Literacy with Tuva</h1>
-            <p class="hero-subtitle">Explore our step-by-step guides to mastering graphing, statistical analysis, and data modeling tools.</p>
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search tutorials (e.g., 'Least Squares', 'Maps')...">
-            </div>
+    <section class="hub-hero">
+        <h1 class="hub-title">Master Data Literacy with Tuva</h1>
+        <p class="hub-subtitle">Explore our step-by-step guides to mastering graphing, statistical analysis, and data modeling tools.</p>
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search tutorials (e.g., 'Least Squares', 'Maps')...">
         </div>
     </section>
 
-    <section class="series-section">
+    <section class="categories-section">
         <div class="section-label">Browse Learning Series</div>
-        <div class="series-grid">
-            <div class="series-card" onclick="goToDetail()">
-                <div class="card-image">
-                    <i class="fas fa-chart-bar card-icon"></i>
+        <div class="cards-grid">
+            
+            <!-- Card 1: Graphing & Modeling -->
+            <a href="#" class="series-card" onclick="event.preventDefault(); goToDetail()">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/graphis_img2_QuTGuyG.png" alt="Graphing" class="card-thumb-img">
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">Graphing Functions & Modeling</h3>
-                    <p class="card-desc">Learn how to fit linear and non-linear models to data using movable lines and least squares regression.</p>
-                    <div class="card-footer">
-                        <span class="tutorial-count"><i class="fas fa-book"></i> 5 Tutorials</span>
-                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                <div class="card-body">
+                    <h3 class="series-title">Graphing Functions &amp; Modeling</h3>
+                    <p class="series-desc">Learn how to fit linear and non-linear models to data using movable lines and least squares regression.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 5 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </div>
-            <div class="series-card">
-                <div class="card-image">
-                    <i class="fas fa-bullseye card-icon"></i>
+            </a>
+
+            <!-- Card 2: Getting Started -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/sample_img.png" alt="Basics" class="card-thumb-img">
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">Getting Started with Tuva</h3>
-                    <p class="card-desc">The essentials of the Tuva interface. Learn to drag-and-drop attributes, create basic plots, and save your work.</p>
-                    <div class="card-footer">
-                        <span class="tutorial-count"><i class="fas fa-book"></i> 4 Tutorials</span>
-                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                <div class="card-body">
+                    <h3 class="series-title">Getting Started with Tuva</h3>
+                    <p class="series-desc">The essentials of the Tuva interface. Learn to drag-and-drop attributes, create basic plots, and save your work.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 4 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </div>
-            <div class="series-card">
-                <div class="card-image">
-                    <i class="fas fa-percentage card-icon"></i>
+            </a>
+
+            <!-- Card 3: Data Analysis -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/models_img2_W4SAcdL.png" alt="Analysis" class="card-thumb-img">
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">Statistical Analysis Tools</h3>
-                    <p class="card-desc">Deep dive into mean, median, mode, box plots, and standard deviation visualizers.</p>
-                    <div class="card-footer">
-                        <span class="tutorial-count"><i class="fas fa-book"></i> 6 Tutorials</span>
-                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                <div class="card-body">
+                    <h3 class="series-title">Statistical Analysis Tools</h3>
+                    <p class="series-desc">Deep dive into mean, median, mode, box plots, and standard deviation visualizers.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 6 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </div>
-            </div>
+            </a>
+
+            <!-- Card 4: Counts & Percents -->
+            <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/count_img2_5eHEHY5.png" alt="Counting" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Counts &amp; Percents</h3>
+                    <p class="series-desc">How to use count and percent tools to analyze categorical data distributions effectively.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 3 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
+             <!-- Card 5: Filtering -->
+             <a href="#" class="series-card">
+                <div class="card-header-block">
+                    <img src="https://tuvalabs.com/media/thumbnails/course/filter_img2_FPAMGxW.png" alt="Filtering" class="card-thumb-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="series-title">Filtering &amp; Formatting</h3>
+                    <p class="series-desc">Techniques for filtering cases, coloring by attributes, and formatting axis labels.</p>
+                    <div class="series-meta">
+                        <span class="meta-count"><i class="fas fa-book-open"></i> 4 Tutorials</span>
+                        <span class="btn-start">Start Series <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+
         </div>
     </section>
 </div>
@@ -387,7 +412,6 @@
                 <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
             </a>
             <a class="breadcrumb-back" onclick="goToDetail()"><i class="fas fa-chevron-left"></i> Back to Tutorials: Graphing Functions & Modeling</a>
-            <button class="dataset-dropdown">US State Capitals <i class="fas fa-chevron-down"></i></button>
         </div>
         <div class="header-right">
             <a href="#" class="help-link">Help</a>
