@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Tutorials</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --header-bg: #004445;
+            --tuva-purple: #682D8A;
+            --tuva-purple-light: #F3F1F9;
+            --tuva-yellow: #ECB606;
+            --tuva-yellow-hover: #EB9E00;
+            --gray-900: #1C2025;
+            --text-body: #1C2025;
+            --gray-700: #666666;
+            --gray-500: #989DA3;
+            --gray-200: #DADFE5;
+            --bg-body: #F5FAFF;
+            --header-height: 56px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Source Sans Pro', sans-serif; background: var(--bg-body); color: var(--text-body); font-size: 16px; }
+        
+        /* Page visibility */
+        .page { display: none; min-height: 100vh; }
+        .page.active { display: block; }
+        
+        /* === HEADER === */
+        .tuva-header {
+            height: var(--header-height);
+            background: var(--header-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .tuva-logo img { height: 32px; display: block; }
+        .header-nav { display: flex; gap: 24px; }
+        .nav-item { color: rgba(255,255,255,0.85); text-decoration: none; font-weight: 600; font-size: 14px; }
+        .nav-item:hover, .nav-item.active { color: white; }
+        .nav-item.active { border-bottom: 3px solid var(--tuva-yellow); padding-bottom: 16px; margin-bottom: -16px; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .btn-premium { border: 1px solid var(--tuva-yellow); color: var(--tuva-yellow); padding: 6px 14px; border-radius: 4px; font-weight: 700; font-size: 12px; text-transform: uppercase; text-decoration: none; }
+        .btn-premium:hover { background: var(--tuva-yellow); color: var(--header-bg); }
+        .user-name { color: white; font-size: 14px; font-weight: 600; }
+        
+        /* === LANDING PAGE === */
+        .hero-section {
+            background: linear-gradient(135deg, var(--tuva-purple) 0%, #4a1d6a 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .hero-title { font-size: 42px; font-weight: 700; color: white; margin-bottom: 16px; font-style: italic; }
+        .hero-subtitle { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 32px; line-height: 1.5; }
+        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
+        .search-box input {
+            width: 100%; padding: 14px 20px 14px 48px; border: none; border-radius: 6px;
+            font-size: 16px; font-family: inherit;
+        }
+        .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--gray-500); }
+        
+        .series-section { padding: 50px 40px; max-width: 1200px; margin: 0 auto; }
+        .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--gray-700); letter-spacing: 1px; margin-bottom: 24px; border-left: 3px solid var(--tuva-yellow); padding-left: 12px; }
+        .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .series-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.2s; cursor: pointer; }
+        .series-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .card-image { height: 160px; background: var(--tuva-purple); display: flex; align-items: center; justify-content: center; }
+        .card-icon { font-size: 64px; color: var(--tuva-yellow); }
+        .card-content { padding: 24px; }
+        .card-title { font-size: 18px; font-weight: 700; color: var(--tuva-purple); margin-bottom: 12px; }
+        .card-desc { font-size: 15px; color: var(--gray-700); line-height: 1.5; margin-bottom: 20px; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .tutorial-count { font-size: 14px; color: var(--gray-500); display: flex; align-items: center; gap: 6px; }
+        .btn-start { color: var(--tuva-purple); font-weight: 700; font-size: 14px; text-transform: uppercase; display: flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer; }
+        .btn-start:hover { color: var(--tuva-yellow-hover); }
+        
+        /* === DETAIL PAGE === */
+        .detail-layout { display: flex; min-height: calc(100vh - var(--header-height)); }
+        .sidebar { width: 280px; background: white; border-right: 1px solid var(--gray-200); flex-shrink: 0; }
+        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--gray-200); }
+        .back-link { font-size: 14px; color: var(--gray-700); text-decoration: none; display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-weight: 600; cursor: pointer; }
+        .back-link:hover { color: var(--tuva-purple); }
+        .category-title { font-size: 18px; font-weight: 700; color: var(--tuva-purple); line-height: 1.3; }
+        .category-meta { font-size: 14px; color: var(--gray-700); margin-top: 4px; }
+        .tutorial-list { list-style: none; }
+        .tutorial-item { border-bottom: 1px solid #f0f0f0; }
+        .tutorial-link { display: flex; gap: 12px; padding: 16px 24px; text-decoration: none; color: var(--text-body); cursor: pointer; }
+        .tutorial-link:hover { background: #f9f9f9; }
+        .tutorial-link.active { background: var(--tuva-purple-light); border-left: 4px solid var(--tuva-purple); padding-left: 20px; }
+        .tutorial-link.active .t-title { color: var(--tuva-purple); font-weight: 700; }
+        .tutorial-link.active .t-number { background: var(--tuva-purple); color: white; border-color: var(--tuva-purple); }
+        .t-number { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .t-title { font-size: 15px; line-height: 1.4; }
+        
+        .content-area { flex: 1; padding: 40px 60px; overflow-y: auto; }
+        .content-container { max-width: 800px; margin: 0 auto; }
+        .hero-badge { display: inline-block; background: var(--gray-200); color: var(--gray-700); font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 12px; }
+        .page-title { font-size: 36px; font-weight: 700; color: var(--gray-900); margin-bottom: 16px; }
+        .page-intro { font-size: 18px; color: var(--text-body); line-height: 1.6; margin-bottom: 24px; }
+        
+        .try-block { background: white; border: 1px solid var(--gray-200); border-left: 5px solid var(--tuva-yellow); border-radius: 4px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 40px; }
+        .try-text h4 { font-size: 18px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .try-text h4 i { color: var(--tuva-yellow); }
+        .try-text p { font-size: 15px; color: var(--gray-700); }
+        .try-actions { display: flex; gap: 12px; }
+        .btn-enroll { background: var(--tuva-purple); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+        .btn-enroll:hover { background: #53266D; }
+        .btn-try { background: white; color: var(--tuva-purple); border: 1px solid var(--tuva-purple); padding: 10px 20px; border-radius: 4px; font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .btn-try:hover { background: var(--tuva-purple-light); }
+        
+        .media-block { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 10px; margin-bottom: 40px; }
+        .media-placeholder { background: #eef2f5; height: 300px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; color: var(--gray-500); }
+        
+        .section-heading { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+        .step-card { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 24px; margin-bottom: 16px; }
+        .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .step-card p { font-size: 16px; line-height: 1.5; color: var(--text-body); }
+        .step-card ul { margin-top: 10px; padding-left: 20px; font-size: 15px; }
+        .step-card li { margin-bottom: 6px; }
+        
+        .cta-block { background: white; border-left: 5px solid var(--tuva-yellow); padding: 30px; border-radius: 0 8px 8px 0; display: flex; justify-content: space-between; align-items: center; margin-top: 50px; }
+        .cta-text h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+        .cta-text p { color: var(--gray-700); }
+        .btn-launch { background: var(--tuva-yellow); color: var(--gray-900); padding: 12px 24px; border-radius: 4px; font-weight: 700; font-size: 15px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer; }
+        .btn-launch:hover { background: var(--tuva-yellow-hover); }
+        
+        /* === PRACTICE PAGE === */
+        .practice-header-modified .header-left { gap: 16px; }
+        .practice-header-modified .breadcrumb-back { color: #7dd3fc; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .practice-header-modified .breadcrumb-back:hover { color: white; text-decoration: underline; }
+        .practice-header-modified .dataset-dropdown { background: transparent; border: none; color: white; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .practice-header-modified .help-link { color: white; font-size: 14px; text-decoration: none; }
+        .btn-exit { background: #dc2626; color: white; padding: 6px 16px; border-radius: 4px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; }
+        .btn-exit:hover { background: #b91c1c; }
+        
+        .practice-layout { display: flex; height: calc(100vh - var(--header-height)); }
+        
+        /* Case Card Panel */
+        .case-card-panel { width: 240px; background: white; border-right: 1px solid var(--gray-200); display: flex; flex-direction: column; }
+        .case-card-header { padding: 12px 16px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; }
+        .case-card-title { font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--gray-700); }
+        .case-nav { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-700); }
+        .case-nav button { background: none; border: none; cursor: pointer; color: var(--gray-500); }
+        .attribute-list { flex: 1; overflow-y: auto; }
+        .attribute-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f0f0f0; gap: 10px; }
+        .attribute-row:hover { background: #fafafa; }
+        .attr-name { flex: 1; font-size: 14px; color: var(--text-body); }
+        .attr-value { font-size: 14px; color: var(--gray-700); min-width: 60px; }
+        .attr-bar { width: 40px; height: 16px; background: linear-gradient(to right, #22c55e, #eab308, #ef4444); border-radius: 2px; }
+        .attr-icons { display: flex; gap: 4px; color: var(--gray-500); font-size: 12px; }
+        .add-attribute { padding: 12px 16px; border-top: 1px solid var(--gray-200); font-size: 14px; color: var(--gray-500); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .add-attribute:hover { color: var(--tuva-purple); }
+        
+        /* Graph Panel */
+        .graph-panel { flex: 1; display: flex; flex-direction: column; background: white; }
+        .graph-toolbar { display: flex; align-items: center; gap: 4px; padding: 8px 16px; border-bottom: 1px solid var(--gray-200); flex-wrap: wrap; }
+        .tool-btn { padding: 6px 12px; border: none; background: none; font-size: 14px; font-weight: 600; color: var(--gray-700); cursor: pointer; border-radius: 4px; }
+        .tool-btn:hover { background: #f0f0f0; }
+        .tool-btn.active { background: var(--tuva-purple-light); color: var(--tuva-purple); }
+        .tool-divider { width: 1px; height: 24px; background: var(--gray-200); margin: 0 8px; }
+        .graph-area { flex: 1; position: relative; background: white; display: flex; align-items: center; justify-content: center; }
+        .graph-placeholder { text-align: center; color: var(--gray-500); }
+        .graph-placeholder i { font-size: 80px; margin-bottom: 16px; opacity: 0.3; }
+        .graph-placeholder p { font-size: 16px; }
+        .axis-label { position: absolute; color: #3b82f6; font-size: 13px; font-weight: 600; }
+        .axis-label.y-axis { left: 20px; top: 50%; transform: rotate(-90deg) translateX(-50%); transform-origin: left center; }
+        .axis-label.x-axis { bottom: 20px; left: 50%; transform: translateX(-50%); }
+        .graph-footer { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border-top: 1px solid var(--gray-200); font-size: 13px; color: var(--gray-500); }
+        .view-tabs button { padding: 4px 12px; border: none; background: none; font-size: 13px; cursor: pointer; }
+        .view-tabs button.active { font-weight: 600; color: var(--tuva-purple); }
+        
+        /* Tutorial Panel */
+        .tutorial-panel { width: 320px; background: white; border-left: 1px solid var(--gray-200); display: flex; flex-direction: column; }
+        .tutorial-panel-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: flex-start; justify-content: space-between; }
+        .panel-title { font-size: 18px; font-weight: 700; color: var(--header-bg); }
+        .step-indicator { font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+        .collapse-btn { background: none; border: none; cursor: pointer; color: var(--gray-500); }
+        .tutorial-panel-content { flex: 1; padding: 20px; overflow-y: auto; }
+        .instruction-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--gray-900); }
+        .instruction-text { font-size: 15px; line-height: 1.6; color: var(--text-body); margin-bottom: 16px; }
+        .instruction-step { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; font-size: 15px; }
+        .instruction-step::before { content: '•'; color: var(--tuva-purple); font-weight: bold; }
+        .highlight-box { display: inline-block; background: #fef3c7; border: 1px solid #fcd34d; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 14px; }
+        .success-msg { background: #dcfce7; border: 1px solid #86efac; border-radius: 6px; padding: 12px 16px; margin-top: 20px; font-size: 14px; color: #166534; }
+        .tutorial-panel-footer { padding: 16px 20px; border-top: 1px solid var(--gray-200); display: flex; justify-content: space-between; gap: 12px; }
+        .btn-nav { padding: 10px 20px; border-radius: 4px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .btn-prev { background: white; border: 1px solid var(--gray-200); color: var(--gray-700); }
+        .btn-prev:hover { background: #f9f9f9; }
+        .btn-next { background: var(--header-bg); border: none; color: white; }
+        .btn-next:hover { background: #006666; }
+        .feedback-link { text-align: center; padding: 12px; font-size: 13px; color: var(--gray-500); border-top: 1px solid var(--gray-200); }
+        .feedback-link a { color: var(--tuva-purple); text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: LANDING ==================== -->
+<div id="landing-page" class="page active">
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item active">Tutorials</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-premium">Premium</a>
+            <span style="color:white; font-size:14px; font-weight:600;">TSOMPURA <i class="fas fa-chevron-down" style="font-size:12px; margin-left:5px;"></i></span>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Master Data Literacy with Tuva</h1>
+            <p class="hero-subtitle">Explore our step-by-step guides to mastering graphing, statistical analysis, and data modeling tools.</p>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search tutorials (e.g., 'Least Squares', 'Maps')...">
+            </div>
+        </div>
+    </section>
+
+    <section class="series-section">
+        <div class="section-label">Browse Learning Series</div>
+        <div class="series-grid">
+            <div class="series-card" onclick="goToDetail()">
+                <div class="card-image">
+                    <i class="fas fa-chart-bar card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Graphing Functions & Modeling</h3>
+                    <p class="card-desc">Learn how to fit linear and non-linear models to data using movable lines and least squares regression.</p>
+                    <div class="card-footer">
+                        <span class="tutorial-count"><i class="fas fa-book"></i> 5 Tutorials</span>
+                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="series-card">
+                <div class="card-image">
+                    <i class="fas fa-bullseye card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Getting Started with Tuva</h3>
+                    <p class="card-desc">The essentials of the Tuva interface. Learn to drag-and-drop attributes, create basic plots, and save your work.</p>
+                    <div class="card-footer">
+                        <span class="tutorial-count"><i class="fas fa-book"></i> 4 Tutorials</span>
+                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="series-card">
+                <div class="card-image">
+                    <i class="fas fa-percentage card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Statistical Analysis Tools</h3>
+                    <p class="card-desc">Deep dive into mean, median, mode, box plots, and standard deviation visualizers.</p>
+                    <div class="card-footer">
+                        <span class="tutorial-count"><i class="fas fa-book"></i> 6 Tutorials</span>
+                        <button class="btn-start">Start Series <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== PAGE 2: DETAIL ==================== -->
+<div id="detail-page" class="page">
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Tuva Tools</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item active">Tutorials</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-premium">Premium</a>
+            <span style="color:white; font-size:14px; font-weight:600;">TSOMPURA <i class="fas fa-chevron-down" style="font-size:12px; margin-left:5px;"></i></span>
+        </div>
+    </header>
+
+    <div class="detail-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a class="back-link" onclick="goToLanding()"><i class="fas fa-arrow-left"></i> All Categories</a>
+                <div class="category-title">Graphing Functions & Creating Models</div>
+                <div class="category-meta">5 Tutorials</div>
+            </div>
+            <ul class="tutorial-list">
+                <li class="tutorial-item"><a class="tutorial-link active"><span class="t-number">1</span><span class="t-title">Fitting Data with the Movable Line</span></a></li>
+                <li class="tutorial-item"><a class="tutorial-link"><span class="t-number">2</span><span class="t-title">Fitting Data with the Least Squares Line</span></a></li>
+                <li class="tutorial-item"><a class="tutorial-link"><span class="t-number">3</span><span class="t-title">Fitting Linear Data using the Equation Editor</span></a></li>
+                <li class="tutorial-item"><a class="tutorial-link"><span class="t-number">4</span><span class="t-title">Judging Model Fit using Least Squares Method</span></a></li>
+                <li class="tutorial-item"><a class="tutorial-link"><span class="t-number">5</span><span class="t-title">Nonlinear Modeling on Tuva</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <div class="content-container">
+                <span class="hero-badge">Modeling Tools</span>
+                <h1 class="page-title">Fitting Data with the Movable Line</h1>
+                <p class="page-intro">When two numerical variables form a pattern that looks like a straight line, a linear model can help describe how they are related. Tuva's <strong>Movable Line tool</strong> lets you adjust a line directly on the graph to see how well it fits the data.</p>
+
+                <div class="try-block">
+                    <div class="try-text">
+                        <h4><i class="fas fa-bolt"></i> Ready to practice?</h4>
+                        <p>Jump straight into the interactive tool or enroll to track progress.</p>
+                    </div>
+                    <div class="try-actions">
+                        <button class="btn-enroll"><i class="fas fa-plus-circle"></i> Enroll in Series</button>
+                        <button class="btn-try" onclick="goToPractice()"><i class="fas fa-external-link-alt"></i> Try It Out Now</button>
+                    </div>
+                </div>
+
+                <div class="media-block">
+                    <div class="media-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                        <span style="font-weight:600; text-transform:uppercase; font-size:13px; letter-spacing:1px;">FITTING_LINEAR_DATA_WITH_A_MOVABLE_LINE.GIF</span>
+                    </div>
+                </div>
+
+                <section>
+                    <h2 class="section-heading">How It Works</h2>
+                    <div class="step-card">
+                        <h3>1. Create a Scatter Plot</h3>
+                        <p>Drag one numerical attribute to the <strong>x-axis</strong> and another to the <strong>y-axis</strong> to visualize the relationship.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>2. Add a Movable Line</h3>
+                        <p>From the toolbar, select the <strong>Stats</strong> or <strong>Modeling</strong> menu, then choose <strong>Movable Line</strong>. A line will appear on your graph.</p>
+                    </div>
+                    <div class="step-card">
+                        <h3>3. Adjust for Best Fit</h3>
+                        <p>Fine-tune the line to match your data:</p>
+                        <ul>
+                            <li><strong>Drag the middle</strong> of the line to change the intercept.</li>
+                            <li><strong>Drag either end</strong> to change the slope (rotation).</li>
+                            <li><strong>Stretch</strong> the line to extend it across the plot.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <div class="cta-block">
+                    <div class="cta-text">
+                        <h3><i class="fas fa-flask" style="color:var(--tuva-yellow); margin-right:8px;"></i> Try It Out</h3>
+                        <p>Open an interactive dataset and experiment with the Movable Line now.</p>
+                    </div>
+                    <button class="btn-launch" onclick="goToPractice()">Launch Modeling Tools <i class="fas fa-external-link-alt"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- ==================== PAGE 3: PRACTICE ==================== -->
+<div id="practice-page" class="page">
+    <header class="tuva-header practice-header-modified">
+        <div class="header-left">
+            <a href="#" class="tuva-logo">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva Logo">
+            </a>
+            <a class="breadcrumb-back" onclick="goToDetail()"><i class="fas fa-chevron-left"></i> Back to Tutorials: Graphing Functions & Modeling</a>
+            <button class="dataset-dropdown">US State Capitals <i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div class="header-right">
+            <a href="#" class="help-link">Help</a>
+            <span style="color:white; font-size:14px; font-weight:600;">TSOMPURA</span>
+            <button class="btn-exit" onclick="goToDetail()">Exit Course</button>
+        </div>
+    </header>
+
+    <div class="practice-layout">
+        <!-- Case Card Panel -->
+        <div class="case-card-panel">
+            <div class="case-card-header">
+                <span class="case-card-title">Case Card</span>
+                <div class="case-nav">
+                    <button><i class="fas fa-chevron-left"></i></button>
+                    <span>1 of 50</span>
+                    <button><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="attribute-list">
+                <div class="attribute-row">
+                    <span class="attr-name">Name</span>
+                    <span class="attr-value">Alabama</span>
+                    <span class="attr-bar"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Year Joined Union</span>
+                    <span class="attr-value">1819</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #3b82f6, #3b82f6);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Capital City</span>
+                    <span class="attr-value">Montgomery</span>
+                    <span class="attr-bar"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Region</span>
+                    <span class="attr-value">South</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #8b5cf6, #8b5cf6);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Latitude of Capital</span>
+                    <span class="attr-value">32</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #22c55e, #eab308);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Longitude of Capital</span>
+                    <span class="attr-value">-86</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #eab308, #ef4444);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Population (Millions)</span>
+                    <span class="attr-value">4.83</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #3b82f6, #3b82f6);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+                <div class="attribute-row">
+                    <span class="attr-name">Area (Sq Miles)</span>
+                    <span class="attr-value">50,750</span>
+                    <span class="attr-bar" style="background:linear-gradient(to right, #22c55e, #22c55e);"></span>
+                    <span class="attr-icons"><i class="fas fa-pen"></i></span>
+                </div>
+            </div>
+            <div class="add-attribute"><i class="fas fa-plus-circle"></i> Add Attribute</div>
+        </div>
+
+        <!-- Graph Panel -->
+        <div class="graph-panel">
+            <div class="graph-toolbar">
+                <button class="tool-btn"><i class="fas fa-undo"></i></button>
+                <button class="tool-btn"><i class="fas fa-redo"></i></button>
+                <div class="tool-divider"></div>
+                <button class="tool-btn active">Dot</button>
+                <button class="tool-btn">Line</button>
+                <button class="tool-btn">Pie</button>
+                <button class="tool-btn">Bar</button>
+                <button class="tool-btn">Hist</button>
+                <button class="tool-btn">Box</button>
+                <button class="tool-btn">Map</button>
+                <div class="tool-divider"></div>
+                <button class="tool-btn">N|%</button>
+                <button class="tool-btn">Stats</button>
+                <div class="tool-divider"></div>
+                <button class="tool-btn"><i class="fas fa-camera"></i></button>
+                <button class="tool-btn"><i class="fas fa-paint-brush"></i></button>
+                <button class="tool-btn"><i class="fas fa-cog"></i></button>
+                <button class="tool-btn"><i class="fas fa-star"></i></button>
+            </div>
+            <div class="graph-area">
+                <div class="axis-label y-axis">(drag and drop Y attribute here)</div>
+                <div class="graph-placeholder">
+                    <i class="fas fa-chart-scatter"></i>
+                    <p>Drag attributes to the axes to create a visualization</p>
+                </div>
+                <div class="axis-label x-axis">(drag and drop X attribute here)</div>
+            </div>
+            <div class="graph-footer">
+                <div class="view-tabs">
+                    <button class="active">Table View</button>
+                    <button>Summary View</button>
+                </div>
+                <span>v3.6.2</span>
+            </div>
+        </div>
+
+        <!-- Tutorial Panel -->
+        <div class="tutorial-panel">
+            <div class="tutorial-panel-header">
+                <div>
+                    <div class="panel-title">Fitting with Movable Line</div>
+                    <div class="step-indicator">Step 1 of 3</div>
+                </div>
+                <button class="collapse-btn"><i class="fas fa-chevron-up"></i></button>
+            </div>
+            <div class="tutorial-panel-content">
+                <h3 class="instruction-title">Create a Scatter Plot</h3>
+                <p class="instruction-text">We'll use Latitude and Longitude coordinates to create a scatter plot on Tuva.</p>
+                <div class="instruction-step">Drag and drop <span class="highlight-box">Longitude of Capital</span> on the x-axis.</div>
+                <div class="instruction-step">Drag and drop <span class="highlight-box">Latitude of Capital</span> on the y-axis.</div>
+                <div class="instruction-step">From the toolbar, select <span class="highlight-box">Stats</span> → <span class="highlight-box">Movable Line</span>.</div>
+                <div class="success-msg">
+                    <i class="fas fa-check-circle" style="margin-right:8px;"></i>
+                    <strong>Excellent!</strong> You've created a scatter plot of all 50 state capitals.
+                </div>
+            </div>
+            <div class="tutorial-panel-footer">
+                <button class="btn-nav btn-prev"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="btn-nav btn-next">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="feedback-link"><i class="fas fa-comment"></i> <a href="#">Feedback</a></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goToLanding() {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('landing-page').classList.add('active');
+    }
+    function goToDetail() {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('detail-page').classList.add('active');
+    }
+    function goToPractice() {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('practice-page').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
