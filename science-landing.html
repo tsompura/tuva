@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuva Science | Data-Driven Science Education</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #004445;
+      --teal-light: #006466;
+      --teal-dark: #003233;
+      --magenta: #8c1a64;
+      --yellow: #ecb606;
+      --yellow-light: #ffd43b;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; color: var(--slate-800); line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'Bitter', serif; font-weight: 700; line-height: 1.2; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Header */
+    header { background: var(--teal); padding: 16px 0; position: fixed; width: 100%; top: 0; z-index: 100; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo img { height: 32px; }
+    nav { display: flex; gap: 4px; align-items: center; }
+    nav a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 10px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    nav a:hover { background: rgba(255,255,255,0.1); }
+    .nav-cta { background: var(--yellow) !important; color: var(--slate-900) !important; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--yellow-light) !important; }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 50%, #001a1a 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 0 100px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero-content { position: relative; z-index: 1; text-align: center; max-width: 900px; margin: 0 auto; }
+    .hero h1 { font-size: 56px; color: white; margin-bottom: 20px; letter-spacing: -1px; }
+    .hero h1 span { color: var(--yellow); }
+    .hero p { font-size: 18px; color: rgba(255,255,255,0.8); max-width: 650px; margin: 0 auto 32px; line-height: 1.7; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 15px; }
+    .btn-primary { background: var(--yellow); color: var(--slate-900); }
+    .btn-primary:hover { background: var(--yellow-light); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(236,182,6,0.3); }
+    .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+    .hero-visual {
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(140,26,100,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-visual-2 {
+      position: absolute;
+      top: -150px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(236,182,6,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* Intro Section */
+    .intro-section {
+      padding: 100px 0;
+      background: white;
+    }
+    .intro-content {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .intro-text h2 { font-size: 42px; margin-bottom: 24px; color: var(--slate-900); }
+    .intro-text p { font-size: 17px; color: var(--slate-600); line-height: 1.8; }
+    .intro-visual {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,68,69,0.15);
+    }
+    .intro-visual img, .intro-visual video {
+      width: 100%;
+      display: block;
+    }
+    .visual-placeholder {
+      background: linear-gradient(135deg, #e0f7f6 0%, #b2ebf2 100%);
+      aspect-ratio: 16/10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .visual-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2l4 3.25-4 3.25zM0 20h2v2H0v-2z' fill='%23004445' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+    .visual-placeholder svg { opacity: 0.3; }
+
+    /* Alternating Feature Sections */
+    .feature-section {
+      padding: 100px 0;
+    }
+    .feature-section:nth-child(even) {
+      background: var(--slate-50);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .feature-section:nth-child(odd) .feature-grid {
+      direction: rtl;
+    }
+    .feature-section:nth-child(odd) .feature-grid > * {
+      direction: ltr;
+    }
+    .feature-text { max-width: 500px; }
+    .feature-label {
+      display: inline-block;
+      padding: 6px 14px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-light));
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .feature-label.magenta { background: linear-gradient(135deg, var(--magenta), #a62278); }
+    .feature-label.yellow { background: var(--yellow); color: var(--slate-900); }
+    .feature-text h2 { font-size: 38px; margin-bottom: 20px; color: var(--slate-900); }
+    .feature-text p { font-size: 17px; color: var(--slate-600); line-height: 1.8; margin-bottom: 24px; }
+    .feature-list {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      font-size: 15px;
+      color: var(--slate-700);
+    }
+    .feature-list li svg {
+      width: 22px;
+      height: 22px;
+      color: var(--teal);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .feature-visual {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    }
+    .btn-teal { background: var(--teal); color: white; }
+    .btn-teal:hover { background: var(--teal-light); transform: translateY(-2px); }
+
+    /* OpenSciEd Highlight */
+    .openscied-section {
+      padding: 120px 0;
+      background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .openscied-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -20%;
+      width: 80%; height: 200%;
+      background: radial-gradient(circle, rgba(140,26,100,0.2) 0%, transparent 50%);
+    }
+    .openscied-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .openscied-text { color: white; }
+    .openscied-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--yellow);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 24px;
+    }
+    .openscied-text h2 { font-size: 42px; margin-bottom: 20px; }
+    .openscied-text > p { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.8; margin-bottom: 32px; }
+    .openscied-cards {
+      display: grid;
+      gap: 16px;
+    }
+    .openscied-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: white;
+    }
+    .openscied-card:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateX(8px);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .openscied-card-icon {
+      width: 56px; height: 56px;
+      background: var(--magenta);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .openscied-card-icon svg { width: 28px; height: 28px; }
+    .openscied-card h4 { font-size: 18px; margin-bottom: 4px; font-family: 'Bitter', serif; }
+    .openscied-card p { font-size: 14px; color: rgba(255,255,255,0.7); }
+    .openscied-card .arrow {
+      margin-left: auto;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s;
+    }
+    .openscied-card:hover .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 3D Science Grid */
+    .three-d-section {
+      padding: 100px 0;
+      background: white;
+    }
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px;
+    }
+    .section-header h2 { font-size: 42px; margin-bottom: 16px; color: var(--slate-900); }
+    .section-header p { font-size: 18px; color: var(--slate-600); }
+    .three-d-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .three-d-card {
+      background: var(--slate-50);
+      border-radius: 20px;
+      padding: 36px;
+      text-align: center;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+    .three-d-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,68,69,0.1);
+      border-color: var(--teal);
+    }
+    .three-d-icon {
+      width: 80px; height: 80px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .three-d-icon.sep { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .three-d-icon.dci { background: linear-gradient(135deg, #10b981, #059669); }
+    .three-d-icon.ccc { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .three-d-icon svg { width: 40px; height: 40px; color: white; }
+    .three-d-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--slate-900); }
+    .three-d-card p { font-size: 15px; color: var(--slate-600); line-height: 1.7; }
+
+    /* Testimonials */
+    .testimonials-section {
+      padding: 100px 0;
+      background: var(--slate-50);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: white;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .testimonial-quote {
+      font-size: 48px;
+      color: var(--teal);
+      opacity: 0.3;
+      font-family: 'Bitter', serif;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .testimonial-text {
+      font-size: 16px;
+      color: var(--slate-700);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .author-avatar {
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, var(--teal), var(--magenta));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .author-info h4 { font-size: 15px; font-weight: 600; color: var(--slate-900); }
+    .author-info p { font-size: 13px; color: var(--slate-600); }
+
+    /* CTA */
+    .cta-section {
+      padding: 120px 0;
+      background: linear-gradient(135deg, var(--magenta) 0%, var(--teal) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-section h2 { font-size: 48px; color: white; margin-bottom: 20px; }
+    .cta-section p { font-size: 20px; color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto 40px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; }
+    .btn-white { background: white; color: var(--teal); }
+    .btn-white:hover { background: var(--slate-100); transform: translateY(-2px); }
+
+    /* Footer */
+    footer {
+      background: var(--slate-900);
+      color: white;
+      padding: 60px 0 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand img { height: 28px; margin-bottom: 16px; }
+    .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 280px; line-height: 1.7; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.5); }
+    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.8); text-decoration: none; padding: 6px 0; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--yellow); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-links a:hover { color: white; }
+
+    @media (max-width: 1024px) {
+      .hero h1 { font-size: 48px; }
+      .intro-content, .feature-grid, .openscied-grid { grid-template-columns: 1fr; gap: 50px; }
+      .feature-section:nth-child(odd) .feature-grid { direction: ltr; }
+      .feature-text { max-width: 100%; }
+      .three-d-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 17px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .section-header h2, .feature-text h2, .openscied-text h2 { font-size: 32px; }
+      .three-d-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+      </a>
+      <nav>
+        <a href="#">Tuva Tools</a>
+        <a href="#">Tuva Jr.</a>
+        <a href="#">Content Library</a>
+        <a href="#">Dataset Library</a>
+        <a href="#">Partners</a>
+        <a href="#">Teaching</a>
+        <a href="#" class="nav-cta">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-visual"></div>
+    <div class="hero-visual-2"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Practice Science <span>in Context.</span></h1>
+        <p>Empower students to explore real phenomena through authentic data. Tuva's intuitive tools and NGSS-aligned lessons make three-dimensional science accessible for every classroom.</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary">Explore Science Library</a>
+          <a href="#" class="btn btn-outline">Request a Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Section -->
+  <section class="intro-section">
+    <div class="container">
+      <div class="intro-content">
+        <div class="intro-text">
+          <h2>Three-Dimensional Science is Our Default</h2>
+          <p>Students can't help but apply science practices as they use data to untangle phenomena. With Tuva, exploring data becomes how students gain knowledge—just like real scientists.</p>
+        </div>
+        <div class="intro-visual">
+          <div class="visual-placeholder">
+            <svg width="120" height="120" fill="none" stroke="#004445" stroke-width="1" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Embrace Data -->
+  <section class="feature-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-text">
+          <span class="feature-label">Authentic Learning</span>
+          <h2>Embrace Data as the Heart of Science</h2>
+          <p>Exploring data is how scientists gain knowledge about natural phenomena. Our 400+ curated datasets from NASA, NOAA, and research institutions bring real-world relevance into your classroom.</p>
+          <ul class="feature-list">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Datasets curated for classroom accessibility
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Standards-aligned to NGSS and state frameworks
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Connections to local, national, and global phenomena
+            </li>
+          </ul>
+          <a href="#" class="btn btn-teal">Browse Dataset Library</a>
+        </div>
+        <div class="feature-visual">
+          <div class="visual-placeholder">
+            <svg width="100" height="100" fill="none" stroke="#004445" stroke-width="1" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Empower Students -->
+  <section class="feature-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-text">
+          <span class="feature-label magenta">Student-Centered</span>
+          <h2>Empower Students to Practice Real Science</h2>
+          <p>Tuva's intuitive data and graphing tools free up time, so you can let students' curiosity drive their investigations. As their thinking progresses, students can refine and remake graphs instantly.</p>
+          <ul class="feature-list">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Drag-and-drop interface—no learning curve
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Upload class data for collaborative analysis
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Free tools accessible to all students
+            </li>
+          </ul>
+          <a href="#" class="btn btn-teal">Try Tuva Tools Free</a>
+        </div>
+        <div class="feature-visual">
+          <div class="visual-placeholder">
+            <svg width="100" height="100" fill="none" stroke="#004445" stroke-width="1" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Belonging -->
+  <section class="feature-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-text">
+          <span class="feature-label yellow">Equity & Access</span>
+          <h2>Send a Message: You Belong in Science</h2>
+          <p>Our real-world datasets help students make connections between what they are learning and how it is relevant to themselves and their communities. Science becomes personal.</p>
+          <ul class="feature-list">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Diverse contexts that reflect student identities
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              WCAG 2.1 accessible for all learners
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              Professional learning for equity-focused instruction
+            </li>
+          </ul>
+          <a href="#" class="btn btn-teal">Learn About Accessibility</a>
+        </div>
+        <div class="feature-visual">
+          <div class="visual-placeholder">
+            <svg width="100" height="100" fill="none" stroke="#004445" stroke-width="1" viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OpenSciEd Section -->
+  <section class="openscied-section">
+    <div class="container">
+      <div class="openscied-grid">
+        <div class="openscied-text">
+          <div class="openscied-badge">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            Official Partnership
+          </div>
+          <h2>Tuva + OpenSciEd</h2>
+          <p>Enhance your OpenSciEd curriculum with Tuva's data tools and curated datasets. Our aligned lessons help students investigate real phenomena using authentic scientific data—seamlessly integrated into your existing units.</p>
+          <a href="#" class="btn btn-primary">Explore OpenSciEd Alignment</a>
+        </div>
+        <div class="openscied-cards">
+          <a href="#" class="openscied-card">
+            <div class="openscied-card-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div>
+              <h4>OpenSciEd Grades 6-8</h4>
+              <p>Middle school phenomena-driven lessons</p>
+            </div>
+            <svg class="arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#" class="openscied-card">
+            <div class="openscied-card-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            </div>
+            <div>
+              <h4>OpenSciEd HS Biology</h4>
+              <p>High school life science investigations</p>
+            </div>
+            <svg class="arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#" class="openscied-card">
+            <div class="openscied-card-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div>
+              <h4>Implementation Guide</h4>
+              <p>Resources for district-wide rollout</p>
+            </div>
+            <svg class="arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D Science Section -->
+  <section class="three-d-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Built for Three-Dimensional Learning</h2>
+        <p>Every Tuva lesson integrates science practices, disciplinary ideas, and crosscutting concepts.</p>
+      </div>
+      <div class="three-d-grid">
+        <div class="three-d-card">
+          <div class="three-d-icon sep">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Science & Engineering Practices</h3>
+          <p>Students analyze data, construct explanations, and argue from evidence—doing science, not just reading about it.</p>
+        </div>
+        <div class="three-d-card">
+          <div class="three-d-icon dci">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <h3>Disciplinary Core Ideas</h3>
+          <p>Lessons organized around key concepts in life science, physical science, Earth science, and engineering.</p>
+        </div>
+        <div class="three-d-card">
+          <div class="three-d-icon ccc">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+          </div>
+          <h3>Crosscutting Concepts</h3>
+          <p>Data exploration naturally reveals patterns, cause and effect, scale, and systems that bridge disciplines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>What Educators Are Saying</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">I love the flexibility of Tuva. I can use it for a stand-alone lesson, a launch pad for a new concept, or as a reinforcement activity.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">LD</div>
+            <div class="author-info">
+              <h4>Laura Davis</h4>
+              <p>Middle School Science, AR</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">It is not just another flashy simulation—it can become a part of how we teach science.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">LJ</div>
+            <div class="author-info">
+              <h4>Lisa Jones</h4>
+              <p>Science Instructional Coach, UT</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Stumbling across Tuva was one of my favorite finds of the year.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JD</div>
+            <div class="author-info">
+              <h4>Jodie Deinhammer</h4>
+              <p>High School Science, TX</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Get Started?</h2>
+        <p>Build data literacy and bring authentic, real-world learning to your students.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary">Get Started Free</a>
+          <a href="#" class="btn btn-white">Request a Quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+          <p>The Data Literacy Company. Empowering students to explore, analyze, and understand data in math and science.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Get Started</h4>
+          <a href="#">Tuva Jr.</a>
+          <a href="#">Tuva Science</a>
+          <a href="#">Tuva Math</a>
+          <a href="#">Upload Dataset</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="#">Tutorials</a>
+          <a href="#">Support</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Workshops</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Partners</a>
+          <a href="#">News</a>
+          <a href="#">Jobs</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="#">hello@tuvalabs.com</a>
+          <a href="#">support@tuvalabs.com</a>
+          <a href="#">+1.646.481.2150</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Tuva Labs Inc.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
