@@ -37,21 +37,22 @@
         
         /* Bridge Section */
         .bridge { padding: 100px 24px; background: #fff; position: relative; overflow: hidden; }
-        .bridge::before { content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 50%; opacity: 0.06; }
         .bridge .section-title { text-align: center; margin-bottom: 64px; position: relative; z-index: 1; }
-        .bridge .section-title h2 { font-family: 'Bitter', serif; font-size: 44px; color: #8c1a64; line-height: 1.2; }
+        .bridge .section-title h2 { font-family: 'Bitter', serif; font-size: 48px; color: #8c1a64; line-height: 1.2; }
         .bridge .container { position: relative; z-index: 1; }
-        .bridge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .bridge-content p { font-size: 20px; color: #5c6065; line-height: 1.8; }
-        .bridge-image { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); background: #f0f5fb; }
+        .bridge-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+        .bridge-content p { font-size: 20px; color: #5c6065; line-height: 1.8; margin-bottom: 24px; }
+        .bridge-content p:last-child { margin-bottom: 0; }
+        .bridge-content .highlight { font-size: 22px; font-weight: 600; color: #004445; line-height: 1.6; border-left: 4px solid #ecb606; padding-left: 24px; margin: 32px 0; }
+        .bridge-image { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.15); background: #fff; }
         .bridge-image img { width: 100%; height: auto; display: block; }
         
         /* Pedagogy Section */
         .pedagogy { padding: 100px 24px; background: linear-gradient(180deg, #f8fafc 0%, #fff 100%); }
         .pedagogy .section-header { text-align: center; margin-bottom: 64px; }
-        .pedagogy .section-header h2 { font-family: 'Bitter', serif; font-size: 40px; color: #1c2025; margin-bottom: 8px; }
-        .pedagogy .section-header p { font-size: 18px; color: #8c1a64; font-weight: 600; }
-        .pedagogy .section-header .subtitle { font-size: 20px; color: #5c6065; margin-top: 12px; font-weight: 400; }
+        .pedagogy .section-header .eyebrow { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: #5c6065; margin-bottom: 12px; }
+        .pedagogy .section-header h2 { font-family: 'Bitter', serif; font-size: 48px; color: #1c2025; margin-bottom: 0; }
+        .pedagogy .section-header h2 span { color: #8c1a64; }
         .pedagogy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
         .pedagogy-card { background: #fff; border-radius: 16px; padding: 40px 32px; border: 1px solid #e9eef4; box-shadow: 0 4px 24px rgba(0,0,0,0.06); transition: all 0.3s; }
         .pedagogy-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
@@ -151,9 +152,11 @@
             .transform-arrow { transform: rotate(90deg); padding: 16px 0; }
             .footer-grid { grid-template-columns: repeat(2, 1fr); }
             header nav { display: none; }
-            .bridge::before { display: none; }
             .your-content-image { order: -1; }
             .your-content .section-header h2 { font-size: 36px; }
+            .bridge .section-title h2 { font-size: 36px; }
+            .pedagogy .section-header h2 { font-size: 36px; }
+            .bridge-content .highlight { font-size: 18px; }
         }
     </style>
 </head>
@@ -197,10 +200,12 @@
             </div>
             <div class="bridge-grid">
                 <div class="bridge-content">
-                    <p>In a world driven by data, a static image in a digital textbook is no longer enough. Your curriculum deserves a data experience that is as dynamic as the world it describes. Tuva enables publishing and assessment partners to seamlessly embed the gold standard in data literacy tools directly into their programs—giving students the power to manipulate, visualize, and find the story behind every data point.</p>
+                    <p>In a world driven by data, a static image in a digital textbook is no longer enough. Your curriculum deserves a data experience that is as dynamic as the world it describes.</p>
+                    <p class="highlight">Tuva enables publishing and assessment partners to seamlessly embed the gold standard in data literacy tools directly into their programs.</p>
+                    <p>Give students the power to manipulate, visualize, and find the story behind every data point—transforming passive readers into active discoverers.</p>
                 </div>
                 <div class="bridge-image">
-                    <img src="https://tuvalabs.com/static/img/partnership/bar-chart.gif" alt="Tuva interactive bar chart">
+                    <img src="https://tuvalabs.com/static/img/home/tuva-tool-702.png" alt="Tuva interactive data tools">
                 </div>
             </div>
         </div>
@@ -210,8 +215,8 @@
     <section class="pedagogy">
         <div class="container">
             <div class="section-header">
-                <p>Pedagogy First. Technology Second.</p>
-                <h2>Built by Educators, for Educators</h2>
+                <p class="eyebrow">Built by Educators, for Educators</p>
+                <h2>Pedagogy First. <span>Technology Second.</span></h2>
             </div>
             <div class="pedagogy-grid">
                 <div class="pedagogy-card">
