@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Math Practice | Tuva Jr.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Open Sans', sans-serif; background: #fff; color: #333; }
+    
+    /* Tuva Brand Colors - Jr. uses Red */
+    :root {
+      --tuva-red: #9b1c31;
+      --tuva-red-dark: #7a1627;
+      --tuva-red-light: #b22234;
+      --yellow: #ecb606;
+      --teal: #004445;
+      --pink-bg: #fef7f7;
+      --gray-light: #f5f5f5;
+    }
+
+    /* Header */
+    .header {
+      background: var(--tuva-red);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { height: 28px; }
+    .nav { display: flex; gap: 4px; align-items: center; }
+    .nav-item {
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.15); }
+    .nav-item.active { background: white; color: var(--tuva-red); }
+    .nav-right { display: flex; gap: 16px; align-items: center; }
+    .nav-right a { color: white; text-decoration: none; font-size: 14px; }
+
+    /* Sub Header */
+    .sub-header {
+      background: white;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--tuva-red);
+      color: white;
+      border-color: var(--tuva-red);
+    }
+    .tab-btn .new-badge {
+      background: var(--yellow);
+      color: #333;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 700;
+    }
+    .search-box {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 20px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+    .filter-btns { display: flex; gap: 0; margin-left: auto; }
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .filter-btn:first-child { border-radius: 6px 0 0 6px; border-right: none; }
+    .filter-btn:last-child { border-radius: 0 6px 6px 0; }
+    .filter-btn.active { background: var(--tuva-red); color: white; border-color: var(--tuva-red); }
+
+    /* Main Layout */
+    .main-layout { display: flex; min-height: calc(100vh - 120px); }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: white;
+      border-right: 1px solid #e5e5e5;
+      padding: 24px 16px;
+      flex-shrink: 0;
+    }
+    .sidebar h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #333; }
+    .filter-item {
+      padding: 10px 12px;
+      margin-bottom: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--teal);
+      transition: all 0.2s;
+    }
+    .filter-item:hover { background: #fef7f7; }
+    .filter-item.active {
+      background: var(--yellow);
+      font-weight: 600;
+      color: #333;
+    }
+    .webinar-banner {
+      background: var(--teal);
+      color: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 24px;
+      font-size: 13px;
+    }
+    .webinar-banner strong { display: block; margin-bottom: 4px; font-size: 12px; }
+
+    /* Content Area */
+    .content { flex: 1; background: var(--pink-bg); }
+    
+    /* Results Header */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: white;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .results-count { font-size: 14px; color: #555; }
+    .premium-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px 8px 16px;
+      border: 2px solid var(--yellow);
+      border-radius: 6px;
+      background: #fffdf5;
+    }
+    .premium-banner span { color: var(--tuva-red); font-weight: 600; font-size: 14px; }
+    .premium-banner button {
+      background: var(--tuva-red);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Grade Section */
+    .grade-section { padding: 24px; }
+    .grade-header {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .grade-indicator {
+      width: 4px;
+      background: var(--tuva-red);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .grade-title {
+      font-family: 'Bitter', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--tuva-red);
+      margin-bottom: 10px;
+    }
+    .grade-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+      max-width: 950px;
+    }
+
+    /* REDESIGNED: Navigation List */
+    .nav-list-container {
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #e8e8e8;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .nav-list-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-list-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--tuva-red);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-list-item:hover {
+      background: var(--tuva-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(155, 28, 49, 0.25);
+    }
+    .nav-list-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+    .nav-list-item span {
+      white-space: nowrap;
+    }
+
+    /* Divider */
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), transparent);
+      margin: 8px 0 28px 0;
+      border-radius: 2px;
+      max-width: 100%;
+    }
+
+    /* Activity Section */
+    .activity-section {
+      margin-bottom: 40px;
+      scroll-margin-top: 80px;
+    }
+    .activity-title {
+      font-family: 'Bitter', serif;
+      font-size: 22px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--tuva-red);
+      margin-bottom: 10px;
+    }
+    .activity-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #444;
+      margin-bottom: 20px;
+      max-width: 950px;
+    }
+
+    /* Lesson Cards */
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .lesson-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e5e5e5;
+      transition: all 0.2s;
+    }
+    .lesson-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .lesson-card-header {
+      background: #f5f5f5;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      border-bottom: 1px solid #eee;
+    }
+    .lesson-card-header svg { width: 16px; height: 16px; color: #666; }
+    .lesson-type { color: #555; font-weight: 500; }
+    .free-badge {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .premium-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+    }
+    .lesson-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+    .lesson-content { padding: 14px 16px; position: relative; }
+    .lesson-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--tuva-red);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .lesson-desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .bookmark-btn {
+      position: absolute;
+      top: -24px;
+      right: 12px;
+      background: white;
+      border: 1px solid #ddd;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .lesson-card-wrapper { position: relative; }
+
+    @media (max-width: 1200px) {
+      .lesson-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .lesson-grid { grid-template-columns: 1fr; }
+      .nav-list-item span { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div style="display: flex; align-items: center; gap: 24px;">
+      <svg class="logo" viewBox="0 0 80 28" fill="white">
+        <text x="0" y="22" font-family="Bitter, serif" font-size="24" font-weight="700" font-style="italic">Tuva</text>
+      </svg>
+      <nav class="nav">
+        <a href="#" class="nav-item active">Tuva Tools</a>
+        <a href="#" class="nav-item">Tuva Jr. ▾</a>
+        <a href="#" class="nav-item">Content Library ▾</a>
+        <a href="#" class="nav-item">Dataset Library ▾</a>
+        <a href="#" class="nav-item">Partners</a>
+        <a href="#" class="nav-item">Teaching ▾</a>
+        <a href="#" class="nav-item">Company ▾</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <a href="#">Help</a>
+      <a href="#">Sign Up</a>
+      <a href="#">Sign In</a>
+    </div>
+  </header>
+
+  <!-- Sub Header -->
+  <div class="sub-header">
+    <button class="tab-btn">Lesson Library</button>
+    <button class="tab-btn active">Real Math Practice <span class="new-badge">NEW</span></button>
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Free</button>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Filter by</h3>
+      <div class="filter-item active">Grade 3</div>
+      <div class="filter-item">Grade 4</div>
+      <div class="filter-item">Grade 5</div>
+      
+      <div class="webinar-banner">
+        <strong>Join us at our upcoming</strong>
+        Webinars and Conferences
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+      <!-- Results Header -->
+      <div class="results-header">
+        <span class="results-count">Showing 21 Results</span>
+        <div class="premium-banner">
+          <span>Upgrade to Tuva Premium</span>
+          <button>Upgrade</button>
+        </div>
+      </div>
+
+      <!-- Grade Section -->
+      <div class="grade-section">
+        <div class="grade-header">
+          <div class="grade-indicator"></div>
+          <div>
+            <h2 class="grade-title">Grade 3</h2>
+            <p class="grade-desc">Real Math Practice with Tuva Jr. helps students go beyond worksheets. They explore real-world datasets, interactive graphs, and practice key grade-level math skills - developing not just fluency, but the data reasoning skills essential for today's world.</p>
+          </div>
+        </div>
+
+        <!-- REDESIGNED: Navigation List (replaces red cards) -->
+        <div class="nav-list-container">
+          <div class="nav-list-title">Jump to Activity</div>
+          <div class="nav-list">
+            <a href="#round-numbers" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Round Numbers to Nearest 100</span>
+            </a>
+            <a href="#number-line" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Use a Number Line for Addition and Subtraction</span>
+            </a>
+            <a href="#multiplication" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Understand Multiplication as Equal Groups</span>
+            </a>
+            <a href="#fractions-numerator" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Compare Fractions with Same Numerator</span>
+            </a>
+            <a href="#addition-subtraction" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Apply Addition and Subtraction within 1000</span>
+            </a>
+            <a href="#fractions-denominator" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Compare Fractions with Same Denominator</span>
+            </a>
+            <a href="#mass" class="nav-list-item">
+              <svg class="nav-list-icon" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="#ecb606" stroke-width="2.5" fill="none"/>
+                <ellipse cx="20" cy="20" rx="14" ry="5" stroke="#ecb606" stroke-width="1.5" fill="none"/>
+                <line x1="20" y1="6" x2="20" y2="34" stroke="#ecb606" stroke-width="1.5"/>
+                <rect x="23" y="22" width="4" height="8" fill="#ecb606"/>
+                <rect x="28" y="18" width="4" height="12" fill="#ecb606"/>
+              </svg>
+              <span>Measure and Compare Mass</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Activity Section: Round Numbers -->
+        <div class="activity-section" id="round-numbers">
+          <h3 class="activity-title">Round Numbers to Nearest 100</h3>
+          <p class="activity-desc">Give your students an opportunity to apply rounding numbers to the nearest hundred to three, real-world contexts: city altitudes in the U.S.A and Europe, calories in common foods, and the distance range of different electric vehicles.</p>
+          
+          <div class="lesson-grid">
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=200&fit=crop" alt="Food">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L1] How High Are We? Altitudes of Cities Around the World</h4>
+                <p class="lesson-desc">Lesson 1 to practice Rounding Numbers to the Nearest 10 and 100 by looking at the altitudes...</p>
+              </div>
+            </div>
+            
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=200&fit=crop" alt="Calories">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L2] Counting Calories!</h4>
+                <p class="lesson-desc">Lesson 2 to practice Rounding Numbers to the Nearest 10 and 100 by looking at the calories...</p>
+              </div>
+            </div>
+            
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=400&h=200&fit=crop" alt="EV">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L3] Charge it Up! Estimating EV Ranges</h4>
+                <p class="lesson-desc">Lesson 3 to practice Rounding Numbers to the Nearest 10 and 100 by comparing the Range of...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Section: Number Line -->
+        <div class="activity-section" id="number-line">
+          <h3 class="activity-title">Use a Number Line for Addition and Subtraction</h3>
+          <p class="activity-desc">Help students visualize addition and subtraction using number lines with real-world data contexts that make abstract concepts concrete and meaningful.</p>
+          
+          <div class="lesson-grid">
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=400&h=200&fit=crop" alt="Math">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L1] Jump Along the Number Line</h4>
+                <p class="lesson-desc">Lesson 1 to practice using number lines for addition and subtraction with real data...</p>
+              </div>
+            </div>
+            
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400&h=200&fit=crop" alt="Sports">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L2] Sports Statistics on the Number Line</h4>
+                <p class="lesson-desc">Lesson 2 to practice using number lines with sports data to solve addition problems...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Section: Multiplication -->
+        <div class="activity-section" id="multiplication">
+          <h3 class="activity-title">Understand Multiplication as Equal Groups</h3>
+          <p class="activity-desc">Students explore multiplication concepts through real-world scenarios involving equal groups, arrays, and repeated addition patterns.</p>
+          
+          <div class="lesson-grid">
+            <div class="lesson-card">
+              <div class="lesson-card-wrapper">
+                <div class="lesson-card-header">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <path d="M3 9h18M9 21V9"/>
+                  </svg>
+                  <span class="lesson-type">Jr. Practice</span>
+                  <span class="free-badge">Free</span>
+                  <div class="premium-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="#333">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <img class="lesson-image" src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=200&fit=crop" alt="Groups">
+              </div>
+              <div class="lesson-content">
+                <button class="bookmark-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </button>
+                <h4 class="lesson-name">[L1] Equal Groups in the Garden</h4>
+                <p class="lesson-desc">Lesson 1 to understand multiplication through equal groups using garden data...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder sections for other activities -->
+        <div class="activity-section" id="fractions-numerator">
+          <h3 class="activity-title">Compare Fractions with Same Numerator</h3>
+          <p class="activity-desc">Students learn to compare fractions that share the same numerator by analyzing real-world data scenarios.</p>
+        </div>
+
+        <div class="activity-section" id="addition-subtraction">
+          <h3 class="activity-title">Apply Addition and Subtraction within 1000</h3>
+          <p class="activity-desc">Practice addition and subtraction with numbers up to 1000 using engaging real-world contexts.</p>
+        </div>
+
+        <div class="activity-section" id="fractions-denominator">
+          <h3 class="activity-title">Compare Fractions with Same Denominator</h3>
+          <p class="activity-desc">Explore fraction comparison when denominators are equal through interactive data activities.</p>
+        </div>
+
+        <div class="activity-section" id="mass">
+          <h3 class="activity-title">Measure and Compare Mass</h3>
+          <p class="activity-desc">Students measure and compare mass using grams and kilograms with real-world objects and data.</p>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('.nav-list-item').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Filter item click
+    document.querySelectorAll('.filter-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.filter-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
