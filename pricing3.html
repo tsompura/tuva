@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tuva Pricing | Plans for Teachers, Schools & Districts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Source Sans Pro', sans-serif; background: #fff; color: #3d4146; }
+    h1, h2, h3, h4 { font-family: 'Bitter', serif; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; border: none; }
+    
+    /* Header */
+    .header { background: #004445; }
+    .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-family: 'Bitter', serif; font-size: 24px; font-weight: 700; color: #fff; }
+    .nav { display: flex; align-items: center; gap: 4px; }
+    .nav a { padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); transition: all 0.2s; }
+    .nav a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav a.active { color: #fff; background: rgba(255,255,255,0.2); }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .btn-premium { padding: 6px 16px; background: #ecb606; color: #3d4146; font-size: 14px; font-weight: 700; border-radius: 6px; }
+    .header-link { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .header-link:hover { color: #fff; }
+    
+    /* Hero */
+    .hero { padding: 48px 24px; background: #f0f5fb; text-align: center; }
+    .hero h1 { font-size: 36px; margin-bottom: 12px; color: #3d4146; }
+    .hero p { font-size: 18px; color: #3d4146; max-width: 700px; margin: 0 auto; }
+    
+    /* Pricing Section */
+    .pricing-section { padding: 32px 24px; }
+    .pricing-inner { max-width: 1100px; margin: 0 auto; }
+    
+    /* Product Tabs */
+    .product-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 0; position: relative; z-index: 2; }
+    .product-tab { padding: 14px 28px; border-radius: 8px; font-size: 17px; font-weight: 700; border: 2px solid; transition: all 0.2s; background: #fff; position: relative; }
+    .product-tab.basic { border-color: #004445; color: #004445; background: #e0f0f4; }
+    .product-tab.basic.active { background: #e0f0f4; border-color: #004445; }
+    .product-tab.jr { border-color: #a71931; color: #a71931; }
+    .product-tab.jr.active { background: #a71931; color: #fff; }
+    .product-tab.premium { border-color: #004445; color: #004445; }
+    .product-tab.premium.active { background: #004445; color: #fff; }
+    .product-tab.assessments { border-color: #013ca6; color: #013ca6; }
+    .product-tab.assessments.active { background: #013ca6; color: #fff; }
+    .product-tab.addons { border-color: #7c3aed; color: #7c3aed; }
+    .product-tab.addons.active { background: #7c3aed; color: #fff; }
+    .product-tab .badge { position: absolute; top: -8px; right: -8px; background: #ecb606; color: #3d4146; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+    /* Arrow pointer for active tab */
+    .product-tab.active::after { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid; display: none; z-index: 3; }
+    .product-tab.jr.active::after { border-top-color: #a71931; display: block; }
+    .product-tab.premium.active::after { border-top-color: #004445; display: block; }
+    .product-tab.assessments.active::after { border-top-color: #013ca6; display: block; }
+    .product-tab.basic.active::after { border-top-color: #004445; display: block; }
+    .product-tab.addons.active::after { border-top-color: #7c3aed; display: block; }
+    
+    /* Tier Toggle - Connected to Tab */
+    .tier-toggle-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; margin-bottom: 24px; background: #f0f5fb; padding: 16px 24px; border-radius: 12px; position: relative; border: 3px solid transparent; }
+    .tier-toggle-row.hidden { display: none; }
+    .tier-toggle-row.jr { border-color: #a71931; background: linear-gradient(180deg, rgba(167,25,49,0.1) 0%, rgba(167,25,49,0.02) 100%); }
+    .tier-toggle-row.premium { border-color: #004445; background: linear-gradient(180deg, rgba(0,68,69,0.1) 0%, rgba(0,68,69,0.02) 100%); }
+    .tier-toggle-row.assessments { border-color: #013ca6; background: linear-gradient(180deg, rgba(1,60,166,0.1) 0%, rgba(1,60,166,0.02) 100%); }
+    .tier-label { font-size: 15px; color: #3d4146; font-weight: 600; white-space: nowrap; }
+    .tier-toggle { display: flex; background: #fff; border-radius: 10px; padding: 4px; gap: 4px; border: 1px solid #dadfe5; }
+    .tier-btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; color: #5c6065; background: transparent; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+    .tier-btn:hover { color: #3d4146; background: #f8fafc; }
+    .tier-btn.active { background: #004445; color: #fff; box-shadow: 0 2px 8px rgba(0,68,69,0.3); }
+    .tier-btn.active.jr-active { background: #a71931; box-shadow: 0 2px 8px rgba(167,25,49,0.3); }
+    .tier-btn.active.assessments-active { background: #013ca6; box-shadow: 0 2px 8px rgba(1,60,166,0.3); }
+    .tier-btn svg { width: 18px; height: 18px; }
+    .tier-btn .discount { background: #ecb606; color: #3d4146; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+    
+    /* Pricing Card Container */
+    .pricing-card { border-radius: 16px; overflow: hidden; border: 3px solid #dadfe5; background: #fff; margin-top: 0; }
+    .pricing-card.no-tier-toggle { margin-top: 20px; }
+    .pricing-card.basic { border-color: #004445; }
+    .pricing-card.jr { border-color: #a71931; }
+    .pricing-card.premium { border-color: #004445; }
+    .pricing-card.assessments { border-color: #013ca6; }
+    .pricing-card.addons { border-color: #7c3aed; }
+    
+    /* Basic Card - Simple */
+    .basic-price-box { padding: 40px; text-align: center; background: #e0f0f4; }
+    .basic-price-box .price-amount { font-size: 48px; font-weight: 700; color: #004445; }
+    .basic-price-box .price-period { font-size: 16px; color: #5c6065; margin-top: 4px; }
+    
+    /* Tiered Pricing Grid - Nested Visual */
+    .tier-pricing-container { background: #f8fafc; padding: 16px; }
+    .tier-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .tier-price-box { padding: 24px 20px; text-align: center; border-radius: 12px; transition: all 0.2s; }
+    .tier-price-box.jr { background: #a71931; color: #fff; }
+    .tier-price-box.premium { background: #004445; color: #fff; }
+    .tier-price-box.assessments { background: #013ca6; color: #fff; }
+    .tier-price-box .tier-name { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .tier-price-box .price-amount { font-size: 32px; font-weight: 700; }
+    .tier-price-box .price-original { font-size: 18px; text-decoration: line-through; opacity: 0.6; margin-left: 8px; }
+    .tier-price-box .price-period { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+    .tier-price-box .discount-badge { display: inline-block; margin-top: 8px; padding: 3px 10px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff; font-size: 12px; font-weight: 700; border-radius: 6px; }
+    .tier-price-box.highlight { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.15); position: relative; z-index: 1; }
+    
+    /* Features Section */
+    .features-section { padding: 24px 32px; background: #fff; border-top: 1px solid #e5e7eb; }
+    .features-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; text-align: center; color: #5c6065; }
+    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 800px; margin: 0 auto; }
+    .feature-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e5e7eb; }
+    .feature-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feature-icon.basic { background: rgba(0,68,69,0.1); color: #004445; }
+    .feature-icon.jr { background: rgba(167,25,49,0.1); color: #a71931; }
+    .feature-icon.premium { background: rgba(0,68,69,0.1); color: #004445; }
+    .feature-icon.assessments { background: rgba(1,60,166,0.1); color: #013ca6; }
+    .feature-item span { font-size: 14px; font-weight: 600; color: #3d4146; }
+    
+    /* CTA Buttons */
+    .cta-section { padding: 24px 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; background: #fff; border-top: 1px solid #e5e7eb; }
+    .btn-primary, .btn-secondary { padding: 14px 32px; font-size: 16px; font-weight: 700; border-radius: 10px; transition: all 0.2s; }
+    .btn-primary { color: #fff; }
+    .btn-primary.basic { background: #004445; }
+    .btn-primary.jr { background: #a71931; }
+    .btn-primary.premium { background: #004445; }
+    .btn-primary.assessments { background: #013ca6; }
+    .btn-primary.addons { background: #7c3aed; }
+    .btn-primary:hover { opacity: 0.9; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translateY(-1px); }
+    .btn-secondary { background: #fff; border: 2px solid; }
+    .btn-secondary.basic { border-color: #004445; color: #004445; }
+    .btn-secondary.jr { border-color: #a71931; color: #a71931; }
+    .btn-secondary.premium { border-color: #004445; color: #004445; }
+    .btn-secondary.assessments { border-color: #013ca6; color: #013ca6; }
+    .btn-secondary:hover { opacity: 0.8; }
+    
+    /* Add-ons Section */
+    .addons-header { padding: 32px; text-align: center; background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%); color: #fff; }
+    .addons-header h3 { font-size: 28px; margin-bottom: 8px; }
+    .addons-header p { font-size: 16px; opacity: 0.9; }
+    .addons-grid-container { padding: 24px; }
+    .addons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .addon-card { padding: 20px; border: 2px solid #e5e7eb; border-radius: 12px; background: #fff; transition: all 0.2s; }
+    .addon-card:hover { border-color: #7c3aed; box-shadow: 0 4px 12px rgba(124,58,237,0.1); }
+    .addon-card .addon-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+    .addon-card .addon-name { font-size: 16px; font-weight: 700; color: #3d4146; }
+    .addon-card .addon-price { font-size: 15px; font-weight: 700; color: #7c3aed; }
+    .addon-card .addon-desc { font-size: 14px; color: #5c6065; margin-bottom: 12px; line-height: 1.5; }
+    .addon-card .addon-compat { font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .addon-card .compat-badge { padding: 2px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; }
+    .addon-card .compat-badge.jr { background: #fbeaef; color: #a71931; }
+    .addon-card .compat-badge.premium { background: #e0f0f4; color: #004445; }
+    .addon-card .btn-add { margin-top: 12px; width: 100%; padding: 10px; background: #7c3aed; color: #fff; font-size: 14px; font-weight: 600; border-radius: 8px; transition: all 0.2s; }
+    .addon-card .btn-add:hover { background: #6d28d9; }
+    
+    /* Comparison Toggle */
+    .comparison-toggle { padding: 24px; background: #f0f5fb; border-top: 1px solid #dadfe5; border-bottom: 1px solid #dadfe5; }
+    .comparison-toggle button { width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; font-size: 18px; font-weight: 700; color: #004445; background: transparent; }
+    
+    /* Comparison Table */
+    .comparison-section { padding: 32px 24px; background: #f0f5fb; display: none; }
+    .comparison-section.show { display: block; }
+    .comparison-table { max-width: 1200px; margin: 0 auto; background: #fff; border-radius: 12px; border: 1px solid #dadfe5; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .table-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid #dadfe5; position: sticky; top: 0; background: #fff; z-index: 10; }
+    .table-header > div { padding: 16px; text-align: center; border-left: 1px solid #dadfe5; }
+    .table-header > div:first-child { text-align: left; border-left: none; }
+    .table-header .col-basic { background: #e0f0f4; }
+    .table-header .col-jr { background: #fbeaef; }
+    .table-header .col-premium { background: #e0f0f4; }
+    .table-header .col-assessments { background: #e6e9f7; }
+    .col-title { font-weight: 700; }
+    .col-title.basic { color: #004445; }
+    .col-title.jr { color: #a71931; }
+    .col-title.premium { color: #004445; }
+    .col-title.assessments { color: #013ca6; }
+    .col-price { font-size: 14px; color: #5c6065; }
+    .category-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; background: #f8fafc; border-bottom: 1px solid #dadfe5; }
+    .category-row > div { grid-column: 1 / -1; padding: 12px 16px; font-weight: 700; font-size: 14px; color: #004445; font-family: 'Bitter', serif; }
+    .feature-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; border-bottom: 1px solid #f0f5fb; transition: background 0.2s; }
+    .feature-row:hover { background: #f9fafb; }
+    .feature-row > div { padding: 14px 16px; font-size: 14px; text-align: center; border-left: 1px solid #f0f5fb; }
+    .feature-row > div:first-child { text-align: left; border-left: none; color: #3d4146; }
+    .feature-row .col-jr { background: rgba(251,234,239,0.3); }
+    .feature-row .col-premium { background: rgba(224,240,244,0.3); }
+    .feature-row .col-assessments { background: rgba(230,233,247,0.3); }
+    .check-icon { color: #004445; }
+    .dash { color: #dadfe5; }
+    
+    /* Contact CTA */
+    .contact-cta { padding: 48px 24px; background: #004445; text-align: center; }
+    .contact-cta h2 { font-size: 28px; color: #fff; margin-bottom: 12px; }
+    .contact-cta > p { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+    .contact-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; }
+    .btn-demo { padding: 16px 32px; background: #ecb606; color: #3d4146; font-size: 16px; font-weight: 700; border-radius: 8px; }
+    .btn-demo:hover { opacity: 0.9; }
+    .contact-links { display: flex; align-items: center; gap: 16px; color: #fff; }
+    .contact-links a:hover { text-decoration: underline; }
+    .contact-links span { opacity: 0.5; }
+    
+    /* FAQ */
+    .faq-section { padding: 48px 24px; }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-section h2 { font-size: 28px; text-align: center; margin-bottom: 32px; }
+    .faq-intro { text-align: center; margin-bottom: 32px; color: #5c6065; }
+    .faq-intro a { color: #004445; font-weight: 600; }
+    .faq-item { border: 1px solid #dadfe5; border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+    .faq-question { width: 100%; padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between; text-align: left; font-weight: 700; color: #3d4146; background: #fff; }
+    .faq-question:hover { background: #f9fafb; }
+    .faq-question span { padding-right: 16px; }
+    .faq-question svg { flex-shrink: 0; margin-top: 2px; color: #5c6065; }
+    .faq-answer { padding: 0 20px 16px; border-top: 1px solid #dadfe5; padding-top: 16px; color: #5c6065; display: none; }
+    .faq-answer.show { display: block; }
+    
+    /* Testimonials */
+    .testimonials { padding: 64px 24px; background: #f0f5fb; }
+    .testimonials h2 { font-size: 28px; text-align: center; margin-bottom: 48px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .testimonial-card { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #dadfe5; }
+    .quote-icon { width: 40px; height: 40px; background: #ecb606; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #3d4146; margin-bottom: 16px; }
+    .testimonial-text { font-size: 16px; line-height: 1.7; color: #3d4146; margin-bottom: 24px; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 40px; height: 40px; background: #004445; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; }
+    .author-name { font-weight: 700; font-size: 14px; color: #3d4146; }
+    .author-role { font-size: 14px; color: #5c6065; }
+    
+    /* Footer */
+    .footer { background: #000; }
+    .footer-main { max-width: 1280px; margin: 0 auto; padding: 48px 24px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 32px; }
+    .footer-brand img { height: 32px; margin-bottom: 16px; }
+    .footer-brand p { color: #9ca3af; font-size: 14px; line-height: 1.6; }
+    .footer-col h4 { color: #fff; font-weight: 700; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a { color: #9ca3af; font-size: 14px; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid #1f2937; padding: 16px 24px; }
+    .footer-bottom-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-copyright { color: #6b7280; font-size: 14px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: #6b7280; font-size: 14px; }
+    .footer-links a:hover { color: #d1d5db; }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .nav { display: none; }
+      .footer-main { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .addons-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 28px; }
+      .product-tabs { gap: 6px; }
+      .product-tab { padding: 10px 16px; font-size: 14px; }
+      .tier-toggle-row { flex-direction: column; gap: 12px; }
+      .tier-pricing-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div style="display: flex; align-items: center; gap: 32px;">
+        <a href="#" class="logo">Tuva</a>
+        <nav class="nav">
+          <a href="#">Tuva Tools</a>
+          <a href="#">Tuva Jr.</a>
+          <a href="#">Content Library</a>
+          <a href="#">Dataset Library</a>
+          <a href="#">Partners</a>
+          <a href="#">Teaching</a>
+          <a href="#" class="active">Pricing</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <button class="btn-premium">PREMIUM</button>
+        <a href="#" class="header-link">Help</a>
+        <a href="#" class="header-link">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Tuva for Teachers, Schools, or Districts</h1>
+    <p>Bring Tuva's comprehensive data literacy program and data exploration platform to supplement and enhance your math, science, and social studies instruction</p>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-inner">
+      <!-- Product Tabs -->
+      <div class="product-tabs">
+        <button class="product-tab basic" data-product="basic">Tuva Basic</button>
+        <button class="product-tab jr" data-product="jr">Tuva Jr.</button>
+        <button class="product-tab premium active" data-product="premium">Tuva Premium</button>
+        <button class="product-tab assessments" data-product="assessments">Assessments</button>
+        <button class="product-tab addons" data-product="addons">Add-ons<span class="badge">7</span></button>
+      </div>
+
+      <!-- Tier Toggle - Connected to Tab -->
+      <div class="tier-toggle-row premium" id="tier-toggle">
+        <span class="tier-label">Select your plan type:</span>
+        <div class="tier-toggle">
+          <button class="tier-btn" data-tier="teacher">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Teacher
+          </button>
+          <button class="tier-btn active" data-tier="school">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            School
+            <span class="discount">20% Off</span>
+          </button>
+          <button class="tier-btn" data-tier="district">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 21V7a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path><path d="M2 21h20"></path><path d="M9 7v.01M9 11v.01M9 15v.01M15 7v.01M15 11v.01M15 15v.01"></path></svg>
+            District
+          </button>
+        </div>
+      </div>
+
+      <!-- Basic Card -->
+      <div class="pricing-card basic no-tier-toggle" id="card-basic" style="display: none;">
+        <div class="basic-price-box">
+          <div class="price-amount">Free</div>
+          <p class="price-period">Get started with Tuva Basic</p>
+        </div>
+        <div class="features-section">
+          <div class="features-title">What's Included</div>
+          <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon basic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>10 Free Math & Science Lessons</span></div>
+            <div class="feature-item"><div class="feature-icon basic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>5 Free Tuva Jr. Lessons</span></div>
+            <div class="feature-item"><div class="feature-icon basic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>5 Dataset Uploads</span></div>
+            <div class="feature-item"><div class="feature-icon basic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Basic Tuva Tools Access</span></div>
+          </div>
+        </div>
+        <div class="cta-section">
+          <button class="btn-primary basic">Sign Up Free</button>
+        </div>
+      </div>
+
+      <!-- Jr Card - With Nested Tier Pricing -->
+      <div class="pricing-card jr" id="card-jr" style="display: none;">
+        <div class="tier-pricing-container">
+          <div class="tier-pricing-grid">
+            <div class="tier-price-box jr" id="jr-teacher">
+              <div class="tier-name">Teachers</div>
+              <div class="price-amount">$250</div>
+              <div class="price-period">per teacher per year</div>
+            </div>
+            <div class="tier-price-box jr highlight" id="jr-school">
+              <div class="tier-name">Schools</div>
+              <div><span class="price-amount">$2,000</span><span class="price-original">$2,500</span></div>
+              <div class="price-period">per school per year</div>
+              <div class="discount-badge">20% Off</div>
+            </div>
+            <div class="tier-price-box jr" id="jr-district">
+              <div class="tier-name">Districts</div>
+              <div class="price-amount">Custom Plan</div>
+              <div class="price-period">Contact us for pricing</div>
+            </div>
+          </div>
+        </div>
+        <div class="features-section">
+          <div class="features-title">What's Included</div>
+          <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon jr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>132 Math + Science Lessons</span></div>
+            <div class="feature-item"><div class="feature-icon jr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>39 Real Math Practice Activities</span></div>
+            <div class="feature-item"><div class="feature-icon jr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Unlimited Dataset Uploads</span></div>
+            <div class="feature-item"><div class="feature-icon jr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Full LMS Integration</span></div>
+          </div>
+        </div>
+        <div class="cta-section">
+          <button class="btn-primary jr">Request a Quote</button>
+          <button class="btn-secondary jr">Pay with Card</button>
+        </div>
+      </div>
+
+      <!-- Premium Card - With Nested Tier Pricing -->
+      <div class="pricing-card premium" id="card-premium">
+        <div class="tier-pricing-container">
+          <div class="tier-pricing-grid">
+            <div class="tier-price-box premium" id="premium-teacher">
+              <div class="tier-name">Teachers</div>
+              <div class="price-amount">$400</div>
+              <div class="price-period">per teacher per year</div>
+            </div>
+            <div class="tier-price-box premium highlight" id="premium-school">
+              <div class="tier-name">Schools</div>
+              <div><span class="price-amount">$3,200</span><span class="price-original">$4,000</span></div>
+              <div class="price-period">per school per year</div>
+              <div class="discount-badge">20% Off</div>
+            </div>
+            <div class="tier-price-box premium" id="premium-district">
+              <div class="tier-name">Districts</div>
+              <div class="price-amount">Custom Plan</div>
+              <div class="price-period">Contact us for pricing</div>
+            </div>
+          </div>
+        </div>
+        <div class="features-section">
+          <div class="features-title">What's Included</div>
+          <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon premium"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>200+ Math Lessons</span></div>
+            <div class="feature-item"><div class="feature-icon premium"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>300+ Science Lessons</span></div>
+            <div class="feature-item"><div class="feature-icon premium"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>350+ Curated Datasets</span></div>
+            <div class="feature-item"><div class="feature-icon premium"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Program Alignments (IM, OpenSciEd)</span></div>
+          </div>
+        </div>
+        <div class="cta-section">
+          <button class="btn-primary premium">Request a Quote</button>
+          <button class="btn-secondary premium">Pay with Card</button>
+        </div>
+      </div>
+
+      <!-- Assessments Card - With Nested Tier Pricing -->
+      <div class="pricing-card assessments" id="card-assessments" style="display: none;">
+        <div class="tier-pricing-container">
+          <div class="tier-pricing-grid">
+            <div class="tier-price-box assessments" id="assessments-teacher">
+              <div class="tier-name">Teachers</div>
+              <div class="price-amount">$3</div>
+              <div class="price-period">per student</div>
+            </div>
+            <div class="tier-price-box assessments highlight" id="assessments-school">
+              <div class="tier-name">Schools</div>
+              <div class="price-amount">$3</div>
+              <div class="price-period">per student</div>
+            </div>
+            <div class="tier-price-box assessments" id="assessments-district">
+              <div class="tier-name">Districts</div>
+              <div class="price-amount">Custom Plan</div>
+              <div class="price-period">Contact us for pricing</div>
+            </div>
+          </div>
+        </div>
+        <div class="features-section">
+          <div class="features-title">What's Included</div>
+          <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon assessments"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Grades 3-12 Diagnostics</span></div>
+            <div class="feature-item"><div class="feature-icon assessments"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Data Literacy Assessments</span></div>
+            <div class="feature-item"><div class="feature-icon assessments"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Science Performance Tasks</span></div>
+            <div class="feature-item"><div class="feature-icon assessments"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>Detailed Score Reports</span></div>
+          </div>
+        </div>
+        <div class="cta-section">
+          <button class="btn-primary assessments">Request a Quote</button>
+          <button class="btn-secondary assessments">Pay with Card</button>
+        </div>
+      </div>
+
+      <!-- Add-ons Card -->
+      <div class="pricing-card addons no-tier-toggle" id="card-addons" style="display: none;">
+        <div class="addons-header">
+          <h3>Power Up Your Tuva Experience</h3>
+          <p>Available add-ons for Tuva Jr. and Tuva Premium subscribers</p>
+        </div>
+        <div class="addons-grid-container">
+          <div class="addons-grid">
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Spanish Language Pack</span>
+                <span class="addon-price">$500/year</span>
+              </div>
+              <p class="addon-desc">Full Tuva Jr. library translated to Spanish for bilingual classrooms</p>
+              <div class="addon-compat">Works with: <span class="compat-badge jr">Tuva Jr.</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Custom Dataset Import</span>
+                <span class="addon-price">$200/setup</span>
+              </div>
+              <p class="addon-desc">We import your district-specific datasets into Tuva format</p>
+              <div class="addon-compat">Works with: <span class="compat-badge jr">Tuva Jr.</span> <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Extended PD Sessions</span>
+                <span class="addon-price">$150/hour</span>
+              </div>
+              <p class="addon-desc">Live professional development training for your teachers</p>
+              <div class="addon-compat">Works with: <span class="compat-badge jr">Tuva Jr.</span> <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">AI-Powered Insights</span>
+                <span class="addon-price">$800/year</span>
+              </div>
+              <p class="addon-desc">Automated student progress analysis & personalized recommendations</p>
+              <div class="addon-compat">Works with: <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Custom Curriculum Builder</span>
+                <span class="addon-price">$1,200/year</span>
+              </div>
+              <p class="addon-desc">Build and brand your own lesson sequences with your district identity</p>
+              <div class="addon-compat">Works with: <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Data Export API</span>
+                <span class="addon-price">$600/year</span>
+              </div>
+              <p class="addon-desc">Export analytics to your data warehouse for advanced reporting</p>
+              <div class="addon-compat">Works with: <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+            <div class="addon-card">
+              <div class="addon-header">
+                <span class="addon-name">Priority Support</span>
+                <span class="addon-price">$400/year</span>
+              </div>
+              <p class="addon-desc">24-hour response time guarantee with dedicated support contact</p>
+              <div class="addon-compat">Works with: <span class="compat-badge jr">Tuva Jr.</span> <span class="compat-badge premium">Premium</span></div>
+              <button class="btn-add">Add to Plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Toggle -->
+  <section class="comparison-toggle">
+    <button onclick="toggleComparison()">
+      <svg id="comp-icon-plus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <svg id="comp-icon-minus" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span id="comp-text">View Full Feature Comparison</span>
+    </button>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="comparison-section" id="comparison-section">
+    <div class="comparison-table">
+      <div class="table-header">
+        <div></div>
+        <div class="col-basic"><div class="col-title basic">Tuva Basic</div><div class="col-price">Free</div></div>
+        <div class="col-jr"><div class="col-title jr">Tuva Jr.</div><div class="col-price">From $250/yr</div></div>
+        <div class="col-premium"><div class="col-title premium">Tuva Premium</div><div class="col-price">From $400/yr</div></div>
+        <div class="col-assessments"><div class="col-title assessments">Assessments</div><div class="col-price">$3/student</div></div>
+      </div>
+      
+      <div class="category-row"><div>Tuva Jr. Library</div></div>
+      <div class="feature-row"><div>Access to Tuva Jr. Content Library</div><div>5 Free</div><div class="col-jr">100+ Lessons</div><div class="col-premium"><span class="dash">—</span></div><div class="col-assessments"><span class="dash">—</span></div></div>
+      <div class="feature-row"><div>Real Math Practice Activities</div><div><span class="dash">—</span></div><div class="col-jr">39 Activities</div><div class="col-premium"><span class="dash">—</span></div><div class="col-assessments"><span class="dash">—</span></div></div>
+      
+      <div class="category-row"><div>Content & Dataset Library</div></div>
+      <div class="feature-row"><div>Math Content Library</div><div>10 Free</div><div class="col-jr"><span class="dash">—</span></div><div class="col-premium">200+ Lessons</div><div class="col-assessments"><span class="dash">—</span></div></div>
+      <div class="feature-row"><div>Science Content Library</div><div>10 Free</div><div class="col-jr"><span class="dash">—</span></div><div class="col-premium">300+ Lessons</div><div class="col-assessments"><span class="dash">—</span></div></div>
+      <div class="feature-row"><div>Tuva Datasets Library</div><div>5 Free</div><div class="col-jr"><span class="dash">—</span></div><div class="col-premium">350+ Datasets</div><div class="col-assessments"><span class="dash">—</span></div></div>
+      
+      <div class="category-row"><div>Classroom & Analytics</div></div>
+      <div class="feature-row"><div>LMS Integration (Google, Canvas, etc.)</div><div><span class="dash">—</span></div><div class="col-jr"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div class="col-premium"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div class="col-assessments"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+      <div class="feature-row"><div>Class & Student Analytics</div><div><span class="dash">—</span></div><div class="col-jr"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div class="col-premium"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div><div class="col-assessments"><svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="contact-cta">
+    <h2>Do you have additional questions?</h2>
+    <p>Request a Demo</p>
+    <div class="contact-actions">
+      <button class="btn-demo">Request a Demo</button>
+      <div class="contact-links">
+        <a href="mailto:hello@tuvalabs.com">hello@tuvalabs.com</a>
+        <span>|</span>
+        <a href="tel:+16464812150">+1.646.481.2150</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <h2>Frequently Asked Questions</h2>
+      <p class="faq-intro">Do you have questions that are not answered below? <a href="#">Contact Us</a></p>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>How many instructional resources can I use for free?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <div class="faq-answer">We make available 10 Math and 10 Science instructional resources available for free for you to use with your students.</div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Are Tuva datasets available in Spanish?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <div class="faq-answer">Yes, many of our datasets have been translated into Spanish. You can find them in our Dataset Library with the Spanish language filter.</div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>Does Tuva Support Single Sign-On?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <div class="faq-answer">Yes, Tuva supports Single Sign-On with Google, Microsoft, Clever, and Classlink.</div>
+      </div>
+      
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          <span>What forms of payment does Tuva accept?</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <div class="faq-answer">You can pay for the Tuva Premium subscription and our Professional Development products and services with a Purchase Order or a credit card.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Educators Are Saying</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">I love the flexibility of Tuva. I can use it for a stand-alone lesson, a launch pad for a new concept, or as a reinforcement activity.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">LD</div>
+          <div><div class="author-name">Laura Davis</div><div class="author-role">Middle School Science, AR</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">It is not just another flashy simulation—it can become a part of how we teach science.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">LJ</div>
+          <div><div class="author-name">Lisa Jones</div><div class="author-role">Science Instructional Coach, UT</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-icon">"</div>
+        <p class="testimonial-text">Stumbling across Tuva was one of my favorite finds of the year.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JD</div>
+          <div><div class="author-name">Jodie Deinhammer</div><div class="author-role">High School Science, TX</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+        <p>The Data Literacy Company. Empowering students to explore, analyze, and understand data in math and science.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <ul><li><a href="#">Tuva Jr.</a></li><li><a href="#">Tuva Science</a></li><li><a href="#">Tuva Math</a></li><li><a href="#">Upload Dataset</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul><li><a href="#">Tutorials</a></li><li><a href="#">Support</a></li><li><a href="#">Accessibility</a></li><li><a href="#">Workshops</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul><li><a href="#">About Us</a></li><li><a href="#">Partners</a></li><li><a href="#">News</a></li><li><a href="#">Jobs</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul><li><a href="mailto:hello@tuvalabs.com">hello@tuvalabs.com</a></li><li><a href="mailto:support@tuvalabs.com">support@tuvalabs.com</a></li><li><a href="tel:+16464812150">+1.646.481.2150</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <p class="footer-copyright">© 2025 Tuva Labs Inc.</p>
+        <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentProduct = 'premium';
+    
+    // Product tab switching
+    const productTabs = document.querySelectorAll('.product-tab');
+    const cards = {
+      basic: document.getElementById('card-basic'),
+      jr: document.getElementById('card-jr'),
+      premium: document.getElementById('card-premium'),
+      assessments: document.getElementById('card-assessments'),
+      addons: document.getElementById('card-addons')
+    };
+    const tierToggle = document.getElementById('tier-toggle');
+
+    productTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const product = tab.dataset.product;
+        currentProduct = product;
+        
+        productTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        Object.keys(cards).forEach(key => {
+          cards[key].style.display = key === product ? 'block' : 'none';
+          // Add/remove margin class based on tier toggle visibility
+          if (key === 'basic' || key === 'addons') {
+            cards[key].classList.add('no-tier-toggle');
+          } else {
+            cards[key].classList.remove('no-tier-toggle');
+          }
+        });
+        
+        // Update tier toggle connection
+        tierToggle.classList.remove('jr', 'premium', 'assessments', 'hidden');
+        
+        if (product === 'basic' || product === 'addons') {
+          tierToggle.classList.add('hidden');
+        } else {
+          tierToggle.classList.add(product);
+          updateTierButtonColors();
+        }
+      });
+    });
+
+    // Tier toggle - highlight selected tier box
+    const tierBtns = document.querySelectorAll('.tier-btn');
+    
+    function updateTierButtonColors() {
+      tierBtns.forEach(btn => {
+        btn.classList.remove('jr-active', 'assessments-active');
+        if (btn.classList.contains('active')) {
+          if (currentProduct === 'jr') btn.classList.add('jr-active');
+          if (currentProduct === 'assessments') btn.classList.add('assessments-active');
+        }
+      });
+    }
+    
+    tierBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tier = btn.dataset.tier;
+        
+        tierBtns.forEach(b => {
+          b.classList.remove('active', 'jr-active', 'assessments-active');
+        });
+        btn.classList.add('active');
+        updateTierButtonColors();
+        
+        // Update highlight on tier boxes
+        document.querySelectorAll('.tier-price-box').forEach(box => {
+          box.classList.remove('highlight');
+        });
+        
+        ['jr', 'premium', 'assessments'].forEach(product => {
+          const box = document.getElementById(`${product}-${tier}`);
+          if (box) box.classList.add('highlight');
+        });
+      });
+    });
+
+    function toggleComparison() {
+      const section = document.getElementById('comparison-section');
+      const iconPlus = document.getElementById('comp-icon-plus');
+      const iconMinus = document.getElementById('comp-icon-minus');
+      const text = document.getElementById('comp-text');
+      
+      const isShown = section.classList.toggle('show');
+      iconPlus.style.display = isShown ? 'none' : 'block';
+      iconMinus.style.display = isShown ? 'block' : 'none';
+      text.textContent = isShown ? 'Hide Full Feature Comparison' : 'View Full Feature Comparison';
+    }
+
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('svg');
+      const isShown = answer.classList.toggle('show');
+      
+      icon.innerHTML = isShown 
+        ? '<line x1="5" y1="12" x2="19" y2="12"></line>'
+        : '<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>';
+    }
+  </script>
+</body>
+</html>
