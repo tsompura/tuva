@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Usage Analytics | Tuva Internal</title>
+  <style>
+    :root {
+      --tuva-teal: #004445;
+      --tuva-teal-light: #006667;
+      --tuva-magenta: #8c1a64;
+      --tuva-yellow: #ecb606;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+    
+    /* Header */
+    .header {
+      background: var(--tuva-teal);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo span { color: var(--tuva-yellow); }
+    
+    .internal-badge {
+      background: var(--tuva-magenta);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: white;
+      font-size: 14px;
+    }
+    
+    /* Main Content */
+    .main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 40px;
+    }
+    
+    /* Page Header */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+    }
+    
+    .page-subtitle {
+      color: var(--gray-500);
+      font-size: 16px;
+    }
+    
+    /* Quick Stats */
+    .quick-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    
+    .quick-stat {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 16px 24px;
+      min-width: 160px;
+    }
+    
+    .quick-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--tuva-teal);
+    }
+    
+    .quick-stat-label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    
+    /* Filters Bar */
+    .filters-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .filter-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+    }
+    
+    .filter-select {
+      padding: 10px 36px 10px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-700);
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      min-width: 160px;
+    }
+    
+    .filter-select:hover { border-color: var(--tuva-teal); }
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--tuva-teal);
+      box-shadow: 0 0 0 3px rgba(0, 68, 69, 0.1);
+    }
+    
+    .search-input {
+      padding: 10px 14px 10px 40px;
+      font-size: 14px;
+      color: var(--gray-700);
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      min-width: 280px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 12px center;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--tuva-teal);
+      box-shadow: 0 0 0 3px rgba(0, 68, 69, 0.1);
+    }
+    
+    .export-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      background: var(--tuva-teal);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+    
+    .export-btn:hover { background: var(--tuva-teal-light); }
+    
+    /* Table Card */
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .data-table th {
+      text-align: left;
+      padding: 14px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--gray-50);
+    }
+    
+    .data-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .data-table th.sortable:hover { color: var(--tuva-teal); }
+    
+    .data-table th:nth-child(3),
+    .data-table th:nth-child(4),
+    .data-table th:nth-child(5) { text-align: right; }
+    
+    .data-table td {
+      padding: 16px 20px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+    
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover { background: var(--gray-50); }
+    
+    .page-cell {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .page-thumb {
+      width: 48px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--tuva-teal) 0%, var(--tuva-teal-light) 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .page-thumb svg { width: 20px; height: 20px; stroke: white; }
+    .page-thumb.jr { background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%); }
+    .page-thumb.practice { background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%); }
+    .page-thumb.science { background: linear-gradient(135deg, #059669 0%, #10b981 100%); }
+    
+    .page-info { flex: 1; }
+    
+    .page-name {
+      font-weight: 600;
+      color: var(--gray-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .page-link {
+      color: var(--tuva-teal);
+      opacity: 0.7;
+      transition: opacity 0.15s;
+    }
+    
+    .page-link:hover { opacity: 1; }
+    
+    .page-type {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    
+    .page-type-badge {
+      background: var(--gray-100);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .stat-cell {
+      text-align: right;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    
+    .stat-cell.visits { color: var(--tuva-teal); }
+    
+    .teacher-count {
+      text-align: right;
+      font-weight: 600;
+      color: var(--tuva-teal);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(0, 68, 69, 0.08);
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    
+    .teacher-count:hover {
+      background: rgba(0, 68, 69, 0.15);
+    }
+    
+    .teacher-count svg { width: 16px; height: 16px; }
+    
+    /* Teacher Dropdown */
+    .teacher-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .teacher-list {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      min-width: 320px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    
+    .teacher-dropdown.open .teacher-list { display: block; }
+    
+    .teacher-list-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-600);
+      background: var(--gray-50);
+      display: flex;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+    }
+    
+    .teacher-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    
+    .teacher-item:last-child { border-bottom: none; }
+    .teacher-item:hover { background: var(--gray-50); }
+    
+    .teacher-name {
+      font-weight: 500;
+      color: var(--gray-800);
+    }
+    
+    .teacher-email {
+      font-size: 12px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    
+    .teacher-time {
+      font-size: 13px;
+      color: var(--gray-600);
+      text-align: right;
+    }
+    
+    .teacher-time-value {
+      font-weight: 600;
+      color: var(--tuva-teal);
+    }
+    
+    .high-engagement {
+      background: rgba(236, 182, 6, 0.15);
+    }
+    
+    .high-engagement .teacher-time-value {
+      color: #b45309;
+    }
+    
+    .engagement-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--tuva-yellow);
+      color: var(--gray-900);
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    
+    /* Highlight Row */
+    .highlight-row {
+      background: rgba(236, 182, 6, 0.08);
+    }
+    
+    .highlight-row:hover {
+      background: rgba(236, 182, 6, 0.12) !important;
+    }
+    
+    /* Footer */
+    .table-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--gray-600);
+    }
+    
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pagination-btn {
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    .pagination-btn:hover { border-color: var(--tuva-teal); color: var(--tuva-teal); }
+    .pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    /* Legend */
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+    
+    .legend-color.high { background: rgba(236, 182, 6, 0.3); }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      T<span>u</span>va
+      <span class="internal-badge">Internal</span>
+    </div>
+    <div class="header-right">
+      <span>Page Usage Analytics</span>
+      <span>•</span>
+      <span>Admin</span>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Page Usage Analytics</h1>
+        <p class="page-subtitle">Track which teachers are using specific content pages • Identify engagement opportunities</p>
+      </div>
+    </div>
+    
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="quick-stat">
+        <div class="quick-stat-value">156</div>
+        <div class="quick-stat-label">Total Pages Tracked</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">842</div>
+        <div class="quick-stat-label">Unique Teachers</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">12,847</div>
+        <div class="quick-stat-label">Total Page Visits</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">47</div>
+        <div class="quick-stat-label">High Engagement (10m+)</div>
+      </div>
+    </div>
+    
+    <!-- Filters Bar -->
+    <div class="filters-bar">
+      <div class="filter-group">
+        <label class="filter-label">Time Period:</label>
+        <select class="filter-select">
+          <option value="all">All Time</option>
+          <option value="7days">Last 7 Days</option>
+          <option value="30days">Last 30 Days</option>
+          <option value="90days">Last 90 Days</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Content Type:</label>
+        <select class="filter-select">
+          <option value="all">All Types</option>
+          <option value="practice">Practice</option>
+          <option value="jr">Tuva Jr.</option>
+          <option value="math">Math Lessons</option>
+          <option value="science">Science Lessons</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Project:</label>
+        <select class="filter-select">
+          <option value="all">All Projects</option>
+          <option value="newark">Newark Pilot</option>
+          <option value="chicago">Chicago Initiative</option>
+          <option value="texas">Texas STEM Grant</option>
+        </select>
+      </div>
+      <input type="text" class="search-input" placeholder="Search pages or teachers...">
+      <button class="export-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
+    
+    <!-- Data Table -->
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 40%;" class="sortable">Page Name ↕</th>
+            <th style="width: 15%;">Type</th>
+            <th style="width: 12%;" class="sortable">Total Visits ↕</th>
+            <th style="width: 13%;" class="sortable">Avg. Time ↕</th>
+            <th style="width: 20%;" class="sortable">Teachers ↕</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Real Math Practice: Fractions
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 3-5</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Practice</span></td>
+            <td class="stat-cell visits">1,456</td>
+            <td class="stat-cell">14m 22s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  58 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">Sarah Johnson <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">sarah.johnson@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">48m 32s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">Michael Chen <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">m.chen@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">35m 15s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Emily Rodriguez</div>
+                      <div class="teacher-email">e.rodriguez@chicago.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">12m 45s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">James Wilson</div>
+                      <div class="teacher-email">jwilson@texas.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">8m 20s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Amanda Peters</div>
+                      <div class="teacher-email">a.peters@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">6m 12s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb jr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Who is Faster?
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 3-5</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Tuva Jr.</span></td>
+            <td class="stat-cell visits">1,234</td>
+            <td class="stat-cell">8m 45s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  42 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">Lisa Thompson <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">l.thompson@chicago.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">28m 10s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Robert Davis</div>
+                      <div class="teacher-email">r.davis@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">9m 33s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Jennifer Lee</div>
+                      <div class="teacher-email">jlee@texas.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">7m 15s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="highlight-row">
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Pay Gap: Math that Doesn't Make Cents
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 6-8</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Math</span></td>
+            <td class="stat-cell visits">847</td>
+            <td class="stat-cell">18m 34s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  24 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">David Martinez <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">d.martinez@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">52m 18s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">Karen White <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">k.white@chicago.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">41m 05s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Thomas Brown</div>
+                      <div class="teacher-email">tbrown@texas.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">8m 42s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb science"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Washington Weather: Bimodality with Histograms
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 6-8</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Science</span></td>
+            <td class="stat-cell visits">956</td>
+            <td class="stat-cell">14m 21s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  31 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Nancy Garcia</div>
+                      <div class="teacher-email">n.garcia@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">9m 45s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Chris Anderson</div>
+                      <div class="teacher-email">c.anderson@chicago.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">8m 12s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb jr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Beaky Fractions: Which Beak is Best?
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 3-5</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Tuva Jr.</span></td>
+            <td class="stat-cell visits">987</td>
+            <td class="stat-cell">10m 12s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  35 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item high-engagement">
+                    <div>
+                      <div class="teacher-name">Patricia Moore <span class="engagement-badge">HIGH</span></div>
+                      <div class="teacher-email">p.moore@texas.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">22m 30s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Steven Taylor</div>
+                      <div class="teacher-email">s.taylor@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">7m 55s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="page-cell">
+                <div class="page-thumb practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg></div>
+                <div class="page-info">
+                  <div class="page-name">
+                    Real Math Practice: Decimals
+                    <a href="#" class="page-link" title="Open page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  </div>
+                  <div class="page-type">Grades 4-6</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="page-type-badge">Practice</span></td>
+            <td class="stat-cell visits">1,123</td>
+            <td class="stat-cell">5m 47s</td>
+            <td>
+              <div class="teacher-dropdown" onclick="this.classList.toggle('open')">
+                <span class="teacher-count">
+                  45 teachers
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+                <div class="teacher-list">
+                  <div class="teacher-list-header">
+                    <span>Teacher Name</span>
+                    <span>Time Spent</span>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Michelle Harris</div>
+                      <div class="teacher-email">m.harris@chicago.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">6m 22s</div>
+                    </div>
+                  </div>
+                  <div class="teacher-item">
+                    <div>
+                      <div class="teacher-name">Daniel Clark</div>
+                      <div class="teacher-email">d.clark@newark.edu</div>
+                    </div>
+                    <div class="teacher-time">
+                      <div class="teacher-time-value">5m 18s</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-footer">
+        <span>Showing 6 of 156 pages</span>
+        <div class="pagination">
+          <button class="pagination-btn" disabled>← Previous</button>
+          <button class="pagination-btn">Next →</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color high"></div>
+        <span>High engagement rows (teachers with 10+ min avg. time)</span>
+      </div>
+      <div class="legend-item">
+        <span class="engagement-badge" style="margin-left: 0;">HIGH</span>
+        <span>Teacher spent 10+ minutes on this page</span>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.teacher-dropdown')) {
+        document.querySelectorAll('.teacher-dropdown.open').forEach(d => d.classList.remove('open'));
+      }
+    });
+  </script>
+</body>
+</html>
