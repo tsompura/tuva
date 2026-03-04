@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Learning – Events & Conferences | Tuva [Hero Alt B]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ════════════════════════════════════════
+       TUVA DESIGN TOKENS — identical to v1
+    ════════════════════════════════════════ */
+    :root {
+      --teal:          #004445;
+      --teal-hover:    #296063;
+      --teal-light:    #cfe0e0;
+      --teal-xlight:   #e8f3f3;
+      --teal-xxlight:  #f0f7f7;
+      --magenta:       #8c1a64;
+      --magenta-light: #fbe5f0;
+      --purple:        #682D8A;
+      --red:           #a71931;
+      --red-light:     #fbeaef;
+      --yellow:        #ecb606;
+      --yellow-dark:   #eb9e00;
+      --yellow-bg:     #fdfce5;
+      --gray-900:      #1c2025;
+      --gray-700:      #3d4146;
+      --gray-600:      #5c6065;
+      --gray-400:      #989da3;
+      --gray-300:      #dadfe5;
+      --gray-200:      #e9eef4;
+      --gray-150:      #e3e6ea;
+      --gray-100:      #f5faff;
+      --white:         #ffffff;
+
+      /* Alt hero specific
+         --hero-bg uses --gray-100 from Tuva library (#f5faff)
+         with a warm tint to reduce the blue cast.
+         Final value: #f7f4ef — registered as --hero-bg token.
+         Contrast verified against all text colors below.           */
+      --hero-bg:           #f7f4ef;  /* warm off-white — in Tuva library as hero bg */
+      --hero-rule:         #ddd8d0;  /* warm divider rule                            */
+
+      /* Contrast-safe overrides for light bg use:
+         --label-on-light  replaces --gray-400 (#989da3) which FAILS at 2.49:1
+                           → #6b6f73 passes at 4.62:1 ✅ AA
+         --gold-on-light   replaces --yellow (#ecb606) which FAILS at 1.70:1
+                           → #a07000 passes at 3.98:1 ✅ AA large (36px bold)
+         These only apply inside .page-hero — brand yellow unchanged elsewhere. */
+      --label-on-light:    #6b6f73;
+      --gold-on-light:     #a07000;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Source Sans Pro', Arial, sans-serif;
+      font-size: 16px; line-height: 1.5;
+      color: var(--gray-900);
+      background: var(--gray-100);
+    }
+    .pd-layout { background: var(--white); }
+    h1, h2, h3, h4 { font-family: 'Bitter', serif; font-weight: 700; line-height: 1.25; }
+    a { color: var(--magenta); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ════════════════════════════════════════
+       BUTTONS
+    ════════════════════════════════════════ */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      line-height: 20px; padding: 7px 18px; border-radius: 4px;
+      border: 1px solid transparent; cursor: pointer;
+      text-decoration: none !important; white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .btn-sm  { font-size: 12px; padding: 4px 12px; }
+    .btn-md  { font-size: 14px; padding: 7px 18px; }
+    .btn-lg  { font-size: 16px; padding: 10px 26px; font-weight: 700; }
+    .btn-primary       { background: var(--teal);    color: var(--white); border-color: var(--teal); }
+    .btn-primary:hover { background: var(--teal-hover); border-color: var(--teal-hover); color: var(--white); }
+    .btn-outline       { background: transparent;    color: var(--teal); border-color: var(--teal); }
+    .btn-outline:hover { background: var(--teal-xxlight); }
+    .btn-outline-teal  { background: transparent;    color: var(--teal); border-color: var(--teal); }
+    .btn-outline-teal:hover { background: var(--teal-xxlight); }
+    .btn-gold          { background: var(--yellow);  color: var(--teal); border-color: var(--yellow); font-weight: 700; }
+    .btn-gold:hover    { background: var(--yellow-dark); border-color: var(--yellow-dark); }
+    .btngroup { display: inline-flex; border: 1px solid var(--gray-300); border-radius: 4px; overflow: hidden; }
+    .btngroup-item {
+      background: var(--white); color: var(--gray-700);
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      padding: 6px 16px; border: none; border-right: 1px solid var(--gray-300); cursor: pointer;
+    }
+    .btngroup-item:last-child { border-right: none; }
+    .btngroup-item.active { background: var(--teal); color: var(--white); }
+    .btngroup-item:not(.active):hover { background: var(--gray-100); }
+
+    /* ════════════════════════════════════════
+       GLOBAL NAV — three-zone: logo | centre links | auth
+    ════════════════════════════════════════ */
+    .site-nav {
+      background: var(--teal); height: 52px;
+      display: flex; align-items: center;
+      position: sticky; top: 0; z-index: 200;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-inner {
+      width: 100%; padding: 0 20px;
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+    }
+    .nav-logo { display: flex; align-items: center; flex-shrink: 0; }
+    .nav-logo img { height: 26px; }
+    .nav-center { display: flex; align-items: center; justify-content: center; gap: 2px; }
+    .nav-center a {
+      color: rgba(255,255,255,0.88); font-size: 14px; font-weight: 600;
+      padding: 6px 10px; border-radius: 3px; white-space: nowrap;
+      transition: background 0.12s, color 0.12s; text-decoration: none;
+    }
+    .nav-center a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+    .nav-center a.nav-active { color: var(--yellow); }
+    .nav-tools-pill {
+      display: inline-flex; align-items: center; font-family: inherit;
+      font-size: 14px; font-weight: 700; color: var(--teal); background: var(--white);
+      border: none; border-radius: 4px; padding: 4px 13px; cursor: pointer;
+      white-space: nowrap; margin-right: 4px; transition: background 0.12s;
+    }
+    .nav-tools-pill:hover { background: rgba(255,255,255,0.88); }
+    .nav-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .nav-right a {
+      color: rgba(255,255,255,0.88); font-size: 14px; font-weight: 600;
+      padding: 5px 10px; border-radius: 3px; white-space: nowrap;
+      text-decoration: none; transition: background 0.12s, color 0.12s;
+    }
+    .nav-right a:hover { background: rgba(255,255,255,0.1); color: var(--white); text-decoration: none; }
+    .nav-signup { border: 1px solid rgba(255,255,255,0.5) !important; padding: 4px 12px !important; }
+    .nav-signup:hover { border-color: rgba(255,255,255,0.9) !important; }
+    .nav-signin { background: var(--yellow); color: var(--teal) !important; font-weight: 700 !important; padding: 4px 14px !important; }
+    .nav-signin:hover { background: var(--yellow-dark) !important; color: var(--teal) !important; }
+
+    /* ════════════════════════════════════════
+       HERO — ALT B: LIGHT EDITORIAL
+       ─────────────────────────────────────
+       Composition: asymmetric three-zone
+         [copy zone] | [vertical rule] | [stats zone]
+       
+       Background: warm off-white #f7f4ef
+       Left yellow bar: 6px solid brand stripe on left edge
+       Stats: oversized editorial numbers — no cards/boxes
+       Tone: education magazine, not tech platform
+       Bottom: teal full-width border to anchor into nav
+    ════════════════════════════════════════ */
+    .page-hero {
+      background: var(--hero-bg);
+      border-left: 6px solid var(--yellow);
+      border-bottom: 3px solid var(--teal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Faint diagonal grid — very subtle, warm */
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23004445' stroke-opacity='0.035' stroke-width='0.8'%3E%3Cline x1='0' y1='60' x2='60' y2='0'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-inner {
+      position: relative; /* above ::before */
+      display: grid;
+      grid-template-columns: 1fr 1px 340px;
+      gap: 0;
+      align-items: stretch;
+      min-height: 220px;
+    }
+
+    /* ── LEFT: copy zone ── */
+    .hero-left {
+      padding: 44px 48px 44px 36px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 14px;
+    }
+    .hero-eyebrow-dash {
+      display: inline-block; width: 24px; height: 2px;
+      background: var(--yellow); border-radius: 1px;
+    }
+
+    .hero-heading {
+      font-family: 'Bitter', serif;
+      font-size: 34px; font-weight: 700;
+      color: var(--teal);
+      line-height: 1.2; margin-bottom: 12px;
+      /* Subtle underline accent on first line only via background */
+    }
+    /* Yellow highlight under a key word */
+    .hero-heading mark {
+      background: none;
+      color: inherit;
+      position: relative; display: inline;
+    }
+    .hero-heading mark::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+      background: var(--yellow); border-radius: 1px;
+    }
+
+    .hero-sub {
+      font-size: 16px; color: var(--gray-600);
+      line-height: 1.65; margin-bottom: 28px; max-width: 440px;
+    }
+
+    .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    /* Separator — teal vertical rule */
+    .hero-rule {
+      background: var(--hero-rule);
+      width: 1px; align-self: stretch;
+      margin: 24px 0;
+    }
+
+    /* ── RIGHT: stats zone — editorial, no boxes ── */
+    .hero-stats {
+      padding: 36px 36px 36px 40px;
+      display: flex; flex-direction: column; justify-content: center; gap: 0;
+    }
+
+    .hero-stats-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--label-on-light);   /* was --gray-400 #989da3 → FAILS 2.49:1; now #6b6f73 → 4.62:1 ✅ */
+      margin-bottom: 18px;
+    }
+
+    .hero-stat-row {
+      display: grid;
+      grid-template-columns: 128px 1fr;   /* fixed number col → desc always left-aligned */
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--hero-rule);
+      position: relative;
+    }
+    .hero-stat-row:last-child { border-bottom: none; }
+
+    /* Oversized editorial number — right-aligned inside its column */
+    .stat-num {
+      font-family: 'Bitter', serif;
+      font-size: 40px; font-weight: 700; line-height: 1;
+      color: var(--teal);
+      text-align: right;
+      padding-right: 18px;
+      letter-spacing: -1px;
+    }
+    .stat-num .plus {
+      /* superscript '+' — large text (≥24px) so 3:1 required; using --gold-on-light */
+      font-size: 22px;
+      color: var(--gold-on-light);   /* was #ecb606 → FAILS 1.70:1; now #a07000 → 3.98:1 ✅ AA large */
+      vertical-align: super;
+      line-height: 0;
+      letter-spacing: 0;
+    }
+    .stat-num .free-word {
+      font-size: 36px; letter-spacing: -0.5px;
+    }
+
+    /* Stat descriptor — left column flush */
+    .stat-desc {
+      font-size: 13px;
+      color: var(--gray-600);        /* #5c6065 → 5.77:1 ✅ AA */
+      line-height: 1.4;
+    }
+
+    /* Yellow dot accent — purely decorative, exempt from contrast */
+    .hero-stat-row.is-accent::before {
+      content: '';
+      position: absolute; left: -12px; top: 50%; transform: translateY(-50%);
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--yellow);   /* decorative only — no text conveyed */
+    }
+
+    /* ════════════════════════════════════════
+       LAYOUT: SIDENAV + MAIN
+    ════════════════════════════════════════ */
+    .pd-layout {
+      display: flex; align-items: flex-start;
+      max-width: 1200px; margin: 0 auto;
+      border-left: 1px solid var(--gray-300);
+      border-right: 1px solid var(--gray-300);
+    }
+    .pd-sidenav {
+      width: 210px; flex-shrink: 0; background: var(--gray-200);
+      min-height: calc(100vh - 52px); position: sticky; top: 52px;
+      border-right: 1px solid var(--gray-300);
+    }
+    .sidenav-item {
+      position: relative; display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 14px 16px; font-family: inherit; font-size: 16px; font-weight: 600;
+      color: var(--gray-700); background: transparent; border: 0; border-top: 1px solid var(--gray-300);
+      cursor: pointer; text-decoration: none; transition: background 0.12s, color 0.12s;
+    }
+    .sidenav-item:first-child { border-top: 0; }
+    .sidenav-item::before { position: absolute; top: 0; bottom: 0; left: 0; width: 3px; content: ''; pointer-events: none; }
+    .sidenav-item:hover, .sidenav-item:focus { background: var(--gray-150); color: var(--gray-900); text-decoration: none; outline: none; }
+    .sidenav-item:hover::before { background: var(--gray-300); }
+    .sidenav-item[aria-current="page"] { font-weight: 700; color: var(--gray-900); background: var(--white); }
+    .sidenav-item[aria-current="page"]::before { background: var(--yellow); }
+    .sidenav-item svg { width: 13px; height: 13px; color: var(--gray-400); flex-shrink: 0; }
+
+    .pd-main { flex: 1; min-width: 0; padding: 32px 32px 72px; }
+
+    /* ════════════════════════════════════════
+       SECTION HEADER
+    ════════════════════════════════════════ */
+    .section-header { margin-bottom: 20px; }
+    .section-header h2 { font-size: 22px; color: var(--gray-900); margin-bottom: 14px; }
+    .section-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+    /* ════════════════════════════════════════
+       FILTER BAR
+    ════════════════════════════════════════ */
+    .filter-bar {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 12px 0; border-bottom: 1px solid var(--gray-300); margin-bottom: 28px;
+    }
+    .filter-label { font-size: 12px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; }
+    .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .pill {
+      font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
+      border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-700);
+      cursor: pointer; font-family: inherit;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+    }
+    .pill:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-xxlight); }
+    .pill.active { background: var(--teal); border-color: var(--teal); color: var(--white); }
+    .filter-search { margin-left: auto; position: relative; }
+    .filter-search svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--gray-400); pointer-events: none; }
+    .filter-search input {
+      height: 32px; padding: 0 12px 0 30px; border: 1px solid var(--gray-300);
+      border-radius: 4px; font-family: inherit; font-size: 14px;
+      color: var(--gray-900); background: var(--white); outline: none; width: 210px;
+    }
+    .filter-search input:focus { border-color: var(--teal); }
+    .filter-search input::placeholder { color: var(--gray-400); }
+
+    /* ════════════════════════════════════════
+       BADGES & META
+    ════════════════════════════════════════ */
+    .event-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.4px; padding: 2px 8px;
+      border-radius: 3px; margin-bottom: 8px;
+    }
+    .badge-webinar    { background: var(--teal-xlight);   color: var(--teal); }
+    .badge-workshop   { background: var(--magenta-light); color: var(--magenta); }
+    .badge-conference { background: var(--yellow-bg);     color: #856404; }
+    .badge-officehour { background: var(--gray-200);      color: var(--gray-700); }
+
+    .meta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
+    .meta-item { display: flex; align-items: center; gap: 5px; font-size: 14px; color: var(--gray-600); }
+    .meta-item svg { width: 13px; height: 13px; color: var(--teal); flex-shrink: 0; }
+
+    /* ════════════════════════════════════════
+       FEATURED EVENT CARD
+    ════════════════════════════════════════ */
+    .featured-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+      color: var(--teal); margin-bottom: 10px;
+    }
+    .featured-label svg { width: 12px; height: 12px; }
+    .featured-card {
+      border: 1px solid var(--teal-light); border-top: 3px solid var(--teal);
+      border-radius: 4px; background: var(--white); margin-bottom: 32px; overflow: hidden;
+    }
+    .featured-grid { display: grid; grid-template-columns: 148px 1fr 168px; }
+    .feat-date {
+      background: var(--teal); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 28px 12px; text-align: center;
+    }
+    .feat-date .fd-month { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow); }
+    .feat-date .fd-day   { font-family: 'Bitter', serif; font-size: 52px; font-weight: 700; color: var(--white); line-height: 1; }
+    .feat-date .fd-year  { font-size: 12px; color: rgba(255,255,255,0.55); }
+    .feat-date .fd-time  { font-size: 12px; color: rgba(255,255,255,0.72); margin-top: 10px; line-height: 1.5; }
+    .feat-content { padding: 22px 24px; border-right: 1px solid var(--teal-light); }
+    .feat-content h3 { font-size: 20px; margin-bottom: 10px; line-height: 1.3; }
+    .feat-content h3 a { color: inherit; }
+    .feat-content h3 a:hover { color: var(--teal); text-decoration: none; }
+    .feat-desc { font-size: 16px; color: var(--gray-700); line-height: 1.6; margin-bottom: 16px; }
+    .feat-presenter { display: flex; align-items: center; gap: 9px; }
+    .pres-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--teal-xlight); border: 1.5px solid var(--teal-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--teal); flex-shrink: 0;
+    }
+    .pres-name { font-size: 14px; font-weight: 700; color: var(--gray-900); }
+    .pres-role { font-size: 12px; color: var(--gray-400); }
+    .feat-cta {
+      background: var(--teal-xxlight); display: flex; flex-direction: column;
+      align-items: stretch; justify-content: flex-end; gap: 10px; padding: 24px 20px;
+    }
+    .feat-cta .btn { justify-content: center; }
+    .feat-cta-note { font-size: 11px; color: var(--gray-600); text-align: center; }
+
+    /* ════════════════════════════════════════
+       EVENT LIST CARDS
+    ════════════════════════════════════════ */
+    .list-heading {
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--gray-600); margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .list-heading .count { font-weight: 400; color: var(--gray-400); }
+    .events-list { display: flex; flex-direction: column; }
+    .event-card { border: 1px solid var(--gray-300); border-top: none; background: var(--white); }
+    .event-card:first-child { border-top: 1px solid var(--gray-300); border-radius: 4px 4px 0 0; }
+    .event-card:last-child  { border-radius: 0 0 4px 4px; }
+    .event-card.is-full { opacity: 0.72; }
+    .card-strip {
+      background: var(--teal-xlight); border-bottom: 1px solid var(--teal-light);
+      padding: 8px 16px; display: flex; align-items: center; flex-wrap: wrap; gap: 18px;
+    }
+    .card-body { display: grid; grid-template-columns: 68px 1fr 120px; }
+    .card-date {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 16px 8px; border-right: 1px solid var(--gray-300);
+    }
+    .card-date .cd-month { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--teal); }
+    .card-date .cd-day   { font-family: 'Bitter', serif; font-size: 24px; font-weight: 700; color: var(--teal); line-height: 1; }
+    .card-content { padding: 16px 20px; }
+    .card-content h3 { font-size: 18px; margin-bottom: 6px; line-height: 1.3; }
+    .card-content h3 a { color: inherit; }
+    .card-content h3 a:hover { color: var(--teal); text-decoration: none; }
+    .card-desc { font-size: 16px; color: var(--gray-700); line-height: 1.55; margin-bottom: 10px; }
+    .card-sub-label { font-size: 16px; font-weight: 600; color: var(--gray-900); margin: 8px 0 4px; }
+    .card-sub-list { list-style: none; }
+    .card-sub-list li { font-size: 16px; color: var(--gray-700); padding-left: 14px; position: relative; line-height: 1.6; }
+    .card-sub-list li::before { content: '•'; position: absolute; left: 0; color: var(--teal); }
+    .card-actions { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .card-cta {
+      display: flex; flex-direction: column; align-items: stretch; justify-content: flex-end;
+      gap: 8px; padding: 16px 14px; border-left: 1px solid var(--gray-300);
+    }
+    .card-cta .btn { justify-content: center; font-size: 12px; }
+
+    /* ════════════════════════════════════════
+       PAGINATION
+    ════════════════════════════════════════ */
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 28px; }
+    .page-btn {
+      width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--gray-300);
+      background: var(--white); font-size: 14px; font-weight: 600; color: var(--gray-700); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-family: inherit;
+      transition: border-color 0.12s, color 0.12s;
+    }
+    .page-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .page-btn.active { background: var(--teal); border-color: var(--teal); color: var(--white); }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-rule { display: none; }
+      .hero-stats { border-top: 1px solid var(--hero-rule); padding: 28px 36px; }
+      .hero-stats-label { margin-bottom: 12px; }
+      .hero-stat-row { padding: 10px 0; }
+      .stat-num { font-size: 32px; }
+    }
+    @media (max-width: 860px) {
+      .page-hero { border-left-width: 4px; }
+      .hero-left { padding: 28px 20px 28px 18px; }
+      .hero-heading { font-size: 26px; }
+      .pd-sidenav { display: none; }
+      .pd-main { padding: 20px 16px 48px; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .feat-date { flex-direction: row; gap: 16px; padding: 14px 18px; justify-content: flex-start; }
+      .feat-date .fd-day { font-size: 36px; }
+      .feat-cta { flex-direction: row; flex-wrap: wrap; align-items: center; }
+      .card-body { grid-template-columns: 60px 1fr; }
+      .card-cta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════
+     GLOBAL NAV
+════════════════════ -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Tuva home">
+      <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva" />
+    </a>
+    <div class="nav-center" role="menubar">
+      <button class="nav-tools-pill" role="menuitem">Tuva Tools</button>
+      <a href="#" role="menuitem">Tuva Jr. ▾</a>
+      <a href="#" role="menuitem">Content Library ▾</a>
+      <a href="#" role="menuitem">Dataset Library ▾</a>
+      <a href="#" role="menuitem">Partners</a>
+      <a href="#" class="nav-active" role="menuitem" aria-current="true">Teaching ▾</a>
+      <a href="#" role="menuitem">Company ▾</a>
+    </div>
+    <div class="nav-right">
+      <a href="#">Help</a>
+      <a href="#" class="nav-signup">Sign Up</a>
+      <a href="#" class="nav-signin">Sign In</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO — ALT B: Light editorial
+     ─────────────────────────────────────
+     Left: 6px yellow bar anchors the brand
+     Copy zone: eyebrow dash + teal heading
+     Vertical rule divides zones visually
+     Stats zone: large editorial numbers,
+       no cards or boxes — pure typography
+     Bottom: 3px teal bar flows into sidenav
+════════════════════════════════════════ -->
+<div class="page-hero" role="banner" aria-label="Professional Learning">
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- LEFT: copy -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dash" aria-hidden="true"></span>
+          Professional Development
+        </div>
+
+        <h1 class="hero-heading">
+          Grow as a<br>
+          <mark>Data-Literate</mark> Educator
+        </h1>
+
+        <p class="hero-sub">Join live webinars, hands-on workshops, and peer learning sessions designed to deepen your skills with Tuva's tools and K–12 data literacy pedagogy.</p>
+
+        <div class="hero-ctas">
+          <a href="#events" class="btn btn-gold btn-lg">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Browse Events
+          </a>
+          <a href="#" class="btn btn-outline-teal btn-lg">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            On-Demand Library
+          </a>
+        </div>
+      </div>
+
+      <!-- VERTICAL RULE -->
+      <div class="hero-rule" aria-hidden="true"></div>
+
+      <!-- RIGHT: editorial stats -->
+      <div class="hero-stats" role="region" aria-label="Program highlights">
+        <div class="hero-stats-label">Program highlights</div>
+
+        <div class="hero-stat-row is-accent">
+          <div class="stat-num">42<span class="plus">+</span></div>
+          <div class="stat-desc">Events<br>this year</div>
+        </div>
+
+        <div class="hero-stat-row">
+          <div class="stat-num">8,500<span class="plus">+</span></div>
+          <div class="stat-desc">Educators<br>trained</div>
+        </div>
+
+        <div class="hero-stat-row">
+          <div class="stat-num">3 hrs</div>
+          <div class="stat-desc">Avg. PD<br>credit earned</div>
+        </div>
+
+        <div class="hero-stat-row">
+          <div class="stat-num"><span class="free-word" style="color:var(--gold-on-light);">Free</span></div>
+          <div class="stat-desc">All events,<br>no cost</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════
+     LAYOUT
+════════════════════ -->
+<div class="pd-layout">
+
+  <nav class="pd-sidenav" aria-label="Professional Learning sections">
+    <a href="#" class="sidenav-item" aria-current="page">
+      Events
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="#" class="sidenav-item">
+      Science Connections
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="#" class="sidenav-item">
+      Recorded Webinars
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="#" class="sidenav-item">
+      Micro Credentials
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </nav>
+
+  <main class="pd-main" id="events">
+
+    <div class="section-header">
+      <h2>Events &amp; Conferences</h2>
+      <div class="section-controls">
+        <div class="btngroup" role="group" aria-label="Event timeframe">
+          <button class="btngroup-item active" aria-pressed="true">Upcoming Events</button>
+          <button class="btngroup-item" aria-pressed="false">Past Events</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar" role="search" aria-label="Filter events">
+      <span class="filter-label">Filter:</span>
+      <div class="filter-pills" role="group">
+        <button class="pill active" aria-pressed="true">All</button>
+        <button class="pill" aria-pressed="false">Webinars</button>
+        <button class="pill" aria-pressed="false">Workshops</button>
+        <button class="pill" aria-pressed="false">Conferences</button>
+        <button class="pill" aria-pressed="false">Office Hours</button>
+      </div>
+      <div class="filter-search">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="Search events…" aria-label="Search events" />
+      </div>
+    </div>
+
+    <!-- FEATURED EVENT -->
+    <div class="featured-label" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Featured Event
+    </div>
+
+    <article class="featured-card" aria-label="Featured event">
+      <div class="featured-grid">
+        <div class="feat-date" aria-hidden="true">
+          <div class="fd-month">July</div>
+          <div class="fd-day">18</div>
+          <div class="fd-year">2026</div>
+          <div class="fd-time">3:00 – 4:30 PM ET<br>Online (Zoom)</div>
+        </div>
+        <div class="feat-content">
+          <span class="event-badge badge-webinar">Webinar</span>
+          <h3><a href="tuva-pd-event-detail.html">Data Talks in the Classroom: Building Student Reasoning with Real-World Datasets</a></h3>
+          <div class="meta-row">
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 hr 30 mins</span>
+            <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Grades 6–10</span>
+          </div>
+          <p class="feat-desc">Learn evidence-based strategies for facilitating student-led data conversations using Tuva's interactive tools. Walk away with lesson frameworks ready for science, math, or social studies.</p>
+          <div class="feat-presenter">
+            <div class="pres-avatar" aria-hidden="true">SR</div>
+            <div>
+              <div class="pres-name">Sara Rooney</div>
+              <div class="pres-role">Curriculum Lead, Tuva Labs</div>
+            </div>
+          </div>
+        </div>
+        <div class="feat-cta">
+          <a href="tuva-pd-event-detail.html" class="btn btn-primary btn-md">Register Free</a>
+          <a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">View Details</a>
+          <span class="feat-cta-note">12 spots remaining · Free</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- EVENTS LIST -->
+    <div class="list-heading">
+      <span>All Upcoming Events</span>
+      <span class="count">Showing 1–5 of 18</span>
+    </div>
+
+    <div class="events-list" role="list" aria-label="Upcoming events">
+
+      <article class="event-card" role="listitem">
+        <div class="card-strip">
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Tuva's Zoom Room</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 mins</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Jocelyn Foran &nbsp;·&nbsp; Rosina Garcia &nbsp;·&nbsp; Jen Greevy</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date" aria-label="Recurring weekly">
+            <div class="cd-month" style="font-size:9px;line-height:1.3;">Every</div>
+            <div class="cd-day" style="font-size:14px;line-height:1.5;">Week</div>
+          </div>
+          <div class="card-content">
+            <span class="event-badge badge-officehour">Office Hours</span>
+            <h3><a href="tuva-pd-event-detail.html">Tuva Math &amp; Science Office Hours</a></h3>
+            <p class="card-desc">Drop in for personalized support with a Tuva education specialist. No preparation needed — bring your questions about lessons, datasets, or classroom integration.</p>
+            <p class="card-sub-label">Math Education Specialist:</p>
+            <ul class="card-sub-list"><li><a href="#">Book with Jen Greevy</a></li></ul>
+            <p class="card-sub-label">Science Education Specialists:</p>
+            <ul class="card-sub-list">
+              <li><a href="#">Book with Jocelyn Foran</a></li>
+              <li><a href="#">Book with Rosina Garcia</a></li>
+            </ul>
+            <div class="card-actions"><a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">Read more</a></div>
+          </div>
+          <div class="card-cta">
+            <a href="tuva-pd-event-detail.html" class="btn btn-primary">Book a Session</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event-card" role="listitem">
+        <div class="card-strip">
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Anaheim Convention Center</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Apr. 15, 2026 · 11:15 a.m. EDT</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 hrs</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Jocelyn Foran</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date" aria-label="April 15"><div class="cd-month">Apr</div><div class="cd-day">15</div></div>
+          <div class="card-content">
+            <span class="event-badge badge-conference">Conference</span>
+            <h3><a href="tuva-pd-event-detail.html">NSTA Conference Anaheim 2026</a></h3>
+            <p class="card-desc">Attend Tuva's hands-on session at the NSTA Annual Conference. Explore how Tuva's tools support NGSS science and engineering practices through authentic data investigations.</p>
+            <div class="card-actions"><a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">Read more</a></div>
+          </div>
+          <div class="card-cta">
+            <a href="tuva-pd-event-detail.html" class="btn btn-primary">Register</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event-card" role="listitem">
+        <div class="card-strip">
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online (Zoom)</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>May 8, 2026 · 4:00 p.m. EDT</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 hr 30 mins</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Sara Rooney</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date" aria-label="May 8"><div class="cd-month">May</div><div class="cd-day">8</div></div>
+          <div class="card-content">
+            <span class="event-badge badge-webinar">Webinar</span>
+            <h3><a href="tuva-pd-event-detail.html">Statistical Thinking for Middle School: Dot Plots &amp; Box Plots</a></h3>
+            <p class="card-desc">Dive into teaching variability and distribution concepts through Tuva's interactive visualization tools. Practical strategies for grades 6–8 math and science.</p>
+            <div class="card-actions"><a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">Read more</a></div>
+          </div>
+          <div class="card-cta">
+            <a href="tuva-pd-event-detail.html" class="btn btn-primary">Register</a>
+            <span style="font-size:11px;color:var(--gray-600);text-align:center;">8 spots left</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="event-card" role="listitem">
+        <div class="card-strip">
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Online (Zoom)</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>June 19, 2026 · 3:30 p.m. EDT</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 hrs · PD credit</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date" aria-label="June 19"><div class="cd-month">Jun</div><div class="cd-day">19</div></div>
+          <div class="card-content">
+            <span class="event-badge badge-workshop">Workshop</span>
+            <h3><a href="tuva-pd-event-detail.html">Designing Data Literacy Units: Backward Design with Real Datasets</a></h3>
+            <p class="card-desc">Collaborative session on aligning Tuva datasets with standards-based unit planning frameworks. Earn up to 2 hours of professional development credit.</p>
+            <div class="card-actions"><a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">Read more</a></div>
+          </div>
+          <div class="card-cta">
+            <a href="tuva-pd-event-detail.html" class="btn btn-primary">Register</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event-card is-full" role="listitem">
+        <div class="card-strip">
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Nashville, TN</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>July 10, 2026 · 2:00 p.m. CDT</span>
+          <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3 hrs</span>
+        </div>
+        <div class="card-body">
+          <div class="card-date" aria-label="July 10"><div class="cd-month">Jul</div><div class="cd-day">10</div></div>
+          <div class="card-content">
+            <span class="event-badge badge-conference">Conference</span>
+            <h3><a href="tuva-pd-event-detail.html">NCTM Annual Conference: Tuva Hands-On Session</a></h3>
+            <p class="card-desc">In-person session at NCTM Annual Conference showcasing how Tuva supports statistical reasoning from data to claim. This session is now at full capacity.</p>
+            <div class="card-actions"><a href="tuva-pd-event-detail.html" class="btn btn-outline btn-sm">Read more</a></div>
+          </div>
+          <div class="card-cta">
+            <a href="#" class="btn btn-outline">Join Waitlist</a>
+            <span style="font-size:11px;color:var(--gray-600);text-align:center;">Session full</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <nav class="pagination" aria-label="Pagination">
+      <button class="page-btn" disabled aria-label="Previous page">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="page-btn active" aria-current="page">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn" aria-label="Next page">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </nav>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.filter-pills .pill').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-pills .pill').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      this.classList.add('active'); this.setAttribute('aria-pressed','true');
+    });
+  });
+  document.querySelectorAll('.btngroup-item').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.btngroup-item').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+      this.classList.add('active'); this.setAttribute('aria-pressed','true');
+    });
+  });
+</script>
+</body>
+</html>
