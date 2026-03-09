@@ -52,16 +52,19 @@
     }
 
     nav .container {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       min-height: 64px;
     }
 
-    .nav-left {
+    .nav-logo {
       display: flex;
       align-items: center;
-      gap: 40px;
+    }
+
+    .nav-logo img {
+      height: 28px;
     }
 
     nav .nav-links {
@@ -69,6 +72,7 @@
       list-style: none;
       gap: 4px;
       margin: 0;
+      justify-content: center;
     }
 
     nav .nav-links a {
@@ -89,7 +93,7 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
     .nav-right a {
@@ -103,18 +107,34 @@
       text-decoration: underline;
     }
 
-    nav .btn-nav {
-      background: white;
-      color: var(--tuva-teal);
-      padding: 10px 20px;
+    .nav-right .btn-signup {
+      background: transparent;
+      color: white;
+      padding: 8px 18px;
       border-radius: 4px;
       font-weight: 700;
       font-size: 14px;
-      transition: background 0.2s;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      text-decoration: none;
     }
 
-    nav .btn-nav:hover {
-      background: #f5f5f5;
+    .nav-right .btn-signup:hover {
+      border-color: white;
+      text-decoration: none;
+    }
+
+    .nav-right .btn-signin {
+      background: var(--tuva-yellow);
+      color: #1a1a1a;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .nav-right .btn-signin:hover {
+      background: #d4a205;
       text-decoration: none;
     }
 
@@ -180,45 +200,68 @@
       margin: 0;
     }
 
-    section {
-      padding: 100px 0;
+    /* ─── Gradient Pillars Section (matches landing page) ─── */
+    .pillars-section {
+      background: linear-gradient(135deg, var(--nsta-blue) 0%, var(--tuva-teal) 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 0;
     }
 
-    /* Pillar Sections */
-    .pillar-section {
+    .pillars-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06), transparent 50%);
+    }
+
+    .pillars-section .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pillars-grid {
       display: grid;
       grid-template-columns: 200px 1fr;
       gap: 60px;
       align-items: start;
-      margin-bottom: 80px;
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .pillar-section:last-child {
-      margin-bottom: 0;
+    .pillars-grid:last-child {
+      border-bottom: none;
     }
 
     .pillar-icon-large {
-      width: 180px;
-      height: 180px;
-      background: linear-gradient(135deg, var(--nsta-blue) 0%, var(--tuva-teal) 100%);
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 12px 32px rgba(40, 51, 89, 0.2);
+      backdrop-filter: blur(10px);
     }
 
     .pillar-content h2 {
       font-size: 36px;
       margin-bottom: 24px;
-      color: var(--text-dark);
+      color: white;
     }
 
     .pillar-content p {
       font-size: 18px;
       line-height: 1.8;
-      color: var(--text-gray);
+      color: rgba(255, 255, 255, 0.9);
       margin-bottom: 0;
+    }
+
+    .pillar-content p strong {
+      color: white;
     }
 
     /* Image Section */
@@ -231,7 +274,7 @@
 
     .image-container {
       width: 100%;
-      height: 500px;
+      height: 600px;
       position: relative;
       overflow: hidden;
     }
@@ -240,6 +283,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 25%;
       display: block;
     }
 
@@ -247,7 +291,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 100%);
       z-index: 1;
     }
 
@@ -297,7 +341,7 @@
     .org-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      gap: 40px;
       margin-top: 60px;
     }
 
@@ -351,7 +395,6 @@
       text-decoration: none;
       border-radius: 6px;
       font-weight: 700;
-      transition: all 0.2s;
       font-size: 15px;
     }
 
@@ -363,7 +406,6 @@
       background: #1f2943;
       color: white !important;
       text-decoration: none;
-      transform: translateY(-1px);
     }
 
     .org-card:last-child .org-link {
@@ -374,7 +416,6 @@
       background: #003334;
       color: white !important;
       text-decoration: none;
-      transform: translateY(-1px);
     }
 
     /* CTA Section */
@@ -424,7 +465,6 @@
       font-weight: 700;
       text-decoration: none;
       border-radius: 6px;
-      transition: all 0.2s;
       font-family: 'Source Sans 3', sans-serif;
       cursor: pointer;
       border: none;
@@ -437,7 +477,6 @@
 
     .btn-white:hover {
       background: #f5f5f5;
-      transform: translateY(-1px);
     }
 
     .btn-outline {
@@ -449,8 +488,6 @@
     .btn-outline:hover {
       background: rgba(255,255,255,0.1);
     }
-
-    /* Image Section - removed old styles */
 
     /* Footer */
     footer {
@@ -503,7 +540,6 @@
       text-decoration: none;
       font-size: 15px;
       line-height: 2.2;
-      transition: color 0.2s;
     }
 
     footer a:hover {
@@ -528,7 +564,7 @@
     }
 
     @media (max-width: 1024px) {
-      .pillar-section {
+      .pillars-grid {
         grid-template-columns: 1fr;
         gap: 40px;
         text-align: center;
@@ -557,6 +593,10 @@
         font-size: 28px;
       }
 
+      .image-container {
+        height: 480px;
+      }
+
       .image-overlay h2 {
         font-size: 32px;
       }
@@ -575,22 +615,25 @@
 <body>
   <nav>
     <div class="container">
-      <div class="nav-left">
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="professional-learning.html">Professional Learning</a></li>
-          <li><a href="datasets.html">Datasets</a></li>
-          <li><a href="anaheim.html">Anaheim</a></li>
-        </ul>
+      <div class="nav-logo">
+        <!-- Logo placeholder — swap in Tuva svg if desired -->
       </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="professional-learning.html">Professional Learning</a></li>
+        <li><a href="datasets.html">Datasets</a></li>
+        <li><a href="anaheim.html">Anaheim</a></li>
+      </ul>
       <div class="nav-right">
         <a href="#">Help</a>
-        <a href="#" class="btn-nav">Sign Up</a>
+        <a href="#" class="btn-signup">Sign Up</a>
+        <a href="#" class="btn-signin">Sign In</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <div class="hero-logos">
@@ -603,9 +646,11 @@
     </div>
   </section>
 
-  <section>
+  <!-- Pillars — gradient bg matching landing page -->
+  <section class="pillars-section">
     <div class="container">
-      <div class="pillar-section">
+
+      <div class="pillars-grid">
         <div class="pillar-icon-large">
           <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2v6m0 8v6M2 12h6m8 0h6"/>
@@ -619,7 +664,7 @@
         </div>
       </div>
 
-      <div class="pillar-section">
+      <div class="pillars-grid">
         <div class="pillar-icon-large">
           <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"/>
@@ -633,7 +678,7 @@
         </div>
       </div>
 
-      <div class="pillar-section">
+      <div class="pillars-grid">
         <div class="pillar-icon-large">
           <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -646,9 +691,11 @@
           <p>Together, NSTA and Tuva provide a cohesive system of professional learning designed to build teacher capacity in three key areas: <strong>cultivating students' data skills</strong>, <strong>bridging science and engineering practices</strong> with the statistical reasoning emphasized in math instruction, and <strong>leveraging authentic data</strong> to foster deeper sensemaking and student engagement.</p>
         </div>
       </div>
+
     </div>
   </section>
 
+  <!-- Full-width photo -->
   <section class="image-section">
     <div class="image-container">
       <img src="https://tsompura.github.io/tuva/about-img.png" alt="Professional Development in Action">
@@ -659,6 +706,7 @@
     </div>
   </section>
 
+  <!-- About the Partners -->
   <section class="org-section">
     <div class="container">
       <div class="section-header">
@@ -684,6 +732,7 @@
     </div>
   </section>
 
+  <!-- CTA -->
   <section class="cta-section">
     <div class="container">
       <h2>Ready to make sense of data together?</h2>
