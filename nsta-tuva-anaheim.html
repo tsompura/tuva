@@ -99,11 +99,39 @@
     .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.08); text-decoration: none; }
     .btn-teal { background: var(--tuva-teal); color: white; }
     .btn-teal:hover { background: #003334; text-decoration: none; }
-    .btn-outline-teal { background: transparent; color: var(--tuva-teal); border: 2px solid var(--tuva-teal); }
+    .btn-outline-teal { background: transparent; color: var(--tuva-teal); border: 2px solid var(--tuva-teal); padding: 10px 24px; box-sizing: border-box; }
     .btn-outline-teal:hover { background: #f0f7f7; text-decoration: none; }
     .btn-sm { padding: 7px 16px; font-size: 13px; }
 
     /* ── QUOTE + PILLARS ROW ── */
+
+    /* ── INTRO SECTION PILLARS ── */
+    .intro-quote {
+      max-width: 800px; margin: 0 auto 48px;
+      text-align: center; border: none; padding: 0;
+    }
+    .intro-quote p {
+      font-size: 20px; color: rgba(255,255,255,0.92);
+      line-height: 1.7; font-style: italic; margin-bottom: 12px;
+    }
+    .intro-quote cite {
+      font-size: 15px; color: rgba(255,255,255,0.65); font-style: italic;
+    }
+    .pillars-row {
+      display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+    }
+    .pillar-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px; padding: 24px 32px; min-width: 140px;
+      color: white; font-size: 15px; font-weight: 600; text-align: center;
+    }
+    .pillar-chip-icon {
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    }
+    .pillar-chip-icon svg {
+      width: 40px; height: 40px; stroke: rgba(255,255,255,0.85);
+    }
     .intro-section {
       background: linear-gradient(135deg, var(--nsta-blue) 0%, var(--tuva-teal) 100%);
       padding: 72px 0; position: relative; overflow: hidden;
@@ -127,15 +155,31 @@
 
     /* ── PLI SECTION ── */
     .pli-section { background: white; padding: 88px 0; border-bottom: 1px solid var(--border); }
+    .pli-left h2 { font-size: 32px; color: var(--text-dark); margin: 0 0 10px; font-family: 'Bitter', serif; }
+    .pli-left p { font-size: 18px; color: var(--text-gray); line-height: 1.75; margin-bottom: 16px; }
+    .pli-left h4 { font-size: 17px; font-weight: 700; color: var(--text-dark); margin: 24px 0 10px; }
+    .pli-left ul { margin: 0 0 16px; padding-left: 20px; }
+    .pli-left ul li { font-size: 18px; color: var(--text-gray); line-height: 1.7; margin-bottom: 6px; }
     .section-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--tuva-teal); margin-bottom: 10px; }
     .eyebrow-line { width: 32px; height: 2px; background: var(--tuva-yellow); border-radius: 2px; }
     .pli-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .pli-left h2 { font-size: 36px; color: var(--text-dark); margin-bottom: 8px; }
-    .pli-left .pli-sub { font-size: 20px; color: var(--tuva-teal); font-weight: 700; margin-bottom: 20px; font-family: 'Bitter', serif; }
-    .pli-left p { font-size: 18px; color: var(--text-gray); line-height: 1.75; margin-bottom: 16px; }
+    .pli-left .pli-sub { font-size: 20px; color: var(--tuva-teal); font-weight: 700; margin: 6px 0 16px; font-family: 'Bitter', serif; }
+    .pli-subtitle { font-size: 20px; color: var(--tuva-teal); font-weight: 700; margin: 8px 0 20px; font-family: 'Bitter', serif; }
+    .pli-left p { font-size: 18px; color: var(--text-gray); line-height: 1.75; margin-bottom: 18px; }
+    .pli-left h4 { font-size: 17px; color: var(--text-dark); font-family: 'Bitter', serif; margin: 28px 0 10px; }
+    .pli-left ul { margin: 0 0 20px 20px; }
+    .pli-left ul li { font-size: 18px; color: var(--text-gray); line-height: 1.75; margin-bottom: 8px; }
+    .pli-left .pli-tagline { font-size: 18px; color: var(--text-gray); font-style: italic; margin: 0 0 24px; }
     .pli-right { background: var(--bg-page); border-radius: 12px; padding: 32px; border: 1px solid var(--border); }
     .pli-detail-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-    .pli-detail-row { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); }
+    .pli-detail-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .pli-detail-row.pli-detail-last { border-bottom: none; }
+    .pli-detail-text { display: flex; flex-direction: column; gap: 2px; }
+    .pli-detail-text strong { font-size: 16px; color: var(--text-dark); font-weight: 700; }
+    .pli-detail-key { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); }
+    .pli-detail-sub { font-size: 13px; color: var(--text-gray); }
+    .pli-cta-left { margin-top: 32px; }
     .pli-detail-row:last-child { border-bottom: none; }
     .pli-detail-icon { width: 32px; height: 32px; border-radius: 7px; background: linear-gradient(135deg, var(--nsta-blue), var(--tuva-teal)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .pli-detail-icon svg { width: 16px; height: 16px; color: white; }
@@ -146,8 +190,10 @@
 
     /* ── PATHWAY PROGRESS STRIP ── */
     .pathway-strip {
-      background: linear-gradient(135deg, var(--nsta-blue) 0%, var(--tuva-teal) 100%);
-      padding: 32px 0; position: relative; overflow: hidden;
+      background: #cdd9d9;
+      border-radius: 10px;
+      padding: 32px 24px;
+      margin: 36px 0;
     }
     .pathway-strip::before {
       content: ''; position: absolute; inset: 0;
@@ -155,13 +201,13 @@
     }
     .pathway-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: nowrap; }
     .pathway-node { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; max-width: 200px; }
-    .pathway-node-circle { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; font-family: 'Bitter', serif; font-size: 20px; font-weight: 700; color: white; }
-    .pathway-node-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.3; max-width: 130px; }
-    .pathway-connector { flex: 0 0 40px; height: 2px; background: rgba(255,255,255,0.25); margin-bottom: 26px; position: relative; }
-    .pathway-connector::after { content: ''; position: absolute; right: -5px; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid rgba(255,255,255,0.35); }
+    .pathway-node-circle { width: 52px; height: 52px; border-radius: 50%; background: white; border: 2px solid var(--tuva-teal); display: flex; align-items: center; justify-content: center; font-family: 'Bitter', serif; font-size: 20px; font-weight: 700; color: var(--tuva-teal); }
+    .pathway-node-label { font-size: 13px; font-weight: 600; color: var(--text-gray, #5c6065); text-align: center; line-height: 1.3; max-width: 130px; }
+    .pathway-connector { flex: 0 0 40px; height: 2px; background: #b0c8c8; margin-bottom: 26px; position: relative; }
+    .pathway-connector::after { content: ''; position: absolute; right: -5px; top: -4px; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid #b0c8c8; }
 
     /* ── PATHWAY STEPS ── */
-    .pathway-section { background: var(--bg-light); padding: 88px 0; }
+    .pathway-section { background: #f7f9f9; padding: 88px 0; }
     .pathway-section .section-header { text-align: left; margin-bottom: 48px; }
     .pathway-section .section-header h2 { font-size: 34px; color: var(--text-dark); margin-bottom: 8px; }
     .pathway-section .section-header p { font-size: 18px; color: var(--text-gray); max-width: 780px; line-height: 1.7; }
@@ -213,16 +259,75 @@
       .intro-pillars { padding-left: 0; }
       .pli-grid { grid-template-columns: 1fr; gap: 40px; }
       .pathway-inner { gap: 8px; }
-      .pathway-connector { flex: 0 0 20px; }
+      .pathway-connector { flex: 0 0 40px; height: 2px; background: #b0c8c8; margin-bottom: 26px; position: relative; }
       .footer-grid { grid-template-columns: 1fr; gap: 48px; }
     }
     @media (max-width: 600px) {
       .hero-image { height: 520px; }
       .hero-image-content h1 { font-size: 34px; }
       .pathway-inner { flex-wrap: wrap; gap: 16px; }
-      .pathway-connector { display: none; }
+      .pathway-connector { flex: 0 0 40px; height: 2px; background: #b0c8c8; margin-bottom: 26px; position: relative; }
       .step-body { padding: 0 16px 20px 16px; }
     }
+  
+    /* ── EVENTS & CONFERENCES (from PL page) ── */
+    .events-section { background: white; padding: 72px 0; border-bottom: 1px solid var(--border); }
+    .events-section .section-header { text-align: center; margin-bottom: 48px; }
+    .events-section .section-header h2 { font-size: 42px; color: var(--text-dark); margin-bottom: 12px; }
+    .events-section .section-header p { font-size: 18px; color: var(--text-gray); }
+    .events-list { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+    .featured-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--tuva-teal); margin-bottom: 12px; }
+    .featured-tag svg { width: 14px; height: 14px; fill: var(--tuva-teal); }
+    .event-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+    .event-card.is-featured { border-color: var(--tuva-teal); border-width: 2px; }
+    .event-strip { background: #f0f7f5; padding: 10px 20px; display: flex; align-items: center; gap: 24px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .event-meta { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-gray); }
+    .event-meta svg { width: 14px; height: 14px; }
+    .event-body { display: grid; grid-template-columns: 80px 1fr auto; gap: 0; align-items: stretch; }
+    .event-date { background: var(--tuva-teal); color: white; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 80px; }
+    .event-date.recurring { background: #5c6065; }
+    .ed-month { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.85; }
+    .ed-day { font-size: 32px; font-weight: 700; font-family: 'Bitter', serif; line-height: 1; }
+    .ed-year { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+    .ed-time { font-size: 10px; opacity: 0.7; margin-top: 4px; }
+    .event-content { padding: 20px 24px; }
+    .event-badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 3px; margin-bottom: 8px; }
+    .badge-institute { background: #ede9f8; color: #5b21b6; }
+    .badge-conference { background: #fef3c7; color: #92400e; }
+    .badge-webinar { background: #dbeafe; color: #1e40af; }
+    .badge-workshop { background: #d1fae5; color: #065f46; }
+    .event-content h3 { font-size: 20px; color: var(--text-dark); margin-bottom: 8px; line-height: 1.3; }
+    .event-content h3 a { color: var(--text-dark); text-decoration: none; }
+    .event-content h3 a:hover { color: var(--tuva-teal); }
+    .event-content p { font-size: 15px; color: var(--text-gray); line-height: 1.65; }
+    .event-cta { padding: 20px 20px; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 10px; border-left: 1px solid var(--border); min-width: 140px; }
+    .event-cta-note { font-size: 12px; color: var(--text-gray); text-align: center; }
+    .btn-sm { padding: 8px 16px !important; font-size: 13px !important; }
+
+    /* ── CONTACT MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: white; border-radius: 10px; padding: 40px 48px 36px; width: 100%; max-width: 600px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+    .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #aaa; line-height: 1; }
+    .modal-close:hover { color: var(--text-dark); }
+    .modal-box h2 { font-size: 28px; color: var(--text-dark); margin-bottom: 4px; }
+    .modal-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0 28px; }
+    .modal-field { display: grid; grid-template-columns: 140px 1fr; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .modal-field label { font-size: 16px; color: var(--text-dark); }
+    .modal-field input, .modal-field textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 15px; font-family: inherit; background: #f7f9fb; color: var(--text-dark); transition: border-color 0.15s; }
+    .modal-field input:focus, .modal-field textarea:focus { outline: none; border-color: var(--tuva-teal); background: white; }
+    .modal-field textarea { height: 96px; resize: vertical; }
+    .modal-submit-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+    .btn-modal-submit { background: var(--tuva-teal); color: white; border: none; padding: 13px 40px; border-radius: 6px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .btn-modal-submit:hover { background: #00333a; }
+
+    @media (max-width: 768px) {
+      .event-body { grid-template-columns: 64px 1fr; }
+      .event-cta { display: none; }
+      .modal-box { padding: 28px 20px; }
+      .modal-field { grid-template-columns: 1fr; gap: 6px; }
+    }
+
   </style>
 </head>
 <body>
@@ -262,132 +367,126 @@
   </div>
 </div>
 
-<!-- HERO — light centered -->
+
+<!-- HERO — light centered, unchanged -->
 <section class="hero">
   <div class="container">
     <div class="hero-logos">
       <img src="https://www.nsta.org/themes/custom/nstabuild/images/logo-sm.svg" alt="NSTA">
-      <span class="sep">×</span>
+      <span class="divider">×</span>
       <img src="https://tsompura.github.io/tuva/tuva-default.svg" alt="Tuva">
     </div>
-    <h1>NSTA Anaheim 2026</h1>
     <div class="hero-image-banner">
-      <img src="https://tsompura.github.io/tuva/1773143932327_image.png" alt="NSTA Anaheim 2026 — www.nsta.org/anaheim26">
+      <img src="https://tsompura.github.io/tuva/1773143932327_image.png" alt="NSTA Anaheim 2026 — Join us in Southern California">
     </div>
     <div class="hero-meta-row">
       <span class="hero-meta-pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Anaheim Convention Center, CA
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Anaheim Convention Center
       </span>
       <span class="hero-meta-pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         April 15–18, 2026
       </span>
       <span class="hero-meta-pill">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-        Room 202B
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Room TBA
       </span>
     </div>
     <div class="hero-cta-row">
-      <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal">Register for the Conference</a>
+      <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal">Register Now</a>
       <a href="#pathway" class="btn btn-outline-teal">View Conference Pathway</a>
     </div>
   </div>
 </section>
 
-<!-- QUOTE + THREE PILLARS -->
+<!-- QUOTE + THREE PILLARS — unchanged from original -->
 <div class="intro-section">
   <div class="container">
-    <div class="intro-inner">
-      <div class="intro-quote">
-        <div class="quote-mark">"</div>
-        <p class="quote-text">Connecting lessons to students' local environments increases engagement, deepens understanding, and helps them see the relevance of science in their own communities.</p>
-        <p class="quote-attr"><strong>Harshil Parikh</strong>, Tuva co-founder</p>
+    <blockquote class="intro-quote">
+      <p>"Connecting lessons to students' local environments increases engagement, deepens understanding, and helps them see the relevance of science in their own communities."</p>
+      <cite>— Harshil Parikh, Tuva co-founder</cite>
+    </blockquote>
+    <div class="pillars-row">
+      <div class="pillar-chip">
+        <div class="pillar-chip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <span>Sensemaking</span>
       </div>
-      <div class="intro-pillars">
-        <div class="intro-pillar">
-          <div class="intro-pillar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M2 12h6m8 0h6"/><circle cx="12" cy="12" r="3"/><path d="m8 16 1.5-1.5M16 8l-1.5 1.5m0 5L16 16M8 8l1.5 1.5"/></svg>
-          </div>
-          <div class="intro-pillar-text">
-            <h4>Sensemaking</h4>
-            <p>Help students do science by investigating real phenomena using authentic evidence.</p>
-          </div>
+      <div class="pillar-chip">
+        <div class="pillar-chip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-        <div class="intro-pillar">
-          <div class="intro-pillar-icon">
-            <!-- Place on line graph icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 8 12 13 15 19 8"/><path d="M19 8v5M19 8h-5"/><path d="M12 21c0 0-7-4-7-11a7 7 0 0 1 14 0c0 3-1.5 6-7 11z" stroke-width="1.5" stroke-dasharray="2 2" opacity=".4"/></svg>
-          </div>
-          <div class="intro-pillar-text">
-            <h4>Local Data</h4>
-            <p>Explore curated, place-based datasets that connect students to their own communities.</p>
-          </div>
+        <span>Local Data</span>
+      </div>
+      <div class="pillar-chip">
+        <div class="pillar-chip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <div class="intro-pillar">
-          <div class="intro-pillar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="intro-pillar-text">
-            <h4>Teacher Capacity</h4>
-            <p>Build confidence and fluency in using data to drive deeper student sensemaking.</p>
-          </div>
-        </div>
+        <span>Teacher Capacity</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PRE-CONFERENCE PLI -->
+<!-- PRE-CONFERENCE PLI — updated content from doc -->
 <section class="pli-section" id="pli">
   <div class="container">
     <div class="section-eyebrow"><span class="eyebrow-line"></span>Pre-Conference</div>
     <div class="pli-grid">
-      <div class="pli-left">
+      <div class="pli-content">
         <h2>Professional Learning Institute</h2>
-        <p class="pli-sub">Sensemaking and Place-Based Data in the 6–12 Classroom</p>
-        <p>Let's make it make sense together in this immersive, full-day experience.</p>
+        <h3 class="pli-subtitle">Sensemaking and Place-Based Data in the 6–12 Classroom</h3>
+        <p class="pli-tagline">Let's make it make sense together in this immersive, full-day experience.</p>
         <p>Join Tuva and the NSTA Professional Learning Team for a deep dive into using local data as evidence in making sense of complex phenomena. Educators will pose questions about a local anchoring phenomenon and use the Tuva Tools to explore and visualize real datasets in pursuit of answers.</p>
         <p>The experience includes a community science field component, where participants will gather and analyze their own data — bringing the sensemaking cycle to life from beginning to end.</p>
-        <div class="pli-ctas">
+        <div class="pli-cta-group pli-cta-left">
           <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal">Register Now</a>
           <a href="#pathway" class="btn btn-outline-teal">View Full Pathway</a>
         </div>
       </div>
-      <div class="pli-right">
-        <div class="pli-detail-label">Session Details</div>
-        <dl>
+      <div class="pli-details">
+        <div class="pli-detail-card">
+          <div class="pli-detail-label">SESSION DETAILS</div>
           <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-            <div class="pli-detail-body"><dt>Date</dt><dd>April 15, 2026 <span>Pre-Conference Day</span></dd></div>
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">DATE</span><strong>April 15, 2026</strong><span class="pli-detail-sub">Pre-Conference Day</span></div>
           </div>
           <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div class="pli-detail-body"><dt>Duration</dt><dd>Full Day <span>Approx. 7 hrs PD credit</span></dd></div>
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">DURATION</span><strong>Full Day</strong><span class="pli-detail-sub">Approx. 7 hrs PD credit</span></div>
           </div>
           <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
-            <div class="pli-detail-body"><dt>Room</dt><dd>202B <span>Anaheim Convention Center</span></dd></div>
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">ROOM</span><strong>202B</strong><span class="pli-detail-sub">Anaheim Convention Center</span></div>
           </div>
           <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="pli-detail-body"><dt>Facilitators</dt><dd>NSTA Professional Learning Team + Tuva</dd></div>
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">FACILITATORS</span><strong>NSTA Professional Learning Team + Tuva</strong></div>
           </div>
           <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 8v6M2 12h6m8 0h6"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <div class="pli-detail-body"><dt>Grades</dt><dd>6–12 <span>All science disciplines</span></dd></div>
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">GRADES</span><strong>6–12</strong><span class="pli-detail-sub">All science disciplines</span></div>
           </div>
-          <div class="pli-detail-row">
-            <div class="pli-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-            <div class="pli-detail-body"><dt>Cost</dt><dd>Free <span>For NSTA members</span></dd></div>
+          <div class="pli-detail-row pli-detail-last">
+            <div class="pli-detail-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="pli-detail-text"><span class="pli-detail-key">COST</span><strong>Free</strong><span class="pli-detail-sub">For NSTA members</span></div>
           </div>
-        </dl>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PATHWAY PROGRESS STRIP -->
+<!-- CONFERENCE PATHWAY STEPS -->
+<section class="pathway-section">
+  <div class="container">
+    <div class="section-header" style="margin-bottom: 36px;">
+      <div class="section-eyebrow"><span class="eyebrow-line"></span>Conference Pathway</div>
+      <h2>Finding Phenomena Nearby: How to Use Local Data to Drive Student Learning</h2>
+      <p>A four-part pathway about using local data as evidence in making sense of complex phenomena. You can drop into any single session, but we recommend the full four-part series to truly make it make sense together from start to finish.</p>
+    </div>
 <div class="pathway-strip" id="pathway">
   <div class="container">
     <div class="pathway-inner">
@@ -414,15 +513,6 @@
   </div>
 </div>
 
-<!-- CONFERENCE PATHWAY STEPS -->
-<section class="pathway-section">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-eyebrow"><span class="eyebrow-line"></span>Conference Pathway</div>
-      <h2>Finding Phenomena Nearby: How to Use Local Data to Drive Student Learning</h2>
-      <p>A four-part pathway about using local data as evidence in making sense of complex phenomena. You can drop into any single session, but we recommend the full four-part series to truly make it make sense together from start to finish.</p>
-    </div>
-
     <div class="steps-list">
 
       <div class="step-card is-open">
@@ -434,8 +524,8 @@
         <div class="step-body">
           <p>Are you interested in helping students make sense of the phenomena in their communities? When sensemaking is focused on local phenomena, there are more opportunities to center students' communities and incorporate personal interests. During this session, participants will learn how to find and select local data that is instructionally productive, based on their goals for student learning and the data available.</p>
           <div class="step-ctas">
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Add to Agenda</a>
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Register</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Register for Conference</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Add to Agenda</a>
           </div>
         </div>
       </div>
@@ -447,10 +537,10 @@
           <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="step-body">
-          <p>The process of science is driven by questions. While it's easy to ask a general question, crafting an investigable question requires deeper thinking and intentionality. Doing so within the constraints of an existing dataset creates an additional challenge. This session, co-facilitated by the NSTA professional learning team and Tuva, will highlight strategies for helping students clarify what data they have to work with, determine the types of questions that can and cannot be answered with a given dataset, and frame six different types of investigable questions.</p>
+          <p>The process of science is driven by questions. While it's easy to ask a general question, crafting an investigable question requires deeper thinking and intentionality. This session, co-facilitated by the NSTA professional learning team and Tuva, will highlight strategies for helping students clarify what data they have to work with, determine the types of questions that can and cannot be answered with a given dataset, and frame six different types of investigable questions.</p>
           <div class="step-ctas">
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Add to Agenda</a>
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Register</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Register for Conference</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Add to Agenda</a>
           </div>
         </div>
       </div>
@@ -462,10 +552,10 @@
           <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="step-body">
-          <p>Place-based science gives students a sense of purpose as they collect data that contributes to knowledge about their own communities. The experience becomes even more meaningful when students use math and computational thinking to explore their data. During this hour-long session, participants will review the data skills students are introduced to in the mathematics curriculum at the grade level(s) they teach, and identify ways to draw on them to build richer science learning and support ongoing growth in math.</p>
+          <p>Place-based science gives students a sense of purpose as they collect data that contributes to knowledge about their own communities. During this session, participants will review the data skills students are introduced to in the mathematics curriculum at the grade level(s) they teach, and identify ways to draw on them to build richer science learning and support ongoing growth in math.</p>
           <div class="step-ctas">
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Add to Agenda</a>
-            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Register</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm">Register for Conference</a>
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-outline-teal btn-sm">Add to Agenda</a>
           </div>
         </div>
       </div>
@@ -489,21 +579,113 @@
   </div>
 </section>
 
-<!-- CTA — "Eager for More?" -->
+<!-- EVENTS & CONFERENCES — moved from PL page -->
+<section class="events-section" id="events">
+  <div class="container">
+    <div class="section-header">
+      <h2>Events &amp; Conferences</h2>
+      <p>Meet the NSTA × Tuva team at upcoming sessions. All events are free for educators.</p>
+    </div>
+    <div class="events-list">
+
+      <div class="featured-tag">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Featured Event
+      </div>
+
+      <article class="event-card is-featured">
+        <div class="event-strip">
+          <span class="event-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Anaheim Convention Center</span>
+          <span class="event-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Full Day · 7 hrs PD Credit</span>
+          <span class="event-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Jocelyn Foran</span>
+        </div>
+        <div class="event-body">
+          <div class="event-date">
+            <div class="ed-month">Apr</div>
+            <div class="ed-day">15</div>
+            <div class="ed-year">2026</div>
+            <div class="ed-time">Full Day</div>
+          </div>
+          <div class="event-content">
+            <span class="event-badge badge-institute">Professional Learning Institute</span>
+            <h3><a href="#pli">NSTA Anaheim 2026 — Full-Day Professional Learning Institute</a></h3>
+            <p>Join us in Anaheim to roll up your sleeves and dive into local phenomena. Participate in a full-day Professional Learning Institute, follow our four-part conference pathway, or drop into a single session.</p>
+          </div>
+          <div class="event-cta">
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm" onclick="document.getElementById('contactModal').classList.add('open'); return false;" href="#">Contact Us</a>
+            <a href="#pli" class="btn btn-outline-teal btn-sm">View Details</a>
+            <span class="event-cta-note">Free · NSTA members</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-strip">
+          <span class="event-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Anaheim Convention Center</span>
+          <span class="event-meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Apr 15–18, 2026</span>
+        </div>
+        <div class="event-body">
+          <div class="event-date"><div class="ed-month">Apr</div><div class="ed-day">15</div></div>
+          <div class="event-content">
+            <span class="event-badge badge-conference">Conference</span>
+            <h3><a href="#pathway">NSTA Annual Conference — Anaheim 2026</a></h3>
+            <p>Four-part conference pathway. Hands-on data investigations, place-based phenomena, and sensemaking sessions — attend one or follow all four.</p>
+          </div>
+          <div class="event-cta">
+            <a href="https://www.nsta.org/anaheim26" target="_blank" class="btn btn-teal btn-sm" onclick="document.getElementById('contactModal').classList.add('open'); return false;" href="#">Contact Us</a>
+            <a href="#pathway" class="btn btn-outline-teal btn-sm">View Schedule</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA — Eager for More? -->
 <section class="cta-section">
   <div class="container">
     <h2>Eager for More?</h2>
     <p>Science starts with data — and these sessions are just the beginning. Explore everything NSTA × Tuva has to offer.</p>
     <div class="cta-buttons">
-      <a href="https://tsompura.github.io/tuva/nsta-tuva-pl.html" class="btn btn-white">
-        Explore All NSTA × Tuva Offerings
-      </a>
-      <a href="https://tsompura.github.io/tuva/nsta-tuva-datasets.html" class="btn btn-outline-white">
-        Browse Datasets
-      </a>
+      <a href="https://tsompura.github.io/tuva/nsta-tuva-pl.html" class="btn btn-white">Explore All NSTA × Tuva Offerings</a>
+      <a href="https://tsompura.github.io/tuva/nsta-tuva-datasets.html" class="btn btn-outline-white">Browse Datasets</a>
+      <a href="#" onclick="document.getElementById('contactModal').classList.add('open'); return false;" class="btn btn-outline-white">Contact Us</a>
     </div>
   </div>
 </section>
+
+<!-- CONTACT US MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('contactModal').classList.remove('open')">&times;</button>
+    <h2>Contact Us</h2>
+    <hr class="modal-divider">
+    <div class="modal-field">
+      <label for="cf-name">Name*</label>
+      <input type="text" id="cf-name" placeholder="Your name">
+    </div>
+    <div class="modal-field">
+      <label for="cf-org">Organization*</label>
+      <input type="text" id="cf-org" placeholder="School or district">
+    </div>
+    <div class="modal-field">
+      <label for="cf-phone">Phone No.*</label>
+      <input type="tel" id="cf-phone" placeholder="Phone No.">
+    </div>
+    <div class="modal-field">
+      <label for="cf-email">Email*</label>
+      <input type="email" id="cf-email" placeholder="you@example.com">
+    </div>
+    <div class="modal-field">
+      <label for="cf-msg">Message*</label>
+      <textarea id="cf-msg" placeholder="How can we help?"></textarea>
+    </div>
+    <div class="modal-submit-row">
+      <button class="btn-modal-submit" onclick="document.getElementById('contactModal').classList.remove('open')">Submit</button>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -582,3 +764,30 @@
 </script>
 </body>
 </html>
+
+<script>
+  // Mobile nav
+  const _ham = document.getElementById('navHamburger');
+  const _drw = document.getElementById('navDrawer');
+  if (_ham && _drw) {
+    _ham.addEventListener('click', e => { e.stopPropagation(); _ham.classList.toggle('open'); _drw.classList.toggle('open'); });
+    document.addEventListener('click', e => {
+      if (!e.target.closest('nav') && !e.target.closest('.nav-drawer')) { _ham.classList.remove('open'); _drw.classList.remove('open'); }
+    });
+  }
+
+  // Accordion — step cards
+  document.querySelectorAll('.step-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.step-card');
+      const isOpen = card.classList.contains('is-open');
+      document.querySelectorAll('.step-card.is-open').forEach(c => c.classList.remove('is-open'));
+      if (!isOpen) card.classList.add('is-open');
+    });
+  });
+
+  // Close modal on overlay click
+  document.getElementById('contactModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+</script>
