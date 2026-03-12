@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuva Survey Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=Bitter:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- TUVA BRAND VARIABLES --- */
+        :root {
+            --tuva-green: #004445;
+            --tuva-green-hover: #005F64;
+            --tuva-pink: #8C1A64;
+            --tuva-pink-hover: #B31E6F;
+            --tuva-pink-light: #fbe5f0;
+            --tuva-yellow: #ECB606;
+            
+            --gray-900: #1C2025;
+            --gray-800: #3d4146;
+            --gray-500: #989da3;
+            --gray-300: #dadfe5;
+            --gray-200: #e9eef4;
+            --gray-100: #f5faff;
+            
+            --bg-body: #F7F9FC;
+            --border-radius: 8px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--gray-800);
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4, h5 { color: var(--gray-900); margin-top: 0; }
+        a { color: var(--tuva-pink); text-decoration: none; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+
+        /* --- GLOBAL COMPONENTS --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 8px 16px; font-size: 15px; font-weight: 600;
+            border-radius: 4px; border: 1px solid transparent; cursor: pointer;
+            transition: all 0.2s; text-decoration: none !important;
+        }
+        .btn-primary { background-color: var(--tuva-green); color: #fff; }
+        .btn-primary:hover { background-color: var(--tuva-green-hover); color: #fff; }
+        .btn-outline { background-color: #fff; border-color: var(--gray-300); color: var(--gray-800); }
+        .btn-outline:hover { border-color: var(--tuva-green); color: var(--tuva-green); }
+        .btn-pink { background-color: var(--tuva-pink); color: #fff; }
+        .btn-pink:hover { background-color: var(--tuva-pink-hover); }
+        
+        .card {
+            background: #fff; border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* --- HEADER --- */
+        .tuva-header {
+            height: 60px; background-color: var(--tuva-green);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px; position: sticky; top: 0; z-index: 100;
+        }
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        .header-nav { display: flex; gap: 24px; height: 60px; }
+        .nav-item { 
+            color: rgba(255,255,255,0.8); font-weight: 600; font-size: 15px; 
+            display: flex; align-items: center; border-bottom: 4px solid transparent;
+            text-decoration: none !important;
+        }
+        .nav-item:hover { color: #fff; }
+        .nav-item.active { border-bottom-color: var(--tuva-yellow); color: #fff; }
+
+        /* --- VIEW CONTAINER --- */
+        .view-container {
+            max-width: 1200px; margin: 40px auto; padding: 0 20px;
+            display: none; /* Hidden by default for SPA logic */
+        }
+        .view-container.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- VIEW 1: DASHBOARD --- */
+        .hero-block {
+            background: #fff; border: 1px solid var(--gray-300); border-radius: var(--border-radius);
+            padding: 30px; margin-bottom: 24px;
+        }
+        .hero-block h1 { font-family: 'Bitter', serif; color: var(--tuva-green); font-size: 28px; margin-bottom: 8px; }
+        .hero-block p { color: var(--gray-500); font-size: 16px; margin: 0; }
+
+        .survey-list-card { padding: 24px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .list-header h2 { margin: 0; font-size: 20px; }
+        
+        .tabs { display: flex; gap: 10px; }
+        .tab { 
+            padding: 6px 16px; border-radius: 20px; border: 1px solid var(--gray-300);
+            background: #fff; color: var(--gray-800); font-size: 14px; font-weight: 600; cursor: pointer;
+        }
+        .tab.active { background: var(--tuva-green); color: #fff; border-color: var(--tuva-green); }
+        .tab:hover:not(.active) { background: var(--gray-100); }
+
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 12px 16px; border-bottom: 2px solid var(--gray-300); font-size: 12px; color: var(--gray-500); text-transform: uppercase; font-weight: 700; }
+        td { padding: 16px; border-bottom: 1px solid var(--gray-200); vertical-align: middle; }
+        tr:hover td { background-color: var(--gray-100); }
+        
+        .status-badge { 
+            padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase;
+        }
+        .status-published { background: #e0f0f4; color: var(--tuva-green); }
+        .status-draft { background: var(--gray-200); color: var(--gray-800); }
+
+        .action-group { display: flex; gap: 8px; }
+
+        /* --- VIEW 2: CREATE / SETUP --- */
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; font-weight: 600; }
+        
+        .setup-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; }
+        
+        .template-section h3 { font-size: 18px; margin-bottom: 16px; }
+        .template-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
+        .template-card {
+            border: 2px solid var(--gray-200); border-radius: var(--border-radius);
+            padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s;
+            background: #fff;
+        }
+        .template-card:hover { border-color: var(--gray-500); }
+        .template-card.active { border-color: var(--tuva-green); background: var(--gray-100); box-shadow: 0 4px 12px rgba(0,68,69,0.1); }
+        .template-icon { font-size: 24px; color: var(--tuva-green); margin-bottom: 12px; }
+        .template-card h4 { margin: 0 0 8px 0; font-size: 15px; }
+        .template-card p { margin: 0 0 12px 0; font-size: 13px; color: var(--gray-500); line-height: 1.4; }
+        .template-q-count { display: inline-block; background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-800); }
+
+        .setup-form { padding: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+        .form-control { 
+            width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300); 
+            border-radius: 4px; font-family: inherit; font-size: 15px;
+        }
+        .form-control:focus { outline: none; border-color: var(--tuva-green); box-shadow: 0 0 0 2px rgba(0,68,69,0.1); }
+        textarea.form-control { resize: vertical; min-height: 80px; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
+        .checkbox-group label { margin: 0; font-weight: 600; cursor: pointer; }
+        .help-text { display: block; font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+
+        /* --- VIEW 3: BUILDER (Split Pane to reduce scroll) --- */
+        .builder-layout {
+            display: flex; gap: 24px; height: calc(100vh - 140px);
+            margin-top: 20px;
+        }
+        .builder-sidebar {
+            width: 300px; display: flex; flex-direction: column; gap: 16px;
+        }
+        .question-list {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+        }
+        .q-list-item {
+            background: #fff; border: 1px solid var(--gray-300); border-radius: 4px;
+            padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .q-list-item:hover { border-color: var(--gray-500); }
+        .q-list-item.active { border-left: 4px solid var(--tuva-green); border-color: var(--tuva-green); background: var(--gray-100); }
+        .q-drag { color: var(--gray-500); cursor: grab; }
+        .q-brief { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px; font-weight: 600; }
+        
+        .builder-main {
+            flex: 1; display: flex; flex-direction: column;
+        }
+        .editor-card {
+            background: #fff; border: 1px solid var(--gray-300); border-radius: var(--border-radius);
+            padding: 30px; flex: 1; overflow-y: auto;
+        }
+        .editor-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); padding-bottom: 20px; margin-bottom: 20px; }
+        .q-type-select { padding: 6px 12px; border-radius: 4px; border: 1px solid var(--gray-300); font-weight: 600; }
+        
+        .option-list { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+        .option-item { display: flex; align-items: center; gap: 10px; }
+        .option-item input[type="text"] { flex: 1; }
+        .option-item .fa-times { color: var(--gray-500); cursor: pointer; }
+        .option-item .fa-times:hover { color: #a71931; }
+
+        /* --- PREVIEW OVERLAY --- */
+        .preview-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(28, 32, 37, 0.8); z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+        }
+        .preview-overlay.active { display: flex; animation: fadeIn 0.2s; }
+        .preview-container {
+            background: #fff; width: 100%; max-width: 800px; height: 90vh;
+            border-radius: 12px; display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .preview-header {
+            background: var(--tuva-green); color: #fff; padding: 16px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .preview-body {
+            padding: 40px; flex: 1; overflow-y: auto; background: var(--bg-body);
+        }
+        .preview-q-card {
+            background: #fff; padding: 24px; border-radius: 8px; border: 1px solid var(--gray-300);
+            margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .preview-q-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+        .preview-option { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .preview-option input { width: 18px; height: 18px; cursor: pointer; }
+        .preview-option label { font-size: 16px; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <!-- STANDARD TUVA HEADER -->
+    <header class="tuva-header">
+        <div class="header-left">
+            <a href="#">
+                <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva" style="height:32px;">
+            </a>
+            <nav class="header-nav">
+                <a href="#" class="nav-item">Dashboard</a>
+                <a href="#" class="nav-item">Content Library</a>
+                <a href="#" class="nav-item">Dataset Library</a>
+                <a href="#" class="nav-item active">Surveys</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn btn-pink" style="padding: 4px 12px; font-size: 13px;">Go Premium</a>
+            <span style="color:white; font-weight:600;">Help</span>
+            <div style="display:flex; align-items:center; gap:8px; color:white; font-weight:700; cursor:pointer;">
+                TEJAS <i class="fas fa-chevron-down" style="font-size:12px;"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: DASHBOARD -->
+    <!-- ========================================== -->
+    <div id="view-dashboard" class="view-container active">
+        
+        <div class="hero-block">
+            <h1>Survey Platform</h1>
+            <p>Create simple surveys to gather feedback and check understanding from your students.</p>
+        </div>
+
+        <div class="card survey-list-card">
+            <div class="list-header">
+                <h2>My Surveys</h2>
+                <button class="btn btn-primary" onclick="switchView('view-setup')">
+                    <i class="fas fa-edit"></i> Create Survey
+                </button>
+            </div>
+
+            <div class="tabs" style="margin-bottom: 24px;">
+                <div class="tab active">All</div>
+                <div class="tab">Published</div>
+                <div class="tab">Draft</div>
+                <div class="tab">Closed</div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Survey Name</th>
+                            <th>Status</th>
+                            <th>Classes</th>
+                            <th>Questions</th>
+                            <th>Responses</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:700;">End of Unit Reflection (Copy)</td>
+                            <td><span class="status-badge status-published">Published</span></td>
+                            <td>AP Biology, Data Sci</td>
+                            <td>4</td>
+                            <td><strong>24</strong> (80%)</td>
+                            <td>Oct 12, 2024</td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px; color:var(--tuva-green); border-color:var(--tuva-green);">Results</button>
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px;">Copy</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:700;">Class Feedback Survey</td>
+                            <td><span class="status-badge status-draft">Draft</span></td>
+                            <td>Not assigned</td>
+                            <td>3</td>
+                            <td><strong>0</strong> (0%)</td>
+                            <td>Oct 20, 2024</td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px;" onclick="switchView('view-builder')">Edit</button>
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px;">Copy</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:700;">Graphing Skills Pre-Assessment</td>
+                            <td><span class="status-badge status-draft">Draft</span></td>
+                            <td>Not assigned</td>
+                            <td>5</td>
+                            <td><strong>0</strong> (0%)</td>
+                            <td>Oct 24, 2024</td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px;" onclick="switchView('view-builder')">Edit</button>
+                                    <button class="btn btn-outline" style="padding: 4px 10px; font-size:13px;">Copy</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: CREATE SURVEY SETUP -->
+    <!-- ========================================== -->
+    <div id="view-setup" class="view-container">
+        
+        <a class="back-link" onclick="switchView('view-dashboard')">
+            <i class="fas fa-arrow-left"></i> Back to Surveys
+        </a>
+
+        <div class="setup-grid">
+            <!-- Left: Templates -->
+            <div class="template-section">
+                <h2 style="font-family:'Bitter', serif; color:var(--tuva-green);">Create New Survey</h2>
+                <p style="color:var(--gray-500); margin-bottom: 24px;">Start from scratch or use a pre-built template to save time.</p>
+                
+                <div class="template-grid">
+                    <div class="template-card active">
+                        <i class="far fa-file-alt template-icon"></i>
+                        <h4>Blank Survey</h4>
+                        <p>Start from scratch with an empty canvas.</p>
+                    </div>
+                    <div class="template-card">
+                        <i class="far fa-comments template-icon"></i>
+                        <h4>Class Feedback</h4>
+                        <p>Gather student feedback on class pace and activities.</p>
+                        <span class="template-q-count">5 questions</span>
+                    </div>
+                    <div class="template-card">
+                        <i class="far fa-lightbulb template-icon"></i>
+                        <h4>Pre-Assessment</h4>
+                        <p>Check what students know before a unit.</p>
+                        <span class="template-q-count">4 questions</span>
+                    </div>
+                    <div class="template-card">
+                        <i class="fas fa-sign-out-alt template-icon"></i>
+                        <h4>Exit Ticket</h4>
+                        <p>Quick end-of-lesson check on learning.</p>
+                        <span class="template-q-count">3 questions</span>
+                    </div>
+                    <div class="template-card">
+                        <i class="far fa-chart-bar template-icon"></i>
+                        <h4>Opinion Poll</h4>
+                        <p>Collect preferences for data analysis.</p>
+                        <span class="template-q-count">2 questions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Settings Form -->
+            <div class="card setup-form">
+                <h3>Survey Details</h3>
+                <div class="form-group" style="margin-top:20px;">
+                    <label>Survey Title <span style="color:#a71931;">*</span></label>
+                    <input type="text" class="form-control" placeholder="e.g., Week 4 Exit Ticket" value="New Untitled Survey">
+                </div>
+                <div class="form-group">
+                    <label>Description (Optional)</label>
+                    <textarea class="form-control" placeholder="Describe the purpose of this survey..."></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="anon">
+                        <label for="anon">Anonymous Responses</label>
+                    </div>
+                    <span class="help-text" style="margin-left: 28px;">Student names will not be visible in results.</span>
+                </div>
+                <div class="form-group">
+                    <label>Visibility</label>
+                    <select class="form-control">
+                        <option>Private — Only you</option>
+                        <option>School — Share with colleagues</option>
+                    </select>
+                </div>
+
+                <hr style="border:0; border-top:1px solid var(--gray-300); margin: 24px 0;">
+                
+                <button class="btn btn-primary" style="width:100%; font-size:16px; padding:12px;" onclick="switchView('view-builder')">
+                    Continue to Builder <i class="fas fa-arrow-right" style="margin-left:4px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: BUILDER (Split Pane) -->
+    <!-- ========================================== -->
+    <div id="view-builder" class="view-container" style="max-width: 1400px;">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap: 16px;">
+                <a class="back-link" style="margin:0;" onclick="switchView('view-setup')"><i class="fas fa-arrow-left"></i></a>
+                <h2 style="margin:0; font-family:'Bitter', serif; color:var(--tuva-green);">New Untitled Survey</h2>
+                <span class="status-badge status-draft">Draft Saved</span>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <button class="btn btn-outline" onclick="togglePreview()"><i class="far fa-eye"></i> Preview</button>
+                <button class="btn btn-primary"><i class="fas fa-paper-plane"></i> Publish & Assign</button>
+            </div>
+        </div>
+
+        <div class="builder-layout">
+            <!-- Left: Question Outline -->
+            <div class="builder-sidebar">
+                <button class="btn btn-outline" style="border-style:dashed; color:var(--tuva-pink); border-color:var(--tuva-pink); background:var(--tuva-pink-light);"><i class="fas fa-plus"></i> Add Question</button>
+                
+                <div class="question-list">
+                    <div class="q-list-item active">
+                        <i class="fas fa-grip-vertical q-drag"></i>
+                        <span class="q-brief">1. How comfortable are you with...</span>
+                    </div>
+                    <div class="q-list-item">
+                        <i class="fas fa-grip-vertical q-drag"></i>
+                        <span class="q-brief">2. What was the most confusing...</span>
+                    </div>
+                    <div class="q-list-item">
+                        <i class="fas fa-grip-vertical q-drag"></i>
+                        <span class="q-brief">3. Any other feedback?</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Active Question Editor -->
+            <div class="editor-card">
+                <div class="editor-header">
+                    <h3 style="margin:0;">Edit Question 1</h3>
+                    <select class="q-type-select">
+                        <option>Multiple Choice</option>
+                        <option>Short Answer</option>
+                        <option>Paragraph</option>
+                        <option>Linear Scale</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <input type="text" class="form-control" value="How comfortable are you with graphing scatter plots?" style="font-size: 18px; font-weight: 600;">
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label>Options</label>
+                    <div class="option-list">
+                        <div class="option-item">
+                            <i class="far fa-circle" style="color:var(--gray-500);"></i>
+                            <input type="text" class="form-control" value="Very Comfortable">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="option-item">
+                            <i class="far fa-circle" style="color:var(--gray-500);"></i>
+                            <input type="text" class="form-control" value="Somewhat Comfortable">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="option-item">
+                            <i class="far fa-circle" style="color:var(--gray-500);"></i>
+                            <input type="text" class="form-control" value="Needs Work">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="option-item" style="opacity: 0.6;">
+                            <i class="far fa-circle" style="color:var(--gray-500);"></i>
+                            <input type="text" class="form-control" placeholder="Add option...">
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="border:0; border-top:1px solid var(--gray-200); margin: 30px 0;">
+                
+                <div style="display:flex; justify-content:flex-end; gap: 16px; align-items:center;">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="req" checked>
+                        <label for="req">Required</label>
+                    </div>
+                    <i class="far fa-copy" style="color:var(--gray-500); cursor:pointer; font-size:18px;" title="Duplicate"></i>
+                    <i class="far fa-trash-alt" style="color:var(--gray-500); cursor:pointer; font-size:18px;" title="Delete"></i>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PREVIEW OVERLAY -->
+    <!-- ========================================== -->
+    <div id="preview-overlay" class="preview-overlay">
+        <div class="preview-container">
+            <div class="preview-header">
+                <div style="font-size:18px; font-family:'Bitter', serif;">Student View: New Untitled Survey</div>
+                <button class="btn" style="background:rgba(255,255,255,0.2); color:#fff;" onclick="togglePreview()">
+                    <i class="fas fa-times"></i> Close Preview
+                </button>
+            </div>
+            
+            <div class="preview-body">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    
+                    <div style="text-align:center; margin-bottom: 30px;">
+                        <h1 style="font-family:'Bitter', serif; color:var(--tuva-green);">New Untitled Survey</h1>
+                        <p style="color:var(--gray-500);">Please answer all required questions.</p>
+                    </div>
+
+                    <div class="preview-q-card">
+                        <div class="preview-q-title">1. How comfortable are you with graphing scatter plots? <span style="color:#a71931;">*</span></div>
+                        <div class="preview-option">
+                            <input type="radio" name="q1" id="o1"> <label for="o1">Very Comfortable</label>
+                        </div>
+                        <div class="preview-option">
+                            <input type="radio" name="q1" id="o2"> <label for="o2">Somewhat Comfortable</label>
+                        </div>
+                        <div class="preview-option">
+                            <input type="radio" name="q1" id="o3"> <label for="o3">Needs Work</label>
+                        </div>
+                    </div>
+
+                    <div class="preview-q-card">
+                        <div class="preview-q-title">2. What was the most confusing part of today's lesson?</div>
+                        <textarea class="form-control" placeholder="Your answer" style="background:var(--bg-body);"></textarea>
+                    </div>
+
+                    <div style="text-align:right;">
+                        <button class="btn btn-primary" style="font-size: 16px; padding: 10px 30px;">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic for Switching Views -->
+    <script>
+        function switchView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+            // Show targeted view
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function togglePreview() {
+            const overlay = document.getElementById('preview-overlay');
+            overlay.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
