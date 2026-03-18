@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Platform – Tuva Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   TOKENS — matched pixel-for-pixel to live Tuva platform
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --tuva-teal:        #004445;
+  --tuva-teal-light:  #006667;
+  --tuva-yellow:      #ecb606;
+  --tuva-magenta:     #8c1a64;    /* Primary CTA in My Datasets */
+  --tuva-magenta-dk:  #6e1450;
+
+  /* Page surfaces — exact live site */
+  --page-bg:          #e8f4f5;   /* light blue-green tint */
+  --surface:          #ffffff;
+  --surface-hover:    #f9fafb;
+
+  /* Sidebar */
+  --sb-gold-border:   #ecb606;
+  --sb-gold-bg:       #fffbeb;
+
+  /* Borders / neutrals */
+  --gray-100:         #f3f4f6;
+  --gray-200:         #e5e7eb;
+  --gray-300:         #d1d5db;
+  --gray-400:         #9ca3af;
+  --gray-500:         #6b7280;
+  --gray-600:         #4b5563;
+  --gray-700:         #374151;
+  --gray-800:         #1f2937;
+  --gray-900:         #111827;
+
+  /* Status */
+  --green-bg:         #dcfce7;
+  --green-text:       #15803d;
+  --red-bg:           #fee2e2;
+  --red-text:         #991b1b;
+
+  /* Typography */
+  --font-head: 'Bitter', Georgia, serif;
+  --font-body: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Shape */
+  --r-sm:   4px;
+  --r:      6px;
+  --r-lg:   10px;
+  --r-xl:   12px;
+
+  /* Elevation */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow:     0 2px 6px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:  0 10px 24px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--page-bg);
+  color: var(--gray-900);
+  line-height: 1.6;
+}
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-head); }
+button,input,select,textarea { font-family: var(--font-body); font-size: inherit; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION — matched to screenshot exactly
+   ═══════════════════════════════════════════════════════════════ */
+.header {
+  background: var(--tuva-teal);
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+.header-inner {
+  max-width: 1440px; margin: 0 auto;
+  padding: 0 2rem;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: 24px; }
+.logo img { height: 30px; display: block; }
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav-link {
+  padding: 6px 12px; border-radius: var(--r-sm);
+  font-size: 15px; font-weight: 600; color: rgba(255,255,255,.85);
+  transition: background .15s, color .15s; white-space: nowrap;
+  background: none; border: none;
+}
+.nav-link:hover { background: rgba(255,255,255,.1); color: #fff; }
+.nav-link.active {
+  background: #fff; color: var(--tuva-teal); font-weight: 700;
+}
+.nav-link.yl { color: var(--tuva-yellow); }  /* Dashboard = yellow in screenshot */
+.header-right { display: flex; align-items: center; gap: 14px; }
+.badge-premium {
+  padding: 5px 12px; border: 1.5px solid var(--tuva-yellow);
+  border-radius: var(--r-sm); font-size: 13px; font-weight: 700;
+  color: var(--tuva-yellow); letter-spacing: .04em;
+}
+.nav-help { font-size: 15px; font-weight: 600; color: rgba(255,255,255,.85); }
+.nav-user { font-size: 15px; font-weight: 700; color: var(--tuva-yellow); display: flex; align-items: center; gap: 4px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ACTION BAR — matches live dashboard screenshot
+   bg = same page-bg (#e8f4f5), border-bottom, generous padding
+   ═══════════════════════════════════════════════════════════════ */
+.action-bar {
+  background: var(--page-bg);
+  border-bottom: 1px solid rgba(0,68,69,.12);
+  padding: 18px 0;
+}
+.action-bar-inner {
+  max-width: 1440px; margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.action-bar-left  { display: flex; align-items: center; gap: 10px; }
+.action-bar-right { display: flex; align-items: center; gap: 20px; }
+
+/* Action bar buttons — large, matching screenshot */
+.ab-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: var(--r);
+  font-size: 15px; font-weight: 700; white-space: nowrap;
+  transition: all .15s; border: none;
+}
+.ab-btn-teal    { background: var(--tuva-teal); color: #fff; }
+.ab-btn-teal:hover { background: var(--tuva-teal-light); }
+.ab-btn-yellow  { background: var(--tuva-yellow); color: var(--gray-900); }
+.ab-btn-yellow:hover { background: #d4a005; }
+.ab-btn-outline {
+  background: transparent; color: var(--tuva-teal);
+  border: 2px solid var(--tuva-teal); font-size: 15px; font-weight: 700;
+  padding: 8px 20px; border-radius: var(--r);
+}
+.ab-btn-outline:hover { background: rgba(0,68,69,.06); }
+.ab-link { font-size: 15px; font-weight: 600; color: var(--gray-700); }
+.ab-link:hover { color: var(--tuva-teal); }
+
+/* ═══════════════════════════════════════════════════════════════
+   APP SHELL
+   ═══════════════════════════════════════════════════════════════ */
+.app-shell {
+  max-width: 1440px; margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; align-items: flex-start; gap: 28px;
+  padding-top: 32px; padding-bottom: 48px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR — matched to My Datasets live page
+   white bg, ~280px wide, generous padding, gold plan box
+   ═══════════════════════════════════════════════════════════════ */
+.sidebar {
+  width: 280px; flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.sidebar.is-hidden { display: none; }
+
+/* Plan box — gold border + bg matching screenshot */
+.plan-box {
+  border: 2px solid var(--sb-gold-border);
+  border-radius: var(--r-xl); background: var(--sb-gold-bg);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.plan-box::after {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle at top right, rgba(236,182,6,.2), transparent 70%);
+  border-radius: 0 var(--r-xl) 0 100%;
+}
+.plan-box-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.plan-box-icon {
+  width: 32px; height: 32px; border-radius: var(--r-sm);
+  background: var(--tuva-yellow); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.plan-box-title {
+  font-family: var(--font-head); font-size: 14px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: #8a6800;
+}
+/* Datasets unlimited row */
+.plan-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.plan-row-label { font-size: 14px; font-weight: 600; color: var(--gray-700); }
+.badge-unlimited {
+  background: var(--tuva-yellow); color: var(--gray-900);
+  font-size: 11px; font-weight: 800; letter-spacing: .06em;
+  padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+}
+/* Stats box inside plan */
+.plan-stat-box {
+  background: rgba(255,255,255,.7); border: 1px solid rgba(236,182,6,.3);
+  border-radius: var(--r); padding: 12px 14px; margin-bottom: 14px;
+}
+.plan-stat-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+.plan-stat-label { font-size: 13px; color: var(--gray-600); }
+.plan-stat-val { font-size: 26px; font-weight: 800; color: var(--gray-900); font-family: var(--font-head); line-height: 1; }
+.plan-stat-sub { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+/* Checklist */
+.plan-check-list { display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+.plan-check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-700); }
+.plan-check-item svg { color: var(--tuva-yellow); flex-shrink: 0; }
+
+/* Free plan box */
+.free-box {
+  background: var(--surface); border: 1px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 20px;
+}
+.free-box-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--gray-800); margin-bottom: 16px; }
+.usage-row { margin-bottom: 14px; }
+.usage-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+.usage-label span { font-weight: 600; color: var(--gray-700); }
+.usage-label strong { font-weight: 800; color: var(--gray-900); }
+.usage-track { height: 7px; background: var(--gray-200); border-radius: 4px; overflow: hidden; }
+.usage-fill { height: 100%; background: var(--tuva-magenta); border-radius: 4px; }
+.free-box-note { font-size: 13px; color: var(--gray-500); margin-top: 8px; }
+
+/* Support box */
+.support-box {
+  background: #fffbeb; border: 1px solid rgba(236,182,6,.4);
+  border-radius: var(--r-xl); padding: 20px;
+}
+.support-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--gray-800); margin-bottom: 14px; }
+.support-link {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; font-weight: 600; color: var(--tuva-magenta);
+  padding: 6px 0; width: 100%; text-align: left;
+}
+.support-link:hover { opacity: .75; }
+.support-link svg { flex-shrink: 0; }
+
+/* Sidebar survey nav (survey-specific) */
+.sb-nav-box {
+  background: var(--surface); border: 1px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 8px 0; overflow: hidden;
+}
+.sb-section-label {
+  font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray-400); padding: 6px 20px 4px; display: block;
+}
+.sb-nav-item {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 9px 20px; font-size: 14.5px; font-weight: 600; color: var(--gray-600);
+  border-left: 3px solid transparent; transition: all .12s; text-align: left;
+}
+.sb-nav-item:hover { background: var(--page-bg); color: var(--tuva-teal); }
+.sb-nav-item.is-active { background: rgba(0,68,69,.05); color: var(--tuva-teal); border-left-color: var(--tuva-teal); }
+.sb-nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+.sb-nav-item.is-active svg { opacity: 1; }
+.sb-badge { margin-left: auto; font-size: 11.5px; font-weight: 800; background: var(--tuva-teal); color: #fff; border-radius: 20px; padding: 1px 8px; min-width: 22px; text-align: center; }
+.sb-badge.yl { background: var(--tuva-yellow); color: var(--gray-900); }
+.sb-nav-divider { border: none; border-top: 1px solid var(--gray-200); margin: 6px 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════════ */
+.main { flex: 1; min-width: 0; }
+.page { display: none; }
+.page.is-active { display: block; }
+
+/* ─── Page header ─────────────────────────────────────────────── */
+.ph {
+  background: var(--surface); border-radius: var(--r-xl);
+  padding: 28px 32px; margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.ph h1 { font-size: 30px; font-weight: 700; color: var(--tuva-teal); margin-bottom: 6px; }
+.ph p  { font-size: 17px; color: var(--gray-600); }
+
+/* ─── Toolbar row ─────────────────────────────────────────────── */
+.toolbar {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.filter-pill {
+  padding: 7px 18px; border-radius: 24px; font-size: 14.5px; font-weight: 600;
+  border: 1.5px solid var(--gray-300); background: var(--surface); color: var(--gray-600);
+  transition: all .12s;
+}
+.filter-pill:hover { border-color: var(--tuva-teal); color: var(--tuva-teal); }
+.filter-pill.is-active { background: var(--tuva-teal); color: #fff; border-color: var(--tuva-teal); }
+.toolbar-gap { flex: 1; }
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  border: 1.5px solid var(--gray-300); border-radius: 8px;
+  padding: 8px 14px; background: var(--surface); min-width: 240px;
+}
+.search-box input { border: none; outline: none; font-size: 15px; color: var(--gray-900); flex: 1; background: transparent; }
+.search-box input::placeholder { color: var(--gray-400); }
+
+/* ─── Buttons (general) ───────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border-radius: var(--r); font-size: 15px; font-weight: 700;
+  border: none; transition: all .15s; white-space: nowrap; cursor: pointer;
+}
+.btn-primary   { background: var(--tuva-magenta); color: #fff; }
+.btn-primary:hover { background: var(--tuva-magenta-dk); }
+.btn-teal      { background: var(--tuva-teal); color: #fff; }
+.btn-teal:hover { background: var(--tuva-teal-light); }
+.btn-outline   { background: var(--surface); color: var(--tuva-teal); border: 2px solid var(--tuva-teal); padding: 7px 18px; }
+.btn-outline:hover { background: rgba(0,68,69,.06); }
+.btn-ghost     { background: transparent; color: var(--gray-600); border: 2px solid var(--gray-300); padding: 7px 18px; }
+.btn-ghost:hover { border-color: var(--tuva-teal); color: var(--tuva-teal); }
+.btn-sm        { padding: 6px 14px; font-size: 13.5px; }
+
+/* ─── Survey card list ────────────────────────────────────────── */
+.survey-list { display: flex; flex-direction: column; gap: 12px; }
+.s-card {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 18px 24px;
+  display: flex; align-items: center; gap: 18px;
+  box-shadow: var(--shadow-sm); transition: box-shadow .12s, border-color .12s;
+}
+.s-card:hover { box-shadow: var(--shadow); border-color: #b0cece; }
+.s-icon {
+  width: 48px; height: 48px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: rgba(0,68,69,.07); color: var(--tuva-teal);
+}
+.s-icon.draft  { background: var(--gray-100); color: var(--gray-500); }
+.s-icon.closed { background: rgba(140,26,100,.07); color: var(--tuva-magenta); }
+.s-info  { flex: 1; min-width: 0; }
+.s-name  { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.s-meta  { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.s-meta-item { font-size: 14px; color: var(--gray-500); display: flex; align-items: center; gap: 4px; }
+.s-badge {
+  display: inline-flex; align-items: center; padding: 3px 10px;
+  border-radius: var(--r-sm); font-size: 12px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.s-badge.published { background: var(--green-bg); color: var(--green-text); }
+.s-badge.draft     { background: var(--gray-200); color: var(--gray-700); }
+.s-badge.closed    { background: var(--red-bg); color: var(--red-text); }
+.s-progress { margin-top: 8px; }
+.s-progress-track { height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+.s-progress-fill  { height: 100%; background: var(--tuva-teal); border-radius: 3px; }
+.s-progress-label { font-size: 13px; color: var(--gray-400); margin-top: 4px; }
+.card-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CREATE FLOW — full-width, no sidebar
+   ═══════════════════════════════════════════════════════════════ */
+.create-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 2rem 48px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 600; color: var(--gray-600);
+  margin-bottom: 28px; transition: color .12s;
+}
+.back-link:hover { color: var(--tuva-teal); }
+
+/* Step bar */
+.steps-bar {
+  display: flex; align-items: center;
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-lg); padding: 16px 28px;
+  margin-bottom: 28px; box-shadow: var(--shadow-sm);
+}
+.step-item { display: flex; align-items: center; gap: 10px; }
+.step-circle {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+  border: 2px solid var(--gray-300); color: var(--gray-400); background: var(--surface);
+}
+.step-circle.is-active { background: var(--tuva-teal); border-color: var(--tuva-teal); color: #fff; }
+.step-circle.is-done   { background: var(--tuva-teal); border-color: var(--tuva-teal); color: #fff; }
+.step-label { font-size: 14.5px; font-weight: 600; color: var(--gray-400); }
+.step-label.is-active  { color: var(--gray-900); font-weight: 700; }
+.step-connector { flex: 1; height: 1.5px; background: var(--gray-200); margin: 0 16px; }
+.step-connector.is-done { background: var(--tuva-teal); }
+
+/* Two-col layout for step 1 */
+.create-cols { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+
+/* Template panel */
+.tmpl-panel {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.tmpl-panel h2 { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.tmpl-panel p  { font-size: 14.5px; color: var(--gray-500); margin-bottom: 20px; }
+.tmpl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tmpl-tile {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 16px 10px; border-radius: var(--r-lg);
+  border: 2px solid var(--gray-200); background: var(--surface);
+  cursor: pointer; transition: all .12s;
+}
+.tmpl-tile:hover { border-color: var(--tuva-teal); background: rgba(0,68,69,.04); }
+.tmpl-tile.is-selected {
+  border-color: var(--tuva-teal); background: rgba(0,68,69,.05);
+  box-shadow: 0 0 0 3px rgba(0,68,69,.1);
+}
+.tmpl-tile svg { color: var(--tuva-teal); margin-bottom: 8px; width: 24px; height: 24px; }
+.tmpl-name  { font-size: 13px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
+.tmpl-count { font-size: 12px; color: var(--gray-400); }
+
+/* Form panel */
+.form-card {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.form-card h2 { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 24px; }
+.form-group { margin-bottom: 20px; }
+.form-label {
+  display: block; font-size: 15px; font-weight: 700; color: var(--gray-700); margin-bottom: 7px;
+}
+.form-label .req { color: #dc2626; margin-left: 2px; }
+/* Inputs — matching Finalize Import screenshot: large, rounded, thin border */
+.form-ctrl {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--gray-300); border-radius: var(--r-lg);
+  font-size: 15px; color: var(--gray-900); background: var(--surface);
+  outline: none; transition: border-color .15s;
+}
+.form-ctrl:focus { border-color: var(--tuva-teal); }
+textarea.form-ctrl { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-hint { font-size: 13px; color: var(--gray-400); margin-top: 5px; }
+.anon-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; background: var(--gray-100);
+  border-radius: var(--r-lg); margin-top: 4px;
+}
+.anon-row input[type=checkbox] { accent-color: var(--tuva-teal); width: 16px; height: 16px; margin-top: 3px; flex-shrink: 0; }
+.anon-main { font-size: 15px; font-weight: 700; color: var(--gray-700); }
+.anon-sub  { font-size: 13.5px; color: var(--gray-400); margin-top: 2px; }
+.form-footer {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 28px; padding-top: 24px; border-top: 2px solid var(--gray-200);
+}
+.form-footer .spacer { flex: 1; }
+
+/* ─── Question builder ────────────────────────────────────────── */
+.questions-card {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.questions-card h2 { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
+.questions-card .subtitle { font-size: 14px; color: var(--gray-400); margin-bottom: 22px; }
+.q-card {
+  border: 1.5px solid var(--gray-200); border-radius: var(--r-lg);
+  margin-bottom: 14px; overflow: hidden;
+}
+.q-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; background: var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+}
+.q-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--tuva-teal); color: #fff;
+  font-size: 13px; font-weight: 800; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.q-type-sel {
+  border: 1.5px solid var(--gray-300); border-radius: var(--r-sm);
+  padding: 4px 10px; font-size: 13.5px; color: var(--gray-700); background: var(--surface); outline: none;
+}
+.q-req { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray-500); margin-left: 6px; }
+.q-req input { accent-color: var(--tuva-teal); }
+.q-acts { margin-left: auto; display: flex; gap: 4px; }
+.q-act {
+  width: 30px; height: 30px; border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-400); transition: background .1s, color .1s;
+}
+.q-act:hover { background: var(--gray-200); color: var(--gray-700); }
+.q-act.del:hover { background: #fee2e2; color: #dc2626; }
+.q-body { padding: 16px 18px; }
+.q-opts { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.q-opt { display: flex; align-items: center; gap: 10px; }
+.q-opt input[type=radio] { accent-color: var(--tuva-teal); flex-shrink: 0; }
+.q-opt-input {
+  flex: 1; border: 1.5px solid var(--gray-200); border-radius: var(--r-sm);
+  padding: 7px 12px; font-size: 14.5px; outline: none; transition: border-color .12s;
+}
+.q-opt-input:focus { border-color: var(--tuva-teal); }
+.add-opt { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 14px; font-weight: 700; color: var(--tuva-teal); }
+.add-opt:hover { opacity: .7; }
+.add-q-btn {
+  width: 100%; padding: 14px;
+  border: 3px dashed var(--gray-300); border-radius: var(--r-lg);
+  background: transparent; color: var(--gray-500); font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .12s; margin-top: 4px;
+}
+.add-q-btn:hover { border-color: var(--tuva-teal); color: var(--tuva-teal); background: rgba(0,68,69,.04); }
+/* Scale */
+.scale-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.scale-num {
+  width: 44px; height: 44px; border-radius: var(--r); border: 1.5px solid var(--gray-300);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: var(--gray-600); cursor: pointer;
+  transition: all .12s;
+}
+.scale-num:hover { border-color: var(--tuva-teal); background: rgba(0,68,69,.05); color: var(--tuva-teal); }
+.scale-lbl { font-size: 13px; color: var(--gray-400); }
+
+/* ─── Preview ─────────────────────────────────────────────────── */
+.preview-card {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.preview-hero { background: var(--tuva-teal); padding: 28px 32px; }
+.preview-hero .eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); margin-bottom: 8px; }
+.preview-hero h2 { font-family: var(--font-head); font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.preview-hero p  { font-size: 15px; color: rgba(255,255,255,.8); }
+.preview-body { padding: 28px 32px; }
+.pv-q { margin-bottom: 28px; }
+.pv-q-meta { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--gray-400); margin-bottom: 8px; }
+.pv-q-text { font-family: var(--font-head); font-size: 17px; font-weight: 600; color: var(--gray-900); margin-bottom: 14px; }
+.pv-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--r-lg);
+  margin-bottom: 8px; cursor: pointer; font-size: 15px; transition: border-color .12s;
+}
+.pv-option:hover { border-color: var(--tuva-teal); }
+.pv-option input { accent-color: var(--tuva-teal); flex-shrink: 0; }
+.pv-scale { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pv-scale-num {
+  width: 46px; height: 46px; border-radius: var(--r-lg);
+  border: 1.5px solid var(--gray-300); display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700; color: var(--gray-600);
+  cursor: pointer; transition: all .12s;
+}
+.pv-scale-num:hover { border-color: var(--tuva-teal); background: rgba(0,68,69,.05); color: var(--tuva-teal); }
+.pv-scale-lbl { font-size: 13px; color: var(--gray-400); }
+.preview-footer {
+  padding: 20px 32px; border-top: 1px solid var(--gray-200);
+  display: flex; justify-content: flex-end; gap: 12px;
+}
+
+/* ─── Assign ──────────────────────────────────────────────────── */
+.assign-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+.class-card {
+  background: var(--surface); border: 2px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 18px 20px;
+  display: flex; align-items: center; gap: 16px;
+  cursor: pointer; margin-bottom: 12px; transition: all .15s;
+  box-shadow: var(--shadow-sm);
+}
+.class-card:hover { border-color: var(--tuva-teal); }
+.class-card.is-selected { border-color: var(--tuva-teal); background: rgba(0,68,69,.04); }
+.class-avatar {
+  width: 48px; height: 48px; border-radius: var(--r-lg);
+  background: var(--tuva-teal); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.class-name { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.class-sub  { font-size: 13.5px; color: var(--gray-500); margin-top: 2px; }
+.class-check {
+  margin-left: auto; width: 22px; height: 22px; border-radius: 4px;
+  border: 2px solid var(--gray-300); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.class-card.is-selected .class-check { background: var(--tuva-teal); border-color: var(--tuva-teal); }
+.assign-summary {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 24px;
+  position: sticky; top: 80px; box-shadow: var(--shadow-sm);
+}
+.assign-summary h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 18px; }
+.sum-row {
+  display: flex; justify-content: space-between; padding: 10px 0;
+  border-bottom: 1px solid var(--gray-200); font-size: 15px;
+}
+.sum-row:last-of-type { border-bottom: none; }
+.sum-lbl { color: var(--gray-500); }
+.sum-val { font-weight: 800; color: var(--gray-900); }
+.big-n { font-family: var(--font-head); font-size: 48px; font-weight: 800; color: var(--tuva-teal); text-align: center; margin: 18px 0 6px; line-height: 1; }
+.big-n-lbl { text-align: center; font-size: 14px; color: var(--gray-400); margin-bottom: 20px; }
+
+/* ─── Results ─────────────────────────────────────────────────── */
+.results-hero {
+  background: var(--tuva-teal); border-radius: var(--r-xl);
+  padding: 24px 32px; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.results-hero-info { flex: 1; }
+.results-hero h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.results-hero p  { font-size: 15px; color: rgba(255,255,255,.8); }
+.stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+.stat-box {
+  background: var(--surface); border-radius: var(--r-xl); padding: 20px 22px;
+  box-shadow: var(--shadow-sm); border: 1.5px solid var(--gray-200);
+}
+.stat-val { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--tuva-teal); line-height: 1; margin-bottom: 6px; }
+.stat-lbl { font-size: 14px; color: var(--gray-500); }
+.results-layout { display: grid; grid-template-columns: 1fr 240px; gap: 18px; align-items: start; }
+.qr-card {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 24px 28px;
+  margin-bottom: 14px; box-shadow: var(--shadow-sm);
+}
+.qr-meta { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--gray-400); margin-bottom: 6px; }
+.qr-text { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 20px; }
+.ans-row { margin-bottom: 14px; }
+.ans-label { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 6px; }
+.ans-label span { color: var(--gray-700); font-weight: 600; }
+.ans-pct { font-weight: 800; color: var(--tuva-teal); }
+.bar-track { height: 36px; background: var(--gray-100); border-radius: var(--r); overflow: hidden; }
+.bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--tuva-teal), var(--tuva-teal-light));
+  display: flex; align-items: center; padding: 0 12px;
+  color: #fff; font-size: 13.5px; font-weight: 800;
+}
+.bar-fill.top { background: linear-gradient(90deg, var(--tuva-magenta), #b0226e); }
+.results-actions {
+  background: var(--surface); border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-xl); padding: 22px;
+  position: sticky; top: 80px; box-shadow: var(--shadow-sm);
+}
+.results-actions h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; margin-bottom: 14px; color: var(--gray-900); }
+.act-btn {
+  width: 100%; display: flex; align-items: center; gap: 10px; text-align: left;
+  padding: 10px 12px; border-radius: var(--r-lg);
+  border: 1.5px solid var(--gray-200); font-size: 14.5px; font-weight: 600;
+  color: var(--gray-700); background: var(--surface); margin-bottom: 8px;
+  transition: all .12s;
+}
+.act-btn:hover { border-color: var(--tuva-teal); color: var(--tuva-teal); background: rgba(0,68,69,.04); }
+.act-btn.danger { color: var(--tuva-magenta); border-color: rgba(140,26,100,.2); }
+.act-btn.danger:hover { background: rgba(140,26,100,.05); border-color: var(--tuva-magenta); }
+
+/* ─── Modal ──────────────────────────────────────────────────── */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.45); z-index: 300;
+  align-items: center; justify-content: center;
+}
+.overlay.is-open { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--r-xl);
+  width: 660px; max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 80px); overflow-y: auto;
+  box-shadow: var(--shadow-lg); display: flex; flex-direction: column;
+}
+.modal-head {
+  display: flex; align-items: center; padding: 20px 26px;
+  border-bottom: 1.5px solid var(--gray-200); position: sticky; top: 0; background: var(--surface); z-index: 1;
+}
+.modal-head h2 { font-family: var(--font-head); font-size: 20px; font-weight: 700; flex: 1; color: var(--gray-900); }
+.modal-badge { background: var(--gray-100); border: 1px solid var(--gray-300); border-radius: var(--r-sm); font-size: 11px; font-weight: 800; padding: 3px 10px; color: var(--gray-500); margin-right: 12px; letter-spacing: .05em; }
+.modal-close { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--gray-100); font-size: 16px; color: var(--gray-500); display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: var(--gray-200); }
+.modal-body { padding: 24px 26px; flex: 1; }
+.modal-foot { padding: 18px 26px; border-top: 1.5px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px; position: sticky; bottom: 0; background: var(--surface); }
+
+/* ─── Toast ──────────────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 28px; right: 28px; z-index: 400;
+  background: var(--gray-900); color: #fff; padding: 13px 20px;
+  border-radius: var(--r-lg); font-size: 15px; font-weight: 600;
+  display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg);
+  transform: translateY(20px); opacity: 0; transition: all .2s;
+  pointer-events: none;
+}
+.toast.show { transform: none; opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER — matched to live screenshot ════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo"><img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva"></div>
+      <nav class="nav">
+        <button class="nav-link active">Tuva Tools</button>
+        <button class="nav-link">Tuva Jr. ▾</button>
+        <button class="nav-link yl">Dashboard</button>
+        <button class="nav-link">Content Library ▾</button>
+        <button class="nav-link">Dataset Library ▾</button>
+        <button class="nav-link">Assessments</button>
+        <button class="nav-link">Teaching ▾</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <span class="badge-premium">PREMIUM</span>
+      <span class="nav-help">Help</span>
+      <span class="nav-user">TSOMPURA ▾</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ ACTION BAR — matched to live screenshot ═══════════ -->
+<div class="action-bar" id="action-bar">
+  <div class="action-bar-inner">
+    <div class="action-bar-left">
+      <button class="ab-btn ab-btn-teal">Create a Class</button>
+      <button class="ab-btn ab-btn-teal">Import Class from LMS ▾</button>
+      <button class="ab-btn ab-btn-yellow">Upload Dataset</button>
+    </div>
+    <div class="action-bar-right">
+      <span class="ab-link">My Activities</span>
+      <span class="ab-link">Settings</span>
+      <button class="ab-btn-outline">Teacher Tour</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD SHELL ════════════════════════════════════ -->
+<div id="dash-shell" style="display:flex;">
+  <div class="app-shell" style="padding-top:32px;padding-bottom:48px;">
+
+    <!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- Survey nav -->
+      <div class="sb-nav-box">
+        <span class="sb-section-label">Surveys</span>
+        <button class="sb-nav-item is-active" onclick="filterDash('all',this)">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          All Surveys
+          <span class="sb-badge">4</span>
+        </button>
+        <button class="sb-nav-item" onclick="filterDash('published',this)">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+          Published
+          <span class="sb-badge">2</span>
+        </button>
+        <button class="sb-nav-item" onclick="filterDash('draft',this)">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Drafts
+          <span class="sb-badge yl">1</span>
+        </button>
+        <button class="sb-nav-item" onclick="filterDash('closed',this)">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Closed
+          <span class="sb-badge">1</span>
+        </button>
+        <div class="sb-nav-divider"></div>
+        <span class="sb-section-label">Templates</span>
+        <button class="sb-nav-item" onclick="showCreate()">
+          <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          New Survey
+        </button>
+      </div>
+
+      <!-- Premium plan box -->
+      <div class="plan-box">
+        <div class="plan-box-header">
+          <div class="plan-box-icon">
+            <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+          </div>
+          <span class="plan-box-title">Premium Plan</span>
+        </div>
+        <div class="plan-row">
+          <span class="plan-row-label">Surveys</span>
+          <span class="badge-unlimited">Unlimited</span>
+        </div>
+        <div class="plan-stat-box">
+          <div class="plan-stat-row">
+            <span class="plan-stat-label">Total Created</span>
+            <span class="plan-stat-val">4</span>
+          </div>
+          <div class="plan-stat-sub">surveys in your library</div>
+        </div>
+        <div class="plan-check-list">
+          <div class="plan-check-item">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Share across classes
+          </div>
+          <div class="plan-check-item">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Export responses
+          </div>
+          <div class="plan-check-item">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            School & District analytics
+          </div>
+        </div>
+      </div>
+
+      <!-- Support box -->
+      <div class="support-box">
+        <div class="support-title">Support</div>
+        <button class="support-link">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          Guide: Creating Surveys
+        </button>
+        <button class="support-link">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          Video Tutorials
+        </button>
+        <button class="support-link">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact Support
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── MAIN ────────────────────────────────────────────────── -->
+    <main class="main" id="main-content">
+
+      <!-- ════ DASHBOARD ════════════════════════════════════════ -->
+      <div id="pg-dashboard" class="page is-active">
+        <div class="ph">
+          <h1>Survey Platform</h1>
+          <p>Create simple surveys to gather feedback and check understanding from your students</p>
+        </div>
+
+        <div class="toolbar">
+          <button class="filter-pill is-active" data-f="all" onclick="filterDash('all',this)">All</button>
+          <button class="filter-pill" data-f="published" onclick="filterDash('published',this)">Published</button>
+          <button class="filter-pill" data-f="draft" onclick="filterDash('draft',this)">Draft</button>
+          <button class="filter-pill" data-f="closed" onclick="filterDash('closed',this)">Closed</button>
+          <div class="toolbar-gap"></div>
+          <div class="search-box">
+            <svg width="16" height="16" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" placeholder="Search surveys…">
+          </div>
+          <button class="btn btn-primary" onclick="showCreate()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Create Survey
+          </button>
+        </div>
+
+        <div class="survey-list" id="survey-list">
+
+          <!-- Published + responses -->
+          <div class="s-card" data-status="published">
+            <div class="s-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="s-info">
+              <div class="s-name">Solar System Knowledge Check</div>
+              <div class="s-meta">
+                <span class="s-badge published">Published</span>
+                <span class="s-meta-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 5th Grade Science</span>
+                <span class="s-meta-item">8 questions</span>
+                <span class="s-meta-item">Feb 15, 2026</span>
+              </div>
+              <div class="s-progress">
+                <div class="s-progress-track"><div class="s-progress-fill" style="width:75%"></div></div>
+                <div class="s-progress-label">18 of 24 responded · 75%</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm" onclick="showResults()">View Results</button>
+              <button class="btn btn-outline btn-sm" onclick="openModal()">Preview</button>
+              <button class="btn btn-ghost btn-sm">Copy</button>
+            </div>
+          </div>
+
+          <!-- Published -->
+          <div class="s-card" data-status="published">
+            <div class="s-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            </div>
+            <div class="s-info">
+              <div class="s-name">Math Class Feedback</div>
+              <div class="s-meta">
+                <span class="s-badge published">Published</span>
+                <span class="s-meta-item">11th Grade Math</span>
+                <span class="s-meta-item">6 questions</span>
+                <span class="s-meta-item">Feb 12, 2026</span>
+              </div>
+              <div class="s-progress">
+                <div class="s-progress-track"><div class="s-progress-fill" style="width:88%"></div></div>
+                <div class="s-progress-label">28 of 32 responded · 88%</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm" onclick="showResults()">View Results</button>
+              <button class="btn btn-outline btn-sm" onclick="openModal()">Preview</button>
+              <button class="btn btn-ghost btn-sm">Copy</button>
+            </div>
+          </div>
+
+          <!-- Draft -->
+          <div class="s-card" data-status="draft">
+            <div class="s-icon draft">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            <div class="s-info">
+              <div class="s-name">Lab Safety Pre-Assessment</div>
+              <div class="s-meta">
+                <span class="s-badge draft">Draft</span>
+                <span class="s-meta-item">Not assigned</span>
+                <span class="s-meta-item">5 questions</span>
+                <span class="s-meta-item">Feb 8, 2026</span>
+              </div>
+              <div style="font-size:14px;color:var(--gray-400);margin-top:8px;">Finish editing to publish and assign to your classes.</div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-teal btn-sm" onclick="showCreate()">Edit</button>
+              <button class="btn btn-outline btn-sm" onclick="openModal()">Preview</button>
+              <button class="btn btn-ghost btn-sm">Copy</button>
+            </div>
+          </div>
+
+          <!-- Closed -->
+          <div class="s-card" data-status="closed">
+            <div class="s-icon closed">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </div>
+            <div class="s-info">
+              <div class="s-name">Data Literacy Self-Assessment</div>
+              <div class="s-meta">
+                <span class="s-badge closed">Closed</span>
+                <span class="s-meta-item">All Classes</span>
+                <span class="s-meta-item">10 questions</span>
+                <span class="s-meta-item">Jan 28, 2026</span>
+              </div>
+              <div class="s-progress">
+                <div class="s-progress-track"><div class="s-progress-fill" style="width:97%;background:var(--tuva-magenta)"></div></div>
+                <div class="s-progress-label">87 of 90 responded · 97%</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-primary btn-sm" onclick="showResults()">View Results</button>
+              <button class="btn btn-ghost btn-sm">Copy</button>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /pg-dashboard -->
+
+      <!-- ════ RESULTS ══════════════════════════════════════════ -->
+      <div id="pg-results" class="page">
+        <button class="back-link" onclick="showDashboard()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back to Surveys
+        </button>
+        <div class="results-hero">
+          <div class="results-hero-info">
+            <h1>Solar System Knowledge Check</h1>
+            <p>5th Grade Science &nbsp;·&nbsp; Feb 15, 2026 &nbsp;·&nbsp; <span style="background:rgba(255,255,255,.15);border-radius:3px;padding:2px 8px;font-size:12px;font-weight:800;letter-spacing:.04em;">PUBLISHED</span></p>
+          </div>
+          <button class="btn btn-ghost" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Export Results
+          </button>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-val">24</div><div class="stat-lbl">Students Assigned</div></div>
+          <div class="stat-box"><div class="stat-val" style="color:#15803d">18</div><div class="stat-lbl">Completed</div></div>
+          <div class="stat-box"><div class="stat-val" style="color:#d97706">6</div><div class="stat-lbl">Pending</div></div>
+          <div class="stat-box"><div class="stat-val">75%</div><div class="stat-lbl">Response Rate</div></div>
+        </div>
+        <div class="results-layout">
+          <div>
+            <div class="qr-card">
+              <div class="qr-meta">Q1 · Multiple Choice · 18 responses</div>
+              <div class="qr-text">What is the largest planet in our solar system?</div>
+              <div class="ans-row"><div class="ans-label"><span>Jupiter</span><span class="ans-pct">89%</span></div><div class="bar-track"><div class="bar-fill top" style="width:89%">89%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>Saturn</span><span class="ans-pct">11%</span></div><div class="bar-track"><div class="bar-fill" style="width:11%">11%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>Neptune</span><span class="ans-pct">0%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>
+            </div>
+            <div class="qr-card">
+              <div class="qr-meta">Q2 · Multiple Choice · 18 responses</div>
+              <div class="qr-text">How many planets are in our solar system?</div>
+              <div class="ans-row"><div class="ans-label"><span>8</span><span class="ans-pct">83%</span></div><div class="bar-track"><div class="bar-fill top" style="width:83%">83%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>9</span><span class="ans-pct">17%</span></div><div class="bar-track"><div class="bar-fill" style="width:17%">17%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>7</span><span class="ans-pct">0%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div></div>
+            </div>
+            <div class="qr-card">
+              <div class="qr-meta">Q3 · Linear Scale (1–5) · 18 responses · Avg: 4.3</div>
+              <div class="qr-text">On a scale of 1–5, how interesting did you find this unit?</div>
+              <div class="ans-row"><div class="ans-label"><span>5 — Very interesting</span><span class="ans-pct">50%</span></div><div class="bar-track"><div class="bar-fill top" style="width:50%">50%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>4</span><span class="ans-pct">33%</span></div><div class="bar-track"><div class="bar-fill" style="width:33%">33%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>3</span><span class="ans-pct">11%</span></div><div class="bar-track"><div class="bar-fill" style="width:11%">11%</div></div></div>
+              <div class="ans-row"><div class="ans-label"><span>2</span><span class="ans-pct">6%</span></div><div class="bar-track"><div class="bar-fill" style="width:6%">6%</div></div></div>
+            </div>
+          </div>
+          <div class="results-actions">
+            <h3>Actions</h3>
+            <button class="act-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Export Results (CSV)</button>
+            <button class="act-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email Summary</button>
+            <button class="act-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> Send Reminder (6)</button>
+            <button class="act-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Survey</button>
+            <hr style="border:none;border-top:1px solid var(--gray-200);margin:8px 0;">
+            <button class="act-btn danger"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Close Survey</button>
+          </div>
+        </div>
+      </div><!-- /pg-results -->
+
+    </main>
+  </div>
+</div><!-- /dash-shell -->
+
+<!-- ══════════ CREATE FLOW (full-width, no sidebar) ══════════════ -->
+<div id="create-shell" style="display:none;">
+  <div class="create-wrap">
+
+    <button class="back-link" onclick="showDashboard()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Surveys
+    </button>
+
+    <!-- Steps -->
+    <div class="steps-bar" id="steps-bar">
+      <div class="step-item"><div class="step-circle is-active" id="sn1">1</div><span class="step-label is-active" id="sl1">Survey Details</span></div>
+      <div class="step-connector" id="sc1"></div>
+      <div class="step-item"><div class="step-circle" id="sn2">2</div><span class="step-label" id="sl2">Questions</span></div>
+      <div class="step-connector" id="sc2"></div>
+      <div class="step-item"><div class="step-circle" id="sn3">3</div><span class="step-label" id="sl3">Preview</span></div>
+      <div class="step-connector" id="sc3"></div>
+      <div class="step-item"><div class="step-circle" id="sn4">4</div><span class="step-label" id="sl4">Assign</span></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="cs1">
+      <div class="create-cols">
+        <div class="tmpl-panel">
+          <h2>Start with a Template</h2>
+          <p>Pick a template to pre-fill, or start blank.</p>
+          <div class="tmpl-grid">
+            <div class="tmpl-tile is-selected" onclick="pickTmpl(this)">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              <div class="tmpl-name">Blank Survey</div><div class="tmpl-count">Start fresh</div>
+            </div>
+            <div class="tmpl-tile" onclick="pickTmpl(this)">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              <div class="tmpl-name">Class Feedback</div><div class="tmpl-count">5 questions</div>
+            </div>
+            <div class="tmpl-tile" onclick="pickTmpl(this)">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+              <div class="tmpl-name">Pre-Assessment</div><div class="tmpl-count">5 questions</div>
+            </div>
+            <div class="tmpl-tile" onclick="pickTmpl(this)">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+              <div class="tmpl-name">Exit Ticket</div><div class="tmpl-count">3 questions</div>
+            </div>
+            <div class="tmpl-tile" onclick="pickTmpl(this)">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <div class="tmpl-name">Opinion Poll</div><div class="tmpl-count">3 questions</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-card">
+          <h2>Survey Information</h2>
+          <div class="form-group">
+            <label class="form-label">Survey Title <span class="req">*</span></label>
+            <input class="form-ctrl" type="text" id="s-title" placeholder="e.g. Solar System Knowledge Check">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-ctrl" id="s-desc" placeholder="Describe the purpose of this survey (optional)"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Target Class</label>
+              <select class="form-ctrl"><option>All Classes</option><option>5th Grade Science</option><option>8th Grade Science</option><option>11th Grade Math</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Display Mode</label>
+              <select class="form-ctrl"><option>All Questions at Once</option><option>One at a Time</option></select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Visibility</label>
+              <select class="form-ctrl"><option>Private — Only you</option><option>School — All teachers</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Due Date (Optional)</label>
+              <input class="form-ctrl" type="date">
+            </div>
+          </div>
+          <div class="anon-row">
+            <input type="checkbox" id="anon">
+            <div>
+              <div class="anon-main">Anonymous Responses</div>
+              <div class="anon-sub">Student names will not be visible in results</div>
+            </div>
+          </div>
+          <div class="form-footer">
+            <button class="btn btn-ghost" onclick="showDashboard()">Cancel</button>
+            <div class="spacer"></div>
+            <button class="btn btn-outline" onclick="toast('Saved as draft')">Save Draft</button>
+            <button class="btn btn-teal" onclick="goStep(2)">Continue to Questions →</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /cs1 -->
+
+    <!-- Step 2 -->
+    <div id="cs2" style="display:none">
+      <div class="questions-card">
+        <h2>Questions</h2>
+        <div class="subtitle">Build your survey questions below</div>
+        <!-- Q1 -->
+        <div class="q-card">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <select class="q-type-sel"><option selected>Multiple Choice</option><option>Short Answer</option><option>Linear Scale (1–5)</option><option>Yes / No</option><option>Checkbox</option></select>
+            <label class="q-req"><input type="checkbox" checked> Required</label>
+            <div class="q-acts">
+              <button class="q-act"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+              <button class="q-act del"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button>
+            </div>
+          </div>
+          <div class="q-body">
+            <input class="form-ctrl" type="text" value="What should you do before starting any lab experiment?">
+            <div class="q-opts">
+              <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" value="Read the safety instructions" type="text"></div>
+              <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" value="Put on your safety goggles" type="text"></div>
+              <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" value="Check for hazardous materials" type="text"></div>
+              <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" value="All of the above" type="text"></div>
+              <button class="add-opt" onclick="addOpt(this)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add option</button>
+            </div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="q-card">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <select class="q-type-sel"><option>Multiple Choice</option><option>Short Answer</option><option selected>Linear Scale (1–5)</option></select>
+            <label class="q-req"><input type="checkbox" checked> Required</label>
+            <div class="q-acts"><button class="q-act del"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button></div>
+          </div>
+          <div class="q-body">
+            <input class="form-ctrl" type="text" value="How confident are you about following lab safety procedures?">
+            <div class="scale-row">
+              <span class="scale-lbl">Not confident</span>
+              <div class="scale-num">1</div><div class="scale-num">2</div><div class="scale-num">3</div><div class="scale-num">4</div><div class="scale-num">5</div>
+              <span class="scale-lbl">Very confident</span>
+            </div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="q-card">
+          <div class="q-head">
+            <div class="q-num">3</div>
+            <select class="q-type-sel"><option>Multiple Choice</option><option selected>Short Answer</option></select>
+            <label class="q-req"><input type="checkbox"> Required</label>
+            <div class="q-acts"><button class="q-act del"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button></div>
+          </div>
+          <div class="q-body">
+            <input class="form-ctrl" type="text" value="What questions do you have about lab safety?">
+            <div style="margin-top:12px;padding:14px;border:1.5px dashed var(--gray-300);border-radius:var(--r-lg);color:var(--gray-400);font-size:15px;">Students will type their open-ended response here…</div>
+          </div>
+        </div>
+        <button class="add-q-btn" onclick="addQuestion()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Add Question
+        </button>
+        <div class="form-footer">
+          <button class="btn btn-ghost" onclick="goStep(1)">← Back</button>
+          <div class="spacer"></div>
+          <button class="btn btn-outline" onclick="toast('Saved as draft')">Save Draft</button>
+          <button class="btn btn-teal" onclick="goStep(3)">Preview Survey →</button>
+        </div>
+      </div>
+    </div><!-- /cs2 -->
+
+    <!-- Step 3 -->
+    <div id="cs3" style="display:none">
+      <div class="preview-card">
+        <div class="preview-hero">
+          <div class="eyebrow">Student Preview — what students will see</div>
+          <h2>Lab Safety Pre-Assessment</h2>
+          <p>Complete the survey below. Your responses will be recorded.</p>
+        </div>
+        <div class="preview-body">
+          <div class="pv-q">
+            <div class="pv-q-meta">Question 1 of 3 · Multiple Choice · Required</div>
+            <div class="pv-q-text">What should you do before starting any lab experiment?</div>
+            <div class="pv-option"><input type="radio" name="pvq1"> Read the safety instructions</div>
+            <div class="pv-option"><input type="radio" name="pvq1"> Put on your safety goggles</div>
+            <div class="pv-option"><input type="radio" name="pvq1"> Check for hazardous materials</div>
+            <div class="pv-option"><input type="radio" name="pvq1"> All of the above</div>
+          </div>
+          <div class="pv-q">
+            <div class="pv-q-meta">Question 2 of 3 · Linear Scale · Required</div>
+            <div class="pv-q-text">How confident are you about following lab safety procedures?</div>
+            <div class="pv-scale">
+              <span class="pv-scale-lbl">Not confident</span>
+              <div class="pv-scale-num">1</div><div class="pv-scale-num">2</div><div class="pv-scale-num">3</div><div class="pv-scale-num">4</div><div class="pv-scale-num">5</div>
+              <span class="pv-scale-lbl">Very confident</span>
+            </div>
+          </div>
+          <div class="pv-q">
+            <div class="pv-q-meta">Question 3 of 3 · Short Answer · Optional</div>
+            <div class="pv-q-text">What questions do you have about lab safety?</div>
+            <textarea class="form-ctrl" placeholder="Type your answer here…"></textarea>
+          </div>
+        </div>
+        <div class="preview-footer">
+          <button class="btn btn-ghost" disabled style="opacity:.4">← Previous</button>
+          <button class="btn btn-teal">Submit Survey</button>
+        </div>
+      </div>
+      <div class="form-footer" style="background:transparent;padding:20px 0 0">
+        <button class="btn btn-ghost" onclick="goStep(2)">← Edit Questions</button>
+        <div class="spacer"></div>
+        <button class="btn btn-outline" onclick="toast('Saved as draft')">Save as Draft</button>
+        <button class="btn btn-teal" onclick="goStep(4)">Continue to Assign →</button>
+      </div>
+    </div><!-- /cs3 -->
+
+    <!-- Step 4 -->
+    <div id="cs4" style="display:none">
+      <div class="assign-layout">
+        <div>
+          <div style="margin-bottom:20px;">
+            <div style="font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--gray-900);margin-bottom:6px;">Select Classes to Assign</div>
+            <div style="font-size:15px;color:var(--gray-500);">Choose which classes will receive this survey.</div>
+          </div>
+          <div class="class-card is-selected" onclick="toggleClass(this)">
+            <div class="class-avatar">5S</div>
+            <div><div class="class-name">5th Grade Science</div><div class="class-sub">24 students · Period 2 · Mon, Wed, Fri</div></div>
+            <div class="class-check"><svg width="12" height="12" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+          </div>
+          <div class="class-card" onclick="toggleClass(this)">
+            <div class="class-avatar" style="background:#5a3e82;">11M</div>
+            <div><div class="class-name">11th Grade Math</div><div class="class-sub">32 students · Period 4 · Tue, Thu</div></div>
+            <div class="class-check"></div>
+          </div>
+          <div class="class-card" onclick="toggleClass(this)">
+            <div class="class-avatar" style="background:#006b6d;">8S</div>
+            <div><div class="class-name">8th Grade Science</div><div class="class-sub">34 students · Period 3 · Mon, Wed, Fri</div></div>
+            <div class="class-check"></div>
+          </div>
+        </div>
+        <div class="assign-summary">
+          <h3>Assignment Summary</h3>
+          <div class="sum-row"><span class="sum-lbl">Survey</span><span class="sum-val" style="font-size:13px;text-align:right;max-width:130px;">Lab Safety Pre-Assessment</span></div>
+          <div class="sum-row"><span class="sum-lbl">Questions</span><span class="sum-val">3</span></div>
+          <div class="sum-row"><span class="sum-lbl">Classes</span><span class="sum-val" id="cls-count">1</span></div>
+          <div class="big-n" id="stu-count">24</div>
+          <div class="big-n-lbl">students will receive this survey</div>
+          <div class="form-group">
+            <label class="form-label">Due Date (Optional)</label>
+            <input class="form-ctrl" type="date">
+          </div>
+          <button class="btn btn-teal" style="width:100%;justify-content:center;" onclick="doAssign()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Assign Survey
+          </button>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:10px;" onclick="showDashboard()">Skip for now</button>
+        </div>
+      </div>
+      <div class="form-footer" style="background:transparent;padding:16px 0 0">
+        <button class="btn btn-ghost" onclick="goStep(3)">← Back to Preview</button>
+      </div>
+    </div><!-- /cs4 -->
+
+  </div>
+</div><!-- /create-shell -->
+
+<!-- ══════════ PREVIEW MODAL ══════════════════════════════════════ -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Lab Safety Pre-Assessment</h2>
+      <span class="modal-badge">PREVIEW</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="pv-q">
+        <div class="pv-q-meta">Question 1 of 3 · Multiple Choice · Required</div>
+        <div class="pv-q-text">What should you do before starting any lab experiment?</div>
+        <div class="pv-option"><input type="radio" name="mpq1"> Read the safety instructions</div>
+        <div class="pv-option"><input type="radio" name="mpq1"> Put on your safety goggles</div>
+        <div class="pv-option"><input type="radio" name="mpq1"> Check for hazardous materials</div>
+        <div class="pv-option"><input type="radio" name="mpq1"> All of the above</div>
+      </div>
+      <div class="pv-q">
+        <div class="pv-q-meta">Question 2 of 3 · Linear Scale · Required</div>
+        <div class="pv-q-text">How confident are you about following lab safety procedures?</div>
+        <div class="pv-scale"><span class="pv-scale-lbl">Not confident</span><div class="pv-scale-num">1</div><div class="pv-scale-num">2</div><div class="pv-scale-num">3</div><div class="pv-scale-num">4</div><div class="pv-scale-num">5</div><span class="pv-scale-lbl">Very confident</span></div>
+      </div>
+      <div class="pv-q">
+        <div class="pv-q-meta">Question 3 of 3 · Short Answer · Optional</div>
+        <div class="pv-q-text">What questions do you have about lab safety?</div>
+        <textarea class="form-ctrl" placeholder="Type your answer here…"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">Close Preview</button>
+      <button class="btn btn-teal" onclick="closeModal()">Looks Good</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOAST ═══════════════════════════════════════════════ -->
+<div class="toast" id="toast-el">
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+// ── Show/hide shell ──────────────────────────────────────────────
+function showDashboard() {
+  document.getElementById('dash-shell').style.display = 'flex';
+  document.getElementById('create-shell').style.display = 'none';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('is-active'));
+  document.getElementById('pg-dashboard').classList.add('is-active');
+  window.scrollTo(0, 0);
+}
+function showCreate() {
+  document.getElementById('dash-shell').style.display = 'none';
+  document.getElementById('create-shell').style.display = 'block';
+  goStep(1);
+  window.scrollTo(0, 0);
+}
+function showResults() {
+  document.getElementById('dash-shell').style.display = 'flex';
+  document.getElementById('create-shell').style.display = 'none';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('is-active'));
+  document.getElementById('pg-results').classList.add('is-active');
+  window.scrollTo(0, 0);
+}
+
+// ── Steps ────────────────────────────────────────────────────────
+function goStep(n) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('cs' + i);
+    if (el) el.style.display = i === n ? '' : 'none';
+    const circ = document.getElementById('sn' + i);
+    const lbl  = document.getElementById('sl' + i);
+    const conn = document.getElementById('sc' + i);
+    if (circ) { circ.className = 'step-circle' + (i < n ? ' is-done' : i === n ? ' is-active' : ''); circ.innerHTML = i < n ? '✓' : i; }
+    if (lbl)  { lbl.className = 'step-label' + (i === n ? ' is-active' : ''); }
+    if (conn) { conn.className = 'step-connector' + (i < n ? ' is-done' : ''); }
+  }
+}
+
+// ── Filter ───────────────────────────────────────────────────────
+function filterDash(f, btn) {
+  document.querySelectorAll('.filter-pill[data-f]').forEach(p => p.classList.remove('is-active'));
+  const pill = document.querySelector('.filter-pill[data-f="'+f+'"]');
+  if (pill) pill.classList.add('is-active');
+  document.querySelectorAll('.sb-nav-item').forEach(i => i.classList.remove('is-active'));
+  if (btn && btn.classList.contains('sb-nav-item')) btn.classList.add('is-active');
+  document.querySelectorAll('.s-card').forEach(c => {
+    c.style.display = (f === 'all' || c.dataset.status === f) ? 'flex' : 'none';
+  });
+  showDashboard();
+}
+
+// ── Templates ────────────────────────────────────────────────────
+function pickTmpl(el) {
+  document.querySelectorAll('.tmpl-tile').forEach(t => t.classList.remove('is-selected'));
+  el.classList.add('is-selected');
+}
+
+// ── Add option ────────────────────────────────────────────────────
+function addOpt(btn) {
+  const opts = btn.previousElementSibling;
+  const d = document.createElement('div');
+  d.className = 'q-opt';
+  d.innerHTML = '<input type="radio" disabled><input class="q-opt-input" type="text" placeholder="Option…">';
+  opts.appendChild(d);
+}
+
+// ── Add question ─────────────────────────────────────────────────
+let qc = 3;
+function addQuestion() {
+  qc++;
+  const wrap = document.querySelector('.questions-card');
+  const addBtn = wrap.querySelector('.add-q-btn');
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.innerHTML = `<div class="q-head">
+    <div class="q-num">${qc}</div>
+    <select class="q-type-sel"><option selected>Multiple Choice</option><option>Short Answer</option><option>Linear Scale (1–5)</option><option>Yes / No</option></select>
+    <label class="q-req"><input type="checkbox" checked> Required</label>
+    <div class="q-acts"><button class="q-act del" onclick="this.closest('.q-card').remove()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+    </button></div>
+  </div>
+  <div class="q-body">
+    <input class="form-ctrl" type="text" placeholder="Enter your question…">
+    <div class="q-opts">
+      <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" type="text" placeholder="Option 1"></div>
+      <div class="q-opt"><input type="radio" disabled><input class="q-opt-input" type="text" placeholder="Option 2"></div>
+      <button class="add-opt" onclick="addOpt(this)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Add option</button>
+    </div>
+  </div>`;
+  wrap.insertBefore(card, addBtn);
+}
+
+// ── Class toggle ─────────────────────────────────────────────────
+const sz = [24, 32, 34];
+function toggleClass(el) {
+  el.classList.toggle('is-selected');
+  const chk = el.querySelector('.class-check');
+  if (el.classList.contains('is-selected')) {
+    chk.innerHTML = '<svg width="12" height="12" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
+  } else { chk.innerHTML = ''; }
+  const all = document.querySelectorAll('.class-card');
+  let t = 0, c = 0;
+  all.forEach((card, i) => { if (card.classList.contains('is-selected')) { t += sz[i] || 0; c++; } });
+  document.getElementById('cls-count').textContent = c;
+  document.getElementById('stu-count').textContent = t;
+}
+
+// ── Assign ───────────────────────────────────────────────────────
+function doAssign() {
+  toast('Survey assigned successfully!');
+  setTimeout(() => showDashboard(), 1000);
+}
+
+// ── Modal ────────────────────────────────────────────────────────
+function openModal()  { document.getElementById('modal').classList.add('is-open'); }
+function closeModal() { document.getElementById('modal').classList.remove('is-open'); }
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+// ── Toast ────────────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById('toast-el');
+  document.getElementById('toast-msg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
