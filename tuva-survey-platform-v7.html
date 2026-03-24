@@ -540,6 +540,9 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
 .survey-section { display:none; }
 .survey-section.active { display:block; }
 
+
+/* community survey preview uses shared .overlay/.modal pattern */
+
 </style>
 </head>
 <body>
@@ -707,7 +710,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
             <div style="font-size:16px;color:var(--gray-500);">Pre-made surveys from the Tuva community — use as-is or copy to customise.</div>
           </div>
           <div class="cs-grid">
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#daeef0,#c4e4e7);">
                 <svg fill="none" stroke="#004445" stroke-width="1.75" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
               </div>
@@ -729,7 +732,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
                 </button>
               </div>
             </div>
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#ece5f5,#ddd0ef);">
                 <svg fill="none" stroke="#682D8A" stroke-width="1.75" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
               </div>
@@ -751,7 +754,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
                 </button>
               </div>
             </div>
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#d8f0e2,#c2e8d0);">
                 <svg fill="none" stroke="#1a7a4a" stroke-width="1.75" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z"/></svg>
               </div>
@@ -773,7 +776,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
                 </button>
               </div>
             </div>
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#fde8d4,#f8d0b0);">
                 <svg fill="none" stroke="#c45c00" stroke-width="1.75" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11l-3 5h12l-3-5V3"/></svg>
               </div>
@@ -795,7 +798,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
                 </button>
               </div>
             </div>
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#daeef0,#bddde0);">
                 <svg fill="none" stroke="#004445" stroke-width="1.75" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               </div>
@@ -817,7 +820,7 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
                 </button>
               </div>
             </div>
-            <div class="cs-card">
+            <div class="cs-card" onclick="openCsModal('Solar System Knowledge Check')">
               <div class="cs-thumb" style="background:linear-gradient(135deg,#fce6ef,#f7c8db);">
                 <svg fill="none" stroke="#8c1a64" stroke-width="1.75" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
               </div>
@@ -1168,6 +1171,36 @@ textarea.form-ctrl{resize:vertical;min-height:76px}
   </div>
 </div>
 
+
+<!-- COMMUNITY SURVEY PREVIEW MODAL — same overlay/modal pattern as My Survey preview -->
+<div class="overlay" id="cs-modal">
+  <div class="modal" style="width:660px;">
+    <div class="modal-hd" style="align-items:flex-start;">
+      <div id="cs-modal-icon" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:14px;margin-top:2px;"></div>
+      <div style="flex:1;min-width:0;">
+        <!-- Row 1: Title (full width, single line) -->
+        <h2 id="cs-modal-title" style="font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;"></h2>
+        <!-- Row 2: Subject · Grade · Qs · Uses · COMMUNITY badge -->
+        <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
+          <span id="cs-modal-subject" style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;"></span>
+          <span style="color:var(--gray-300);font-size:13px;">·</span>
+          <span id="cs-modal-meta" style="font-size:13px;font-weight:600;color:var(--gray-500);"></span>
+          <span class="modal-tag" style="font-size:11px;padding:2px 7px;">COMMUNITY</span>
+        </div>
+      </div>
+      <button class="modal-x" id="cs-modal-x" style="margin-left:12px;flex-shrink:0;">✕</button>
+    </div>
+    <div class="modal-bd" id="cs-modal-bd"></div>
+    <div class="modal-ft">
+      <button class="btn btn-ghost" id="cs-modal-close">Close Preview</button>
+      <button class="btn btn-primary" id="cs-modal-copy">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy &amp; Use This Survey
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast-el"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span id="toast-msg"></span></div>
 
 <script>
@@ -1234,7 +1267,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       const allBadge=document.querySelector('.sb-item[data-filter="all"] .sb-badge');
       // (count stays same — just moved from draft to published)
     }
-    toastMsg('Survey published successfully!');
+    toast('Survey published successfully!');
   });
   document.getElementById('publish-modal').addEventListener('click',function(e){if(e.target===this)closePublishModal()});
 
@@ -1270,6 +1303,184 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.addEventListener('click',()=>document.getElementById('ql-dd').classList.remove('open'));
 });
 
+
+
+
+
+/* ── COMMUNITY SURVEY PREVIEW MODAL ─────────────────────
+   Reuses the same .overlay/.modal pattern as My Survey preview.
+   Card click → opens modal with full question list.
+   "Copy & Use" button → copies to My Surveys + toast.
+   ────────────────────────────────────────────────────── */
+const CS_DATA = {
+  'Solar System Knowledge Check': {
+    subject:'SCIENCE', subjectColor:'#004445',
+    thumbBg:'linear-gradient(135deg,#daeef0,#c4e4e7)', thumbStroke:'#004445',
+    thumbPath:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/>',
+    grades:'Grades 4–6', qs:8, uses:'2.4k',
+    questions:[
+      {type:'Multiple Choice', required:true,
+       text:'What is the largest planet in our solar system?',
+       options:['Jupiter','Saturn','Neptune','Uranus']},
+      {type:'Multiple Choice', required:true,
+       text:'Which planet is closest to the Sun?',
+       options:['Mercury','Venus','Earth','Mars']},
+      {type:'Multiple Choice', required:true,
+       text:'How many planets are in our solar system?',
+       options:['7','8','9','10']},
+      {type:'Multiple Choice', required:false,
+       text:'What do we call the path a planet takes around the Sun?',
+       options:['Orbit','Rotation','Revolution','Axis']},
+      {type:'Linear Scale', required:true,
+       text:'How confident are you in your knowledge of the solar system?'},
+      {type:'Short Answer', required:false,
+       text:'What is one interesting fact you know about space?'},
+      {type:'Multiple Choice', required:true,
+       text:'Which planet has the most visible rings?',
+       options:['Saturn','Jupiter','Uranus','Neptune']},
+      {type:'Short Answer', required:false,
+       text:'Describe one difference between a planet and a star.'},
+    ]
+  },
+  'Fraction Fundamentals': {
+    subject:'MATH', subjectColor:'#682D8A',
+    thumbBg:'linear-gradient(135deg,#ece5f5,#ddd0ef)', thumbStroke:'#682D8A',
+    thumbPath:'<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>',
+    grades:'Grades 3–5', qs:6, uses:'1.8k',
+    questions:[
+      {type:'Multiple Choice', required:true, text:'Which fraction is equivalent to 1/2?', options:['2/4','2/3','3/4','1/3']},
+      {type:'Multiple Choice', required:true, text:'What is 1/4 + 1/4?', options:['1/2','1/8','2/8','2/4']},
+      {type:'Multiple Choice', required:true, text:'Which is greater: 3/4 or 2/3?', options:['3/4','2/3','They are equal','Cannot tell']},
+      {type:'Multiple Choice', required:true, text:'What is 3/5 of 20?', options:['12','10','15','8']},
+      {type:'Linear Scale', required:true, text:'How confident do you feel working with fractions?'},
+      {type:'Short Answer', required:false, text:'Draw or describe a real-life example of a fraction.'},
+    ]
+  },
+  'Climate & Weather Patterns': {
+    subject:'SCIENCE', subjectColor:'#1a7a4a',
+    thumbBg:'linear-gradient(135deg,#d8f0e2,#c2e8d0)', thumbStroke:'#1a7a4a',
+    thumbPath:'<path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z"/>',
+    grades:'Grades 5–8', qs:10, uses:'3.1k',
+    questions:[
+      {type:'Multiple Choice', required:true, text:'What is the difference between weather and climate?', options:['Weather is short-term, climate is long-term','They are the same thing','Climate is short-term, weather is long-term','Weather is global, climate is local']},
+      {type:'Multiple Choice', required:true, text:'Which gas is most responsible for the greenhouse effect?', options:['Carbon dioxide','Oxygen','Nitrogen','Hydrogen']},
+      {type:'Multiple Choice', required:true, text:'What causes the seasons on Earth?', options:["Earth\'s tilt on its axis","Distance from the Sun","Moon\'s gravity","Solar flares"]},
+      {type:'Linear Scale', required:true, text:'How concerned are you about climate change?'},
+      {type:'Short Answer', required:false, text:'Describe the water cycle in your own words.'},
+      {type:'Multiple Choice', required:true, text:'What is the most common cause of acid rain?', options:['Burning fossil fuels','Volcanic eruptions','Ocean evaporation','Deforestation']},
+      {type:'Multiple Choice', required:false, text:'Which layer of the atmosphere is closest to Earth?', options:['Troposphere','Stratosphere','Mesosphere','Thermosphere']},
+      {type:'Linear Scale', required:true, text:'How well did you understand today\'s climate lesson?'},
+      {type:'Short Answer', required:false, text:'Name one way humans can reduce their carbon footprint.'},
+      {type:'Multiple Choice', required:true, text:'What instrument measures air temperature?', options:['Thermometer','Barometer','Anemometer','Hygrometer']},
+    ]
+  },
+  'Lab Safety Essentials': {
+    subject:'SCIENCE', subjectColor:'#c45c00',
+    thumbBg:'linear-gradient(135deg,#fde8d4,#f8d0b0)', thumbStroke:'#c45c00',
+    thumbPath:'<path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11l-3 5h12l-3-5V3"/>',
+    grades:'Grades 6–8', qs:7, uses:'980',
+    questions:[
+      {type:'Multiple Choice', required:true, text:'What should you do before starting any lab experiment?', options:['Read all instructions first','Start immediately','Ask a friend','Guess and check']},
+      {type:'Multiple Choice', required:true, text:'What should you wear to protect your eyes in the lab?', options:['Safety goggles','Regular glasses','Sunglasses','Nothing needed']},
+      {type:'Linear Scale', required:true, text:'How confident are you about following lab safety procedures?'},
+      {type:'Short Answer', required:true, text:'What would you do if you spilled a chemical on your hand?'},
+      {type:'Multiple Choice', required:true, text:'Where should you dispose of broken glass?', options:['Sharps/broken glass container','Regular bin','Leave on bench','Sink drain']},
+      {type:'Multiple Choice', required:true, text:'What does MSDS stand for?', options:['Material Safety Data Sheet','Maximum Safety Distance Standard','Material Storage and Disposal System','None of the above']},
+      {type:'Short Answer', required:false, text:'Describe what you should do in a fire emergency in the lab.'},
+    ]
+  },
+  'Reading Charts & Graphs': {
+    subject:'DATA', subjectColor:'#004445',
+    thumbBg:'linear-gradient(135deg,#daeef0,#bddde0)', thumbStroke:'#004445',
+    thumbPath:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+    grades:'Grades 4–7', qs:5, uses:'1.2k',
+    questions:[
+      {type:'Multiple Choice', required:true, text:'What does the y-axis of a bar chart typically show?', options:['The values being measured','The categories','The title','The legend']},
+      {type:'Multiple Choice', required:true, text:'Which chart type is best for showing change over time?', options:['Line graph','Pie chart','Bar chart','Scatter plot']},
+      {type:'Short Answer', required:true, text:'Look at a bar graph. Which category has the highest value? Explain how you know.'},
+      {type:'Linear Scale', required:true, text:'How comfortable are you reading graphs and charts?'},
+      {type:'Multiple Choice', required:true, text:'What does a pie chart show?', options:['Parts of a whole','Change over time','Comparison of groups','Relationship between variables']},
+    ]
+  },
+  'Quick Exit Ticket': {
+    subject:'GENERAL', subjectColor:'#8c1a64',
+    thumbBg:'linear-gradient(135deg,#fce6ef,#f7c8db)', thumbStroke:'#8c1a64',
+    thumbPath:'<path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/>',
+    grades:'All grades', qs:3, uses:'5.7k',
+    questions:[
+      {type:'Linear Scale', required:true, text:"How well did you understand today\'s lesson?"},
+      {type:'Short Answer', required:true, text:'Write one thing you learned today.'},
+      {type:'Short Answer', required:false, text:"Write one question you still have about today\'s topic."},
+    ]
+  },
+};
+
+function openCsModal(name) {
+  const d = CS_DATA[name];
+  if (!d) return;
+  const total = d.questions.length;
+
+  // Header
+  const icon = document.getElementById('cs-modal-icon');
+  icon.style.background = d.thumbBg;
+  icon.innerHTML = `<svg fill="none" stroke="${d.thumbStroke}" stroke-width="1.75" viewBox="0 0 24 24" width="20" height="20">${d.thumbPath}</svg>`;
+  const subj = document.getElementById('cs-modal-subject');
+  subj.textContent = d.subject;
+  subj.style.color = d.subjectColor;
+  document.getElementById('cs-modal-title').textContent = name;
+  document.getElementById('cs-modal-meta').textContent = d.grades + ' · ' + total + ' questions · ' + d.uses + ' uses';
+
+  // Body — reuse same .pv-q / .pv-option / .pv-scale CSS as My Survey preview
+  let bd = '';
+  d.questions.forEach((q, i) => {
+    const req = q.required ? 'Required' : 'Optional';
+    bd += `<div class="pv-q">
+      <div class="pv-q-meta">Q${i+1} of ${total} · ${q.type} · ${req}</div>
+      <div class="pv-q-text">${q.text}</div>`;
+
+    if (q.type === 'Multiple Choice') {
+      const nm = 'cs' + i;
+      q.options.forEach(o => {
+        bd += `<div class="pv-option"><input type="radio" name="${nm}">${o}</div>`;
+      });
+    } else if (q.type === 'Linear Scale') {
+      bd += `<div class="pv-scale">
+        <span class="pv-scale-lbl">Not at all</span>
+        ${[1,2,3,4,5].map(n=>`<div class="pv-scale-num">${n}</div>`).join('')}
+        <span class="pv-scale-lbl">Very much</span>
+      </div>`;
+    } else {
+      bd += `<textarea class="form-ctrl" placeholder="Type your answer here…" style="margin-top:4px;"></textarea>`;
+    }
+    bd += '</div>';
+  });
+  document.getElementById('cs-modal-bd').innerHTML = bd;
+
+  // Wire Copy & Use button
+  document.getElementById('cs-modal-copy').onclick = () => {
+    closeCsModal();
+    copyToMySurveys(name);
+  };
+
+  // Open using the same .overlay.open pattern
+  document.getElementById('cs-modal').classList.add('open');
+}
+
+function closeCsModal() {
+  document.getElementById('cs-modal').classList.remove('open');
+}
+
+// Initialise modal close buttons (run after DOM ready)
+document.addEventListener('DOMContentLoaded', function() {
+  const cx = document.getElementById('cs-modal-x');
+  if (cx) cx.addEventListener('click', closeCsModal);
+  const cc = document.getElementById('cs-modal-close');
+  if (cc) cc.addEventListener('click', closeCsModal);
+  document.getElementById('cs-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeCsModal();
+  });
+});
+
 /* ── MODE SWITCHER: Community vs My Surveys ────────────── */
 function switchMode(mode) {
   document.getElementById('section-community').classList.toggle('active', mode === 'community');
@@ -1280,7 +1491,7 @@ function switchMode(mode) {
 
 /* ── COPY COMMUNITY SURVEY ─────────────────────────────── */
 function copyToMySurveys(name) {
-  toastMsg('\'' + name + '\' copied to My Surveys!');
+  toast('\'' + name + '\' copied to My Surveys!');
   setTimeout(() => switchMode('my'), 900);
 }
 
@@ -1339,5 +1550,6 @@ function copyToMySurveys(name) {
 })();
 
 </script>
+
 </body>
 </html>
