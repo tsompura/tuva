@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set up your Tuva account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Tuva Brand Tokens ─────────────────────────────────────────── */
+:root {
+  --teal:        #004445;
+  --teal-mid:    #005c5e;
+  --teal-light:  #d4e9e9;
+  --teal-pale:   #e8f4f4;
+  --magenta:     #8c1a64;
+  --red:         #a71931;
+  --yellow:      #ecb606;
+  --yellow-dark: #c79900;
+  --purple:      #682D8A;
+  --body-bg:     #f7f7fb;
+  --sidebar-bg:  #ddeef0;
+  --white:       #ffffff;
+  --text-dark:   #1a1a1a;
+  --text-mid:    #444;
+  --text-muted:  #6b6f73;
+  --border:      #d0dfe0;
+  --font-head:   'Bitter', Georgia, serif;
+  --font-body:   'Source Sans Pro', sans-serif;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --shadow-sm:   0 1px 4px rgba(0,68,69,.08);
+  --shadow-md:   0 4px 20px rgba(0,68,69,.12);
+  --transition:  0.18s ease;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-dark);
+  background: var(--body-bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Nav ──────────────────────────────────────────────────────── */
+.nav {
+  background: var(--teal);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--yellow); }
+.nav-center {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+}
+.nav-right a { color: rgba(255,255,255,0.75); text-decoration: none; }
+.nav-user { color: var(--yellow) !important; font-weight: 600; }
+
+/* ── Layout Shell ─────────────────────────────────────────────── */
+.shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────── */
+.sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.sidebar::before {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(0,68,69,.07);
+}
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(0,68,69,.05);
+}
+
+/* Progress steps */
+.progress-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+  padding-bottom: 28px;
+}
+.step-item:last-child { padding-bottom: 0; }
+.step-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 32px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.step-item.completed:not(:last-child)::after { background: var(--teal); }
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: all var(--transition);
+}
+.step-item.completed .step-dot {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+}
+.step-item.active .step-dot {
+  background: var(--white);
+  border-color: var(--teal);
+  border-width: 3px;
+  color: var(--teal);
+  box-shadow: 0 0 0 4px rgba(0,68,69,.12);
+}
+.step-label {
+  padding-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+.step-label.active { color: var(--teal); }
+.step-label.completed { color: var(--teal); }
+
+/* Testimonial */
+.testimonial {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 8px;
+}
+.quote-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.quote-icon svg { fill: white; width: 16px; height: 16px; }
+.testimonial p {
+  font-size: 14px;
+  color: #3a5e5f;
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.testimonial strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal);
+  font-style: normal;
+}
+.testimonial em {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* ── Main Panel ───────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  overflow-y: auto;
+}
+
+/* Step Header Banner */
+.step-header {
+  background: #e8f0f0;
+  padding: 20px 56px;
+  border-bottom: 1px solid var(--border);
+}
+.step-header h2 {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--teal);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Step Content */
+.step-content {
+  flex: 1;
+  padding: 44px 56px 56px;
+  max-width: 720px;
+}
+
+/* ── Form Elements ────────────────────────────────────────────── */
+fieldset { border: none; }
+
+.field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+
+/* Org search */
+.search-box {
+  position: relative;
+  margin-bottom: 8px;
+}
+.search-box input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color var(--transition);
+}
+.search-box input:focus { border-color: var(--teal); }
+.search-box input::placeholder { color: #aab8b8; }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aab8b8;
+}
+.search-results {
+  border: 2px solid var(--teal);
+  border-radius: var(--radius-md);
+  background: white;
+  max-height: 180px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-md);
+}
+.search-result-item {
+  padding: 11px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-dark);
+  border-bottom: 1px solid #f0f5f5;
+  transition: background var(--transition);
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: var(--teal-pale); color: var(--teal); }
+.search-result-item.selected { background: var(--teal); color: white; }
+.search-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.selected-org-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-pale);
+  border: 1.5px solid var(--teal-light);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal);
+  margin-top: 10px;
+}
+.selected-org-badge button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+}
+
+/* Radio list */
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 14px;
+  color: var(--text-dark);
+}
+.radio-item:hover { border-color: var(--teal); background: var(--teal-pale); }
+.radio-item input[type="radio"] { accent-color: var(--teal); width: 16px; height: 16px; cursor: pointer; }
+.radio-item.selected { border-color: var(--teal); background: var(--teal-pale); font-weight: 600; color: var(--teal); }
+
+/* Subject cards grid */
+.subject-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.subject-col-label {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  margin-bottom: 0;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.col-jr   .subject-col-label { background: var(--red); }
+.col-math .subject-col-label { background: var(--teal); }
+.col-sci  .subject-col-label { background: var(--purple); }
+.col-assess .subject-col-label { background: #555; }
+
+.subject-col {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.subject-col-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition);
+  font-size: 13.5px;
+  color: var(--text-dark);
+}
+.check-item:hover { background: var(--teal-pale); }
+.check-item input[type="checkbox"] { accent-color: var(--teal); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+.check-item.checked { font-weight: 600; color: var(--teal); }
+
+/* Curriculum checklist */
+.curriculum-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.curriculum-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 14px;
+}
+.curriculum-item:hover { border-color: var(--teal); background: var(--teal-pale); }
+.curriculum-item input[type="checkbox"] { accent-color: var(--teal); margin-top: 2px; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+.curriculum-item.checked { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); font-weight: 600; }
+
+/* Textarea */
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-dark);
+  resize: vertical;
+  min-height: 90px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.form-textarea:focus { border-color: var(--teal); }
+.form-textarea::placeholder { color: #aab8b8; }
+
+/* Delivery mode cards */
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.mode-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+}
+.mode-card:hover { border-color: var(--teal); background: var(--teal-pale); }
+.mode-card.selected { border-color: var(--teal); background: var(--teal-pale); }
+.mode-card input { display: none; }
+.mode-icon { font-size: 28px; margin-bottom: 8px; }
+.mode-title { font-size: 13.5px; font-weight: 700; color: var(--teal); margin-bottom: 4px; }
+.mode-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.mode-card.selected .mode-title { color: var(--teal); }
+
+/* Challenge checkboxes */
+.challenge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.challenge-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.45;
+  transition: all var(--transition);
+}
+.challenge-item:hover { border-color: var(--teal); background: var(--teal-pale); }
+.challenge-item.checked { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); }
+.challenge-item input { accent-color: var(--teal); margin-top: 3px; flex-shrink: 0; width: 15px; height: 15px; cursor: pointer; }
+
+/* Walkthrough radio */
+.walkthrough-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.walkthrough-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.walkthrough-card:hover { border-color: var(--teal); background: var(--teal-pale); }
+.walkthrough-card.selected { border-color: var(--teal); background: var(--teal-pale); }
+.walkthrough-card input { accent-color: var(--teal); margin-top: 4px; flex-shrink: 0; width: 16px; height: 16px; cursor: pointer; }
+.walkthrough-label { font-size: 14px; color: var(--text-dark); line-height: 1.5; }
+.walkthrough-label a { color: var(--teal); }
+.walkthrough-card.selected .walkthrough-label { color: var(--teal); font-weight: 600; }
+
+/* Helpers */
+.helper-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.section-q {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+/* Conditional panel */
+.conditional-panel {
+  background: #f9f5e8;
+  border: 1.5px solid #e8d89a;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-top: 14px;
+}
+.conditional-panel .field-label { color: #7a5c00; }
+
+/* CTA Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 13px 32px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--teal-mid); transform: translateY(-1px); }
+.btn-primary:active { transform: none; }
+.btn-primary svg { width: 14px; height: 14px; fill: white; }
+
+.btn-skip {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px 0;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.btn-skip:hover { color: var(--teal); }
+
+.cta-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 36px;
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+footer {
+  background: #000;
+  color: rgba(255,255,255,.6);
+  font-size: 13px;
+  text-align: center;
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+footer a { color: rgba(255,255,255,.7); text-decoration: underline; margin: 0 8px; }
+
+/* ── Step Pages (hidden/shown via JS) ─────────────────────────── */
+.step-page { display: none; }
+.step-page.active { display: flex; flex-direction: column; flex: 1; }
+
+/* ── Toast / Validation ───────────────────────────────────────── */
+.validation-msg {
+  font-size: 13px;
+  color: #b71c1c;
+  margin-top: 6px;
+  display: none;
+}
+.validation-msg.visible { display: block; }
+
+/* ── Completion ───────────────────────────────────────────────── */
+.completion-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  text-align: center;
+}
+.completion-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+.completion-icon svg { fill: white; width: 32px; height: 32px; }
+.completion-wrap h2 {
+  font-family: var(--font-head);
+  font-size: 26px;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.completion-wrap p { font-size: 16px; color: var(--text-mid); max-width: 420px; line-height: 1.6; margin-bottom: 32px; }
+.btn-explore {
+  background: var(--yellow);
+  color: var(--teal);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 14px 36px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background var(--transition);
+}
+.btn-explore:hover { background: var(--yellow-dark); color: white; }
+
+/* Inline "Other" field */
+.other-field {
+  display: none;
+  margin-top: 10px;
+}
+.other-field.visible { display: block; }
+
+/* Animated step transition */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.step-page.active { animation: slideIn 0.22s ease; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .sidebar { display: none; }
+  .step-content { padding: 28px 24px 40px; }
+  .step-header { padding: 18px 24px; }
+  .subject-grid { grid-template-columns: 1fr 1fr; }
+  .mode-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-logo" href="#">Tu<span>v</span>a</a>
+  <span class="nav-center">Set up your Tuva account</span>
+  <div class="nav-right">
+    <a href="#">Help</a>
+    <a href="#" class="nav-user">TEACHER ▾</a>
+  </div>
+</nav>
+
+<!-- ── SHELL ─────────────────────────────────────────────────────── -->
+<div class="shell" id="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <nav class="progress-steps" id="progressSteps">
+      <!-- injected by JS -->
+    </nav>
+
+    <div class="testimonial" id="testimonial">
+      <div class="quote-icon">
+        <svg viewBox="0 0 24 24"><path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.293 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.293 3.996-5.849h-3.983v-10h9.983z"/></svg>
+      </div>
+      <p id="testimonialText">"Tuva has been this very energizing source of collaboration where it unifies teachers and brings diverse voices to the table."</p>
+      <strong id="testimonialAuthor">–Lisa Jones</strong>
+      <em id="testimonialRole">Salt Lake City · Science Instructional Coach</em>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- ── STEP 1: School ──────────────────────────────────────── -->
+    <div class="step-page active" id="step-1">
+      <div class="step-header">
+        <h2>Welcome to Tuva! Which school, district, or organization are you from?</h2>
+      </div>
+      <div class="step-content">
+        <label class="field-label" for="orgSearch">Search for your school or district</label>
+        <div class="search-box">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="orgSearch" placeholder="e.g. Jefferson Elementary, Denver Public Schools…" autocomplete="off">
+        </div>
+        <div class="search-results" id="orgResults" style="display:none"></div>
+        <p class="search-hint">Can't find your school? Type the full name and press Enter to add it.</p>
+        <div id="orgBadge" style="display:none">
+          <div class="selected-org-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="orgBadgeText"></span>
+            <button onclick="clearOrg()" title="Clear">×</button>
+          </div>
+        </div>
+        <p class="validation-msg" id="orgError">Please select or enter your school / organization.</p>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goToStep(2)">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button class="btn-skip" onclick="goToStep(2)">Skip for now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: Role ────────────────────────────────────────── -->
+    <div class="step-page" id="step-2">
+      <div class="step-header">
+        <h2>Tell us about your role</h2>
+      </div>
+      <div class="step-content">
+        <p class="helper-text">This helps us personalise your Tuva experience with the most relevant resources.</p>
+        <div class="radio-list" id="roleList">
+          <label class="radio-item"><input type="radio" name="role" value="teacher"> Teacher</label>
+          <label class="radio-item"><input type="radio" name="role" value="instructional-coach-school"> Instructional Coach (School)</label>
+          <label class="radio-item"><input type="radio" name="role" value="tech-coordinator"> Technology Coordinator</label>
+          <label class="radio-item"><input type="radio" name="role" value="media-specialist"> Media Specialist / Librarian</label>
+          <label class="radio-item"><input type="radio" name="role" value="it-admin-school"> IT Admin (School)</label>
+          <label class="radio-item"><input type="radio" name="role" value="dept-head"> Department Head</label>
+          <label class="radio-item"><input type="radio" name="role" value="principal"> Principal</label>
+          <label class="radio-item"><input type="radio" name="role" value="other-school-admin"> Other School Administrator</label>
+          <label class="radio-item"><input type="radio" name="role" value="instructional-coach-district"> Instructional Coach (District)</label>
+          <label class="radio-item"><input type="radio" name="role" value="it-admin-district"> IT Admin (District)</label>
+          <label class="radio-item"><input type="radio" name="role" value="district-admin"> District Administrator</label>
+          <label class="radio-item"><input type="radio" name="role" value="state-coordinator"> State Coordinator</label>
+          <label class="radio-item"><input type="radio" name="role" value="researcher"> Researcher</label>
+        </div>
+        <p class="validation-msg" id="roleError">Please select your role.</p>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="validateAndGo(2,3)">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: Subjects ────────────────────────────────────── -->
+    <div class="step-page" id="step-3">
+      <div class="step-header">
+        <h2>Which subject / content area are you interested in?</h2>
+      </div>
+      <div class="step-content">
+        <p class="helper-text">Select all that apply — your choices shape the rest of this setup.</p>
+
+        <div class="subject-grid">
+          <!-- Elementary Jr. -->
+          <div class="subject-col col-jr">
+            <div class="subject-col-label">Elementary – Tuva Jr.</div>
+            <div class="subject-col-body">
+              <label class="check-item"><input type="checkbox" name="subject" value="elem-math" onchange="updateSubjectCheck(this)"> Elementary Math</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="elem-science" onchange="updateSubjectCheck(this)"> Elementary Science</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="elem-social-studies" onchange="updateSubjectCheck(this)"> Elementary Social Studies</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="elem-ela" onchange="updateSubjectCheck(this)"> Elementary ELA</label>
+            </div>
+          </div>
+          <!-- Secondary Math -->
+          <div class="subject-col col-math">
+            <div class="subject-col-label">Secondary Math</div>
+            <div class="subject-col-body">
+              <label class="check-item"><input type="checkbox" name="subject" value="sec-math-all" onchange="updateSubjectCheck(this)"> All</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="sec-math-middle" onchange="updateSubjectCheck(this)"> Middle (Grades 6–8)</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="algebra1" onchange="updateSubjectCheck(this)"> Algebra I</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="geometry" onchange="updateSubjectCheck(this)"> Geometry</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="algebra2" onchange="updateSubjectCheck(this)"> Algebra II</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="data-science" onchange="updateSubjectCheck(this)"> Data Science</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="ap-stats" onchange="updateSubjectCheck(this)"> AP Statistics</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="calculus" onchange="updateSubjectCheck(this)"> Calculus</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="social-studies" onchange="updateSubjectCheck(this)"> Social Studies</label>
+            </div>
+          </div>
+          <!-- Secondary Science -->
+          <div class="subject-col col-sci">
+            <div class="subject-col-label">Secondary Science</div>
+            <div class="subject-col-body">
+              <label class="check-item"><input type="checkbox" name="subject" value="sec-sci-all" onchange="updateSubjectCheck(this)"> All</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="earth-science" onchange="updateSubjectCheck(this)"> Earth Science</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="life-science" onchange="updateSubjectCheck(this)"> Life Science</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="physical-science" onchange="updateSubjectCheck(this)"> Physical Science</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="biology" onchange="updateSubjectCheck(this)"> Biology</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="chemistry" onchange="updateSubjectCheck(this)"> Chemistry</label>
+              <label class="check-item"><input type="checkbox" name="subject" value="physics" onchange="updateSubjectCheck(this)"> Physics</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assessment (full-width) -->
+        <div class="subject-col col-assess" style="border-radius:var(--radius-md);overflow:hidden;margin-bottom:24px;">
+          <div class="subject-col-label">Assessment</div>
+          <div class="subject-col-body" style="flex-direction:row;flex-wrap:wrap;gap:6px 20px;">
+            <label class="check-item"><input type="checkbox" name="subject" value="3d-assessment" onchange="updateSubjectCheck(this)"> 3D Science Assessments</label>
+          </div>
+        </div>
+
+        <p class="validation-msg" id="subjectError">Please select at least one subject area.</p>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="validateSubjectAndGo()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4a: Science Curriculum ────────────────────────── -->
+    <div class="step-page" id="step-4a">
+      <div class="step-header">
+        <h2>Tuva Science helps you connect real-world data to your curriculum. Which programs do you use?</h2>
+      </div>
+      <div class="step-content">
+        <p class="helper-text">Select all that apply — we'll surface the most relevant datasets and lesson connections.</p>
+        <div class="curriculum-list">
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="amplify"> Amplify Science</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="carolina"> Carolina Biological Supply</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="ck12"> CK-12</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="discovery"> Discovery Education</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="iqwst"> IQWST</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="ngss-open"> NGSS-Aligned Open Resources</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="phenomena"> Phenomena-Based / Project-Based</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="stemscopes-sci"> STEMscopes Science by Accelerate Learning</label>
+          <label class="curriculum-item"><input type="checkbox" name="sci-curr" value="other-sci" id="sciOtherCheck"> Other</label>
+        </div>
+        <div class="other-field" id="sciOtherField">
+          <label class="field-label" for="sciOtherText">Which curriculum do you use?</label>
+          <textarea class="form-textarea" id="sciOtherText" placeholder="Please describe your science curriculum…"></textarea>
+        </div>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goNextFromStep4()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button class="btn-skip" onclick="goNextFromStep4()">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4b: Math Curriculum ────────────────────────────── -->
+    <div class="step-page" id="step-4b">
+      <div class="step-header">
+        <h2>Tuva Math addresses significant data literacy gaps and enhances all core math curricula programs. Which do you use?</h2>
+      </div>
+      <div class="step-content">
+        <p class="helper-text">Select all that apply — we'll surface the most relevant lesson connections.</p>
+        <div class="curriculum-list">
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="amplify-desmos"> Amplify Desmos Math</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="big-ideas"> Big Ideas Learning</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="envision"> Envision Math by Savvas</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="illustrative"> Illustrative Mathematics (Open Source, Imagine Learning, Kiddom, and other versions)</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="into-math"> Into Math by Houghton Mifflin Harcourt (HMH)</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="math-nation"> Math Nation by Accelerate Learning</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="reveal"> Reveal Math by McGraw Hill</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="stemscopes-math"> STEMscopes Math by Accelerate Learning</label>
+          <label class="curriculum-item"><input type="checkbox" name="math-curr" value="other-math" id="mathOtherCheck"> Other</label>
+        </div>
+        <div class="other-field" id="mathOtherField">
+          <label class="field-label" for="mathOtherText">Which curriculum do you use?</label>
+          <textarea class="form-textarea" id="mathOtherText" placeholder="Please describe your math curriculum…"></textarea>
+        </div>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goNextFromMath()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button class="btn-skip" onclick="goNextFromMath()">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4c: Jr. Classroom Mode ───────────────────────── -->
+    <div class="step-page" id="step-4c">
+      <div class="step-header">
+        <h2>Knowing how you plan to use Tuva Jr. will help us connect you with the most relevant strategies and resources.</h2>
+      </div>
+      <div class="step-content">
+        <p class="section-q">How are you most likely to use Tuva Jr. lessons in your classroom(s)?</p>
+        <div class="mode-grid">
+          <label class="mode-card">
+            <input type="radio" name="classmode" value="whole-class">
+            <div class="mode-icon">👨‍🏫</div>
+            <div class="mode-title">Whole-class presentation</div>
+            <div class="mode-desc">Displayed on a projector or smartboard for the full class.</div>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="classmode" value="small-group">
+            <div class="mode-icon">👥</div>
+            <div class="mode-title">Small groups</div>
+            <div class="mode-desc">Students working in pods or stations.</div>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="classmode" value="individual">
+            <div class="mode-icon">🧑‍💻</div>
+            <div class="mode-title">Individual students</div>
+            <div class="mode-desc">Each student on their own device.</div>
+          </label>
+          <label class="mode-card">
+            <input type="radio" name="classmode" value="mixed">
+            <div class="mode-icon">🔀</div>
+            <div class="mode-title">A mix of all modes</div>
+            <div class="mode-desc">Varies by lesson or unit.</div>
+          </label>
+        </div>
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goNextFromJr()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button class="btn-skip" onclick="goNextFromJr()">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: Challenges + Walkthrough ──────────────────── -->
+    <div class="step-page" id="step-5">
+      <div class="step-header">
+        <h2>We offer a variety of supports to help educators use Tuva to its maximum potential.</h2>
+      </div>
+      <div class="step-content">
+        <p class="section-q">What do you anticipate as your primary challenge(s)?</p>
+        <div class="challenge-list">
+          <label class="challenge-item"><input type="checkbox" name="challenge" value="lessons"> Finding grade-appropriate, standards-aligned lessons that are relevant for my instruction</label>
+          <label class="challenge-item"><input type="checkbox" name="challenge" value="curriculum"> Integrating Tuva into my core math and science curriculum</label>
+          <label class="challenge-item"><input type="checkbox" name="challenge" value="leadership"> Getting support from my school and/or district leadership to fully adopt Tuva</label>
+          <label class="challenge-item"><input type="checkbox" name="challenge" value="learning"> Learning how to best use Tuva in my classroom</label>
+        </div>
+
+        <hr class="divider">
+
+        <p class="section-q">Would you like a member of the Tuva team to give you a 20–30 min walkthrough?</p>
+        <div class="walkthrough-options">
+          <label class="walkthrough-card">
+            <input type="radio" name="walkthrough" value="yes">
+            <div class="walkthrough-label"><strong>Yes, please reach out to me</strong> — I'd love to schedule a walk-through and discuss the impact Tuva can have on my classroom.</div>
+          </label>
+          <label class="walkthrough-card">
+            <input type="radio" name="walkthrough" value="later">
+            <div class="walkthrough-label">Maybe later — I'll contact Tuva at <a href="mailto:hello@tuvalabs.com">hello@tuvalabs.com</a> when I'm ready.</div>
+          </label>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn-primary" onclick="goToStep('done')">
+            Finish & Explore Tuva
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DONE ───────────────────────────────────────────────── -->
+    <div class="step-page" id="step-done">
+      <div class="completion-wrap">
+        <div class="completion-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2>You're all set! Welcome to Tuva.</h2>
+        <p>Your account is personalised and ready. Start exploring datasets, lessons, and tools built for your classroom.</p>
+        <button class="btn-explore" onclick="alert('Redirecting to dashboard…')">Explore Tuva →</button>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+</div><!-- /shell -->
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<footer>
+  Copyright © 2026 Tuva Labs Inc.
+  <a href="#">Privacy Policy</a>
+  <a href="#">Terms of Service</a>
+</footer>
+
+<script>
+// ── State ────────────────────────────────────────────────────────
+let currentStep = 1;
+let selectedOrg = '';
+let subjectSelections = [];
+
+// ── Steps config ─────────────────────────────────────────────────
+const steps = [
+  { id: '1',    label: 'Your Organization' },
+  { id: '2',    label: 'Your Role' },
+  { id: '3',    label: 'Subject Areas' },
+  { id: '4',    label: 'Curriculum' },
+  { id: '5',    label: 'Getting Support' },
+];
+
+const testimonials = [
+  { text: '"Tuva has been this energizing source of collaboration — it still unifies us. It feels very widely applicable, bringing a whole big group of diverse teachers to the table."', author: '–Lisa Jones', role: 'Salt Lake City · Science Instructional Coach' },
+  { text: '"This platform fills gaps we did not know existed in our student experience. We continue to see strong gains in data literacy and computational thinking in Grades 3–12."', author: '–Tara Fogel', role: 'Greenwich Public Schools · Science Learning Coordinator' },
+  { text: '"Tuva Jr. transforms our classroom into a vibrant hub of exploration. Students discover the power of curiosity and critical thinking."', author: '–BJ Barrie', role: '5th-Grade Teacher' },
+  { text: '"Students can take their gathered data and place it into Tuva — it\'s an immediate way for them to connect actions to a powerful online learning tool."', author: '–Ann McClellan', role: 'Gifted and Talented Teacher · Troy Elementary, ME' },
+  { text: '"[Tuva] has clean and easy-to-understand visuals — simple or more complex depending on learner levels."', author: '–Ann McClellan', role: 'Gifted and Talented Teacher · Troy Elementary, ME' },
+];
+
+// ── Progress steps render ────────────────────────────────────────
+function renderProgress(activeIdx) {
+  const container = document.getElementById('progressSteps');
+  container.innerHTML = steps.map((s, i) => {
+    let cls = '';
+    if (i < activeIdx - 1) cls = 'completed';
+    else if (i === activeIdx - 1) cls = 'active';
+    const num = i < activeIdx - 1
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>`
+      : `${i + 1}`;
+    return `<div class="step-item ${cls}">
+      <div class="step-dot">${num}</div>
+      <div class="step-label ${cls}">${s.label}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Show step ────────────────────────────────────────────────────
+function goToStep(id) {
+  document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
+  document.getElementById(`step-${id}`).classList.add('active');
+
+  const numId = parseInt(id);
+  if (!isNaN(numId)) {
+    renderProgress(numId);
+    // Rotate testimonials
+    const t = testimonials[(numId - 1) % testimonials.length];
+    document.getElementById('testimonialText').textContent = `"${t.text.replace(/^"|"$/g,'')}"`;
+    document.getElementById('testimonialAuthor').textContent = t.author;
+    document.getElementById('testimonialRole').textContent = t.role;
+    currentStep = numId;
+  } else {
+    // done
+    document.getElementById('sidebar').style.display = 'none';
+  }
+
+  window.scrollTo(0, 0);
+}
+
+// ── Org search ───────────────────────────────────────────────────
+const orgs = [
+  'Tuva Labs', 'Tuva Basic School', 'Tuva Jr. School',
+  'Jefferson Elementary', 'Denver Public Schools',
+  'Chicago Public Schools', 'Houston ISD', 'Los Angeles Unified',
+  'New York City DOE', 'Miami-Dade County Public Schools',
+  'Phoenix Union High School District', 'Seattle Public Schools',
+  'Boston Public Schools', 'Atlanta Public Schools',
+];
+
+document.getElementById('orgSearch').addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  const resultsEl = document.getElementById('orgResults');
+  if (!q) { resultsEl.style.display = 'none'; return; }
+  const matches = orgs.filter(o => o.toLowerCase().includes(q));
+  if (!matches.length) { resultsEl.style.display = 'none'; return; }
+  resultsEl.innerHTML = matches.map(m =>
+    `<div class="search-result-item" onclick="selectOrg('${m}')">${m}</div>`
+  ).join('');
+  resultsEl.style.display = 'block';
+});
+
+document.getElementById('orgSearch').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && this.value.trim()) selectOrg(this.value.trim());
+});
+
+function selectOrg(name) {
+  selectedOrg = name;
+  document.getElementById('orgSearch').value = '';
+  document.getElementById('orgResults').style.display = 'none';
+  document.getElementById('orgBadgeText').textContent = name;
+  document.getElementById('orgBadge').style.display = 'block';
+}
+function clearOrg() {
+  selectedOrg = '';
+  document.getElementById('orgBadge').style.display = 'none';
+}
+
+// ── Role selection highlight ─────────────────────────────────────
+document.querySelectorAll('.radio-item input[type="radio"]').forEach(r => {
+  r.addEventListener('change', function() {
+    document.querySelectorAll('.radio-item').forEach(i => i.classList.remove('selected'));
+    this.closest('.radio-item').classList.add('selected');
+  });
+});
+
+// ── Subject check styling ────────────────────────────────────────
+function updateSubjectCheck(el) {
+  el.closest('.check-item').classList.toggle('checked', el.checked);
+}
+
+// ── Curriculum check styling ─────────────────────────────────────
+document.querySelectorAll('.curriculum-item input[type="checkbox"]').forEach(c => {
+  c.addEventListener('change', function() {
+    this.closest('.curriculum-item').classList.toggle('checked', this.checked);
+  });
+});
+document.querySelectorAll('.challenge-item input[type="checkbox"]').forEach(c => {
+  c.addEventListener('change', function() {
+    this.closest('.challenge-item').classList.toggle('checked', this.checked);
+  });
+});
+
+// Walkthrough card highlight
+document.querySelectorAll('.walkthrough-card input[type="radio"]').forEach(r => {
+  r.addEventListener('change', function() {
+    document.querySelectorAll('.walkthrough-card').forEach(c => c.classList.remove('selected'));
+    this.closest('.walkthrough-card').classList.add('selected');
+  });
+});
+
+// Mode card highlight
+document.querySelectorAll('.mode-card input[type="radio"]').forEach(r => {
+  r.addEventListener('change', function() {
+    document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+    this.closest('.mode-card').classList.add('selected');
+  });
+});
+
+// Other field toggles
+document.getElementById('sciOtherCheck').addEventListener('change', function() {
+  document.getElementById('sciOtherField').classList.toggle('visible', this.checked);
+});
+document.getElementById('mathOtherCheck').addEventListener('change', function() {
+  document.getElementById('mathOtherField').classList.toggle('visible', this.checked);
+});
+
+// ── Validation helpers ───────────────────────────────────────────
+function validateAndGo(fromStep, toStep) {
+  if (fromStep === 2) {
+    const selected = document.querySelector('input[name="role"]:checked');
+    const errEl = document.getElementById('roleError');
+    if (!selected) { errEl.classList.add('visible'); return; }
+    errEl.classList.remove('visible');
+  }
+  goToStep(toStep);
+}
+
+function validateSubjectAndGo() {
+  const checked = document.querySelectorAll('input[name="subject"]:checked');
+  const errEl = document.getElementById('subjectError');
+  if (!checked.length) { errEl.classList.add('visible'); return; }
+  errEl.classList.remove('visible');
+
+  // Determine next step based on selection
+  const vals = Array.from(checked).map(c => c.value);
+  const hasSci = vals.some(v => ['sec-sci-all','earth-science','life-science','physical-science','biology','chemistry','physics','3d-assessment'].includes(v));
+  const hasMath = vals.some(v => ['sec-math-all','sec-math-middle','algebra1','geometry','algebra2','data-science','ap-stats','calculus','social-studies'].includes(v));
+  const hasJr = vals.some(v => v.startsWith('elem-'));
+
+  // Store for routing
+  window._subjectFlags = { hasSci, hasMath, hasJr };
+  window._subjectQueue = [];
+  if (hasSci) window._subjectQueue.push('4a');
+  if (hasMath) window._subjectQueue.push('4b');
+  if (hasJr)  window._subjectQueue.push('4c');
+
+  const next = window._subjectQueue.shift();
+  if (next) goToStep(next);
+  else goToStep(5);
+}
+
+function goNextFromStep4() {
+  const next = (window._subjectQueue || []).shift();
+  if (next) goToStep(next);
+  else goToStep(5);
+}
+function goNextFromMath() { goNextFromStep4(); }
+function goNextFromJr()   { goNextFromStep4(); }
+
+// ── Init ────────────────────────────────────────────────────────
+renderProgress(1);
+</script>
+</body>
+</html>
