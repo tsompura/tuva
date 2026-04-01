@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1012">
+<title>Tuva Tools — Formula Editor Keypad v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* TUVA TOKENS */
+:root {
+  --gray:      #3D4146;
+  --gray-2:    #5C6065;
+  --gray-3:    #828890;
+  --gray-4:    #989DA3;
+  --border:    #989DA3;
+  --border-lt: #CED3D8;
+  --divider:   #E3E6E9;
+  --surface:   #F7F7FB;
+  --white:     #ffffff;
+  --teal:      #004445;
+  --teal-h:    #005F64;
+  --blue:      #1D4CBC;
+  --blue-h:    #E6E9F7;
+  --blue-lt:   #C1C8EB;
+  --r:         4px;
+  --font:      'Source Sans Pro', sans-serif;
+  --card-w:    252px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);font-size:14px;color:var(--gray);background:var(--white);display:flex;flex-direction:column;height:100vh}
+
+/* ═══ TOOLBAR ═══ */
+.tb{flex-shrink:0;height:42px;background:var(--teal);display:flex;align-items:center;padding:0 10px;gap:1px;z-index:10}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.2);margin:0 5px;flex-shrink:0}
+.tb-btn{height:28px;padding:0 8px;min-width:28px;background:transparent;border:none;border-radius:var(--r);color:rgba(255,255,255,.85);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;white-space:nowrap;transition:background .12s;flex-shrink:0}
+.tb-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.tb-btn.on{background:rgba(255,255,255,.2);color:#fff}
+.tb-spacer{flex:1}
+
+/* ═══ WORK AREA ═══ */
+.work{flex:1;display:flex;min-height:0;overflow:hidden;position:relative}
+
+/* ── Card ── */
+.card{width:var(--card-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--divider);display:flex;flex-direction:column;z-index:20}
+.card-hd{padding:9px 13px 8px;border-bottom:1px solid var(--divider);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray-3);display:flex;align-items:center;justify-content:space-between}
+.card-hd-x{width:20px;height:20px;border:none;background:transparent;color:var(--gray-3);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:3px;transition:background .12s}
+.card-hd-x:hover{background:var(--blue-h);color:var(--gray)}
+.card-body{padding:12px;display:flex;flex-direction:column;gap:11px;flex:1}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld-row{display:flex;align-items:center;gap:5px}
+.fld-lbl{font-size:13px;font-weight:600;color:var(--gray)}
+.fld-info{width:14px;height:14px;border:1.5px solid var(--border);border-radius:50%;font-size:9px;font-style:normal;color:var(--gray-3);display:inline-flex;align-items:center;justify-content:center;cursor:help;flex-shrink:0}
+.f-in{height:30px;width:100%;border:1px solid var(--border);border-radius:var(--r);padding:0 8px;font-family:var(--font);font-size:13px;color:var(--gray);background:var(--white);outline:none;transition:border-color .15s,box-shadow .15s}
+.f-in:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(29,76,188,.14)}
+.expr-wrap{border:1px solid var(--border-lt);border-radius:var(--r);background:var(--white);overflow:hidden}
+.expr-disp{padding:6px 9px;font-family:'Courier New',monospace;font-size:12px;color:var(--teal);word-break:break-all;white-space:pre-wrap;line-height:1.5;min-height:42px;cursor:text;font-weight:600}
+.expr-disp.empty{color:var(--gray-3);font-style:italic;font-family:var(--font);font-size:12px;font-weight:400;white-space:normal}
+.expr-foot{display:flex;border-top:1px solid var(--divider)}
+.expr-del,.expr-clr{flex:1;height:22px;border:none;background:transparent;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:3px;transition:background .12s;color:var(--gray-2)}
+.expr-del{border-right:1px solid var(--divider)}
+.expr-del:hover,.expr-clr:hover{background:var(--blue-h)}
+.kp-toggle{
+  height:32px; padding:0 12px;
+  border:none;
+  border-radius:6px;
+  /* Same keycap treatment as .k keys */
+  box-shadow: 0 0 0 1px #9DA4AF, 0 3px 0 0 #9DA4AF, 0 2px 4px rgba(0,0,0,.1);
+  background: linear-gradient(to bottom, #ffffff 0%, #f0f2f5 100%);
+  color:var(--gray); font-size:13px; font-weight:600; font-family:var(--font);
+  cursor:pointer; display:flex; align-items:center; gap:7px;
+  width:100%; justify-content:center;
+  transition: box-shadow .08s, transform .08s, background .08s, color .12s;
+}
+.kp-toggle:hover{
+  background: linear-gradient(to bottom, #ffffff 0%, #eaecf0 100%);
+  box-shadow: 0 0 0 1px #7A8290, 0 3px 0 0 #7A8290, 0 2px 6px rgba(0,0,0,.12);
+}
+.kp-toggle:active{
+  transform: translateY(2px);
+  box-shadow: 0 0 0 1px #9DA4AF, 0 0 0 0 #9DA4AF, 0 0 2px rgba(0,0,0,.06);
+}
+.kp-toggle.open{
+  background: linear-gradient(to bottom, #005F64 0%, #004445 100%);
+  box-shadow: 0 0 0 1px #003334, 0 3px 0 0 #003334, 0 2px 4px rgba(0,0,0,.2);
+  color:#fff;
+}
+.kp-toggle.open:hover{
+  background: linear-gradient(to bottom, #006669 0%, #005254 100%);
+}
+.card-actions{display:flex;gap:6px;padding-top:10px;border-top:1px solid var(--divider);margin-top:auto}
+.btn-save{flex:1;height:28px;background:var(--teal);color:#fff;border:1px solid var(--teal);border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:background .12s}
+.btn-save:hover{background:var(--teal-h)}
+.btn-cancel{flex:1;height:28px;background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:var(--font);cursor:pointer;transition:background .12s}
+.btn-cancel:hover{background:var(--blue-h)}
+
+/* ── Canvas ── */
+.canvas{flex:1;min-width:0;background:var(--white);position:relative;overflow:hidden}
+.dot-grid{position:absolute;inset:0;background-image:radial-gradient(var(--border-lt) 1px,transparent 1px);background-size:20px 20px;opacity:.6;z-index:1}
+.axis-y{position:absolute;left:0;top:0;bottom:40px;width:26px;border-right:1px solid var(--divider);background:rgba(225,232,245,.35);display:flex;align-items:center;justify-content:center;z-index:2}
+.axis-y span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;color:var(--gray-3);white-space:nowrap}
+.axis-x{position:absolute;bottom:40px;left:26px;right:20px;height:26px;border-top:1px solid var(--divider);background:rgba(225,232,245,.35);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gray-3);z-index:2}
+.axis-close{width:16px;height:16px;border:1px solid var(--border-lt);border-radius:2px;background:var(--white);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;margin-left:7px;color:var(--gray-3)}
+.sc{position:absolute;left:26px;right:20px;top:0;bottom:66px;display:flex;align-items:center;justify-content:center;z-index:3}
+.ds-lbl{position:absolute;top:9px;right:28px;display:flex;align-items:center;gap:5px;font-size:13px;color:var(--gray);z-index:4}
+.ds-lbl-btn{width:19px;height:19px;border:1px solid var(--border-lt);border-radius:3px;background:var(--white);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--gray-3);transition:background .12s}
+.ds-lbl-btn:hover{background:var(--blue-h)}
+.col-drop{position:absolute;right:0;top:0;bottom:40px;width:20px;border-left:1px solid var(--divider);background:rgba(225,232,245,.35);display:flex;align-items:center;justify-content:center;z-index:2}
+.col-drop span{writing-mode:vertical-rl;font-size:9px;color:var(--gray-3);white-space:nowrap;padding:3px 0}
+.data-strip{position:absolute;bottom:0;left:26px;right:0;height:40px;border-top:1px solid var(--divider);background:var(--white);display:flex;align-items:center;padding:0 10px;gap:7px;font-size:13px;color:var(--gray);z-index:5}
+.ds-btn{height:24px;padding:0 9px;border:1px solid var(--border-lt);border-radius:var(--r);background:var(--white);font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:4px;color:var(--gray);transition:background .12s}
+.ds-btn:hover{background:var(--blue-h)}
+.ds-btn.on{background:var(--blue-h);border-color:var(--blue-lt)}
+.ds-link{font-size:13px;color:var(--blue);cursor:pointer;margin-left:auto;font-weight:600}
+.ds-link:hover{text-decoration:underline}
+
+/* ══════════════════════════════════════════════════════
+   KEYPAD — compact, no help panel
+   position:absolute inside .canvas, starts at canvas left
+══════════════════════════════════════════════════════ */
+.keypad{
+  position:fixed; bottom:0; left:var(--card-w);
+  width:760px; max-width:calc(100vw - var(--card-w));
+  background:var(--surface);
+  border-top:1px solid var(--border-lt);
+  border-right:1px solid var(--border-lt);
+  box-shadow:0 -3px 14px rgba(0,0,0,.08);
+  z-index:100;
+  display:flex; flex-direction:column;
+  height:280px;
+  transform:translateY(100%);
+  transition:transform .22s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.keypad.open{transform:translateY(0)}
+
+/* drag handle */
+.kp-handle{position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:44px;height:8px;cursor:ns-resize;z-index:5;display:flex;align-items:center;justify-content:center}
+.kp-handle::after{content:'';display:block;width:34px;height:3px;background:var(--border-lt);border-radius:2px}
+
+/* header — compact */
+.kp-hd{flex-shrink:0;height:36px;background:var(--white);border-bottom:1px solid var(--divider);display:flex;align-items:center;padding:0 14px;justify-content:space-between}
+.kp-hd-title{font-size:13px;font-weight:700;color:var(--gray);display:flex;align-items:center;gap:7px}
+.kp-hd-icon{font-size:15px;color:var(--gray-3)}
+/* Close button — small keycap */
+.kp-close{
+  width:22px; height:22px;
+  border:none; border-radius:4px;
+  box-shadow: 0 0 0 1px #C8CDD3, 0 1px 0 0 #C8CDD3;
+  background: linear-gradient(to bottom, #ffffff 0%, #f0f2f5 100%);
+  color:var(--gray-3); font-size:12px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition: box-shadow .08s, transform .08s;
+}
+.kp-close:hover{
+  box-shadow: 0 0 0 1px #9DA4AF, 0 1px 0 0 #9DA4AF;
+  background: linear-gradient(to bottom, #f5f6f8 0%, #e8eaed 100%);
+  color:var(--gray);
+}
+.kp-close:active{
+  transform:translateY(1px);
+  box-shadow: 0 0 0 1px #C8CDD3, 0 0 0 0 #C8CDD3;
+}
+
+/* tab bar */
+.kp-tabs{flex-shrink:0;display:flex;background:var(--surface);border-bottom:1px solid var(--divider);padding:0 14px;overflow-x:auto;scrollbar-width:none}
+.kp-tabs::-webkit-scrollbar{display:none}
+.kp-tab{height:32px;padding:0 12px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--gray-3);font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;white-space:nowrap;flex-shrink:0;margin-bottom:-1px;transition:color .12s,border-color .12s}
+.kp-tab:hover{color:var(--gray)}
+.kp-tab.on{color:var(--teal);border-bottom-color:var(--teal)}
+
+/* content — compact padding */
+.kp-content{flex:1;overflow-y:hidden;overflow-x:auto;padding:8px 12px;background:#EDEEF2;min-width:0}
+
+/* bottom info bar — compact single line */
+.kp-info{flex-shrink:0;height:30px;background:var(--surface);border-top:1px solid var(--border-lt);display:flex;align-items:center;padding:0 14px;gap:7px;font-size:12px;color:var(--gray-2);overflow:hidden;white-space:nowrap}
+.info-name{font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:var(--teal);flex-shrink:0}
+.info-sep{color:var(--border);flex-shrink:0}
+.info-desc{color:var(--gray);overflow:hidden;text-overflow:ellipsis}
+.info-ex{margin-left:auto;flex-shrink:0;background:var(--white);border:1px solid var(--border-lt);border-radius:3px;padding:1px 6px;font-family:'Courier New',monospace;font-size:11px;color:var(--blue)}
+
+/* ══════════════════════════════════════════════════════
+   KEY BUTTONS v4 — tactile keyboard keycap style
+   Technique: white top face + darker bottom border = keycap depth
+   Press: translateY(1px) + shrink bottom-shadow = satisfying click
+══════════════════════════════════════════════════════ */
+.k{
+  height:30px; padding:0 9px; min-width:30px;
+  border:none;
+  border-radius:5px;
+  /* Keycap layered shadow: bottom edge (depth) + outer border */
+  box-shadow:
+    0 0 0 1px #B8BEC5,          /* outer border */
+    0 2px 0 0 #B8BEC5,          /* bottom edge — the "depth" */
+    0 1px 2px rgba(0,0,0,.08);  /* soft ambient shadow */
+  /* Subtle top-lit gradient — gives face a slight sheen */
+  background: linear-gradient(to bottom, #ffffff 0%, #f4f5f7 100%);
+  color:var(--gray);
+  font-size:13px; font-family:var(--font); font-weight:600;
+  cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  white-space:nowrap; line-height:1;
+  transition: box-shadow .08s, transform .08s, background .08s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+.k:hover{
+  background: linear-gradient(to bottom, #ffffff 0%, #edf0f7 100%);
+  box-shadow:
+    0 0 0 1px #9DA4AF,
+    0 2px 0 0 #9DA4AF,
+    0 2px 4px rgba(0,0,0,.1);
+}
+/* Press: key travels down 2px — the depth collapses */
+.k:active{
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 1px #B8BEC5,
+    0 0 0 0 #B8BEC5,    /* bottom edge gone — pressed */
+    0 0 1px rgba(0,0,0,.06);
+  background: linear-gradient(to bottom, #edf0f7 0%, #f4f5f7 100%);
+}
+.k:disabled{ opacity:.35; cursor:default; pointer-events:none }
+.k:focus-visible{ outline:2px solid var(--blue); outline-offset:2px }
+
+/* ── Key variants ── */
+.k.num{
+  font-size:14px; font-weight:700;
+  background: linear-gradient(to bottom, #ffffff 0%, #f0f2f5 100%);
+  box-shadow: 0 0 0 1px #B8BEC5, 0 2px 0 0 #B8BEC5, 0 1px 2px rgba(0,0,0,.08);
+}
+.k.op{
+  font-size:15px; font-weight:700;
+}
+.k.fn{ font-size:12px }
+/* Delete / Clear — slightly recessed surface look */
+.k.del{
+  color:var(--gray-2);
+  background: linear-gradient(to bottom, #F3F4F6 0%, #E9EAED 100%);
+  box-shadow: 0 0 0 1px #B0B6BF, 0 2px 0 0 #B0B6BF, 0 1px 2px rgba(0,0,0,.07);
+}
+.k.clr{
+  color:var(--gray-2); font-size:12px;
+  background: linear-gradient(to bottom, #F3F4F6 0%, #E9EAED 100%);
+  box-shadow: 0 0 0 1px #B0B6BF, 0 2px 0 0 #B0B6BF, 0 1px 2px rgba(0,0,0,.07);
+}
+/* Attribute chips — teal-tinted, wider */
+.k.attr{
+  justify-content:flex-start; padding:0 9px; font-size:12px;
+  background: linear-gradient(to bottom, #f0f8f8 0%, #e6f2f2 100%);
+  box-shadow: 0 0 0 1px #7AB0B0, 0 2px 0 0 #7AB0B0, 0 1px 2px rgba(0,68,69,.08);
+  color: var(--teal);
+}
+.k.attr:hover{
+  background: linear-gradient(to bottom, #e6f4f4 0%, #d8ecec 100%);
+  box-shadow: 0 0 0 1px #5A9898, 0 2px 0 0 #5A9898, 0 2px 4px rgba(0,68,69,.1);
+}
+/* Constants π/e — same plain style, no amber */
+.k.const{ font-size:15px; font-weight:700 }
+
+/* section label — bottom border only */
+.sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gray);display:block;margin:0 0 5px;padding-bottom:4px;border-bottom:1px solid var(--divider)}
+
+/* ── TAB 1: Attributes + Operations (Desmos style) ─────────────
+   Left pane: attribute chips
+   Right pane: Desmos calc grid (Arithmetic 7-col + Constants 4-col)
+─────────────────────────────────────────────────────────────── */
+.tab1-layout{display:grid;grid-template-columns:200px 1fr;gap:0}
+.tab1-attrs{padding-right:12px;border-right:1px solid var(--divider)}
+.tab1-ops{padding-left:12px;min-width:0;overflow-x:auto}
+
+/* Attributes: wrap chips */
+.attr-wrap{display:flex;flex-wrap:wrap;gap:4px}
+
+/* Operations Desmos grid:
+   7 arithmetic cols | 1px divider | 3 numpad cols | 1 op-accent col
+   4 rows = Row0(labels) + 4 key rows
+*/
+.ops-grid{
+  display:grid;
+  grid-template-columns:repeat(7,minmax(32px,1fr)) 1px repeat(3,minmax(32px,1fr)) minmax(32px,1fr);
+  gap:3px;
+  align-items:center;
+  min-width:520px;
+}
+.ops-div{grid-column:8;grid-row:1/7;background:var(--divider);width:1px;margin:0 3px}
+/* label header cells */
+.ops-lbl{
+  border:none;border-bottom:1px solid var(--divider);border-radius:0;
+  background:transparent;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.55px;
+  color:var(--gray);cursor:default;
+  height:auto;padding:0 0 4px;
+  display:flex;align-items:flex-end;justify-content:flex-start;
+  margin-bottom:2px;
+}
+.ops-lbl:hover{background:transparent}
+
+/* ── TAB 2: Functions ────────────────────────────────────────── */
+.fn-layout{display:flex;gap:18px}
+.fn-col{flex:1;display:flex;flex-direction:column;gap:4px}
+.fn-row{display:flex;flex-wrap:wrap;gap:4px}
+
+/* trig icon+label */
+.k.trig{flex-direction:column;height:34px;gap:1px;min-width:50px}
+.k.trig .t-sym{font-size:13px;font-weight:700;line-height:1}
+.k.trig .t-lbl{font-size:9px;color:var(--gray-3);line-height:1}
+
+/* ── TAB 3: More ─────────────────────────────────────────────── */
+.more-wrap{display:flex;flex-wrap:wrap;gap:4px}
+
+/* ── TAB 4: Advanced ─────────────────────────────────────────── */
+.adv-layout{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px 14px}
+.adv-col{display:flex;flex-direction:column;gap:4px}
+.adv-row{display:flex;flex-wrap:wrap;gap:3px}
+
+/* responsive — card always visible; keypad fills canvas at any width */
+@media(max-width:680px){.tab1-layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- TOOLBAR -->
+<div class="tb">
+  <svg width="52" height="18" viewBox="0 0 64 22" style="margin-right:10px;flex-shrink:0">
+    <text x="0" y="18" font-family="'Source Sans Pro',sans-serif" font-size="20" font-weight="700" fill="white" letter-spacing=".5">Tuva</text>
+  </svg>
+  <div class="tb-sep"></div>
+  <button class="tb-btn">↺</button><button class="tb-btn">↻</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn">Dot</button><button class="tb-btn">Line</button><button class="tb-btn">Pie</button>
+  <button class="tb-btn">Bar</button><button class="tb-btn">Hist</button>
+  <button class="tb-btn on">Box</button><button class="tb-btn">Map</button>
+  <div class="tb-sep"></div>
+  <button class="tb-btn">N|%</button><button class="tb-btn">Stats</button>
+  <button class="tb-btn">✦</button><button class="tb-btn">TEST</button><button class="tb-btn">⚗</button>
+  <div class="tb-spacer"></div>
+  <button class="tb-btn">📷</button><button class="tb-btn">✏</button><button class="tb-btn">⚙</button>
+  <button class="tb-btn">★</button><button class="tb-btn">🌐 EN</button><button class="tb-btn">?</button>
+</div>
+
+<!-- WORK AREA -->
+<div class="work">
+
+  <!-- Card -->
+  <div class="card">
+    <div class="card-hd">New Attribute<button class="card-hd-x">✕</button></div>
+    <div class="card-body">
+      <div class="fld">
+        <div class="fld-row"><label class="fld-lbl">Name</label><i class="fld-info">?</i></div>
+        <input class="f-in" type="text" value="New Attribute" id="attrName">
+      </div>
+      <div class="fld">
+        <div class="fld-row"><label class="fld-lbl">Formula</label><i class="fld-info">?</i></div>
+        <div class="expr-wrap">
+          <div class="expr-disp empty" id="exprDisp">Click a key below to build your formula…</div>
+          <div class="expr-foot">
+            <button class="expr-del" onclick="delChar()">⌫ Delete</button>
+            <button class="expr-clr" onclick="clearAll()">AC Clear</button>
+          </div>
+        </div>
+      </div>
+      <button class="kp-toggle" id="kpToggle" onclick="toggleKp()">
+        <span style="border:1.5px solid currentColor;border-radius:2px;padding:0 2px;font-size:9px;font-family:'Courier New',monospace">⌨</span>
+        Formula Keypad
+      </button>
+      <div class="card-actions">
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas" id="canvas">
+    <div class="dot-grid"></div>
+    <div class="ds-lbl">mixed up cases<button class="ds-lbl-btn">✏</button><button class="ds-lbl-btn">✕</button></div>
+    <div class="axis-y"><span>(drag and drop Y attribute here)</span><button class="axis-close" style="position:absolute;top:5px;left:3px">✕</button></div>
+    <div class="col-drop"><span>(drag and drop Color By attribute here)</span></div>
+    <div class="sc">
+      <svg width="300" height="255" viewBox="0 0 300 255" style="overflow:visible">
+        <g fill="#1D4CBC" opacity=".7">
+          <circle cx="140" cy="78" r="6.5"/><circle cx="158" cy="69" r="6.5"/><circle cx="176" cy="65" r="6.5"/><circle cx="195" cy="73" r="6.5"/>
+          <circle cx="152" cy="87" r="6.5"/><circle cx="170" cy="83" r="6.5"/><circle cx="188" cy="79" r="6.5"/><circle cx="207" cy="87" r="6.5"/>
+          <circle cx="135" cy="101" r="6.5"/><circle cx="149" cy="95" r="6.5"/><circle cx="166" cy="97" r="6.5"/><circle cx="184" cy="92" r="6.5"/>
+          <circle cx="200" cy="101" r="6.5"/><circle cx="218" cy="95" r="6.5"/><circle cx="130" cy="115" r="6.5"/><circle cx="145" cy="110" r="6.5"/>
+          <circle cx="162" cy="107" r="6.5"/><circle cx="179" cy="113" r="6.5"/><circle cx="196" cy="108" r="6.5"/><circle cx="213" cy="115" r="6.5"/>
+          <circle cx="228" cy="107" r="6.5"/><circle cx="124" cy="130" r="6.5"/><circle cx="139" cy="124" r="6.5"/><circle cx="156" cy="121" r="6.5"/>
+          <circle cx="173" cy="127" r="6.5"/><circle cx="190" cy="122" r="6.5"/><circle cx="207" cy="130" r="6.5"/><circle cx="222" cy="124" r="6.5"/>
+          <circle cx="130" cy="143" r="6.5"/><circle cx="146" cy="139" r="6.5"/><circle cx="163" cy="136" r="6.5"/><circle cx="180" cy="142" r="6.5"/>
+          <circle cx="197" cy="137" r="6.5"/><circle cx="214" cy="143" r="6.5"/><circle cx="135" cy="157" r="6.5"/><circle cx="152" cy="153" r="6.5"/>
+          <circle cx="169" cy="150" r="6.5"/><circle cx="146" cy="168" r="6.5"/><circle cx="163" cy="173" r="6.5"/><circle cx="152" cy="184" r="6.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="axis-x">(drag and drop X attribute here)<button class="axis-close">✕</button></div>
+    <div class="data-strip">
+      <button class="ds-btn" style="background:var(--surface)">▼</button>
+      <button class="ds-btn on">⊞ Table (104)</button>
+      <button class="ds-btn">≡ Summary</button>
+      <span class="ds-link">✏ Edit Data</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--gray-3);font-weight:600">vlab-15</span>
+    </div>
+
+    <!-- ══════════════ KEYPAD ══════════════ -->
+    <div class="keypad" id="keypad">
+      <div class="kp-handle" id="kpHandle"></div>
+
+      <div class="kp-hd">
+        <div class="kp-hd-title"><span class="kp-hd-icon">⌨</span> Formula Keypad</div>
+        <button class="kp-close" onclick="toggleKp()">✕</button>
+      </div>
+
+      <!-- 4 TABS per spec matrix -->
+      <div class="kp-tabs" role="tablist">
+        <button class="kp-tab on" onclick="sw('tab1',this)">Attributes &amp; Operations</button>
+        <button class="kp-tab"    onclick="sw('tab2',this)">Functions</button>
+        <button class="kp-tab"    onclick="sw('tab3',this)">More</button>
+        <button class="kp-tab"    onclick="sw('tab4',this)">Advanced</button>
+      </div>
+
+      <div class="kp-content">
+
+        <!-- ══════════════════════════════════════════════════
+             TAB 1: ATTRIBUTES + OPERATIONS (Desmos style)
+             Left: attribute chips
+             Right: Arithmetic (7 cols) + Constants (4 cols)
+        ══════════════════════════════════════════════════ -->
+        <div id="tab1">
+          <div class="tab1-layout">
+
+            <!-- Attributes -->
+            <div class="tab1-attrs">
+              <span class="sec">Dataset Attributes</span>
+              <div class="attr-wrap">
+                <button class="k attr" onclick="ins('Case')"        onmouseenter="hlp('Case','Text — identifies each row.','if(Case==&quot;A&quot;, 1, 0)')">Case</button>
+                <button class="k attr" onclick="ins('Gender')"      onmouseenter="hlp('Gender','Categorical: M or F.','if(Gender==&quot;F&quot;, 1, 0)')">Gender</button>
+                <button class="k attr" onclick="ins('Species')"     onmouseenter="hlp('Species','Text — species name.','concat(Species, &quot;(bird)&quot;)')">Species</button>
+                <button class="k attr" onclick="ins('Body_Weight')" onmouseenter="hlp('Body_Weight','Numeric — body weight (g).','Body_Weight × 0.035')">Body Weight (g)</button>
+                <button class="k attr" onclick="ins('Wing_Length')" onmouseenter="hlp('Wing_Length','Numeric — wing length (mm).','Wing_Length ÷ 10')">Wing Length (mm)</button>
+                <button class="k attr" onclick="ins('Wing_Width')"  onmouseenter="hlp('Wing_Width','Numeric — wing width (mm).','Wing_Width ÷ Wing_Length')">Wing Width (mm)</button>
+                <button class="k attr" onclick="ins('Body_Length')" onmouseenter="hlp('Body_Length','Numeric — body length (mm).','Body_Length − 10')">Body Length (mm)</button>
+              </div>
+            </div>
+
+            <!-- Operations (Desmos style) -->
+            <div class="tab1-ops">
+              <div class="ops-grid">
+
+                <!-- ROW 0: Section labels -->
+                <div class="ops-lbl" style="grid-column:span 7">Arithmetic</div>
+                <div class="ops-div"></div>
+                <div class="ops-lbl" style="grid-column:span 4">Constants</div>
+
+                <!-- ROW 1 -->
+                <button class="k op" onclick="ins(' + ')"   onmouseenter="hlp('+','Addition.','a + b')">+</button>
+                <button class="k op" onclick="ins(' − ')"   onmouseenter="hlp('−','Subtraction.','a − b')">−</button>
+                <button class="k op" onclick="ins(' × ')"   onmouseenter="hlp('×','Multiplication.','a × b')">×</button>
+                <button class="k op" onclick="ins(' ÷ ')"   onmouseenter="hlp('÷','Division.','a ÷ b')">÷</button>
+                <button class="k op" onclick="ins('(')"     onmouseenter="hlp('(','Open parenthesis.','(a + b) × c')">(</button>
+                <button class="k op" onclick="ins(')')"     onmouseenter="hlp(')','Close parenthesis.','(a + b) × c')">)</button>
+                <button class="k del" onclick="delChar()"   onmouseenter="hlp('⌫','Delete last character.','')">⌫</button>
+                <div class="ops-div"></div>
+                <button class="k num" onclick="ins('7')">7</button>
+                <button class="k num" onclick="ins('8')">8</button>
+                <button class="k num" onclick="ins('9')">9</button>
+                <button class="k op"  onclick="ins(' ÷ ')" onmouseenter="hlp('÷','Division.','a ÷ b')">÷</button>
+
+                <!-- ROW 2 -->
+                <button class="k fn" onclick="ins('^2')"    onmouseenter="hlp('x²','Squares a value.','Body_Weight^2')">x²</button>
+                <button class="k fn" onclick="ins('^3')"    onmouseenter="hlp('x³','Cubes a value.','Wing_Length^3')">x³</button>
+                <button class="k fn" onclick="ins('^')"     onmouseenter="hlp('xⁿ','Raises x to power n.','Body_Weight^n')">xⁿ</button>
+                <button class="k fn" onclick="ins('√(')"    onmouseenter="hlp('√(x)','Square root.','√(Body_Weight)')">√</button>
+                <button class="k fn" onclick="ins('n√(')"   onmouseenter="hlp('n√(n,x)','Nth root.','n√(3, Body_Weight)')">ⁿ√</button>
+                <button class="k fn" onclick="ins('abs(')"  onmouseenter="hlp('abs(x)','Absolute value.','abs(Body_Weight − 10)')">|x|</button>
+                <button class="k clr" onclick="clearAll()"  onmouseenter="hlp('AC','Clear entire formula.','')">AC</button>
+                <div class="ops-div"></div>
+                <button class="k num" onclick="ins('4')">4</button>
+                <button class="k num" onclick="ins('5')">5</button>
+                <button class="k num" onclick="ins('6')">6</button>
+                <button class="k op"  onclick="ins(' × ')" onmouseenter="hlp('×','Multiplication.','a × b')">×</button>
+
+                <!-- ROW 3 -->
+                <button class="k fn" onclick="ins('log10(')" onmouseenter="hlp('log10(x)','Log base 10.','log10(100) → 2')">log₁₀</button>
+                <button class="k fn" onclick="ins('ln(')"    onmouseenter="hlp('ln(x)','Natural log.','ln(1) → 0')">ln</button>
+                <button class="k fn" onclick="ins('round(')" onmouseenter="hlp('round(x)','Rounds to nearest integer.','round(3.7) → 4')">round</button>
+                <button class="k fn" onclick="ins(' mod ')"  onmouseenter="hlp('mod','Remainder after division.','10 mod 3 → 1')">mod</button>
+                <button class="k op" onclick="ins(', ')"     onmouseenter="hlp(',','Argument separator.','mean(x, y)')">,</button>
+                <button class="k fn" onclick="ins('!')"      onmouseenter="hlp('n!','Factorial.','5! → 120')">n!</button>
+                <button class="k"    style="background:var(--surface);border-color:var(--divider);cursor:default" disabled>—</button>
+                <div class="ops-div"></div>
+                <button class="k num" onclick="ins('1')">1</button>
+                <button class="k num" onclick="ins('2')">2</button>
+                <button class="k num" onclick="ins('3')">3</button>
+                <button class="k op"  onclick="ins(' − ')" onmouseenter="hlp('−','Subtraction.','a − b')">−</button>
+
+                <!-- ROW 4 -->
+                <button class="k fn"    onclick="ins('sin(')"  onmouseenter="hlp('sin(angle)','Sine — radians.','sin(π÷2) → 1')">sin</button>
+                <button class="k fn"    onclick="ins('cos(')"  onmouseenter="hlp('cos(angle)','Cosine — radians.','cos(0) → 1')">cos</button>
+                <button class="k fn"    onclick="ins('tan(')"  onmouseenter="hlp('tan(angle)','Tangent — radians.','tan(π÷4) → 1')">tan</button>
+                <button class="k const" onclick="ins('π')"     onmouseenter="hlp('π','Pi ≈ 3.14159…','2 × π × r')">π</button>
+                <button class="k const" onclick="ins('e')"     onmouseenter="hlp('e','Euler\'s number ≈ 2.71828…','e^2 ≈ 7.389')">e</button>
+                <button class="k"       style="background:var(--surface);border-color:var(--divider);cursor:default" disabled>—</button>
+                <button class="k"       style="background:var(--surface);border-color:var(--divider);cursor:default" disabled>—</button>
+                <div class="ops-div"></div>
+                <button class="k num" onclick="ins('0')" style="grid-column:span 2">0</button>
+                <button class="k num" onclick="ins('.')">.</button>
+                <button class="k op"  onclick="ins(' + ')" onmouseenter="hlp('+','Addition.','a + b')">+</button>
+
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /tab1 -->
+
+
+        <!-- ══════════════════════════════════════════════════
+             TAB 2: FUNCTIONS — Stats + Trig
+        ══════════════════════════════════════════════════ -->
+        <div id="tab2" style="display:none">
+          <div class="fn-layout">
+            <div class="fn-col">
+              <span class="sec">Statistics</span>
+              <div class="fn-row">
+                <button class="k fn" onclick="ins('mean(')"      onmouseenter="hlp('mean(attribute)','Arithmetic mean — average.','mean(Body_Weight)')">mean</button>
+                <button class="k fn" onclick="ins('median(')"    onmouseenter="hlp('median(attribute)','Middle value when sorted.','median(Body_Weight)')">median</button>
+                <button class="k fn" onclick="ins('iqr(')"       onmouseenter="hlp('iqr(attribute)','Interquartile range Q3 − Q1.','iqr(Body_Weight)')">iqr</button>
+                <button class="k fn" onclick="ins('stdDev(')"    onmouseenter="hlp('stdDev(attribute)','Standard deviation.','stdDev(Wing_Length)')">stdDev</button>
+                <button class="k fn" onclick="ins('meanAvDev(')" onmouseenter="hlp('meanAvDev(attribute)','Mean absolute deviation.','meanAvDev(Body_Weight)')">meanAvDev</button>
+                <button class="k fn" onclick="ins('variance(')"  onmouseenter="hlp('variance(attribute)','Square of std deviation.','variance(Body_Weight)')">variance</button>
+                <button class="k fn" onclick="ins('sum(')"       onmouseenter="hlp('sum(attribute)','Sum of all values.','sum(Body_Weight)')">sum</button>
+                <button class="k fn" onclick="ins('min(')"       onmouseenter="hlp('min(attribute)','Smallest value.','min(Wing_Length)')">min</button>
+                <button class="k fn" onclick="ins('max(')"       onmouseenter="hlp('max(attribute)','Largest value.','max(Wing_Length)')">max</button>
+                <button class="k fn" onclick="ins('count(')"     onmouseenter="hlp('count(attribute)','Count of non-empty values.','count(Species)')">count</button>
+              </div>
+            </div>
+            <div class="fn-col">
+              <span class="sec">Trigonometry</span>
+              <div class="fn-row" style="flex-wrap:nowrap;margin-bottom:10px">
+                <button class="k trig fn" onclick="ins('sin(')" onmouseenter="hlp('sin(angle)','Sine — angle in radians.','sin(π÷2) → 1')">
+                  <span class="t-sym">sin</span><span class="t-lbl">sine</span>
+                </button>
+                <button class="k trig fn" onclick="ins('cos(')" onmouseenter="hlp('cos(angle)','Cosine — angle in radians.','cos(0) → 1')">
+                  <span class="t-sym">cos</span><span class="t-lbl">cosine</span>
+                </button>
+                <button class="k trig fn" onclick="ins('tan(')" onmouseenter="hlp('tan(angle)','Tangent — angle in radians.','tan(π÷4) → 1')">
+                  <span class="t-sym">tan</span><span class="t-lbl">tangent</span>
+                </button>
+              </div>
+              <span class="sec">Constants</span>
+              <div class="fn-row" style="flex-wrap:nowrap">
+                <button class="k const" onclick="ins('π')" onmouseenter="hlp('π','Pi ≈ 3.14159…','2 × π × r')">π</button>
+                <button class="k const" onclick="ins('e')"  onmouseenter="hlp('e','Euler\'s number ≈ 2.71828…','e^2')">e</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- /tab2 -->
+
+
+        <!-- ══════════════════════════════════════════════════
+             TAB 3: MORE — abs, √, n√, xⁿ, round, log10, ln, mod, n!
+        ══════════════════════════════════════════════════ -->
+        <div id="tab3" style="display:none">
+          <span class="sec">Additional Math</span>
+          <div class="more-wrap">
+            <button class="k fn" onclick="ins('abs(')"   onmouseenter="hlp('abs(x)','Absolute value.','abs(Body_Weight − 10)')">abs</button>
+            <button class="k fn" onclick="ins('√(')"     onmouseenter="hlp('√(x)','Square root.','√(Body_Weight)')">√</button>
+            <button class="k fn" onclick="ins('n√(')"    onmouseenter="hlp('n√(n,x)','Nth root.','n√(3, Body_Weight)')">ⁿ√</button>
+            <button class="k fn" onclick="ins('^2')"     onmouseenter="hlp('x²','Squares a value.','Body_Weight^2')">x²</button>
+            <button class="k fn" onclick="ins('^3')"     onmouseenter="hlp('x³','Cubes a value.','Wing_Length^3')">x³</button>
+            <button class="k fn" onclick="ins('^')"      onmouseenter="hlp('xⁿ','Raises x to power n.','Body_Weight^n')">xⁿ</button>
+            <button class="k fn" onclick="ins('round(')" onmouseenter="hlp('round(x)','Rounds to nearest integer.','round(3.7) → 4')">round</button>
+            <button class="k fn" onclick="ins('log10(')" onmouseenter="hlp('log10(x)','Log base 10.','log10(100) → 2')">log₁₀</button>
+            <button class="k fn" onclick="ins('ln(')"    onmouseenter="hlp('ln(x)','Natural log (base e).','ln(1) → 0')">ln</button>
+            <button class="k fn" onclick="ins(' mod ')"  onmouseenter="hlp('mod','Remainder after division.','10 mod 3 → 1')">mod</button>
+            <button class="k fn" onclick="ins('!')"      onmouseenter="hlp('n!','Factorial.','5! → 120')">n!</button>
+          </div>
+        </div><!-- /tab3 -->
+
+
+        <!-- ══════════════════════════════════════════════════
+             TAB 4: ADVANCED — Logic | Random | Date & Time | Text
+        ══════════════════════════════════════════════════ -->
+        <div id="tab4" style="display:none">
+          <div class="adv-layout">
+
+            <div class="adv-col">
+              <span class="sec">Logic</span>
+              <div class="adv-row">
+                <button class="k fn" onclick="ins('if(')"     onmouseenter="hlp('if(cond, trueVal, falseVal)','If-then-else.','if(Body_Weight &gt; 10, &quot;Heavy&quot;, &quot;Light&quot;)')">if</button>
+                <button class="k fn" onclick="ins(' and ')"   onmouseenter="hlp('and','True when both are true.','Body_Weight &gt; 5 and Gender == &quot;F&quot;')">and</button>
+                <button class="k fn" onclick="ins(' or ')"    onmouseenter="hlp('or','True when at least one is true.','Species == &quot;Hawk&quot; or Body_Weight &gt; 20')">or</button>
+                <button class="k fn" onclick="ins(' xor ')"   onmouseenter="hlp('xor','True when exactly one is true.','(x &gt; 0) xor (y &gt; 0)')">xor</button>
+                <button class="k fn" onclick="ins(' == ')"    onmouseenter="hlp('==','Equal to.','Species == &quot;Hawk&quot;')">==</button>
+                <button class="k fn" onclick="ins(' != ')"    onmouseenter="hlp('!=','Not equal to.','Gender != &quot;M&quot;')">!=</button>
+                <button class="k fn" onclick="ins(' &lt; ')"  onmouseenter="hlp('&lt;','Less than.','Body_Weight &lt; 15')">&lt;</button>
+                <button class="k fn" onclick="ins(' &lt;= ')" onmouseenter="hlp('&lt;=','Less than or equal.','Body_Weight &lt;= 10')">&lt;=</button>
+                <button class="k fn" onclick="ins(' > ')"     onmouseenter="hlp('&gt;','Greater than.','Body_Weight &gt; 10')">&gt;</button>
+                <button class="k fn" onclick="ins(' >= ')"    onmouseenter="hlp('&gt;=','Greater than or equal.','Body_Weight &gt;= 5')">&gt;=</button>
+              </div>
+            </div>
+
+            <div class="adv-col">
+              <span class="sec">Random</span>
+              <div class="adv-row">
+                <button class="k fn" onclick="ins('random()')"            onmouseenter="hlp('random()','Random decimal 0–1.','random() × 100')">random</button>
+                <button class="k fn" onclick="ins('randomInt(min, max)')" onmouseenter="hlp('randomInt(min, max)','Random integer.','randomInt(1, 6)')">randomInt</button>
+                <button class="k fn" onclick="ins('pickRandom(')"         onmouseenter="hlp('pickRandom(attr)','Random from attribute.','pickRandom(Species)')">pickRandom</button>
+              </div>
+            </div>
+
+            <div class="adv-col">
+              <span class="sec">Date &amp; Time</span>
+              <div class="adv-row">
+                <button class="k fn" onclick="ins('secondsToMS(')" onmouseenter="hlp('secondsToMS(s)','Seconds → ms.','secondsToMS(60) → 60000')">secondsToMS</button>
+                <button class="k fn" onclick="ins('minutesToMS(')" onmouseenter="hlp('minutesToMS(m)','Minutes → ms.','minutesToMS(5)')">minutesToMS</button>
+                <button class="k fn" onclick="ins('hoursToMS(')"   onmouseenter="hlp('hoursToMS(h)','Hours → ms.','hoursToMS(2)')">hoursToMS</button>
+                <button class="k fn" onclick="ins('daysToMS(')"    onmouseenter="hlp('daysToMS(d)','Days → ms.','daysToMS(7)')">daysToMS</button>
+                <button class="k fn" onclick="ins('weeksToMS(')"   onmouseenter="hlp('weeksToMS(w)','Weeks → ms.','weeksToMS(4)')">weeksToMS</button>
+                <button class="k fn" onclick="ins('date(')"        onmouseenter="hlp('date(value)','Creates a date.','date(&quot;2024-01-15&quot;)')">date</button>
+              </div>
+            </div>
+
+            <div class="adv-col">
+              <span class="sec">Text</span>
+              <div class="adv-row">
+                <button class="k fn" onclick="ins('concat(')"  onmouseenter="hlp('concat(a, b)','Joins text values.','concat(Species, &quot; — &quot;, Gender)')">concat</button>
+                <button class="k fn" onclick="ins('extract(')" onmouseenter="hlp('extract(text, start, end)','Extracts by position.','extract(Species, 1, 3)')">extract</button>
+                <button class="k fn" onclick="ins('length(')"  onmouseenter="hlp('length(text)','Character count.','length(&quot;Hawk&quot;) → 4')">length</button>
+                <button class="k fn" onclick="ins('string(')"  onmouseenter="hlp('string(value)','Number to text.','string(42) → &quot;42&quot;')">string</button>
+                <button class="k fn" onclick="ins('number(')"  onmouseenter="hlp('number(text)','Text to number.','number(&quot;42&quot;) → 42')">number</button>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /tab4 -->
+
+      </div><!-- /kp-content -->
+
+      <!-- Bottom info bar — no side help panel -->
+      <div class="kp-info" id="helpBox">
+        <span style="font-size:11px;color:var(--gray-3)">ℹ</span>
+        <span style="color:var(--gray-2)">Hover any key to see its description and example.</span>
+      </div>
+
+    </div><!-- /keypad -->
+  </div><!-- /canvas -->
+
+</div><!-- /work -->
+
+<script>
+let formula = '';
+let kpOpen  = false;
+const TABS  = ['tab1','tab2','tab3','tab4'];
+
+function toggleKp() {
+  kpOpen = !kpOpen;
+  document.getElementById('keypad').classList.toggle('open', kpOpen);
+  document.getElementById('kpToggle').classList.toggle('open', kpOpen);
+  const kp = document.getElementById('keypad');
+  document.getElementById('canvas').style.paddingBottom = kpOpen ? kp.offsetHeight + 'px' : '0';
+}
+
+function sw(id, el) {
+  TABS.forEach(t => document.getElementById(t).style.display = 'none');
+  document.querySelectorAll('.kp-tab').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).style.display = '';
+  el.classList.add('on');
+  clearHelp();
+}
+
+function ins(text) { formula += text; refresh() }
+
+function delChar() {
+  if (!formula) return;
+  const t = formula.trimEnd();
+  const noTok = t.replace(/\s*[\w.]+$/, '');
+  formula = noTok.length < t.length ? noTok : t.slice(0, -1);
+  refresh();
+}
+
+function clearAll() { formula = ''; refresh() }
+
+function refresh() {
+  const d = document.getElementById('exprDisp');
+  if (formula) { d.textContent = formula; d.classList.remove('empty') }
+  else { d.textContent = 'Click a key below to build your formula…'; d.classList.add('empty') }
+}
+
+function hlp(name, desc, example) {
+  if (!desc) { clearHelp(); return }
+  let h = `<span style="font-size:11px;color:var(--gray-3)">ℹ</span>
+    <span class="info-name">${name}</span>
+    <span class="info-sep">—</span>
+    <span class="info-desc">${desc}</span>`;
+  if (example) h += `<span class="info-ex">${example}</span>`;
+  document.getElementById('helpBox').innerHTML = h;
+}
+
+function clearHelp() {
+  document.getElementById('helpBox').innerHTML = `
+    <span style="font-size:11px;color:var(--gray-3)">ℹ</span>
+    <span style="color:var(--gray-2)">Hover any key to see its description and example.</span>`;
+}
+
+/* Drag to resize */
+(function(){
+  const handle = document.getElementById('kpHandle');
+  const kp = document.getElementById('keypad');
+  let drag=false, sy=0, sh=0;
+  const MIN=200, MAX=()=>window.innerHeight-120;
+  function move(e){
+    if(!drag) return;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    const h = Math.min(MAX(), Math.max(MIN, sh+(sy-y)));
+    kp.style.height = h+'px';
+    if(kpOpen) document.getElementById('canvas').style.paddingBottom = h+'px';
+  }
+  function up(){ drag=false; document.body.style.userSelect='' }
+  handle.addEventListener('mousedown', e=>{ drag=true; sy=e.clientY; sh=kp.offsetHeight; document.body.style.userSelect='none'; e.preventDefault() });
+  handle.addEventListener('touchstart', e=>{ drag=true; sy=e.touches[0].clientY; sh=kp.offsetHeight; e.preventDefault() },{passive:false});
+  document.addEventListener('mousemove', move);
+  document.addEventListener('touchmove', move, {passive:false});
+  document.addEventListener('mouseup', up);
+  document.addEventListener('touchend', up);
+})();
+</script>
+</body>
+</html>
