@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set up your Tuva account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<!-- Tuvaicons -->
+<link rel="stylesheet" href="https://tuvalabs.com/static/css/tuvaicons/tuvaicons.css">
+<style>
+/* ── Tuva brand tokens (from tuva-brand-guide.md) ──────────────── */
+:root{
+  --teal:#004445; --teal-mid:#005F64; --teal-100:#E0F0F4; --teal-50:#F0F9F4;
+  /* selected state uses teal (WCAG AA ~10:1 contrast) */
+  --green-500:#004445; --green-100:#E0F0F4; --green-700:#004445;
+  --yellow:#ECB606; --yellow-bg:#FDFCE5;
+  --white:#ffffff;
+  --bg-page:#F3F4F6; --bg-surface:#FFFFFF; --bg-subtle:#E4E7EB;
+  --border:#DADFE5; --border-input:#989DA3;
+  --text-dark:#1C2025; --text-mid:#3D4146; --text-muted:#5C6065;
+  --sidebar-bg:#D9ECEF;
+  --radius-base:4px; --radius-lg:8px; --radius-xl:12px; --radius-full:9999px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07);
+  --shadow-lg:0 10px 15px rgba(0,0,0,.1);
+  --transition-fast:150ms ease; --transition-base:200ms ease;
+  --sans:'Source Sans Pro',sans-serif; --serif:'Bitter',serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);font-size:16px;line-height:1.5;color:var(--text-dark);background:var(--bg-page);display:flex;flex-direction:column;min-height:100vh;-webkit-font-smoothing:antialiased}
+button{font-family:var(--sans);cursor:pointer}
+a{color:var(--teal)}
+
+/* ── NAV ──────────────────────────────────────────────────────── */
+.nav{background:var(--teal);height:56px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 32px;flex-shrink:0;position:sticky;top:0;z-index:200}
+.nav-logo{display:flex;align-items:center}
+.nav-logo img{height:28px}
+.nav-title{font-size:16px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.04em;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:24px;font-size:16px}
+.nav-right a{color:rgba(255,255,255,.7);text-decoration:none}
+.nav-right a:hover{color:#fff}
+.nav-user{color:var(--yellow)!important;font-weight:600}
+
+/* ── SHELL ────────────────────────────────────────────────────── */
+.shell{display:flex;flex:1;min-height:0}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────── */
+.sidebar{width:296px;flex-shrink:0;background:var(--sidebar-bg);display:flex;flex-direction:column;padding:48px 32px 36px;overflow-y:auto;border-right:1px solid rgba(0,68,69,.1)}
+.sb-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:24px}
+.stepper{display:flex;flex-direction:column}
+.si{display:flex;gap:14px;position:relative;padding-bottom:32px}
+.si:last-child{padding-bottom:0}
+.si:not(:last-child)::after{content:'';position:absolute;left:15px;top:36px;bottom:0;width:2px;background:var(--border);transition:background var(--transition-base)}
+.si.done:not(:last-child)::after{background:var(--teal)}
+.si-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--text-muted);flex-shrink:0;z-index:1;transition:all var(--transition-base)}
+.si.done .si-dot{background:var(--teal);border-color:var(--teal);color:#fff}
+.si.current .si-dot{background:#fff;border:3px solid var(--teal);color:var(--teal);box-shadow:0 0 0 4px rgba(0,68,69,.1)}
+.si-copy{padding-top:5px;flex:1;min-width:0}
+.si-label{font-size:14px;font-weight:600;color:var(--text-muted);line-height:1.3}
+.si.done .si-label,.si.current .si-label{color:var(--teal)}
+.si-sub{font-size:14px;color:var(--text-muted);line-height:1.4;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.si.done .si-sub,.si.current .si-sub{color:#2d5e5e}
+
+/* sidebar testimonial */
+.sb-testimonial{margin-top:auto;padding-top:40px;border-top:1px solid rgba(0,68,69,.12)}
+.quote-bubble{width:38px;height:38px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.quote-bubble svg{fill:white;width:15px;height:15px}
+.t-text{font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.6;color:#2d5e5e;margin-bottom:14px}
+.t-attr strong{display:block;font-size:16px;font-weight:700;color:var(--teal)}
+.t-attr em{font-style:normal;font-size:14px;color:var(--text-muted);line-height:1.5}
+
+/* ── MAIN ─────────────────────────────────────────────────────── */
+.main{flex:1;background:var(--bg-surface);display:flex;flex-direction:column;overflow-y:auto}
+.step-page{display:none}
+.step-page.active{display:flex;flex-direction:column;flex:1;animation:fadeSlide .2s ease both}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+.step-inner{flex:1;padding:48px 56px 64px;max-width:680px}
+.step-eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+.step-title{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--teal);line-height:1.2;margin-bottom:8px}
+.step-lead{font-size:16px;color:var(--text-muted);line-height:1.6;margin-bottom:32px}
+
+/* ── FORM SECTIONS ────────────────────────────────────────────── */
+.form-section{margin-bottom:28px}
+.form-section+.form-section{padding-top:28px;border-top:1px solid var(--bg-subtle)}
+.fs-label{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.35}
+.fs-note{font-size:16px;color:var(--text-muted);margin-bottom:16px;line-height:1.5}
+
+/* ── CHIPS (grade / area / subject) ──────────────────────────── */
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 20px;border:1.5px solid var(--border);border-radius:var(--radius-full);background:var(--bg-surface);font-size:16px;font-weight:600;color:var(--text-mid);transition:border-color var(--transition-fast),background var(--transition-fast),color var(--transition-fast);white-space:nowrap;cursor:pointer}
+.chip:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-50)}
+/* selected chips use green-500 accent */
+.chip.active{border-color:var(--green-500);background:var(--green-500);color:#fff}
+
+/* ── CARD LIST (single-col, radio-style) ─────────────────────── */
+.card-list{display:flex;flex-direction:column;gap:8px}
+/* two-column card list for curriculum */
+.card-list-2col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.card-item{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-surface);font-size:16px;color:var(--text-mid);transition:border-color var(--transition-fast),background var(--transition-fast);text-align:left;width:100%;cursor:pointer;min-height:52px}
+.card-item:hover{border-color:var(--teal);background:var(--teal-50);color:var(--teal)}
+/* selected = green accent */
+.card-item.active{border-color:var(--green-500);background:var(--green-100);color:var(--green-700);font-weight:600}
+
+/* Radio dot indicator */
+.card-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border-input);background:var(--bg-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all var(--transition-fast)}
+.card-item.active .card-radio{border-color:var(--green-500);background:var(--green-500)}
+/* inner white dot */
+.card-radio::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff;opacity:0;transition:opacity var(--transition-fast)}
+.card-item.active .card-radio::after{opacity:1}
+
+/* Checkbox indicator (multi-select) */
+.card-check{width:20px;height:20px;border-radius:4px;border:2px solid var(--border-input);background:var(--bg-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all var(--transition-fast);flex-shrink:0}
+.card-item.active .card-check{border-color:var(--green-500);background:var(--green-500)}
+.card-check .ti{font-size:12px;color:#fff;opacity:0;transition:opacity var(--transition-fast)}
+.card-item.active .card-check .ti{opacity:1}
+
+.card-text{flex:1;line-height:1.4}
+.card-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:var(--radius-full);font-size:14px;font-weight:600;background:var(--teal-100);color:var(--teal);flex-shrink:0;white-space:nowrap}
+.card-badge .ti{font-size:14px}
+
+/* 2-col role grid */
+.card-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* ── SCHOOL SEARCH ────────────────────────────────────────────── */
+.search-wrap{position:relative}
+.search-input{width:100%;padding:12px 16px 12px 46px;border:1.5px solid var(--border-input);border-radius:var(--radius-lg);font-family:var(--sans);font-size:16px;color:var(--text-dark);outline:none;transition:border-color var(--transition-fast);background:var(--bg-surface)}
+.search-input:focus{border-color:var(--teal)}
+.search-input::placeholder{color:#b0bec5}
+.search-icon-wrap{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#b0bec5;pointer-events:none;font-size:18px}
+.search-drop{border:1.5px solid var(--teal);border-radius:var(--radius-lg);background:var(--bg-surface);max-height:200px;overflow-y:auto;box-shadow:var(--shadow-md);margin-top:4px}
+.search-opt{padding:12px 16px;font-size:16px;color:var(--text-mid);cursor:pointer;border-bottom:1px solid var(--bg-subtle);transition:background var(--transition-fast)}
+.search-opt:last-child{border-bottom:none}
+.search-opt:hover{background:var(--teal-50);color:var(--teal)}
+.sel-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--radius-full);background:var(--teal-100);border:1.5px solid var(--teal);font-size:16px;font-weight:600;color:var(--teal);margin-top:10px}
+.sel-pill button{background:none;border:none;font-size:18px;line-height:1;color:var(--text-muted);padding:0;margin-left:2px;cursor:pointer}
+.sel-pill button:hover{color:var(--teal)}
+.field-hint{font-size:14px;color:var(--text-muted);margin-top:8px;line-height:1.5}
+
+/* ── REVEAL PANELS ────────────────────────────────────────────── */
+.reveal{display:none;margin-top:12px;padding:16px 20px;background:#F0FAF6;border:1.5px solid #B2DDD0;border-radius:var(--radius-lg)}
+.reveal.show{display:block}
+.reveal.warm{background:var(--yellow-bg);border-color:#E6C845}
+.reveal.info{background:var(--teal-50);border-color:var(--teal-100)}
+.reveal-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.reveal p{font-size:16px;line-height:1.5;color:var(--text-mid)}
+.form-textarea{width:100%;padding:12px 16px;border:1.5px solid var(--border-input);border-radius:var(--radius-lg);font-family:var(--sans);font-size:16px;color:var(--text-dark);resize:vertical;min-height:88px;outline:none;transition:border-color var(--transition-fast);margin-top:10px}
+.form-textarea:focus{border-color:var(--teal)}
+.form-textarea::placeholder{color:#b0bec5}
+
+/* ── MODE CARDS (2-col grid) ──────────────────────────────────── */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.mode-card{padding:20px 16px 18px;border:1.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-surface);cursor:pointer;text-align:left;transition:border-color var(--transition-fast),background var(--transition-fast)}
+.mode-card:hover{border-color:var(--teal);background:var(--teal-50)}
+.mode-card.active{border-color:var(--green-500);background:var(--green-100)}
+.mode-icon-wrap{width:40px;height:40px;border-radius:var(--radius-lg);background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:12px;transition:background var(--transition-fast)}
+.mode-card.active .mode-icon-wrap{background:var(--green-500)}
+.mode-icon-wrap .ti{font-size:20px;color:var(--text-muted)}
+.mode-card.active .mode-icon-wrap .ti{color:#fff}
+.mode-title{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
+.mode-desc{font-size:16px;color:var(--text-muted);line-height:1.4}
+.mode-card.active .mode-title{color:var(--green-700)}
+
+/* ── WALKTHROUGH CARDS ────────────────────────────────────────── */
+.wt-cards{display:flex;flex-direction:column;gap:10px}
+.wt-card{display:flex;gap:16px;padding:18px 20px;border:1.5px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-surface);cursor:pointer;text-align:left;transition:border-color var(--transition-fast),background var(--transition-fast);width:100%;align-items:flex-start}
+.wt-card:hover{border-color:var(--teal);background:var(--teal-50)}
+.wt-card.active{border-color:var(--green-500);background:var(--green-100)}
+.wt-icon{width:44px;height:44px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg-subtle);transition:background var(--transition-fast)}
+.wt-icon .ti{font-size:20px;color:var(--text-muted);transition:color var(--transition-fast)}
+.wt-card.active .wt-icon{background:var(--green-500)}
+.wt-card.active .wt-icon .ti{color:#fff}
+.wt-title{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
+.wt-desc{font-size:16px;color:var(--text-muted);line-height:1.5}
+.wt-card.active .wt-title{color:var(--green-700)}
+
+/* ── ROLE GROUPS ──────────────────────────────────────────────── */
+.role-group+.role-group{margin-top:20px}
+.role-group-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+
+/* ── VALIDATION ───────────────────────────────────────────────── */
+.err{display:none;font-size:16px;color:#b71c1c;margin-top:8px}
+.err.show{display:block}
+
+/* ── CTA ROW ──────────────────────────────────────────────────── */
+.cta-row{display:flex;align-items:center;gap:18px;margin-top:40px;padding-top:28px;border-top:1px solid var(--bg-subtle)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:none;border-radius:var(--radius-base);padding:10px 24px;font-size:16px;font-weight:600;letter-spacing:.01em;transition:background var(--transition-fast),transform var(--transition-fast);cursor:pointer}
+.btn-primary:hover{background:var(--teal-mid);transform:translateY(-1px)}
+.btn-primary:active{transform:none}
+.btn-primary .ti{font-size:16px}
+.btn-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-muted);font-size:16px;font-weight:600;padding:8px 0;transition:color var(--transition-fast);cursor:pointer}
+.btn-back:hover{color:var(--teal)}
+.btn-skip{background:none;border:none;color:var(--text-muted);font-size:16px;text-decoration:underline;text-underline-offset:2px;padding:8px 0;margin-left:auto;cursor:pointer;transition:color var(--transition-fast)}
+.btn-skip:hover{color:var(--teal)}
+
+/* ── COMPLETION ───────────────────────────────────────────────── */
+.done-shell{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 40px}
+.done-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:56px 48px;text-align:center;max-width:460px;width:100%;box-shadow:var(--shadow-md)}
+.done-check{width:68px;height:68px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+.done-check .ti{font-size:30px;color:#fff}
+.done-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--teal);margin-bottom:12px}
+.done-text{font-size:16px;color:var(--text-mid);line-height:1.65;margin-bottom:32px}
+.btn-explore{background:var(--yellow);color:var(--teal);border:none;border-radius:var(--radius-base);padding:12px 36px;font-size:16px;font-weight:600;cursor:pointer;transition:background var(--transition-fast)}
+.btn-explore:hover{background:#D4A017;color:#fff}
+
+/* ── FOOTER ───────────────────────────────────────────────────── */
+footer{background:#000;color:rgba(255,255,255,.55);font-size:14px;text-align:center;padding:14px 20px;flex-shrink:0}
+footer a{color:rgba(255,255,255,.65);margin:0 8px}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────── */
+@media(max-width:860px){
+  .sidebar{display:none}
+  .step-inner{padding:32px 24px 48px}
+  .mode-grid,.card-list-2col,.card-grid-2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva" height="28">
+  </a>
+  <span class="nav-title">Account Setup</span>
+  <div class="nav-right">
+    <a href="#">Help</a>
+    <a href="#" class="nav-user">TEACHER <i class="ti ti-chevron-down" aria-hidden="true"></i></a>
+  </div>
+</nav>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-eyebrow">Setup progress</div>
+    <nav class="stepper" id="stepper"></nav>
+    <div class="sb-testimonial">
+      <div class="quote-bubble">
+        <svg viewBox="0 0 24 24"><path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.293 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.293 3.996-5.849h-3.983v-10h9.983z"/></svg>
+      </div>
+      <p class="t-text" id="tText">"Tuva has been this energizing source of collaboration — it unifies diverse teachers and brings everyone to the table."</p>
+      <div class="t-attr">
+        <strong id="tAuthor">–Lisa Jones</strong>
+        <em id="tRole">Salt Lake City · Science Instructional Coach</em>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ── STEP 1: What do you teach? ──────────────────────────── -->
+    <div class="step-page active" id="step-1">
+      <div class="step-inner">
+        <div class="step-eyebrow">Step 1 of 4</div>
+        <h1 class="step-title">What do you teach?</h1>
+        <p class="step-lead">We'll use this to personalise your dashboard, surface relevant datasets, and skip questions that don't apply to you.</p>
+
+        <div class="form-section">
+          <div class="fs-label">Grade band</div>
+          <div class="chip-row" id="gradeChips">
+            <button class="chip" data-grade="K-2">K–2</button>
+            <button class="chip" data-grade="3-5">3–5</button>
+            <button class="chip" data-grade="6-8">6–8</button>
+            <button class="chip" data-grade="9-12">9–12</button>
+            <button class="chip" data-grade="multiple">Multiple grades</button>
+          </div>
+        </div>
+
+        <div class="form-section" id="areaSection" style="display:none">
+          <div class="fs-label">Teaching area <span style="font-weight:400;color:var(--text-muted)">— select all that apply</span></div>
+          <div class="chip-row" id="areaChips"></div>
+        </div>
+
+        <div class="form-section" id="subjectSection" style="display:none">
+          <div class="fs-label" id="subjectLabel">Specific subjects <span style="font-weight:400;color:var(--text-muted)">— select all that apply</span></div>
+          <div class="chip-row" id="subjectChips"></div>
+        </div>
+
+        <div class="err" id="err-1">Please choose a grade band, teaching area, and at least one subject.</div>
+        <div class="cta-row">
+          <button class="btn-primary" id="btn-1-next">Next <i class="ti ti-next" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: School ───────────────────────────────────────── -->
+    <div class="step-page" id="step-2">
+      <div class="step-inner">
+        <div class="step-eyebrow">Step 2 of 4</div>
+        <h1 class="step-title">Which school are you from?</h1>
+        <p class="step-lead">We use this to connect you to the right account and make recommendations feel relevant to your setting.</p>
+
+        <div class="form-section">
+          <div class="fs-label">Search for your school or district</div>
+          <div class="search-wrap">
+            <span class="search-icon-wrap"><i class="ti ti-search" aria-hidden="true"></i></span>
+            <input type="text" class="search-input" id="schoolInput" placeholder="e.g. Jefferson Elementary, Austin ISD…" autocomplete="off">
+          </div>
+          <div class="search-drop" id="schoolDrop" style="display:none"></div>
+          <div id="schoolPill" style="display:none">
+            <div class="sel-pill">
+              <i class="ti ti-tick" aria-hidden="true"></i>
+              <span id="schoolPillText"></span>
+              <button id="clearSchoolBtn" aria-label="Clear school"><i class="ti ti-close" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <p class="field-hint">Can't find your school? Type the name and press Enter.</p>
+        </div>
+
+        <div class="err" id="err-2">Please enter or select your school, district, or organization.</div>
+        <div class="cta-row">
+          <button class="btn-back" id="btn-2-back"><i class="ti ti-previous" aria-hidden="true"></i> Back</button>
+          <button class="btn-primary" id="btn-2-next">Next <i class="ti ti-next" aria-hidden="true"></i></button>
+          <button class="btn-skip" id="btn-2-skip">Skip for now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: Role ─────────────────────────────────────────── -->
+    <div class="step-page" id="step-3">
+      <div class="step-inner">
+        <div class="step-eyebrow">Step 3 of 4</div>
+        <h1 class="step-title">Tell us about your role</h1>
+        <p class="step-lead">This helps us tailor your dashboard, examples, and support resources.</p>
+
+        <div class="form-section">
+          <div class="role-group">
+            <div class="role-group-label">School-based roles</div>
+            <div class="card-grid-2" id="roleCardsSchool"></div>
+          </div>
+          <div class="role-group">
+            <div class="role-group-label">District &amp; other roles</div>
+            <div class="card-grid-2" id="roleCardsOther"></div>
+          </div>
+        </div>
+
+        <div class="err" id="err-3">Please select a role.</div>
+        <div class="cta-row">
+          <button class="btn-back" id="btn-3-back"><i class="ti ti-previous" aria-hidden="true"></i> Back</button>
+          <button class="btn-primary" id="btn-3-next">Next <i class="ti ti-next" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: Curriculum + Support ────────────────────────── -->
+    <div class="step-page" id="step-4">
+      <div class="step-inner" style="max-width:720px">
+        <div class="step-eyebrow">Step 4 of 4</div>
+        <h1 class="step-title" id="currTitle">Which curriculum do you use?</h1>
+        <p class="step-lead" id="currLead">We'll surface aligned lesson connections on your dashboard right away.</p>
+
+        <!-- curriculum cards — rendered as 2-col grid for math/science -->
+        <div class="form-section">
+          <div id="curriculumCards"></div>
+          <div class="reveal warm" id="otherCurrField">
+            <div class="reveal-title"><i class="ti ti-pencil" aria-hidden="true"></i> Which curriculum do you use?</div>
+            <textarea class="form-textarea" id="otherCurrText" placeholder="Type your curriculum name…"></textarea>
+          </div>
+          <div class="reveal info" id="alignmentPanel">
+            <div class="reveal-title" id="alignmentTitle"><i class="ti ti-success-o" aria-hidden="true"></i> Aligned in Tuva</div>
+            <p id="alignmentText">We'll surface aligned materials on your dashboard so you can hit the ground running.</p>
+          </div>
+        </div>
+
+        <!-- delivery mode — Jr. only -->
+        <div class="form-section" id="deliverySection" style="display:none">
+          <div class="fs-label">How will you most likely use Tuva Jr. in class?</div>
+          <div class="fs-note">This helps us recommend the most relevant strategies and resources.</div>
+          <div class="mode-grid" id="modeCards">
+            <button class="mode-card" data-mode="whole-class">
+              <div class="mode-icon-wrap"><i class="ti ti-chart" aria-hidden="true"></i></div>
+              <div class="mode-title">Whole-class</div>
+              <div class="mode-desc">Projected or smartboard for the full class.</div>
+            </button>
+            <button class="mode-card" data-mode="small-group">
+              <div class="mode-icon-wrap"><i class="ti ti-alert-group-work" aria-hidden="true"></i></div>
+              <div class="mode-title">Small groups</div>
+              <div class="mode-desc">Students working in pods or stations.</div>
+            </button>
+            <button class="mode-card" data-mode="individual">
+              <div class="mode-icon-wrap"><i class="ti ti-steps" aria-hidden="true"></i></div>
+              <div class="mode-title">Individual</div>
+              <div class="mode-desc">Each student on their own device.</div>
+            </button>
+            <button class="mode-card" data-mode="mixed">
+              <div class="mode-icon-wrap"><i class="ti ti-activities" aria-hidden="true"></i></div>
+              <div class="mode-title">A mix of modes</div>
+              <div class="mode-desc">Varies by lesson or unit.</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- challenges -->
+        <div class="form-section">
+          <div class="fs-label">What's your main challenge? <span style="font-weight:400;color:var(--text-muted)">— select any that apply</span></div>
+          <div class="card-list" id="challengeCards">
+            <button class="card-item" data-challenge="lessons">
+              <div class="card-check"><i class="ti ti-tick" aria-hidden="true"></i></div>
+              <div class="card-text">Finding grade-appropriate, standards-aligned lessons</div>
+            </button>
+            <button class="card-item" data-challenge="integration">
+              <div class="card-check"><i class="ti ti-tick" aria-hidden="true"></i></div>
+              <div class="card-text">Integrating Tuva into my core curriculum</div>
+            </button>
+            <button class="card-item" data-challenge="leadership">
+              <div class="card-check"><i class="ti ti-tick" aria-hidden="true"></i></div>
+              <div class="card-text">Getting support from school or district leadership</div>
+            </button>
+            <button class="card-item" data-challenge="howto">
+              <div class="card-check"><i class="ti ti-tick" aria-hidden="true"></i></div>
+              <div class="card-text">Learning how to best use Tuva in my classroom</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- walkthrough -->
+        <div class="form-section">
+          <div class="fs-label">Would you like a free 20-min walkthrough with the Tuva team?</div>
+          <div class="wt-cards">
+            <button class="wt-card" data-wt="yes">
+              <div class="wt-icon"><i class="ti ti-calendar" aria-hidden="true"></i></div>
+              <div>
+                <div class="wt-title">Yes, please reach out</div>
+                <div class="wt-desc">I'd love a quick Zoom to get started and ask questions live.</div>
+              </div>
+            </button>
+            <button class="wt-card" data-wt="no">
+              <div class="wt-icon"><i class="ti ti-graph" aria-hidden="true"></i></div>
+              <div>
+                <div class="wt-title">I'll explore on my own</div>
+                <div class="wt-desc">I can reach out to hello@tuvalabs.com if I need help later.</div>
+              </div>
+            </button>
+          </div>
+          <div class="reveal info" id="wtConfirm">
+            <div class="reveal-title"><i class="ti ti-success-o" aria-hidden="true"></i> We'll follow up!</div>
+            <p>We'll reach out to the email on your account to schedule a time that works for you.</p>
+          </div>
+        </div>
+
+        <div class="err" id="err-4">Please select a curriculum to continue.</div>
+        <div class="cta-row">
+          <button class="btn-back" id="btn-4-back"><i class="ti ti-previous" aria-hidden="true"></i> Back</button>
+          <button class="btn-primary" id="btn-4-next">Finish &amp; Explore Tuva <i class="ti ti-next" aria-hidden="true"></i></button>
+          <button class="btn-skip" id="btn-4-skip">Skip curriculum</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DONE ─────────────────────────────────────────────────── -->
+    <div class="step-page" id="step-done">
+      <div class="done-shell">
+        <div class="done-card">
+          <div class="done-check"><i class="ti ti-tick" aria-label="Complete"></i></div>
+          <div class="done-title">You're all set!</div>
+          <p class="done-text" id="doneText">Your Tuva account is personalised and ready. Let's start exploring.</p>
+          <button class="btn-explore">Explore Tuva <i class="ti ti-next" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>Copyright © 2026 Tuva Labs Inc. <a href="#">Privacy Policy</a> <a href="#">Terms of Service</a></footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+/* ── DATA ──────────────────────────────────────────────────────── */
+var AREAS=[
+  {v:'jr',l:'Elementary (Tuva Jr.)',bands:['K-2','3-5','multiple']},
+  {v:'math',l:'Math',bands:['6-8','9-12','multiple']},
+  {v:'science',l:'Science',bands:['6-8','9-12','multiple']},
+  {v:'ss',l:'Social Studies',bands:['6-8','9-12','multiple']}
+];
+
+var SUBJECTS={
+  jr:[{v:'elem-math',l:'Elementary Math'},{v:'elem-sci',l:'Elementary Science'},{v:'elem-ss',l:'Elementary Social Studies'},{v:'elem-ela',l:'Elementary ELA'}],
+  math:[{v:'ms-math',l:'Middle School Math',bands:['6-8','multiple']},{v:'algebra1',l:'Algebra I'},{v:'geometry',l:'Geometry'},{v:'algebra2',l:'Algebra II',bands:['9-12','multiple']},{v:'data-sci',l:'Data Science',bands:['9-12','multiple']},{v:'ap-stats',l:'AP Statistics',bands:['9-12','multiple']},{v:'calculus',l:'Calculus',bands:['9-12','multiple']}],
+  science:[{v:'earth-sci',l:'Earth Science',bands:['6-8','multiple']},{v:'life-sci',l:'Life Science',bands:['6-8','multiple']},{v:'phys-sci',l:'Physical Science',bands:['6-8','multiple']},{v:'biology',l:'Biology',bands:['9-12','multiple']},{v:'chemistry',l:'Chemistry',bands:['9-12','multiple']},{v:'physics',l:'Physics',bands:['9-12','multiple']},{v:'3d-assess',l:'3D Science Assessments'}],
+  ss:[{v:'ss',l:'Social Studies'}]
+};
+
+var CURRICULA={
+  math:{
+    title:'Which math curriculum do you use?',
+    lead:"We'll surface aligned lessons on your dashboard right away.",
+    twoCol:true,
+    items:[
+      {v:'amplify-desmos',l:'Amplify Desmos Math',aligned:true},
+      {v:'big-ideas',l:'Big Ideas Learning'},
+      {v:'envision',l:'Envision Math by Savvas'},
+      {v:'illustrative',l:'Illustrative Mathematics',aligned:true},
+      {v:'into-math',l:'Into Math by HMH'},
+      {v:'math-nation',l:'Math Nation by Accelerate Learning'},
+      {v:'reveal-math',l:'Reveal Math by McGraw Hill'},
+      {v:'stemscopes-math',l:'STEMscopes Math'},
+      {v:'other',l:'Other'}
+    ]
+  },
+  science:{
+    title:'Which science curriculum do you use?',
+    lead:"We'll surface aligned lessons on your dashboard right away.",
+    twoCol:true,
+    items:[
+      {v:'amplify-sci',l:'Amplify Science'},
+      {v:'inspire-sci',l:'Inspire Science by McGraw Hill'},
+      {v:'openscied',l:'OpenSciEd',aligned:true},
+      {v:'into-sci',l:'Into Science by HMH'},
+      {v:'stemscopes-sci',l:'STEMscopes Science',aligned:true},
+      {v:'natgeo',l:'National Geographic / Cengage'},
+      {v:'other',l:'Other'}
+    ]
+  },
+  jr:{title:'Which elementary curriculum do you use?',lead:'Tell us your curriculum so we can understand demand and expand alignment.',freeEntry:true},
+  ss:{title:'Which social studies curriculum do you use?',lead:'Tell us your curriculum so we can understand demand and expand alignment.',freeEntry:true}
+};
+
+var ROLES={
+  school:[
+    {v:'teacher',l:'Teacher'},
+    {v:'dept-head',l:'Department Head'},
+    {v:'instr-coach-school',l:'Instructional Coach'},
+    {v:'tech-coord',l:'Technology Coordinator'},
+    {v:'media-spec',l:'Media Specialist / Librarian'},
+    {v:'it-admin-school',l:'IT Admin (School)'},
+    {v:'principal',l:'Principal'},
+    {v:'other-admin',l:'Other School Admin'}
+  ],
+  other:[
+    {v:'instr-coach-dist',l:'Instructional Coach (District)'},
+    {v:'district-admin',l:'District Administrator'},
+    {v:'it-admin-dist',l:'IT Admin (District)'},
+    {v:'state-coord',l:'State Coordinator'},
+    {v:'researcher',l:'Researcher'}
+  ]
+};
+
+var SCHOOLS=['Jefferson Elementary','Denver Public Schools','Austin ISD','Chicago Public Schools','Houston ISD','Los Angeles Unified','New York City DOE','Boston Public Schools','Everett Middle School','Abraham Lincoln High School','Mission High School','Presidio Middle School','Sunset Elementary','Aptos Middle School'];
+
+var TESTIMONIALS=[
+  {text:'"Tuva has been this energizing source of collaboration — it unifies diverse teachers and brings everyone to the table."',author:'–Lisa Jones',role:'Salt Lake City · Science Instructional Coach'},
+  {text:'"This platform fills gaps we didn\'t know existed. We see strong gains in data literacy across Grades 3–12."',author:'–Tara Fogel',role:'Greenwich Public Schools · Science Learning Coordinator'},
+  {text:'"Tuva Jr. transforms our classroom into a vibrant hub of exploration — students discover the power of curiosity."',author:'–BJ Barrie',role:'5th-Grade Teacher'},
+  {text:'"Students can take their gathered data and place it into Tuva — an immediate way to connect actions to powerful analysis."',author:'–Ann McClellan',role:'Gifted and Talented Teacher · Troy Elementary, ME'}
+];
+
+var STEP_META=[
+  {label:'What you teach',getSub:function(){return subSummary()}},
+  {label:'Your school',getSub:function(){return s.school||'—'}},
+  {label:'Your role',getSub:function(){return roleLabel(s.role)||'—'}},
+  {label:'Curriculum',getSub:function(){return currLabel()||'—'}}
+];
+
+/* ── STATE ─────────────────────────────────────────────────────── */
+var s={grade:'',areas:[],activeArea:'',subjects:[],school:'',role:'',curriculum:'',currOther:'',deliveryMode:'',challenges:[],walkthrough:''};
+var currentStep=1;
+
+/* ── HELPERS ───────────────────────────────────────────────────── */
+function $$(id){return document.getElementById(id);}
+function subSummary(){
+  if(!s.grade)return '—';
+  var area=s.activeArea||s.areas[0]||'';
+  var subs=s.subjects.map(function(v){return(SUBJECTS[area]||[]).find(function(x){return x.v===v;});}).filter(Boolean).map(function(x){return x.l;});
+  if(subs.length){var j=subs.slice(0,2).join(', ');return subs.length>2?j+' +'+(subs.length-2):j;}
+  if(s.areas.length){return s.areas.map(function(a){return(AREAS.find(function(x){return x.v===a;})||{}).l;}).filter(Boolean).join(', ');}
+  return s.grade;
+}
+function roleLabel(v){return([].concat(ROLES.school,ROLES.other).find(function(r){return r.v===v;})||{}).l||'';}
+function currLabel(){
+  if(s.currOther)return s.currOther.trim();
+  var cfg=CURRICULA[s.activeArea];
+  if(!cfg||!s.curriculum)return '';
+  return(cfg.items&&cfg.items.find(function(i){return i.v===s.curriculum;})||{}).l||'';
+}
+function isCurrAligned(){
+  var cfg=CURRICULA[s.activeArea];
+  return!!(cfg&&cfg.items&&(cfg.items.find(function(i){return i.v===s.curriculum;})||{}).aligned);
+}
+function getActiveArea(){
+  if(!s.areas.length)return '';
+  if(s.areas.length===1)return s.areas[0];
+  return s.areas.indexOf(s.activeArea)>-1?s.activeArea:s.areas[0];
+}
+function getVisibleAreas(){
+  if(!s.grade)return [];
+  return AREAS.filter(function(a){return a.bands.indexOf(s.grade)>-1;});
+}
+
+/* ── NAVIGATION ────────────────────────────────────────────────── */
+function goTo(id){
+  document.querySelectorAll('.step-page').forEach(function(p){p.classList.remove('active');});
+  $$('step-'+id).classList.add('active');
+  var n=parseInt(id,10);
+  if(!isNaN(n)){
+    currentStep=n;
+    $$('sidebar').style.display='';
+    var t=TESTIMONIALS[(n-1)%TESTIMONIALS.length];
+    $$('tText').textContent=t.text;
+    $$('tAuthor').textContent=t.author;
+    $$('tRole').textContent=t.role;
+  } else {
+    $$('sidebar').style.display='none';
+    buildDoneText();
+  }
+  renderStepper();
+  window.scrollTo(0,0);
+}
+
+/* ── STEPPER ───────────────────────────────────────────────────── */
+function renderStepper(){
+  $$('stepper').innerHTML=STEP_META.map(function(step,i){
+    var idx=i+1,done=idx<currentStep,curr=idx===currentStep,cls=done?'done':curr?'current':'';
+    var dot=done?'<i class="ti ti-tick" aria-hidden="true"></i>':idx;
+    return '<div class="si '+cls+'"><div class="si-dot">'+dot+'</div>'
+      +'<div class="si-copy"><div class="si-label">'+step.label+'</div>'
+      +'<div class="si-sub">'+step.getSub()+'</div></div></div>';
+  }).join('');
+}
+
+/* ── STEP 1 ─────────────────────────────────────────────────────── */
+function renderGradeChips(){
+  $$('gradeChips').querySelectorAll('[data-grade]').forEach(function(b){
+    b.classList.toggle('active',b.dataset.grade===s.grade);
+  });
+}
+function renderAreaChips(){
+  var sec=$$('areaSection'),vis=getVisibleAreas();
+  if(!vis.length){sec.style.display='none';return;}
+  sec.style.display='';
+  $$('areaChips').innerHTML=vis.map(function(a){
+    return '<button class="chip'+(s.areas.indexOf(a.v)>-1?' active':'')+'" data-area="'+a.v+'">'+a.l+'</button>';
+  }).join('');
+}
+function renderSubjectChips(){
+  var sec=$$('subjectSection'),area=getActiveArea(),subs=SUBJECTS[area]||[];
+  if(!area||!subs.length){sec.style.display='none';return;}
+  sec.style.display='';
+  var label=(AREAS.find(function(a){return a.v===area;})||{}).l||'';
+  $$('subjectLabel').innerHTML=label+' subjects <span style="font-weight:400;color:var(--text-muted)">— select all that apply</span>';
+  $$('subjectChips').innerHTML=subs
+    .filter(function(sub){return!sub.bands||sub.bands.indexOf(s.grade)>-1;})
+    .map(function(sub){
+      return '<button class="chip'+(s.subjects.indexOf(sub.v)>-1?' active':'')+'" data-sub="'+sub.v+'">'+sub.l+'</button>';
+    }).join('');
+}
+
+$$('gradeChips').addEventListener('click',function(e){
+  var b=e.target.closest('[data-grade]');
+  if(!b)return;
+  s.grade=b.dataset.grade;s.areas=[];s.activeArea='';s.subjects=[];
+  renderGradeChips();renderAreaChips();renderSubjectChips();renderStepper();
+});
+$$('areaChips').addEventListener('click',function(e){
+  var b=e.target.closest('[data-area]');
+  if(!b)return;
+  var v=b.dataset.area,idx=s.areas.indexOf(v);
+  if(idx>-1)s.areas.splice(idx,1);else s.areas.push(v);
+  s.activeArea=getActiveArea();
+  var valid=(SUBJECTS[s.activeArea]||[]).map(function(x){return x.v;});
+  s.subjects=s.subjects.filter(function(sv){return valid.indexOf(sv)>-1;});
+  renderAreaChips();renderSubjectChips();renderStepper();
+});
+$$('subjectChips').addEventListener('click',function(e){
+  var b=e.target.closest('[data-sub]');
+  if(!b)return;
+  var v=b.dataset.sub,idx=s.subjects.indexOf(v);
+  if(idx>-1)s.subjects.splice(idx,1);else s.subjects.push(v);
+  renderSubjectChips();renderStepper();
+});
+
+function validateStep1(){
+  var err=$$('err-1');
+  if(!s.grade||!s.areas.length||!s.subjects.length){err.classList.add('show');return;}
+  err.classList.remove('show');
+  s.activeArea=getActiveArea();
+  buildStep4();goTo(2);
+}
+
+/* ── STEP 2 ─────────────────────────────────────────────────────── */
+var sInput=$$('schoolInput'),sDrop=$$('schoolDrop');
+sInput.addEventListener('input',function(){
+  var q=this.value.trim().toLowerCase();
+  s.school='';$$('schoolPill').style.display='none';
+  if(!q){sDrop.style.display='none';return;}
+  var hits=SCHOOLS.filter(function(sc){return sc.toLowerCase().indexOf(q)>-1;});
+  if(!hits.length){sDrop.style.display='none';return;}
+  sDrop.innerHTML=hits.map(function(sc){return '<div class="search-opt" data-school="'+sc+'">'+sc+'</div>';}).join('');
+  sDrop.style.display='block';
+});
+sInput.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&this.value.trim())selectSchool(this.value.trim());
+});
+sDrop.addEventListener('click',function(e){
+  var o=e.target.closest('[data-school]');
+  if(o)selectSchool(o.dataset.school);
+});
+function selectSchool(name){
+  s.school=name;sInput.value='';sDrop.style.display='none';
+  $$('schoolPillText').textContent=name;$$('schoolPill').style.display='block';
+  renderStepper();
+}
+$$('clearSchoolBtn').addEventListener('click',function(){
+  s.school='';$$('schoolPill').style.display='none';sInput.value='';renderStepper();
+});
+function validateStep2(){
+  var err=$$('err-2'),typed=sInput.value.trim();
+  if(!s.school&&!typed){err.classList.add('show');return;}
+  if(!s.school&&typed)selectSchool(typed);
+  err.classList.remove('show');goTo(3);
+}
+
+/* ── STEP 3 ─────────────────────────────────────────────────────── */
+function buildRoleCards(){
+  ['school','other'].forEach(function(grp){
+    var suffix=grp==='school'?'School':'Other';
+    $$('roleCards'+suffix).innerHTML=ROLES[grp].map(function(r){
+      return '<button class="card-item'+(s.role===r.v?' active':'')+'" data-role="'+r.v+'">'
+        +'<div class="card-radio"></div>'
+        +'<div class="card-text">'+r.l+'</div>'
+        +'</button>';
+    }).join('');
+  });
+}
+function validateStep3(){
+  var err=$$('err-3');
+  if(!s.role){err.classList.add('show');return;}
+  err.classList.remove('show');goTo(4);
+}
+
+/* ── STEP 4 ─────────────────────────────────────────────────────── */
+function buildStep4(){
+  var cfg=CURRICULA[s.activeArea];
+  if(!cfg)return;
+  $$('currTitle').textContent=cfg.title;
+  $$('currLead').textContent=cfg.lead;
+  var cardEl=$$('curriculumCards'),oF=$$('otherCurrField'),dS=$$('deliverySection');
+
+  if(cfg.freeEntry){
+    cardEl.innerHTML='';
+    oF.classList.add('show');
+    $$('otherCurrText').value=s.currOther;
+  } else {
+    /* Use 2-col grid when twoCol flag is set */
+    var gridClass=cfg.twoCol?'card-list-2col':'card-list';
+    cardEl.innerHTML='<div class="'+gridClass+'">'
+      +cfg.items.map(function(item){
+        return '<button class="card-item'+(s.curriculum===item.v?' active':'')+'" data-curr="'+item.v+'">'
+          +'<div class="card-radio"></div>'
+          +'<div class="card-text">'+item.l+'</div>'
+          +(item.aligned?'<span class="card-badge"><i class="ti ti-tick" aria-hidden="true"></i> Aligned</span>':'')
+          +'</button>';
+      }).join('')
+      +'</div>';
+    updateCurrUI();
+  }
+  dS.style.display=s.activeArea==='jr'?'':'none';
+}
+
+function updateCurrUI(){
+  var oF=$$('otherCurrField'),aP=$$('alignmentPanel');
+  oF.classList.toggle('show',s.curriculum==='other');
+  if(isCurrAligned()){
+    aP.classList.add('show');
+    $$('alignmentTitle').innerHTML='<i class="ti ti-success-o" aria-hidden="true"></i> Aligned in Tuva';
+    $$('alignmentText').textContent="We'll surface aligned lesson materials right on your dashboard so you can hit the ground running.";
+  } else if(s.curriculum&&s.curriculum!=='other'){
+    aP.classList.add('show');
+    $$('alignmentTitle').innerHTML='<i class="ti ti-info" aria-hidden="true"></i> Thanks for sharing';
+    $$('alignmentText').textContent='We track curriculum usage across teachers to decide where to expand alignment next.';
+  } else {
+    aP.classList.remove('show');
+  }
+}
+
+$$('otherCurrText').addEventListener('input',function(){s.currOther=this.value;renderStepper();});
+
+function validateStep4(){
+  var err=$$('err-4'),cfg=CURRICULA[s.activeArea];
+  var ok=cfg&&cfg.freeEntry
+    ?s.currOther.trim().length>0
+    :!!(s.curriculum&&(s.curriculum!=='other'||s.currOther.trim().length>0));
+  if(!ok){err.classList.add('show');return;}
+  err.classList.remove('show');goTo('done');
+}
+
+function buildDoneText(){
+  var parts=['your teaching context'];
+  if(s.school)parts.unshift('your school');
+  if(currLabel())parts.push('the '+currLabel()+' curriculum');
+  var text="We'll personalise your dashboard based on "+parts.join(', ')+'.';
+  if(isCurrAligned())text+=' Aligned curriculum materials will appear right away.';
+  if(s.walkthrough==='yes')text+=' Someone from Tuva will follow up to schedule your walkthrough.';
+  $$('doneText').textContent=text;
+}
+
+/* ── DELEGATED CLICKS ──────────────────────────────────────────── */
+document.addEventListener('click',function(e){
+  /* role */
+  var rb=e.target.closest('[data-role]');
+  if(rb){
+    s.role=rb.dataset.role;
+    document.querySelectorAll('[data-role]').forEach(function(el){el.classList.toggle('active',el.dataset.role===s.role);});
+    renderStepper();return;
+  }
+  /* curriculum */
+  var cb=e.target.closest('[data-curr]');
+  if(cb){
+    s.curriculum=cb.dataset.curr;s.currOther='';
+    document.querySelectorAll('[data-curr]').forEach(function(el){el.classList.toggle('active',el.dataset.curr===s.curriculum);});
+    $$('otherCurrText').value='';
+    updateCurrUI();renderStepper();return;
+  }
+  /* delivery mode */
+  var mb=e.target.closest('[data-mode]');
+  if(mb){
+    s.deliveryMode=mb.dataset.mode;
+    document.querySelectorAll('[data-mode]').forEach(function(el){el.classList.toggle('active',el.dataset.mode===s.deliveryMode);});
+    return;
+  }
+  /* challenges */
+  var chb=e.target.closest('[data-challenge]');
+  if(chb){
+    var cv=chb.dataset.challenge,ci=s.challenges.indexOf(cv);
+    if(ci>-1){s.challenges.splice(ci,1);chb.classList.remove('active');}
+    else{s.challenges.push(cv);chb.classList.add('active');}
+    return;
+  }
+  /* walkthrough */
+  var wtb=e.target.closest('[data-wt]');
+  if(wtb){
+    s.walkthrough=wtb.dataset.wt;
+    document.querySelectorAll('[data-wt]').forEach(function(el){el.classList.toggle('active',el.dataset.wt===s.walkthrough);});
+    $$('wtConfirm').classList.toggle('show',s.walkthrough==='yes');
+  }
+});
+
+/* ── BUTTON WIRING ─────────────────────────────────────────────── */
+$$('btn-1-next').addEventListener('click',validateStep1);
+$$('btn-2-back').addEventListener('click',function(){goTo(1);});
+$$('btn-2-next').addEventListener('click',validateStep2);
+$$('btn-2-skip').addEventListener('click',function(){s.school='';goTo(3);});
+$$('btn-3-back').addEventListener('click',function(){goTo(2);});
+$$('btn-3-next').addEventListener('click',validateStep3);
+$$('btn-4-back').addEventListener('click',function(){goTo(3);});
+$$('btn-4-next').addEventListener('click',validateStep4);
+$$('btn-4-skip').addEventListener('click',function(){goTo('done');});
+
+/* ── INIT ──────────────────────────────────────────────────────── */
+buildRoleCards();
+renderStepper();
+});
+</script>
+</body>
+</html>
