@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Types of M&Ms · Activity — Tuva</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://tuvalabs.com/static/css/tuvaicons/tuvaicons.css">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TUVA DESIGN TOKENS
+   Source: tuva-brand-guide.md (strict)
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  /* Brand core */
+  --teal:           #004445;
+  --teal-light:     #005F64;
+  --magenta:        #8C1A64;
+  --yellow:         #ECB606;
+  --red:            #A71931;
+  --purple:         #682D8A;
+
+  /* Shade palettes */
+  --green-900: #004445; --green-800: #005F64; --green-700: #007775;
+  --green-600: #008894; --green-500: #46AD89; --green-300: #7DC4CE;
+  --green-200: #B1DBE2; --green-100: #E0F0F4; --green-50: #F0F9F4;
+
+  --yellow-700: #ECB606; --yellow-300: #F2E969; --yellow-200: #F6EF94;
+  --yellow-100: #F9F6BF; --yellow-50: #FDFCE5;
+
+  --magenta-900: #8C1A64; --magenta-700: #C83374;
+  --magenta-100: #F7BEDB; --magenta-50: #FBE5F0;
+
+  --purple-900: #682D8A; --purple-700: #8453A8;
+  --purple-100: #E8DEF2; --purple-50: #F5F0FA;
+
+  --red-900: #C10000; --red-100: #FFCCCE; --red-50: #FFEBED;
+
+  /* Surfaces & text */
+  --bg-page:      #F3F4F6;
+  --bg-surface:   #FFFFFF;
+  --bg-subtle:    #E4E7EB;
+  --border:       #DADFE5;
+  --border-light: #D3D8E1;
+  --border-input: #989DA3;
+  --text-dark:    #1C2025;
+  --text-mid:     #3D4146;
+  --text-muted:   #5C6065;
+
+  /* Status */
+  --warning:      #D4A017;
+  --premium:      #ECB606;
+  --premium-dark: #C49A04;
+  --premium-bg:   #FFFDE7;
+
+  /* Layout */
+  --nav-height:             56px;
+  --content-max-width:      984px;
+  --content-max-width-wide: 1200px;
+
+  /* Radius */
+  --radius-sm:   2px;
+  --radius-base: 4px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.10);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+
+  /* Typography */
+  --font-sans:  'Source Sans 3', 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  --font-serif: 'Bitter', Georgia, serif;
+  --font-mono:  ui-monospace, 'JetBrains Mono', monospace;
+
+  /* Z-index */
+  --z-sticky:   200;
+  --z-tooltip:  600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior: smooth; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-dark);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3,h4,h5,h6{ margin:0; font-family: var(--font-serif); color: var(--text-dark); line-height: 1.2; }
+h1{ font-size: 30px; font-weight: 700; }
+h2{ font-size: 28px; font-weight: 700; }
+h3{ font-size: 26px; font-weight: 700; }
+h4{ font-size: 24px; font-weight: 600; }
+h5{ font-size: 22px; font-weight: 600; }
+h6{ font-size: 20px; font-weight: 600; }
+a{ color: var(--magenta); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+button{ font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+ul,ol{ margin: 0; padding-left: 20px; }
+img{ max-width:100%; display:block; }
+.ti{ line-height: 1; }
+
+/* ═══════════════════════════════════════════════════════════
+   DEMO HARNESS (wireframe only, not production)
+   ═══════════════════════════════════════════════════════════ */
+.demo-bar{
+  position: sticky; top: 0; z-index: 1000;
+  background: #111; color: #fff;
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 20px;
+  font-size: 14px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #2a2a2a;
+}
+.demo-bar strong{ color: #fff; letter-spacing: 0.5px; text-transform: uppercase; font-size: 14px; }
+.demo-bar-group{ display:flex; gap: 4px; align-items: center; }
+.demo-bar-group > span{ color:#8a8a8a; margin-right: 6px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+.seg{
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: #bbb;
+  border: 1px solid #333;
+  font-size: 14px;
+  font-family: inherit;
+}
+.seg:hover{ color: #fff; border-color: #555; }
+.seg.active{ background: #fff; color: #111; border-color: #fff; }
+.demo-bar-spacer{ flex:1; }
+.demo-bar small{ color: #777; font-size: 14px; }
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════ */
+.btn{
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 20px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-base);
+  border: 1px solid transparent;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 40px;
+  color: #fff;
+}
+.btn i{ font-size: 16px; }
+
+.btn-primary{ background: var(--teal); color: #fff; }
+.btn-primary:hover{ background: var(--teal-light); }
+
+.btn-secondary{ background: transparent; color: var(--teal); border-color: var(--teal); }
+.btn-secondary:hover{ background: var(--green-100); }
+
+.btn-ghost{ background: transparent; color: var(--text-mid); border-color: var(--border); }
+.btn-ghost:hover{ background: var(--bg-subtle); color: var(--text-dark); }
+
+.btn-accent{ background: var(--yellow); color: var(--teal); font-weight: 700; }
+.btn-accent:hover{ background: var(--premium-dark); color: #fff; }
+
+.btn-danger{ background: var(--red); color: #fff; }
+
+.btn-block{ width: 100%; }
+.btn-sm{ padding: 6px 14px; font-size: 14px; min-height: 32px; }
+.btn-sm i{ font-size: 14px; }
+.btn-lg{ padding: 10px 22px; min-height: 44px; }
+
+.btn-icon{
+  width: 40px; height: 40px; padding: 0;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-mid);
+  border-radius: var(--radius-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px;
+  transition: all var(--transition-base);
+}
+.btn-icon i{ font-size: 16px; }
+.btn-icon:hover{ border-color: var(--teal); color: var(--teal); background: var(--green-50); }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER / NAVIGATION
+   Nav bg = theme primary (teal); logo white; links white
+   ═══════════════════════════════════════════════════════════ */
+.site-header{
+  background: var(--teal);
+  color: #fff;
+  position: relative;
+  z-index: var(--z-sticky);
+}
+.site-header-inner{
+  max-width: var(--content-max-width-wide);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.logo{ display: flex; align-items: center; flex-shrink: 0; }
+.logo img{ height: 28px; width: auto; }
+
+.primary-nav{ display: flex; gap: 4px; align-items: center; }
+.primary-nav a{
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 18px 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  position: relative;
+}
+.primary-nav a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+.primary-nav a.active{ text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+.primary-nav i.caret{ font-size: 14px; opacity: 0.7; }
+
+.header-right{ margin-left: auto; display: flex; align-items: center; gap: 16px; }
+
+/* Premium chip — yellow bg, teal text, ti-lock-1 */
+.premium-chip{
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--yellow);
+  color: var(--teal);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  height: 24px;
+  line-height: 1;
+}
+.premium-chip i{ font-size: 14px; }
+
+.header-link{ color: #fff; font-size: 16px; }
+.header-link:hover{ text-decoration: underline; }
+.header-user{
+  color: var(--yellow);
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.header-user i{ font-size: 14px; }
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE SHELL
+   ═══════════════════════════════════════════════════════════ */
+.page{
+  max-width: var(--content-max-width-wide);
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.crumbs{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px; color: var(--text-muted);
+  padding: 20px 0 12px;
+  flex-wrap: wrap;
+}
+.crumbs a{ color: var(--text-mid); }
+.crumbs a:hover{ color: var(--magenta); }
+.crumbs i{ font-size: 14px; opacity: 0.6; }
+
+/* ═══════════════════════════════════════════════════════════
+   HERO — image + meta
+   ═══════════════════════════════════════════════════════════ */
+.hero{
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  min-height: 360px;
+}
+@media (max-width: 900px){
+  .hero{ grid-template-columns: 1fr; }
+}
+
+.hero-media{
+  position: relative;
+  background: linear-gradient(135deg, var(--yellow-100), var(--yellow));
+  overflow: hidden;
+  min-height: 280px;
+}
+.hero-media img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hero-media::after{
+  content:'';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,68,69,0) 55%, rgba(0,68,69,0.25) 100%);
+  pointer-events: none;
+}
+
+.hero-type-ribbon{
+  position: absolute;
+  top: 16px; left: 16px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  background: #fff;
+  color: var(--teal);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  height: 28px;
+  line-height: 1;
+  z-index: 2;
+}
+.hero-type-ribbon i{ font-size: 16px; }
+
+.hero-premium-ribbon{
+  position: absolute;
+  top: 16px; right: 16px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  background: var(--yellow);
+  color: var(--teal);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 700;
+  height: 28px;
+  line-height: 1;
+  z-index: 2;
+}
+.hero-premium-ribbon i{ font-size: 14px; }
+
+.hero-body{
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 900px){
+  .hero-body{ padding: 24px 20px; }
+}
+
+.hero-tags{ display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+/* Tag (pill) — brand badge spec */
+.tag{
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  height: 24px;
+  line-height: 1;
+}
+.tag i{ font-size: 14px; }
+.tag-subject{ background: var(--green-100); color: var(--teal); }
+.tag-grade{ background: var(--bg-subtle); color: var(--text-mid); }
+.tag-topic{ background: var(--purple-50); color: var(--purple-900); }
+
+.hero h1{
+  font-size: 30px;
+  line-height: 1.15;
+  margin: 4px 0 16px;
+}
+
+.hero-byline{
+  display: flex; gap: 20px; flex-wrap: wrap;
+  font-size: 16px; color: var(--text-mid);
+  margin-bottom: 22px;
+}
+.hero-byline span{ display: inline-flex; align-items: center; gap: 6px; }
+.hero-byline i{ font-size: 16px; color: var(--text-muted); }
+
+.hero-actions{ display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════════════════
+   INFO BANNERS (premium notice / guest hint)
+   ═══════════════════════════════════════════════════════════ */
+.info-banner{
+  background: var(--premium-bg);
+  border: 1px solid var(--yellow);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 20px;
+}
+.info-banner-icon{
+  width: 40px; height: 40px;
+  background: var(--yellow);
+  color: var(--teal);
+  border-radius: var(--radius-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.info-banner-icon i{ font-size: 20px; }
+.info-banner-body{ flex:1; min-width: 0; }
+.info-banner-body strong{ display: block; color: var(--teal); font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.info-banner-body p{ margin: 0; font-size: 16px; color: var(--text-mid); }
+.info-banner .btn{ flex-shrink: 0; }
+
+.info-banner.guest{
+  background: var(--green-50);
+  border-color: var(--green-200);
+}
+.info-banner.guest .info-banner-icon{ background: var(--teal); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION TABS (sticky under the hero)
+   ═══════════════════════════════════════════════════════════ */
+.section-tabs-wrap{
+  position: sticky;
+  top: 56px;  /* under demo bar in this harness */
+  background: var(--bg-page);
+  z-index: var(--z-sticky);
+  margin: 32px 0 0;
+  border-bottom: 1px solid var(--border);
+}
+.section-tabs{
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.section-tabs::-webkit-scrollbar{ display: none; }
+.section-tab{
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-mid);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+.section-tab:hover{ color: var(--text-dark); text-decoration: none; }
+.section-tab.active{ color: var(--teal); border-bottom-color: var(--teal); }
+.tab-count{
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  background: var(--green-100); color: var(--teal);
+  border-radius: var(--radius-full);
+  font-size: 14px; font-weight: 700;
+}
+.section-tab.active .tab-count{ background: var(--teal); color: #fff; }
+
+/* ═══════════════════════════════════════════════════════════
+   BODY GRID
+   ═══════════════════════════════════════════════════════════ */
+.body-grid{
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 24px;
+}
+@media (max-width: 1100px){
+  .body-grid{ grid-template-columns: 1fr; }
+}
+.content-col{ min-width: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════════════════════ */
+.card{
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  scroll-margin-top: 130px;
+}
+.card + .card, .card + section, section + .card{ margin-top: 20px; }
+
+.card-head{
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.card-head h2, .card-head h3{ font-size: 20px; font-weight: 700; }
+.card-head .head-meta{ font-size: 14px; color: var(--text-muted); margin-top: 2px; }
+.card-head .head-actions{ display: flex; gap: 8px; align-items: center; }
+
+.card-body{ padding: 20px; }
+.card-body > *:first-child{ margin-top: 0; }
+.card-body > *:last-child{ margin-bottom: 0; }
+.card-body p{ margin: 0 0 12px; color: var(--text-dark); font-size: 16px; }
+.card-body ul{ color: var(--text-dark); font-size: 16px; }
+.card-body li + li{ margin-top: 4px; }
+
+.sub-label{
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  margin: 20px 0 10px;
+}
+.sub-label:first-child{ margin-top: 0; }
+
+.pull-quote{
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--teal);
+  padding: 14px 18px;
+  border-left: 3px solid var(--yellow);
+  background: var(--green-50);
+  border-radius: 0 var(--radius-base) var(--radius-base) 0;
+  margin: 16px 0 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOSSARY TERMS (click-to-show-definition)
+   ═══════════════════════════════════════════════════════════ */
+.gloss{
+  border-bottom: 1.5px dotted var(--teal);
+  cursor: help;
+  padding: 0 1px;
+  border-radius: 2px;
+  transition: background var(--transition-fast);
+}
+.gloss:hover{ background: var(--yellow-100); }
+.gloss.active{ background: var(--yellow); color: var(--teal); border-bottom-color: transparent; }
+
+.gloss-pop{
+  position: fixed;
+  z-index: var(--z-tooltip);
+  background: var(--yellow);
+  color: var(--teal);
+  padding: 14px 18px 16px;
+  border-radius: var(--radius-lg);
+  max-width: 320px;
+  font-size: 16px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-lg);
+  animation: gloss-in 150ms ease-out;
+}
+.gloss-pop::before{
+  content:'';
+  position: absolute;
+  top: -7px;
+  width: 14px; height: 14px;
+  background: var(--yellow);
+  transform: rotate(45deg);
+  left: var(--arrow-x, 20px);
+}
+.gloss-pop-term{
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+.gloss-pop-def{ display: block; color: var(--teal); font-size: 16px; }
+.gloss-pop-close{
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--teal);
+  opacity: 0.6;
+  cursor: pointer;
+}
+.gloss-pop-close:hover{ opacity: 1; background: rgba(0,0,0,0.08); }
+.gloss-pop-close i{ font-size: 14px; }
+@keyframes gloss-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══════════════════════════════════════════════════════════
+   SIDE PANEL (right rail)
+   ═══════════════════════════════════════════════════════════ */
+.side{
+  position: sticky;
+  top: 130px;
+  display: grid;
+  gap: 16px;
+}
+.side-card{
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+}
+.side-card h4{
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.side-actions{ display: grid; gap: 8px; }
+
+.side-meta{ display: grid; gap: 14px; }
+.side-meta > div{ padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.side-meta > div:last-child{ border-bottom: none; padding-bottom: 0; }
+.side-meta label{
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.side-meta .val{ font-size: 16px; color: var(--text-dark); }
+
+.chip-set{ display: flex; flex-wrap: wrap; gap: 4px; }
+.chip{
+  display: inline-flex; align-items: center;
+  padding: 4px 10px;
+  font-size: 14px; font-weight: 600;
+  background: var(--green-100); color: var(--teal);
+  border-radius: var(--radius-full);
+  height: 24px; line-height: 1;
+  font-family: var(--font-mono);
+}
+
+.icon-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+.icon-grid button{
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-mid);
+  border-radius: var(--radius-base);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+.icon-grid button:hover{ background: var(--green-50); color: var(--teal); }
+.icon-grid i{ font-size: 20px; }
+
+/* Auth prompts (sign-in / upgrade) */
+.auth-prompt{
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.auth-prompt.guest{
+  background: var(--teal);
+  color: #fff;
+}
+.auth-prompt.guest h4{
+  color: #fff; font-family: var(--font-sans); font-size: 14px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  margin-bottom: 4px; opacity: 0.8;
+  font-weight: 700;
+}
+.auth-prompt.guest h3{ color: #fff; font-size: 18px; margin-bottom: 8px; line-height: 1.25; }
+.auth-prompt.guest p{ font-size: 16px; color: rgba(255,255,255,0.85); margin: 0 0 14px; }
+.auth-prompt.guest .btn-accent{ width: 100%; }
+.auth-prompt.guest .link{
+  color: #fff; font-size: 16px; display: block; text-align: center; margin-top: 10px;
+}
+
+.auth-prompt.premium{
+  background: var(--premium-bg);
+  border: 1px solid var(--yellow);
+  color: var(--teal);
+}
+.auth-prompt.premium .premium-icon{
+  width: 40px; height: 40px;
+  background: var(--yellow);
+  color: var(--teal);
+  border-radius: var(--radius-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.auth-prompt.premium .premium-icon i{ font-size: 20px; }
+.auth-prompt.premium h4{
+  color: var(--teal); font-family: var(--font-sans); font-size: 14px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  margin-bottom: 4px; font-weight: 700;
+}
+.auth-prompt.premium h3{ font-size: 20px; margin-bottom: 8px; color: var(--text-dark); line-height: 1.25; }
+.auth-prompt.premium p{ font-size: 16px; color: var(--text-mid); margin: 0 0 14px; }
+.auth-prompt.premium .btn-primary{ width: 100%; }
+.auth-prompt.premium .link{
+  color: var(--text-mid); font-size: 16px; display: block; text-align: center; margin-top: 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STEPS STRIP
+   ═══════════════════════════════════════════════════════════ */
+.steps-strip{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.step-card{
+  border: 1px solid var(--border);
+  border-radius: var(--radius-base);
+  padding: 16px;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.step-card:hover{ border-color: var(--teal); box-shadow: var(--shadow-md); }
+.step-num{
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--green-100); color: var(--teal);
+  border-radius: var(--radius-full);
+  font-family: var(--font-serif);
+  font-size: 16px; font-weight: 700;
+  margin-bottom: 10px;
+}
+.step-card h5{
+  font-size: 18px; font-weight: 700;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+.step-card p{ font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.5; }
+.step-card .step-type{
+  position: absolute; top: 14px; right: 14px;
+  font-size: 14px; font-weight: 700;
+  color: var(--teal);
+  background: var(--yellow-50);
+  padding: 2px 8px;
+  border-radius: var(--radius-base);
+  height: 22px; line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SIMULATION
+   ═══════════════════════════════════════════════════════════ */
+.sim-wrap{
+  background: var(--teal);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.sim-header{
+  padding: 10px 16px;
+  background: var(--teal-light);
+  color: #fff;
+  display: flex; align-items: center; gap: 14px;
+  font-size: 14px;
+}
+.sim-header strong{ font-weight: 700; font-size: 16px; }
+.sim-badge{
+  padding: 2px 8px;
+  background: var(--yellow);
+  color: var(--teal);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  height: 22px;
+  line-height: 1.3;
+}
+.sim-controls{ margin-left: auto; display: flex; gap: 4px; }
+.sim-controls button{
+  width: 32px; height: 32px;
+  border-radius: var(--radius-base);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background var(--transition-base);
+}
+.sim-controls button:hover{ background: rgba(255,255,255,0.2); }
+.sim-controls i{ font-size: 16px; }
+
+.sim-frame{
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(ellipse at 30% 20%, var(--teal-light) 0%, var(--teal) 60%),
+    linear-gradient(180deg, var(--teal) 0%, #001a1a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.sim-grid{
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.sim-ground{
+  position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+  background: linear-gradient(180deg, rgba(125,196,206,0.15) 0%, rgba(125,196,206,0.4) 100%);
+}
+.sim-trajectory{ position: absolute; left: 10%; bottom: 30%; width: 80%; height: 55%; overflow: visible; }
+.sim-label{
+  position: absolute;
+  color: rgba(255,255,255,0.65);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+.sim-label.top-left{ top: 16px; left: 16px; }
+.sim-label.bottom-right{
+  bottom: 16px; right: 16px;
+  background: rgba(0,0,0,0.45);
+  padding: 4px 10px;
+  border-radius: var(--radius-base);
+  font-family: var(--font-sans);
+}
+.sim-launch{
+  position: absolute; bottom: 26%; left: 10%;
+  width: 52px; height: 30px;
+  background: linear-gradient(135deg, var(--green-600), var(--teal-light));
+  border-radius: 2px 14px 2px 2px;
+  transform: rotate(-22deg);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.sim-projectile{
+  position: absolute;
+  top: 35%; left: 55%;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 24px rgba(236,182,6,0.7);
+}
+.sim-phet-logo{
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DATASET + PREMIUM GATE
+   ═══════════════════════════════════════════════════════════ */
+.dataset-preview{
+  position: relative;
+  overflow: hidden;
+}
+.dataset-toolbar{
+  padding: 10px 16px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 14px;
+  font-size: 14px; color: var(--text-mid);
+}
+.dataset-toolbar .dataset-meta{ color: var(--text-muted); }
+.dataset-toolbar .dataset-rows-shown{ margin-left: auto; color: var(--text-muted); }
+
+table.data{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  background: #fff;
+}
+table.data th, table.data td{
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+table.data thead th{
+  background: var(--green-100);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--teal);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  position: sticky; top: 0;
+}
+table.data tbody tr:hover{ background: var(--bg-subtle); }
+table.data td:first-child{ color: var(--text-muted); font-family: var(--font-mono); font-size: 14px; }
+
+.dataset-gate{
+  position: relative;
+}
+.dataset-gate::after{
+  content:'';
+  position: absolute; inset: 48px 0 0 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.98) 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.gate-cta{
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 2;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow-lg);
+  min-width: 420px;
+  max-width: calc(100% - 40px);
+}
+.gate-cta-icon{
+  width: 40px; height: 40px;
+  background: var(--yellow);
+  color: var(--teal);
+  border-radius: var(--radius-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.gate-cta-icon i{ font-size: 20px; }
+.gate-cta-text{ flex: 1; min-width: 0; }
+.gate-cta-text strong{ display: block; font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+.gate-cta-text small{ display: block; font-size: 14px; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════
+   TEACHER GUIDE (slideshow)
+   ═══════════════════════════════════════════════════════════ */
+.tg-section{
+  background: var(--purple-50);
+  border: 1px solid var(--purple-100);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  margin: 20px 0;
+}
+.tg-banner{
+  padding: 10px 14px 12px;
+  display: flex; align-items: center; gap: 12px;
+  color: var(--purple-900);
+}
+.tg-banner-icon{
+  width: 36px; height: 36px;
+  background: var(--purple-900);
+  color: #fff;
+  border-radius: var(--radius-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: width 150ms, height 150ms;
+}
+.tg-banner-icon i{ font-size: 18px; transition: font-size 150ms; }
+.tg-section.collapsed .tg-banner-icon{ width: 28px; height: 28px; }
+.tg-section.collapsed .tg-banner-icon i{ font-size: 14px; }
+.tg-section.collapsed .tg-banner{ padding: 8px 12px; }
+.tg-banner strong{ display: block; font-size: 16px; font-weight: 700; color: var(--purple-900); line-height: 1.3; }
+.tg-banner small{ display: block; font-size: 14px; color: var(--purple-700); margin-top: 2px; }
+.tg-banner .btn{ margin-left: auto; }
+
+.tg-viewer{
+  background: #fff;
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.tg-viewer-head{
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-page);
+}
+.tg-viewer-head .tg-title{
+  font-family: var(--font-serif);
+  font-size: 18px; font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+.tg-viewer-head .tg-meta{ font-size: 14px; color: var(--text-muted); margin-top: 2px; }
+.tg-actions{ margin-left: auto; display: flex; gap: 4px; }
+.tg-actions .btn-icon{
+  width: 32px; height: 32px;
+  min-height: 32px;
+  border-color: transparent;
+  background: transparent;
+}
+.tg-actions .btn-icon i{ font-size: 16px; }
+.tg-actions .btn-icon:hover{ background: var(--purple-50); color: var(--purple-900); border-color: transparent; }
+
+.tg-progress{ height: 2px; background: var(--bg-subtle); }
+.tg-progress-bar{ height: 100%; background: var(--purple-900); width: 25%; transition: width var(--transition-base); }
+
+.tg-stage{
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(180deg, var(--bg-subtle) 0%, var(--border) 100%);
+  overflow: hidden;
+}
+.tg-stage::before, .tg-stage::after{
+  content:'';
+  position: absolute;
+  top: 38px; bottom: 38px;
+  width: 10px;
+  background: #fff;
+  border-radius: var(--radius-base);
+  opacity: 0.4;
+  box-shadow: var(--shadow-sm);
+}
+.tg-stage::before{ left: 12px; }
+.tg-stage::after{ right: 12px; }
+.tg-slide{
+  position: absolute;
+  inset: 28px;
+  background: #fff;
+  border-radius: var(--radius-base);
+  box-shadow: var(--shadow-md);
+  padding: 32px 40px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.tg-slide-eyebrow{
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--purple-900);
+  margin-bottom: 10px;
+}
+.tg-slide h3{
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 14px;
+  line-height: 1.15;
+}
+.tg-slide ul{ font-size: 16px; color: var(--text-dark); line-height: 1.5; }
+.tg-slide ul li{ margin-bottom: 8px; }
+.tg-slide-footer{
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between;
+  font-size: 14px; color: var(--text-muted);
+}
+
+.tg-controls{
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+.tg-nav{
+  display: inline-flex; align-items: center;
+  background: var(--bg-page);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+.tg-nav button{
+  width: 28px; height: 28px;
+  border-radius: var(--radius-full);
+  color: var(--text-mid);
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+.tg-nav button:hover{ background: #fff; color: var(--purple-900); }
+.tg-nav i{ font-size: 14px; }
+.tg-counter{
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-mid);
+  padding: 0 10px;
+}
+.tg-counter strong{ color: var(--text-dark); }
+
+.tg-thumbs{ display: inline-flex; align-items: center; gap: 3px; margin-left: auto; flex-wrap: wrap; }
+.tg-thumb{
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+.tg-thumb:hover{ background: var(--text-muted); }
+.tg-thumb.on{ background: var(--purple-900); width: 22px; border-radius: var(--radius-full); }
+
+/* ═══════════════════════════════════════════════════════════
+   RELATED (More Like This)
+   ═══════════════════════════════════════════════════════════ */
+.related{ margin-top: 40px; }
+.related-head{ display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.related h2{ font-size: 22px; font-weight: 700; }
+.related-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px){ .related-grid{ grid-template-columns: 1fr; } }
+
+.rel-card{
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.rel-card:hover{ border-color: var(--teal); box-shadow: var(--shadow-md); text-decoration: none; }
+.rel-thumb{
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--green-100), var(--green-50));
+  position: relative;
+  overflow: hidden;
+}
+.rel-thumb img{ width: 100%; height: 100%; object-fit: cover; }
+.rel-type{
+  position: absolute; top: 10px; left: 10px;
+  padding: 3px 10px;
+  background: #fff;
+  font-size: 14px; font-weight: 700;
+  color: var(--teal);
+  border-radius: var(--radius-full);
+  height: 22px; line-height: 1.3;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.rel-type i{ font-size: 14px; }
+.rel-prem{
+  position: absolute; top: 10px; right: 10px;
+  padding: 3px 10px;
+  background: var(--yellow);
+  font-size: 14px; font-weight: 700;
+  color: var(--teal);
+  border-radius: var(--radius-full);
+  height: 22px; line-height: 1.3;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.rel-prem i{ font-size: 14px; }
+.rel-prem.free{ background: var(--green-100); color: var(--teal); }
+.rel-body{ padding: 14px 16px; flex: 1; }
+.rel-body h4{
+  font-size: 18px; font-weight: 700;
+  margin: 0 0 6px;
+  line-height: 1.25;
+  color: var(--text-dark);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rel-body p{
+  font-size: 14px; color: var(--text-mid); margin: 0; line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rel-foot{
+  display: flex; justify-content: space-between;
+  font-size: 14px; color: var(--text-muted);
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STATES
+   ═══════════════════════════════════════════════════════════ */
+.shimmer{
+  background: linear-gradient(90deg, var(--bg-subtle) 0%, #fff 50%, var(--bg-subtle) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius-base);
+}
+@keyframes shimmer{ 0%{ background-position: 200% 0; } 100%{ background-position: -200% 0; } }
+.skel-line{ height: 16px; margin-bottom: 10px; }
+.skel-line.w-80{ width: 80%; }
+.skel-line.w-60{ width: 60%; }
+.skel-line.w-40{ width: 40%; }
+.skel-block{ height: 220px; margin-top: 14px; }
+
+.state-empty, .state-error{
+  padding: 60px 32px;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+.state-empty .state-icon{
+  font-size: 48px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.state-error{ border-color: var(--red-100); background: var(--red-50); }
+.state-error .state-icon{ font-size: 48px; color: var(--red); margin-bottom: 16px; display: inline-block; }
+.state-empty h3, .state-error h3{ font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+.state-error h3{ color: var(--red); }
+.state-empty p, .state-error p{ color: var(--text-mid); font-size: 16px; max-width: 420px; margin: 0 auto 20px; }
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE ACTIONS BAR
+   ═══════════════════════════════════════════════════════════ */
+.mobile-actions{
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 10px 16px;
+  gap: 10px;
+  z-index: var(--z-sticky);
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+}
+.mobile-actions .btn{ flex: 1; }
+
+@media (max-width: 1100px){
+  .mobile-actions{ display: flex; }
+  body{ padding-bottom: 72px; }
+  .side{ position: static; }
+}
+
+@media (max-width: 768px){
+  .primary-nav{ display: none; }
+  .site-header-inner{ padding: 0 16px; gap: 16px; }
+  .page{ padding: 0 16px 80px; }
+  .hero{ min-height: auto; }
+  .hero-media{ min-height: 200px; }
+  .hero-body{ padding: 20px 16px; }
+  .card-body{ padding: 16px; }
+  .steps-strip{ grid-template-columns: 1fr 1fr; }
+  .gate-cta{ flex-direction: column; text-align: center; min-width: 0; }
+  .section-tabs-wrap{ top: 96px; }
+  h1{ font-size: 26px; }
+  h2{ font-size: 24px; }
+}
+
+.hidden{ display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Demo harness (wireframe only) -->
+<div class="demo-bar">
+  <strong>Wireframe Demo</strong>
+  <div class="demo-bar-group">
+    <span>Auth</span>
+    <button class="seg active" data-auth="free" onclick="setAuth('free')">Free (Logged-in)</button>
+    <button class="seg" data-auth="premium" onclick="setAuth('premium')">Premium</button>
+    <button class="seg" data-auth="guest" onclick="setAuth('guest')">Guest</button>
+  </div>
+  <div class="demo-bar-group">
+    <span>Type</span>
+    <button class="seg active" data-mode="standard" onclick="setMode('standard')">Standard</button>
+    <button class="seg" data-mode="simulation" onclick="setMode('simulation')">Simulation</button>
+  </div>
+  <div class="demo-bar-group">
+    <span>State</span>
+    <button class="seg active" data-state="default" onclick="setState('default')">Default</button>
+    <button class="seg" data-state="loading" onclick="setState('loading')">Loading</button>
+    <button class="seg" data-state="empty" onclick="setState('empty')">Empty</button>
+    <button class="seg" data-state="error" onclick="setState('error')">Error</button>
+  </div>
+  <div class="demo-bar-spacer"></div>
+  <small>Tuva Activity · v3</small>
+</div>
+
+<!-- Site header -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="https://tuvalabs.com/" class="logo" aria-label="Tuva home">
+      <img src="https://tuvalabs.com/static/img/home/tuva-logo-white.svg" alt="Tuva">
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="#">Tuva Tools</a>
+      <a href="#">Tuva Jr. <i class="ti ti-chevron-down caret" aria-hidden="true"></i></a>
+      <a href="#">Dashboard</a>
+      <a href="#" class="active">Content Library <i class="ti ti-chevron-down caret" aria-hidden="true"></i></a>
+      <a href="#">Dataset Library <i class="ti ti-chevron-down caret" aria-hidden="true"></i></a>
+      <a href="#">Assessments</a>
+      <a href="#">Teaching <i class="ti ti-chevron-down caret" aria-hidden="true"></i></a>
+    </nav>
+    <div class="header-right" id="header-right"></div>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- Breadcrumb -->
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="#">Content Library</a>
+    <i class="ti ti-chevron-right" aria-hidden="true"></i>
+    <a href="#">Math</a>
+    <i class="ti ti-chevron-right" aria-hidden="true"></i>
+    <a href="#">Grade 6</a>
+    <i class="ti ti-chevron-right" aria-hidden="true"></i>
+    <span style="color:var(--text-dark)" id="crumb-title">Types of M&Ms</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media" id="hero-media">
+      <span class="hero-type-ribbon">
+        <i class="ti ti-activities" aria-hidden="true"></i>
+        <span id="ribbon-type">Activity</span>
+      </span>
+      <span class="hero-premium-ribbon" id="hero-premium">
+        <i class="ti ti-lock-1" aria-hidden="true"></i> PREMIUM
+      </span>
+      <img id="hero-img" src="https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=1200&q=80" alt="M&M candies">
+    </div>
+
+    <div class="hero-body">
+      <div class="hero-tags">
+        <span class="tag tag-subject">Math</span>
+        <span class="tag tag-grade">Grade 6</span>
+        <span class="tag tag-topic" id="tag-topic">Distribution Shapes</span>
+      </div>
+
+      <h1 id="activity-title">Types of M&Ms: Comparing Distribution Shapes with Dot Plots</h1>
+
+      <div class="hero-byline">
+        <span>
+          <i class="ti ti-author" aria-hidden="true"></i>
+          <span>Ms. Smith · <span style="color:var(--text-muted)">Tuva Staff</span></span>
+        </span>
+        <span>
+          <i class="ti ti-calendar" aria-hidden="true"></i>
+          Updated Dec 10, 2024
+        </span>
+        <span>
+          <i class="ti ti-clock" aria-hidden="true"></i>
+          <span id="meta-steps">4 steps</span> · ~25 min
+        </span>
+      </div>
+
+      <div class="hero-actions" id="hero-actions"></div>
+    </div>
+  </section>
+
+  <!-- Auth-based notice -->
+  <div id="notice-slot"></div>
+
+  <!-- Section tabs -->
+  <div class="section-tabs-wrap">
+    <nav class="section-tabs" role="tablist">
+      <a href="#sec-overview" class="section-tab active" data-target="sec-overview">Overview</a>
+      <a href="#sec-steps" class="section-tab" data-target="sec-steps">Activity Steps <span class="tab-count">4</span></a>
+      <a href="#sec-simulation" class="section-tab hidden" data-target="sec-simulation" id="tab-sim">Simulation</a>
+      <a href="#sec-dataset" class="section-tab" data-target="sec-dataset">Dataset</a>
+      <a href="#sec-teacher" class="section-tab" data-target="sec-teacher" id="tab-teacher">Teacher Guide</a>
+      <a href="#sec-standards" class="section-tab" data-target="sec-standards">Standards</a>
+    </nav>
+  </div>
+
+  <div class="body-grid">
+    <div class="content-col">
+
+      <!-- LOADING -->
+      <div class="card state-block" id="state-loading" style="display:none">
+        <div class="card-body">
+          <div class="shimmer skel-line w-40"></div>
+          <div class="shimmer skel-line w-80"></div>
+          <div class="shimmer skel-line w-60"></div>
+          <div class="shimmer skel-line w-80"></div>
+          <div class="shimmer skel-block"></div>
+        </div>
+      </div>
+
+      <!-- EMPTY -->
+      <div class="state-empty state-block" id="state-empty" style="display:none">
+        <i class="ti ti-activities state-icon" aria-hidden="true"></i>
+        <h3>This activity doesn't have content yet</h3>
+        <p>This is a draft. Once content is added, you'll see the overview, steps, and dataset here.</p>
+        <button class="btn btn-primary">Start building</button>
+      </div>
+
+      <!-- ERROR -->
+      <div class="state-error state-block" id="state-error" style="display:none">
+        <i class="ti ti-warning state-icon" aria-hidden="true"></i>
+        <h3>We couldn't load this activity</h3>
+        <p>Something went wrong on our end. Try refreshing, or come back in a moment.</p>
+        <div style="display:flex;gap:10px;justify-content:center;">
+          <button class="btn btn-secondary">
+            <i class="ti ti-refresh" aria-hidden="true"></i> Retry
+          </button>
+          <button class="btn btn-ghost">Back to library</button>
+        </div>
+      </div>
+
+      <!-- DEFAULT CONTENT -->
+      <div class="state-block" id="state-default">
+
+        <!-- SIMULATION (top, only for simulation mode) -->
+        <section class="card hidden" id="sec-simulation">
+          <div class="card-head">
+            <div>
+              <h2>Interactive Simulation</h2>
+              <div class="head-meta">PhET × Tuva · Launch to explore</div>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-sm btn-ghost">
+                <i class="ti ti-eye" aria-hidden="true"></i> Fullscreen
+              </button>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 16px;">
+            <div class="sim-wrap">
+              <div class="sim-header">
+                <strong>Projectile Motion</strong>
+                <span class="sim-badge">LIVE SIM</span>
+                <div class="sim-controls">
+                  <button title="Reset" aria-label="Reset"><i class="ti ti-refresh"></i></button>
+                  <button title="Settings" aria-label="Settings"><i class="ti ti-settings"></i></button>
+                  <button title="Fullscreen" aria-label="Fullscreen"><i class="ti ti-eye"></i></button>
+                </div>
+              </div>
+              <div class="sim-frame">
+                <div class="sim-grid"></div>
+                <div class="sim-ground"></div>
+                <div class="sim-label top-left">Angle: 45° · Speed: 18 m/s · Mass: 5 kg</div>
+                <div class="sim-launch"></div>
+                <div class="sim-projectile"></div>
+                <svg class="sim-trajectory" viewBox="0 0 100 50" preserveAspectRatio="none">
+                  <path d="M 0 50 Q 50 -8, 100 45" stroke="rgba(236,182,6,0.85)" stroke-width="0.5" stroke-dasharray="1.5 1.5" fill="none"/>
+                </svg>
+                <div class="sim-phet-logo">PhET + Tuva</div>
+                <div class="sim-label bottom-right">Range: 28.4 m · Height: 8.1 m</div>
+              </div>
+            </div>
+            <p style="margin-top:18px;">
+              Launch projectiles at different angles and speeds. Track the range and height, then record your data in Tuva Tools to find the pattern.
+            </p>
+          </div>
+        </section>
+
+        <!-- OVERVIEW -->
+        <section class="card" id="sec-overview">
+          <div class="card-head">
+            <h2>Overview</h2>
+            <span class="head-meta">Updated Dec 10, 2024</span>
+          </div>
+          <div class="card-body">
+            <p id="overview-description"></p>
+
+            <span class="sub-label">Learning Objectives</span>
+            <p>Students will be able to:</p>
+            <ul>
+              <li>Identify the shapes of distributions (symmetric, skewed, uniform)</li>
+              <li>Compare the mass of different types of M&Ms using dot plots</li>
+              <li>Use measures of center and spread to summarize data</li>
+            </ul>
+
+            <span class="sub-label">Driving Question</span>
+            <div class="pull-quote">Are all M&Ms really the same size — and how would we know from the data?</div>
+
+            <span class="sub-label">Prerequisite Knowledge</span>
+            <p>Students should be familiar with reading basic dot plots and calculating mean and median. No prior Tuva experience required.</p>
+          </div>
+        </section>
+
+        <!-- STEPS -->
+        <section class="card" id="sec-steps">
+          <div class="card-head">
+            <div>
+              <h2>Activity Steps</h2>
+              <div class="head-meta">4 steps · ~25 minutes total</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="steps-strip">
+              <div class="step-card">
+                <span class="step-type">Read</span>
+                <span class="step-num">1</span>
+                <h5>Explore the Dataset</h5>
+                <p>Meet the data: 60 M&Ms, three types, weighed in grams.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-type">Build</span>
+                <span class="step-num">2</span>
+                <h5>Make a Dot Plot</h5>
+                <p>Plot mass for one type at a time. Notice the shape.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-type">Analyze</span>
+                <span class="step-num">3</span>
+                <h5>Compare Distributions</h5>
+                <p>Overlay plots. Which type is most consistent?</p>
+              </div>
+              <div class="step-card">
+                <span class="step-type">Reflect</span>
+                <span class="step-num">4</span>
+                <h5>Draw Conclusions</h5>
+                <p>Write a claim backed by dot plot evidence.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DATASET -->
+        <section class="card" id="sec-dataset">
+          <div class="card-head">
+            <div>
+              <h2>Dataset</h2>
+              <div class="head-meta">M&M Masses · 60 rows · 3 columns</div>
+            </div>
+            <div class="head-actions" id="dataset-actions"></div>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="dataset-preview" id="dataset-preview-wrap">
+              <div class="dataset-toolbar">
+                <span class="dataset-meta">Numeric + categorical · 3 attributes</span>
+                <span class="dataset-rows-shown">Showing first 8 rows</span>
+              </div>
+              <table class="data">
+                <thead><tr><th>#</th><th>Type</th><th>Mass (g)</th><th>Color</th></tr></thead>
+                <tbody>
+                  <tr><td>01</td><td>Plain</td><td>0.88</td><td>Brown</td></tr>
+                  <tr><td>02</td><td>Plain</td><td>0.91</td><td>Red</td></tr>
+                  <tr><td>03</td><td>Peanut</td><td>2.31</td><td>Yellow</td></tr>
+                  <tr><td>04</td><td>Peanut</td><td>2.17</td><td>Green</td></tr>
+                  <tr><td>05</td><td>Almond</td><td>2.68</td><td>Blue</td></tr>
+                  <tr><td>06</td><td>Almond</td><td>2.55</td><td>Orange</td></tr>
+                  <tr><td>07</td><td>Plain</td><td>0.87</td><td>Green</td></tr>
+                  <tr><td>08</td><td>Peanut</td><td>2.22</td><td>Red</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TEACHER GUIDE -->
+        <section id="sec-teacher">
+          <div class="tg-section">
+            <div class="tg-banner">
+              <div class="tg-banner-icon">
+                <i class="ti ti-bulb" aria-hidden="true"></i>
+              </div>
+              <div>
+                <strong>Teacher Guide</strong>
+                <small>Facilitation notes · Only visible to teachers and admins</small>
+              </div>
+              <button class="btn btn-sm btn-ghost" onclick="toggleGuide()" id="tg-toggle">
+                <i class="ti ti-chevron-up" aria-hidden="true" id="tg-toggle-icon"></i>
+                <span id="tg-toggle-label">Collapse</span>
+              </button>
+            </div>
+
+            <div class="tg-viewer" id="tg-viewer">
+              <div class="tg-viewer-head">
+                <div>
+                  <div class="tg-title">M&M Distributions · Facilitation Guide</div>
+                  <div class="tg-meta">12 slides · PPT · Updated Dec 10, 2024</div>
+                </div>
+                <div class="tg-actions">
+                  <button class="btn-icon" title="Download PPT" aria-label="Download PPT"><i class="ti ti-download"></i></button>
+                  <button class="btn-icon" title="Download PDF" aria-label="Download PDF"><i class="ti ti-pdf"></i></button>
+                  <button class="btn-icon" title="Open in new tab" aria-label="Open in new tab"><i class="ti ti-link"></i></button>
+                  <button class="btn-icon" title="Fullscreen" aria-label="Fullscreen"><i class="ti ti-eye"></i></button>
+                </div>
+              </div>
+
+              <div class="tg-progress"><div class="tg-progress-bar" id="tg-progress-bar"></div></div>
+
+              <div class="tg-stage">
+                <div class="tg-slide" id="tg-slide">
+                  <div class="tg-slide-eyebrow" id="tg-slide-eyebrow">Slide 3 · Anticipating Student Thinking</div>
+                  <h3 id="tg-slide-title">Why this activity?</h3>
+                  <ul id="tg-slide-body">
+                    <li>Students often assume all candies of a "type" are identical — the data surprises them.</li>
+                    <li>Watch for confusion between <strong>mean</strong> and <strong>median</strong> when distributions skew.</li>
+                    <li>Listen for the word "typical" — push students to specify measure + unit.</li>
+                    <li>Pair strategy: group by dot-plot type for the overlay step.</li>
+                  </ul>
+                  <div class="tg-slide-footer">
+                    <span>M&M Distributions · Teacher Guide</span>
+                    <span>© Tuva Labs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tg-controls">
+                <div class="tg-nav">
+                  <button onclick="tgPrev()" aria-label="Previous slide"><i class="ti ti-chevron-up" style="transform:rotate(-90deg)"></i></button>
+                  <span class="tg-counter"><strong id="tg-current">3</strong> / <span id="tg-total">12</span></span>
+                  <button onclick="tgNext()" aria-label="Next slide"><i class="ti ti-chevron-down" style="transform:rotate(-90deg)"></i></button>
+                </div>
+                <button class="btn btn-sm btn-ghost" aria-label="Present">
+                  <i class="ti ti-play" aria-hidden="true"></i> Present
+                </button>
+                <div class="tg-thumbs" id="tg-thumbs"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STANDARDS -->
+        <section class="card" id="sec-standards">
+          <div class="card-head">
+            <h2>Standards &amp; Alignment</h2>
+            <span class="head-meta">Common Core Math</span>
+          </div>
+          <div class="card-body">
+            <span class="sub-label">Content Standards</span>
+            <div class="chip-set" style="margin-bottom: 20px;">
+              <span class="chip">6.SP.A.2</span>
+              <span class="chip">6.SP.A.3</span>
+              <span class="chip">6.SP.B.4</span>
+              <span class="chip">6.SP.B.5.C</span>
+              <span class="chip">6.SP.B.5.D</span>
+            </div>
+
+            <span class="sub-label">Mathematical Practices</span>
+            <div class="chip-set" style="margin-bottom: 20px;">
+              <span class="chip">CCSMP-2</span>
+              <span class="chip">CCSMP-4</span>
+              <span class="chip">CCSMP-6</span>
+            </div>
+
+            <span class="sub-label">Math Filter</span>
+            <p>Describing Distribution Shapes</p>
+
+            <span class="sub-label">Item Summary</span>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <div style="padding: 16px; background: var(--bg-page); border-radius: var(--radius-base);">
+                <div style="font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--teal); line-height: 1;">6</div>
+                <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Text Entry</div>
+              </div>
+              <div style="padding: 16px; background: var(--bg-page); border-radius: var(--radius-base);">
+                <div style="font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--teal); line-height: 1;">2</div>
+                <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Graphing</div>
+              </div>
+              <div style="padding: 16px; background: var(--bg-page); border-radius: var(--radius-base);">
+                <div style="font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--teal); line-height: 1;">8</div>
+                <div style="font-size: 14px; color: var(--text-muted); margin-top: 4px;">Total Questions</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /state-default -->
+
+      <!-- RELATED -->
+      <section class="related">
+        <div class="related-head">
+          <h2>More Like This</h2>
+          <a href="#">See all Grade 6 Math →</a>
+        </div>
+        <div class="related-grid">
+          <a class="rel-card" href="#">
+            <div class="rel-thumb">
+              <span class="rel-type"><i class="ti ti-activities"></i> Activity</span>
+              <span class="rel-prem"><i class="ti ti-lock-1"></i> PREMIUM</span>
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="">
+            </div>
+            <div class="rel-body">
+              <h4>Dog Breeds: Finding What Is Typical of a Group</h4>
+              <p>Students use the median to describe the typical weight of a group of dog breeds.</p>
+            </div>
+            <div class="rel-foot">
+              <span>By Tuva Staff</span>
+              <span>11 steps</span>
+            </div>
+          </a>
+          <a class="rel-card" href="#">
+            <div class="rel-thumb">
+              <span class="rel-type"><i class="ti ti-activities"></i> Activity</span>
+              <span class="rel-prem"><i class="ti ti-lock-1"></i> PREMIUM</span>
+              <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=600&q=80" alt="">
+            </div>
+            <div class="rel-body">
+              <h4>Analyzing Life Expectancy with Dot Plots</h4>
+              <p>Graph data on life expectancy and categorize countries by life span bands.</p>
+            </div>
+            <div class="rel-foot">
+              <span>By Tuva Staff</span>
+              <span>8 steps</span>
+            </div>
+          </a>
+          <a class="rel-card" href="#">
+            <div class="rel-thumb">
+              <span class="rel-type"><i class="ti ti-datastories"></i> Data Story</span>
+              <span class="rel-prem free">FREE</span>
+              <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80" alt="">
+            </div>
+            <div class="rel-body">
+              <h4>Alike &amp; Different: Linear Relationships with M&amp;Ms</h4>
+              <p>Use linear equations to compare and contrast two representations of M&M data.</p>
+            </div>
+            <div class="rel-foot">
+              <span>By Tuva Staff</span>
+              <span>3 steps</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT RAIL -->
+    <aside class="side">
+      <div id="side-primary-slot"></div>
+
+      <div class="side-card">
+        <h4>Quick Tools</h4>
+        <div class="icon-grid">
+          <button title="Bookmark"><i class="ti ti-bookmark" aria-hidden="true"></i> Bookmark</button>
+          <button title="Copy"><i class="ti ti-copy" aria-hidden="true"></i> Copy</button>
+          <button title="Print"><i class="ti ti-print" aria-hidden="true"></i> Print</button>
+          <button title="Share"><i class="ti ti-share" aria-hidden="true"></i> Share</button>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h4>Details</h4>
+        <div class="side-meta">
+          <div><label>Content Area</label><div class="val">Math</div></div>
+          <div><label>Grade</label><div class="val">Grade 6</div></div>
+          <div>
+            <label>Common Core</label>
+            <div class="chip-set">
+              <span class="chip">6.SP.A.2</span>
+              <span class="chip">6.SP.A.3</span>
+              <span class="chip">6.SP.B.4</span>
+              <span class="chip">6.SP.B.5.C</span>
+              <span class="chip">6.SP.B.5.D</span>
+            </div>
+          </div>
+          <div><label>Math Filter</label><div class="val">Describing Distribution Shapes</div></div>
+          <div><label>Accessibility</label><div class="val" style="font-size:14px; color: var(--text-mid);">Screen-reader ready · Keyboard navigable · Alt text on visuals</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<div class="mobile-actions" id="mobile-actions"></div>
+
+<script>
+const state = { auth: 'free', mode: 'standard', state: 'default' };
+
+const HERO_IMAGES = {
+  standard:   'https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=1200&q=80',
+  simulation: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1200&q=80'
+};
+
+const CONTENT = {
+  standard: {
+    title: 'Types of M&Ms: Comparing Distribution Shapes with Dot Plots',
+    crumb: 'Types of M&Ms',
+    steps: '4 steps',
+    tagTopic: 'Distribution Shapes',
+    ribbonType: 'Activity',
+    overview: `In this <span class="gloss" data-term="activity" data-def="A learning task with steps, questions, and a dataset that students work through to practice a skill or explore a concept.">activity</span>, students compare the <span class="gloss" data-term="mass" data-def="The amount of matter in an object, measured in grams, kilograms, or other units of weight.">mass</span> of different types of M&Ms using <span class="gloss" data-term="dot plot" data-def="A simple graph where each data value is shown as a dot above a number line. Good for small datasets and seeing distribution shape at a glance.">dot plots</span>. They investigate how the shape of a <span class="gloss" data-term="distribution" data-def="The pattern of how values in a dataset are spread out. The shape tells you where values cluster and how varied they are.">distribution</span> tells a story about the data, and use the <span class="gloss" data-term="median" data-def="The middle value in a sorted dataset. Half the values fall below it, half above.">median</span> and <span class="gloss" data-term="interquartile range" data-def="The middle 50% of a dataset — the range between the 25th and 75th percentile. A measure of spread that's robust to outliers.">interquartile range</span> to summarize what's typical of each type.`
+  },
+  simulation: {
+    title: 'PhET + Tuva: Gravity and Orbits',
+    crumb: 'Gravity and Orbits',
+    steps: '11 steps',
+    tagTopic: 'Physics',
+    ribbonType: 'Simulation Task',
+    overview: `In this lesson, students describe how <span class="gloss" data-term="gravitational force" data-def="The attractive force that pulls objects with mass toward each other. On Earth, it's what keeps us on the ground.">gravitational force</span> governs the <span class="gloss" data-term="orbit" data-def="The curved path an object takes around another, held by gravity — like planets around the Sun.">orbits</span> of planets. They generate and analyze data using the PhET <span class="gloss" data-term="simulation" data-def="An interactive model that lets you explore a scientific phenomenon by changing variables and watching what happens.">simulation</span> to validate Newton's Law of Gravitation and calculate the value of the <span class="gloss" data-term="gravitational constant" data-def="A fixed number (G ≈ 6.674 × 10⁻¹¹) used in Newton's Law of Gravitation to calculate the force between two masses.">universal gravitational constant</span>, G.`
+  }
+};
+
+/* ─── AUTH ─── */
+function setAuth(auth){
+  state.auth = auth;
+  document.querySelectorAll('[data-auth]').forEach(b => b.classList.toggle('active', b.dataset.auth === auth));
+  renderHeader();
+  renderHeroActions();
+  renderPrimarySide();
+  renderDatasetActions();
+  renderDatasetGate();
+  renderNotice();
+  renderTeacherVisibility();
+  renderHeroPremium();
+  renderMobileActions();
+}
+
+function renderHeader(){
+  const hr = document.getElementById('header-right');
+  if(state.auth === 'guest'){
+    hr.innerHTML = `
+      <a href="#" class="header-link">Help</a>
+      <a href="#" class="header-link">Sign in</a>
+      <button class="btn btn-accent btn-sm">Sign up free</button>
+    `;
+  } else if(state.auth === 'premium'){
+    hr.innerHTML = `
+      <span class="premium-chip"><i class="ti ti-lock-1" aria-hidden="true"></i> PREMIUM</span>
+      <a href="#" class="header-link">Help</a>
+      <a href="#" class="header-user">TSOMPURA <i class="ti ti-chevron-down" aria-hidden="true"></i></a>
+    `;
+  } else {
+    hr.innerHTML = `
+      <a href="#" class="header-link" style="color: var(--yellow);">Upgrade</a>
+      <a href="#" class="header-link">Help</a>
+      <a href="#" class="header-user">TSOMPURA <i class="ti ti-chevron-down" aria-hidden="true"></i></a>
+    `;
+  }
+}
+
+function renderHeroActions(){
+  const ha = document.getElementById('hero-actions');
+  if(state.auth === 'guest'){
+    ha.innerHTML = `
+      <button class="btn btn-primary btn-lg">
+        <i class="ti ti-add" aria-hidden="true"></i>
+        Sign up to assign
+      </button>
+      <button class="btn btn-ghost btn-lg">Sign in</button>
+    `;
+  } else if(state.auth === 'premium'){
+    ha.innerHTML = `
+      <button class="btn btn-primary btn-lg">
+        <i class="ti ti-add" aria-hidden="true"></i>
+        Assign to class
+      </button>
+      <button class="btn btn-secondary btn-lg">
+        <i class="ti ti-author" aria-hidden="true"></i>
+        Preview as Teacher
+      </button>
+      <button class="btn btn-secondary btn-lg">
+        <i class="ti ti-eye" aria-hidden="true"></i>
+        Preview as Student
+      </button>
+    `;
+  } else {
+    ha.innerHTML = `
+      <button class="btn btn-accent btn-lg">
+        <i class="ti ti-lock-1" aria-hidden="true"></i>
+        Upgrade to assign
+      </button>
+      <button class="btn btn-secondary btn-lg">
+        <i class="ti ti-author" aria-hidden="true"></i>
+        Preview as Teacher
+      </button>
+      <button class="btn btn-secondary btn-lg">
+        <i class="ti ti-eye" aria-hidden="true"></i>
+        Preview as Student
+      </button>
+    `;
+  }
+}
+
+function renderPrimarySide(){
+  const slot = document.getElementById('side-primary-slot');
+  if(state.auth === 'guest'){
+    slot.innerHTML = `
+      <div class="auth-prompt guest">
+        <h4>Sign in to get started</h4>
+        <h3>Assign this to your class in minutes</h3>
+        <p>Create a free Tuva account to assign activities, track progress, and access teacher guides.</p>
+        <button class="btn btn-accent">Sign up free</button>
+        <a href="#" class="link">Already have an account? Sign in</a>
+      </div>
+    `;
+  } else if(state.auth === 'free'){
+    slot.innerHTML = `
+      <div class="auth-prompt premium">
+        <div class="premium-icon"><i class="ti ti-lock-1" aria-hidden="true"></i></div>
+        <h4>Premium Activity</h4>
+        <h3>Unlock full access for your class</h3>
+        <p>Assigning, analytics, and teacher guides require a Tuva subscription. Ask your school or start a free trial.</p>
+        <button class="btn btn-primary">Start free trial</button>
+        <a href="#" class="link">Talk to our team</a>
+      </div>
+    `;
+  } else {
+    slot.innerHTML = `
+      <div class="side-card">
+        <h4>Classroom Actions</h4>
+        <div class="side-actions">
+          <button class="btn btn-primary btn-block">
+            <i class="ti ti-add" aria-hidden="true"></i>
+            Assign to class
+          </button>
+          <button class="btn btn-secondary btn-block">
+            <i class="ti ti-author" aria-hidden="true"></i>
+            Preview as Teacher
+          </button>
+          <button class="btn btn-secondary btn-block">
+            <i class="ti ti-eye" aria-hidden="true"></i>
+            Preview as Student
+          </button>
+          <button class="btn btn-ghost btn-block">
+            <i class="ti ti-chart" aria-hidden="true"></i>
+            View analytics
+          </button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function renderDatasetActions(){
+  const da = document.getElementById('dataset-actions');
+  if(state.auth === 'premium'){
+    da.innerHTML = `
+      <button class="btn btn-sm btn-secondary">
+        <i class="ti ti-chart" aria-hidden="true"></i>
+        Open in Tools
+      </button>
+      <button class="btn btn-sm btn-ghost">
+        <i class="ti ti-download" aria-hidden="true"></i>
+        Download CSV
+      </button>
+    `;
+  } else {
+    da.innerHTML = `
+      <button class="btn btn-sm btn-accent">
+        <i class="ti ti-lock-1" aria-hidden="true"></i>
+        View Dataset (Premium)
+      </button>
+    `;
+  }
+}
+
+function renderDatasetGate(){
+  const wrap = document.getElementById('dataset-preview-wrap');
+  const existing = wrap.querySelector('.gate-cta');
+  if(state.auth !== 'premium'){
+    wrap.classList.add('dataset-gate');
+    if(!existing){
+      const gate = document.createElement('div');
+      gate.className = 'gate-cta';
+      const msg = state.auth === 'guest'
+        ? ['Sign in to view the full dataset', 'Create a free Tuva account to explore all rows and open the data in Tuva Tools.', 'Sign up free']
+        : ['Premium dataset', 'Unlock the full dataset and open it in Tuva Tools with a Tuva subscription.', 'Start free trial'];
+      gate.innerHTML = `
+        <div class="gate-cta-icon"><i class="ti ti-lock-1" aria-hidden="true"></i></div>
+        <div class="gate-cta-text">
+          <strong>${msg[0]}</strong>
+          <small>${msg[1]}</small>
+        </div>
+        <button class="btn btn-primary">${msg[2]}</button>
+      `;
+      wrap.appendChild(gate);
+    }
+  } else {
+    wrap.classList.remove('dataset-gate');
+    if(existing) existing.remove();
+  }
+}
+
+function renderNotice(){
+  const slot = document.getElementById('notice-slot');
+  if(state.auth === 'free'){
+    slot.innerHTML = `
+      <div class="info-banner">
+        <div class="info-banner-icon"><i class="ti ti-lock-1" aria-hidden="true"></i></div>
+        <div class="info-banner-body">
+          <strong>This is a Premium Activity</strong>
+          <p>To use this with a class, your school needs a Tuva subscription. Ask your admin or start a free trial.</p>
+        </div>
+        <button class="btn btn-sm btn-primary">Start trial</button>
+      </div>
+    `;
+  } else if(state.auth === 'guest'){
+    slot.innerHTML = `
+      <div class="info-banner guest">
+        <div class="info-banner-icon"><i class="ti ti-author" aria-hidden="true"></i></div>
+        <div class="info-banner-body">
+          <strong>You're browsing as a guest</strong>
+          <p>Sign in to bookmark activities, preview as a student, or assign to your class.</p>
+        </div>
+        <button class="btn btn-sm btn-primary">Sign in</button>
+      </div>
+    `;
+  } else {
+    slot.innerHTML = '';
+  }
+}
+
+function renderTeacherVisibility(){
+  const tabT = document.getElementById('tab-teacher');
+  const secT = document.getElementById('sec-teacher');
+  if(state.auth === 'guest'){
+    tabT.classList.add('hidden');
+    secT.style.display = 'none';
+  } else {
+    tabT.classList.remove('hidden');
+    secT.style.display = '';
+  }
+}
+
+function renderHeroPremium(){
+  // Hide the PREMIUM ribbon on hero when user already has premium (redundant)
+  const ribbon = document.getElementById('hero-premium');
+  ribbon.style.display = state.auth === 'premium' ? 'none' : '';
+}
+
+function renderMobileActions(){
+  const ma = document.getElementById('mobile-actions');
+  if(state.auth === 'guest'){
+    ma.innerHTML = `
+      <button class="btn btn-ghost">Sign in</button>
+      <button class="btn btn-accent">Sign up free</button>
+    `;
+  } else if(state.auth === 'free'){
+    ma.innerHTML = `
+      <button class="btn btn-secondary">Preview</button>
+      <button class="btn btn-accent">Upgrade</button>
+    `;
+  } else {
+    ma.innerHTML = `
+      <button class="btn btn-secondary">Preview</button>
+      <button class="btn btn-primary">Assign</button>
+    `;
+  }
+}
+
+/* ─── MODE ─── */
+function setMode(mode){
+  state.mode = mode;
+  document.querySelectorAll('[data-mode]').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  const c = CONTENT[mode];
+  document.getElementById('activity-title').textContent = c.title;
+  document.getElementById('crumb-title').textContent = c.crumb;
+  document.getElementById('meta-steps').textContent = c.steps;
+  document.getElementById('tag-topic').textContent = c.tagTopic;
+  document.getElementById('ribbon-type').textContent = c.ribbonType;
+  document.getElementById('overview-description').innerHTML = c.overview;
+  document.getElementById('hero-img').src = HERO_IMAGES[mode];
+  const simCard = document.getElementById('sec-simulation');
+  const simTab = document.getElementById('tab-sim');
+  if(mode === 'simulation'){ simCard.classList.remove('hidden'); simTab.classList.remove('hidden'); }
+  else { simCard.classList.add('hidden'); simTab.classList.add('hidden'); }
+}
+
+/* ─── STATE ─── */
+function setState(s){
+  state.state = s;
+  document.querySelectorAll('[data-state]').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+  document.getElementById('state-default').style.display = s === 'default' ? '' : 'none';
+  document.getElementById('state-loading').style.display = s === 'loading' ? '' : 'none';
+  document.getElementById('state-empty').style.display = s === 'empty' ? '' : 'none';
+  document.getElementById('state-error').style.display = s === 'error' ? '' : 'none';
+}
+
+/* ─── TEACHER GUIDE SLIDES ─── */
+const SLIDES = [
+  { eyebrow: 'Slide 1 · Introduction', title: 'M&M Distributions', body: '<li>Welcome teachers to the activity.</li><li>Target: Grade 6 students learning about dot plots.</li><li>~25 minutes total, small groups of 3-4 work best.</li>' },
+  { eyebrow: 'Slide 2 · Learning Goals', title: 'What students will learn', body: '<li>Distinguish between symmetric and skewed distributions.</li><li>Use median and IQR to describe what\'s typical.</li><li>Compare two distributions using dot plots side-by-side.</li>' },
+  { eyebrow: 'Slide 3 · Anticipating Student Thinking', title: 'Why this activity?', body: '<li>Students often assume all candies of a "type" are identical — the data surprises them.</li><li>Watch for confusion between <strong>mean</strong> and <strong>median</strong> when distributions skew.</li><li>Listen for the word "typical" — push students to specify measure + unit.</li><li>Pair strategy: group by dot-plot type for the overlay step.</li>' },
+  { eyebrow: 'Slide 4 · Launch', title: 'Setting the stage', body: '<li>Open with: "Are all M&Ms the same size?"</li><li>Let students share hypotheses before showing data.</li><li>Introduce the dataset as a class.</li>' },
+  { eyebrow: 'Slide 5 · Step 1', title: 'Explore the Dataset', body: '<li>Students scan 60 rows in Tuva Tools.</li><li>Press them to notice: 3 types, mass in grams, color labels.</li><li>Common confusion: treating color as a continuous variable.</li>' },
+  { eyebrow: 'Slide 6 · Step 2', title: 'Make a Dot Plot', body: '<li>Demonstrate plotting mass for one type.</li><li>Then release students to plot the other two.</li><li>Circulate: look for axis scale errors.</li>' },
+  { eyebrow: 'Slide 7 · Step 3', title: 'Compare Distributions', body: '<li>Overlay the three plots using color.</li><li>Ask: "Which type is most consistent?"</li><li>Probe: How do you know?</li>' },
+  { eyebrow: 'Slide 8 · Step 4', title: 'Draw Conclusions', body: '<li>Students write a claim + evidence statement.</li><li>Sample strong claim: "Plain M&Ms have the most consistent mass because..."</li><li>Have pairs swap and critique.</li>' },
+  { eyebrow: 'Slide 9 · Differentiation', title: 'For mixed-level classrooms', body: '<li><strong>Stretch:</strong> Have advanced students compute standard deviation.</li><li><strong>Support:</strong> Provide sentence starters for the conclusion.</li><li><strong>ELL:</strong> Pre-teach the words "skewed," "symmetric," "typical."</li>' },
+  { eyebrow: 'Slide 10 · Common Pitfalls', title: 'Watch for these', body: '<li>Using mean when median is more appropriate (skew).</li><li>Reading the x-axis incorrectly when overlaying.</li><li>Forgetting units — always grams, not "points."</li>' },
+  { eyebrow: 'Slide 11 · Assessment', title: 'Checking for understanding', body: '<li>Exit ticket: one sentence describing each distribution.</li><li>Formative: listen for "typical" + specific measure.</li><li>Summative: the Step 4 claim + evidence.</li>' },
+  { eyebrow: 'Slide 12 · Extensions', title: 'Where to go next', body: '<li>Collect your own M&M data as a class.</li><li>Connect to: "Dog Breeds" activity for continued practice.</li><li>Apply median/IQR to a different context.</li>' }
+];
+
+let tgIndex = 2;
+function renderSlide(){
+  const s = SLIDES[tgIndex];
+  document.getElementById('tg-slide-eyebrow').textContent = s.eyebrow;
+  document.getElementById('tg-slide-title').textContent = s.title;
+  document.getElementById('tg-slide-body').innerHTML = s.body;
+  document.getElementById('tg-current').textContent = tgIndex + 1;
+  document.getElementById('tg-progress-bar').style.width = `${((tgIndex + 1) / SLIDES.length) * 100}%`;
+  const thumbs = document.getElementById('tg-thumbs');
+  thumbs.innerHTML = '';
+  for(let i = 0; i < SLIDES.length; i++){
+    const t = document.createElement('span');
+    t.className = 'tg-thumb' + (i === tgIndex ? ' on' : '');
+    t.onclick = () => { tgIndex = i; renderSlide(); };
+    thumbs.appendChild(t);
+  }
+}
+function tgPrev(){ tgIndex = Math.max(0, tgIndex - 1); renderSlide(); }
+function tgNext(){ tgIndex = Math.min(SLIDES.length - 1, tgIndex + 1); renderSlide(); }
+document.addEventListener('keydown', e => {
+  if(document.getElementById('tg-viewer') && document.getElementById('tg-viewer').style.display !== 'none'){
+    if(e.key === 'ArrowLeft') tgPrev();
+    if(e.key === 'ArrowRight') tgNext();
+  }
+});
+
+function toggleGuide(){
+  const section = document.querySelector('.tg-section');
+  const v = document.getElementById('tg-viewer');
+  const lbl = document.getElementById('tg-toggle-label');
+  const icon = document.getElementById('tg-toggle-icon');
+  const collapsed = section.classList.toggle('collapsed');
+  v.style.display = collapsed ? 'none' : '';
+  lbl.textContent = collapsed ? 'Expand' : 'Collapse';
+  icon.className = collapsed ? 'ti ti-chevron-down' : 'ti ti-chevron-up';
+}
+
+/* ─── GLOSSARY POPUP ─── */
+let glossPop = null;
+let glossActive = null;
+function closeGloss(){
+  if(glossPop){ glossPop.remove(); glossPop = null; }
+  if(glossActive){ glossActive.classList.remove('active'); glossActive = null; }
+}
+function showGloss(target){
+  closeGloss();
+  const term = target.dataset.term;
+  const def = target.dataset.def;
+  glossActive = target;
+  target.classList.add('active');
+  glossPop = document.createElement('div');
+  glossPop.className = 'gloss-pop';
+  glossPop.innerHTML = `
+    <button class="gloss-pop-close" aria-label="Close"><i class="ti ti-close" aria-hidden="true"></i></button>
+    <span class="gloss-pop-term">${term}</span>
+    <span class="gloss-pop-def">${def}</span>
+  `;
+  document.body.appendChild(glossPop);
+  const rect = target.getBoundingClientRect();
+  const popRect = glossPop.getBoundingClientRect();
+  const vw = window.innerWidth;
+  let left = rect.left + (rect.width/2) - 40;
+  const margin = 12;
+  if(left + popRect.width > vw - margin) left = vw - popRect.width - margin;
+  if(left < margin) left = margin;
+  const top = rect.bottom + 12;
+  const arrowX = Math.max(12, Math.min(popRect.width - 24, rect.left + rect.width/2 - left - 7));
+  glossPop.style.setProperty('--arrow-x', arrowX + 'px');
+  glossPop.style.left = left + 'px';
+  glossPop.style.top = top + 'px';
+  glossPop.querySelector('.gloss-pop-close').onclick = closeGloss;
+}
+document.addEventListener('click', e => {
+  const g = e.target.closest('.gloss');
+  if(g){ e.preventDefault(); if(glossActive === g) closeGloss(); else showGloss(g); return; }
+  if(glossPop && !e.target.closest('.gloss-pop')) closeGloss();
+});
+window.addEventListener('scroll', closeGloss, { passive: true });
+window.addEventListener('resize', closeGloss);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeGloss(); });
+
+/* ─── SECTION TAB SMOOTH SCROLL + ACTIVE ─── */
+document.querySelectorAll('.section-tab').forEach(tab => {
+  tab.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.getElementById(tab.dataset.target);
+    if(!target) return;
+    window.scrollTo({ top: target.offsetTop - 140, behavior: 'smooth' });
+  });
+});
+const sectionIds = ['sec-simulation','sec-overview','sec-steps','sec-dataset','sec-teacher','sec-standards'];
+window.addEventListener('scroll', () => {
+  const pos = window.scrollY + 170;
+  let cur = 'sec-overview';
+  for(const id of sectionIds){
+    const el = document.getElementById(id);
+    if(el && el.offsetParent !== null && el.offsetTop <= pos) cur = id;
+  }
+  document.querySelectorAll('.section-tab').forEach(t => t.classList.toggle('active', t.dataset.target === cur));
+}, { passive: true });
+
+/* ─── INIT ─── */
+setAuth('free');
+setMode('standard');
+setState('default');
+renderSlide();
+</script>
+</body>
+</html>
